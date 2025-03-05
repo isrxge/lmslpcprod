@@ -69,8 +69,8 @@ export async function POST(req: Request) {
         secureConnection: false, // TLS requires secureConnection to be false
         port: 587, // port for secure SMTP
         auth: {
-          user: "Webmaster@lp.com.vn",
-          pass: "Lpc@236238$",
+          user: "webmaster@lp.com.vn",
+          pass: "yqpcfbbvhfrvfbwz",
         },
         tls: {
           ciphers: "SSLv3",
