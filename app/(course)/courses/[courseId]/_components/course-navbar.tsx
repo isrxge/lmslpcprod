@@ -1,4 +1,4 @@
-import { Module, Course, UserProgress } from "@prisma/client";
+import { Module, Course, UserProgress, ModuleInCourse } from "@prisma/client";
 
 import { NavbarRoutes } from "@/components/navbar-routes";
 
@@ -6,8 +6,10 @@ import { CourseMobileSidebar } from "./course-mobile-sidebar";
 
 interface CourseNavbarProps {
   course: Course & {
-    Module: (Module & {
-      userProgress: UserProgress[] | null;
+    modules: (ModuleInCourse & {
+      module: Module & {
+        userProgress: UserProgress[] | null;
+      };
     })[];
   };
   progressCount: number;

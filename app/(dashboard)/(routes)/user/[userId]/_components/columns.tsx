@@ -109,28 +109,26 @@ export const columns: ColumnDef<Course>[] = [
       );
     },
     cell: ({ row }) => {
-      const { Module }: any = row.original;
+      const { modules }: any = row.original;
 
       return (
         <div className="flex items-center">
           <ul>
-            {Module.map((item: any) => {
-              return (
-                <li key={item.id}>
-                  {item.title}:{" "}
-                  {item?.UserProgress[0] != undefined ? (
-                    <>
-                      {item?.UserProgress[0]?.status} (
-                      {item?.UserProgress[0]?.score}%)
-                      {" in "}
-                      {item?.UserProgress[0]?.attempt} times
-                    </>
-                  ) : (
-                    "No Result"
-                  )}
-                </li>
-              );
-            })}
+            {modules && modules.length > 0 ? (
+              modules.map((item: any) => {
+                const courseModule = item.module; // Truy cập vào module từ bảng ModuleInCourse
+                return (
+                  <li key={module.id}>
+                    {courseModule.title}:{" "}
+                    {courseModule.UserProgress && courseModule.UserProgress.length > 0
+                      ? `${courseModule.UserProgress[0]?.status} (${courseModule.UserProgress[0]?.score}%) in ${courseModule.UserProgress[0]?.attempt} attempts`
+                      : "No Result"}
+                  </li>
+                );
+              })
+            ) : (
+              <li>No Modules</li>
+            )}
           </ul>
         </div>
       );

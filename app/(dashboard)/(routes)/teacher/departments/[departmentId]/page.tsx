@@ -30,7 +30,7 @@ const DepartmentIdPage = async ({
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("User management permission") == -1
+      .indexOf("Edit department permission") == -1
   ) {
     return redirect("/");
   }

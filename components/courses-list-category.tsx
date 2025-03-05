@@ -28,8 +28,8 @@ export const CoursesList = ({ title, items }: CoursesListProps) => {
                 ? "/istockphoto-936681148-612x612.jpg"
                 : item.imageUrl!
             }
-            chapters={item?.Module}
-            chaptersLength={item.Module.length}
+            chapters={item?.modules}
+            chaptersLength={item.modules.length}
             bookmark={item.BookMark}
             isLocked={
               item?.ClassSessionRecord.map(
@@ -39,8 +39,9 @@ export const CoursesList = ({ title, items }: CoursesListProps) => {
                 : false
             }
             // price={item.price!}
-            progress={item.progress}
+            // progress={item.progress}
             description={item?.description}
+            endDate={item?.endDate}
             // category={item?.category?.name!}
           />
         ))}

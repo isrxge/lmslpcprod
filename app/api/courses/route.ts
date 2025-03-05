@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 export async function POST(req: Request) {
   try {
     const { userId, sessionClaims }: any = auth();
-    const { title } = await req.json();
+    const { title, imageUrl } = await req.json();
     let userInfo: any = await db.user.findUnique({
       where: { id: userId, status: "approved" },
     });
@@ -16,19 +16,21 @@ export async function POST(req: Request) {
       data: {
         userId,
         title,
+        imageUrl,
         startDate: date,
         isPublished: false,
-        Module: {
-          create: [
-            {
-              position: 1,
-              isPublished: false,
-              title: "Intro",
-              type: "slide",
-              userId,
-            },
-          ],
-        },
+        modules: { }
+        // Module: {
+        //   create: [
+        //     {
+        //       position: 1,
+        //       isPublished: false,
+        //       title: "Intro",
+        //       type: "slide",
+        //       userId,
+        //     },
+        //   ],
+        // },
       },
     });
 
@@ -53,24 +55,43 @@ export async function GET(req: Request) {
             program: true,
           },
         },
-        Module: {
-          orderBy: {
-            position: "asc",
-          },
+        modules: {
           include: {
-            Slide: true,
-            examRecord: {
+            module: {
               include: {
-                user: true,
-              },
-            },
-            UserProgress: {
-              include: {
-                user: true,
-              },
-            },
-          },
+                Slide: true,
+                examRecord: {
+                  include: {
+                    user: true,
+                  },
+                },
+                UserProgress: {
+                  include: {
+                    user: true,
+                  },
+                },
+              }
+            }
+          }
         },
+        // Module: {
+        //   orderBy: {
+        //     position: "asc",
+        //   },
+        //   include: {
+        //     Slide: true,
+        //     examRecord: {
+        //       include: {
+        //         user: true,
+        //       },
+        //     },
+        //     UserProgress: {
+        //       include: {
+        //         user: true,
+        //       },
+        //     },
+        //   },
+        // },
 
         ClassSessionRecord: {
           include: {

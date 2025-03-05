@@ -23,8 +23,11 @@ const PermissionsPage = async () => {
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("User management permission") == -1
-  ) {
+      .indexOf("Edit department permission") == -1 &&
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Create department permission") == -1
+  )  {
     return redirect("/");
   }
   const departments = await db.department.findMany({
@@ -43,14 +46,14 @@ const PermissionsPage = async () => {
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
-            .indexOf("User management permission") != -1
+            .indexOf("Create department permission") != -1
         }
         canEdit={
           checkUser
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
-            .indexOf("User management permission") != -1
+            .indexOf("Edit department permission") != -1
         }
       />
     </div>

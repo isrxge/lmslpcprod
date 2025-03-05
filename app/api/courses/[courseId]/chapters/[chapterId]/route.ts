@@ -17,7 +17,7 @@ export async function DELETE(
     const chapter = await db.module.findUnique({
       where: {
         id: params.chapterId,
-        courseId: params.courseId,
+        // courseId: params.courseId,
       },
     });
 
@@ -33,7 +33,7 @@ export async function DELETE(
 
     const publishedChaptersInCourse = await db.module.findMany({
       where: {
-        courseId: params.courseId,
+        // courseId: params.courseId,
         isPublished: true,
       },
     });
@@ -79,7 +79,7 @@ export async function PATCH(
     const chapter = await db.module.update({
       where: {
         id: params.chapterId,
-        courseId: params.courseId,
+        // courseId: params.courseId,
       },
       data: {
         ...values,

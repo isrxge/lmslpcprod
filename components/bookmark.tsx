@@ -12,7 +12,7 @@ import { auth } from "@clerk/nextjs";
 
 type CourseWithProgressWithCategory = Course & {
   programs: Program | null;
-  Module: { id: string }[];
+  modules: { module: { id: string } }[];  
   progress: string;
   BookMark: { length: number; id: string };
 };
@@ -44,6 +44,7 @@ export const Bookmark = ({ items }: BookmarkProps) => {
       >
         <CarouselContent>
           {items.map((item) => (
+            console.log("teststs", item),
             <CarouselItem key={item.id} className="md:basis-1/3 lg:basis-1/4">
               <CourseCard
                 key={item.id}
@@ -63,10 +64,11 @@ export const Bookmark = ({ items }: BookmarkProps) => {
                     ? true
                     : false
                 }
-                chaptersLength={item?.Module.length}
-                chapters={item?.Module}
+                chaptersLength={item?.course?.modules.length}
+                chapters={item?.modules?.map((moduleInCourse: any) => moduleInCourse.module)}
                 bookmark={item?.BookMark}
-                progress={item?.progress}
+                endDate={item?.endDate}
+                // progress={item?.progress}
                 description={item?.description}
               />
             </CarouselItem>

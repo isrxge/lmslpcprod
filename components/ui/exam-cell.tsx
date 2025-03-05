@@ -1,13 +1,14 @@
-"use client";
-
 import React, { useState } from "react";
-import { Modal } from "../modals/modal-exam"; // Adjust the import path to where your Modal component is located
+import { Modal } from "../modals/modal-exam"; // Đảm bảo đường dẫn đúng
 
 export const ExamsCell = ({ row }: any) => {
-  const { Module } = row.original;
+  const { modules } = row.original; // Giả sử `modules` là mảng các `ModuleInCourse` đã được truyền từ phía server
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const exams = Module.filter((item: any) => item.type === "Exam");
+  // Lọc các mô-đun có type là "Exam" và kiểm tra `module` có tồn tại hay không
+  const exams = modules
+    .map((moduleInCourse: any) => moduleInCourse.module) // Lấy thông tin `module` từ `ModuleInCourse`
+    .filter((module: any) => module && module.type === "Exam"); // Kiểm tra module có tồn tại và loại là "Exam"
 
   const examDetails = exams.map((exam: any) => {
     const passedUsers = exam.UserProgress.filter(

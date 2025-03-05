@@ -40,9 +40,9 @@ export const NavbarRoutes = ({ userId }: any) => {
         </div>
         <div className="flex gap-x-2 ml-auto justify-center">
           <div className="flex items-center">
-            <Button size="sm" variant="ghost" asChild>
+            {/* <Button size="sm" variant="ghost" asChild>
               <MyCourse data={data} />
-            </Button>
+            </Button> */}
             {/* <div className="flex items-center ml-5 mr-3">
               <Notification />
             </div> */}

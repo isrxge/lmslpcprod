@@ -143,21 +143,35 @@ model Course {
   startDate          DateTime             @default(now())
   endDate            DateTime?
   updateDate         DateTime?
-  intro              String?
+  type              String?
   isPublished        Boolean              @default(false)
   credit             Int?
   ClassSessionRecord ClassSessionRecord[]
-  Module             Module[]
   courseWithProgram  courseWithProgram[]
   BookMark           BookMark[]
   CourseOnDepartment CourseOnDepartment[]
   userExamReport     userExamReport[]
   examRecord         examRecord[]
+  modules            ModuleInCourse[]
 
   @@index([userId])
   @@index([updatedBy])
   @@index([courseInstructedBy])
 }
+
+model ModuleInCourse {
+  id        String   @id @default(uuid())
+  module    Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  moduleId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+  position  Int
+
+  @@unique([moduleId, courseId])
+  @@index([moduleId])
+  @@index([courseId])
+}
+
 
 model ClassSessionRecord {
   id        String    @id @default(uuid())
@@ -190,8 +204,6 @@ model BookMark {
 
 model Module {
   id           String         @id @default(uuid())
-  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  courseId     String
   title        String         @db.Text
   type         String
   user         User           @relation(fields: [userId], references: [id])
@@ -208,8 +220,8 @@ model Module {
   Resource       Resource[]
   examRecord     examRecord[]
   userExamReport userExamReport[]
+  courses        ModuleInCourse[]
 
-  @@index([courseId])
   @@index([userId])
 }
 
@@ -284,8 +296,8 @@ model UserProgress {
   startDate  DateTime
   endDate    DateTime?
   score      Int?
-  attempt    Int?
-  retakeTime Int?      @default(0)
+  attempt    Int?      @default(1)
+  retakeTime Int?      @default(1)
 
   @@unique([moduleId, userId])
   @@index([moduleId])

@@ -27,8 +27,8 @@ export const CoursesList = ({ items }: CoursesListProps) => {
                 ? "/istockphoto-936681148-612x612.jpg"
                 : item.imageUrl!
             }
-            chapters={item?.Module}
-            chaptersLength={item.Module.length}
+            chapters={item?.modules.module}
+            chaptersLength={item.modules.length}
             bookmark={item.BookMark}
             isLocked={
               item?.ClassSessionRecord.map(
@@ -38,7 +38,8 @@ export const CoursesList = ({ items }: CoursesListProps) => {
                 : false
             }
             // price={item.price!}
-            progress={item.progress}
+            // progress={item.progress}
+            endDate={item?.endDate}
             description={item?.description}
             // category={item?.category?.name!}
           />

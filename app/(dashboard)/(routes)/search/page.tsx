@@ -36,7 +36,12 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
             ClassSessionRecord: {
               every: {
                 userId: sessionClaims.userId,
-                status: { not: "finished" },
+                // status: { 
+                //   notIn: ["finished", "failed"],
+                // },
+                status: {
+            equals:"studying"
+          }
               },
             },
           },
@@ -51,10 +56,14 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
               isPublished: true,
             },
             include: {
-              Module: {
-                where: {
-                  isPublished: true,
-                },
+              modules: {
+                include: {
+                  module: {
+                    select: {
+                      isPublished: true,
+                    },
+                  },
+                }
               },
               BookMark: true,
               ClassSessionRecord: true,
@@ -69,22 +78,36 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
       ClassSessionRecord: {
         every: {
           userId: sessionClaims.userId,
-          status: { not: "finished" },
+          // status: { 
+          //   notIn: ["finished", "failed"],
+          // },
+          status: {
+            equals:"studying"
+          }
         },
       },
       isPublished: true,
     },
     include: {
-      Module: {
-        where: {
-          isPublished: true,
-        },
+      modules: {
+        include: {
+          module: {
+            select: {
+              isPublished: true,
+            },
+          },
+        }
       },
       BookMark: true,
       ClassSessionRecord: {
         where: {
           userId: sessionClaims.userId,
-          status: { not: "finished" },
+          // status: { 
+          //   notIn: ["finished", "failed"],
+          // },
+          status: {
+            equals:"studying"
+          }
         },
       },
     },

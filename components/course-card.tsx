@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookOpen, BookOpenText, Bookmark, Eye, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IconBadge } from "@/components/icon-badge";
 import { CourseProgress } from "@/components/course-progress";
 import axios from "axios";
@@ -15,10 +15,11 @@ interface CourseCardProps {
   imageUrl: string;
   chaptersLength: number;
   bookmark: any[];
-  progress: string | null;
+  // progress: string | null;
   chapters: any;
   isLocked: boolean;
   description: string;
+  endDate?: string
 }
 
 export const CourseCard = ({
@@ -27,10 +28,11 @@ export const CourseCard = ({
   imageUrl,
   chaptersLength,
   bookmark,
-  progress,
+  // progress,
   chapters,
   isLocked,
   description,
+  endDate
 }: CourseCardProps) => {
   const router = useRouter();
 
@@ -49,6 +51,16 @@ export const CourseCard = ({
     toggleUpdating();
     router.refresh();
   };
+
+  const [isClient, setIsClient] = useState(false);  // To detect if it's client-side
+  const [formattedEndDate, setFormattedEndDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsClient(true);  // Set the flag after component mounts
+    if (endDate) {
+      setFormattedEndDate(new Date(endDate).toLocaleDateString());  // Format the endDate
+    }
+  }, [endDate]);
 
   return (
     <div className="group relative">
@@ -73,16 +85,11 @@ export const CourseCard = ({
               </span>
             </div>
           </div>
-          {progress !== null ? (
-            <CourseProgress
-              variant={parseInt(progress) === 100 ? "success" : "default"}
-              size="sm"
-              value={parseInt(progress)}
-            />
-          ) : (
-            <p className="text-md md:text-sm font-medium text-slate-700">
-              {/* {formatPrice(price)} */}
-            </p>
+          <div className="w-full h-0.5 bg-gray-300 rounded-md mt-1"></div>
+          {isClient && (
+          <p className="font-small mt-4 text-sky-700 text-xs">
+            End course: {formattedEndDate || "N/A"}
+          </p>
           )}
         </div>
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">

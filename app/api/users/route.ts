@@ -23,16 +23,20 @@ export async function GET(req: Request) {
           include: {
             course: {
               include: {
-                Module: {
-                  orderBy: { position: "asc" },
+                modules: {
                   include: {
-                    UserProgress: {
+                    module: {
+                      // orderBy: { position: "asc" },
                       include: {
-                        module: true,
+                        UserProgress: {
+                          include: {
+                            module: true,
+                          },
+                        },
                       },
                     },
-                  },
-                },
+                  }
+                }
               },
             },
           },

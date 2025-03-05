@@ -63,18 +63,22 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
           userId: userId,
         },
       },
-      Module: {
-        where: {
-          type: "Exam",
-        },
+      modules: {
         include: {
-          UserProgress: {
-            where: {
-              userId: userId,
+          module: {
+            select: {
+              // type: "Exam",
+              type: true,
+              UserProgress: {
+                where: {
+                  userId: userId,
+                },
+              },
             },
           },
-        },
-      },
+        }
+      }
+      
     },
   });
 

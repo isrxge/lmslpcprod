@@ -45,7 +45,7 @@ const ChapterIdPage = async ({
   const chapter = await db.module.findUnique({
     where: {
       id: params.chapterId,
-      courseId: params.courseId,
+    //   courseId: params.courseId,
     },
     include: {
       Slide: true,
@@ -119,11 +119,11 @@ const ChapterIdPage = async ({
         <div className="flex items-center justify-between">
           <div className="w-full">
             <Link
-              href={`/teacher/courses/${params.courseId}`}
+              href={`/teacher/module`}
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to course setup
+              Back to resources setup
             </Link>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col gap-y-2">

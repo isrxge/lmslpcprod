@@ -51,15 +51,23 @@ export default async function Dashboard({
     where: {
       userId: sessionClaims.userId,
       status: { not: "finished" },
+      course: {
+        isPublished: true
+      }
     },
     include: {
       course: {
         include: {
-          Module: {
-            where: {
-              isPublished: true,
+          modules: {
+            include: {
+              module: true,
             },
           },
+          // Module: {
+          //   where: {
+          //     isPublished: true,
+          //   },
+          // },
           ClassSessionRecord: true,
           BookMark: true,
         },
@@ -92,11 +100,11 @@ export default async function Dashboard({
               isPublished: true,
             },
             include: {
-              Module: {
-                where: {
-                  isPublished: true,
-                },
-              },
+              // Module: {
+              //   where: {
+              //     isPublished: true,
+              //   },
+              // },
               BookMark: true,
               ClassSessionRecord: true,
             },
@@ -119,26 +127,42 @@ export default async function Dashboard({
       ClassSessionRecord: {
         every: {
           userId: sessionClaims.userId,
-          status: { not: "finnish" },
+          status: { not: "finished" },
         },
       },
       isPublished: true,
     },
     include: {
-      Module: {
-        where: {
-          isPublished: true,
-        },
-      },
+      // Module: {
+      //   where: {
+      //     isPublished: true,
+      //   },
+      // },
       BookMark: true,
       ClassSessionRecord: {
         where: {
           userId: sessionClaims.userId,
-          status: { not: "finnish" },
+          status: { not: "finished" },
         },
       },
     },
   });
+
+  for (let course of allCourses) {
+    if (course.endDate && new Date(course.endDate) < new Date()) {
+      // Cập nhật khóa học thành không công khai nếu endDate đã qua
+      await db.course.update({
+        where: {
+          id: course.id,
+        },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
+  }
+
+  
 
   let courses = recommendCourses?.CourseOnDepartment || [];
   for (let i = 0; i < allCourses.length; i++) {
@@ -158,11 +182,11 @@ export default async function Dashboard({
       },
     },
     include: {
-      Module: {
-        where: {
-          isPublished: true,
-        },
-      },
+      // Module: {
+      //   where: {
+      //     isPublished: true,
+      //   },
+      // },
       BookMark: true,
       ClassSessionRecord: true,
     },
@@ -176,17 +200,18 @@ export default async function Dashboard({
     include: {
       course: {
         include: {
-          Module: {
-            where: {
-              isPublished: true,
-            },
-          },
+          // Module: {
+          //   where: {
+          //     isPublished: true,
+          //   },
+          // },
           ClassSessionRecord: true,
           BookMark: true,
         },
       },
     },
   });
+  
   const coursesWithProgress: any = await Promise.all(
     bookmark.map(async (course: { id: any }) => {
       const progressPercentage = await getProgress(

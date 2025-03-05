@@ -37,7 +37,10 @@ const ProgramIdPage = async ({ params }: { params: { programId: string } }) => {
           course: {
             include: {
               ClassSessionRecord: true,
-              Module: true,
+              modules: {
+                include: {module: true,}
+              },
+              // Module: true,
               BookMark: true,
             },
           },

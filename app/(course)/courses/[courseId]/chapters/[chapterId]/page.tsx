@@ -40,11 +40,13 @@ const ChapterIdPage = async ({
   if (!chapter || !course) {
     return redirect("/");
   }
+let chapter1 = chapter.module
+  console.log("COURASSSS ", chapter.module);
 
-  return chapter.type == "Exam" ? (
+  return chapter.module.type == "Exam" ? (
     <>
       <Exam
-        chapter={chapter}
+        chapter={chapter.module}
         nextChapterId={nextChapter}
         courseId={params.courseId}
         course={course}
@@ -53,10 +55,10 @@ const ChapterIdPage = async ({
         }
       />
     </>
-  ) : (userInfo.userExamReport[0]?.isInExam && chapter.type != "Exam") ||
+  ) : (userInfo.userExamReport[0]?.isInExam && chapter.module.type != "Exam") ||
     (userInfo.userExamReport[0]?.isInExam &&
-      chapter.type == "Exam" &&
-      chapter.id != userInfo.userExamReport[0]?.moduleId) ? (
+      chapter.module.type == "Exam" &&
+      chapter.module.id != userInfo.userExamReport[0]?.moduleId) ? (
     <AlertInExam
       courseId={userInfo.userExamReport[0]?.courseId}
       moduleId={userInfo.userExamReport[0]?.moduleId}
@@ -70,15 +72,15 @@ const ChapterIdPage = async ({
       <div className="flex flex-col pb-20 overflow-x-hidden">
         <div>
           <Slide
-            slide={chapter.Slide}
-            chapter={chapter}
+            slide={chapter.module.Slide}
+            chapter={chapter.module}
             nextChapterId={nextChapter}
             preChapter={preChapter}
             courseId={params.courseId}
             course={course}
             isCompleted={userProgress?.status}
           ></Slide>
-          Extra resources:{" "}
+          {/* Extra resources:{" "}
           <ul className="list-decimal">
             {chapter.Resource.map((item: any) => (
               <li key={item.attachment}>
@@ -87,11 +89,11 @@ const ChapterIdPage = async ({
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
         <div>
           <div>
-            <Preview value={chapter.description!} />
+            <Preview value={chapter.module.description!} />
           </div>
         </div>
       </div>

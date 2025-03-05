@@ -20,7 +20,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   if (!userId) {
     return redirect("/");
   }
-  if (userInfo.userExamReport[0]?.isInExam) {
+  if (userInfo?.userExamReport[0]?.isInExam) {
     return (
       <AlertInExam
         courseId={userInfo.userExamReport[0]?.courseId}

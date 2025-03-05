@@ -16,8 +16,8 @@ export const CoursesListInProgram = ({ items }: CoursesListInProgramProps) => {
             id={item.id}
             title={item.title}
             imageUrl={item.imageUrl!}
-            chapters={item?.Module}
-            chaptersLength={item.Module.length}
+            chapters={item?.modules.map((item: any) => item.module.title)}
+            chaptersLength={item.modules.length}
             bookmark={item.BookMark}
             isLocked={
               item?.ClassSessionRecord.map(
@@ -27,8 +27,9 @@ export const CoursesListInProgram = ({ items }: CoursesListInProgramProps) => {
                 : false
             }
             // price={item.price!}
-            progress={item.progress}
+            // progress={item.progress}
             description={item?.description}
+            endDate={item?.endDate}
             // category={item?.category?.name!}
           />
         ))}

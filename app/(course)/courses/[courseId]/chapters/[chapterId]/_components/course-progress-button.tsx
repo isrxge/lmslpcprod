@@ -7,14 +7,14 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 interface CourseProgressButtonProps {
-  chapterId: string;
+  moduleId: string;
   courseId: string;
   isCompleted?: boolean;
   nextChapterId?: string;
 };
 
 export const CourseProgressButton = ({
-  chapterId,
+  moduleId,
   courseId,
   isCompleted,
   nextChapterId
@@ -27,7 +27,9 @@ export const CourseProgressButton = ({
     try {
       setIsLoading(true);
 
-      await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
+      // await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
+            await axios.put(`/api/module/${moduleId}/progress`, {
+
         isCompleted: !isCompleted
       });
 

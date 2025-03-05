@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 const CourseHistory = ({ userId }: any) => {
   const [completedCourses, setCompletedCourses] = useState([]);
   const [uncompletedCourses, setUncompletedCourses] = useState([]);
+  const [failedCourses, setFailedCourses] = useState([]);
+
   useEffect(() => {
     async function loadCourses() {
       let courseList = await axios.get(`/api/user/${userId}`);
@@ -17,9 +19,13 @@ const CourseHistory = ({ userId }: any) => {
       );
       setUncompletedCourses(uncompletedCourses);
       // setCourses(courseList.data.ClassSessionRecord);
+      const failedCourses = courseList.data.ClassSessionRecord.filter(
+        (course: any) => course.status == "failed"
+      );
+      setFailedCourses(failedCourses);
     }
     loadCourses();
-  }, []);
+  }, [userId]);
 
   return (
     <div className="my-8 text-black dark:text-white">
@@ -57,6 +63,25 @@ const CourseHistory = ({ userId }: any) => {
           </div>
           <div>
             {uncompletedCourses.map((course: any, index: any) => (
+              <p key={index} className="text-white">
+                {course.title}
+              </p>
+            ))}
+          </div>
+        </div>
+        
+        <div className="bg-gradient-to-r from-red-400 to-purple-500 p-4 rounded-md border shadow-md flex-1">
+          <h2 className="text-lg font-bold mb-4 text-white">
+            Failed Courses
+          </h2>
+          <div className="mb-4">
+            <span className="text-4xl font-bold text-white">
+              {failedCourses.length}
+            </span>
+            <span className="ml-2 text-white">courses</span>
+          </div>
+          <div>
+            {failedCourses.map((course: any, index: any) => (
               <p key={index} className="text-white">
                 {course.title}
               </p>

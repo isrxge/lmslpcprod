@@ -47,7 +47,7 @@ const CoursesPage = async ({ params }: { params: { courseId: string } }) => {
   });
   let exams: any = await db.module.findMany({
     where: {
-      courseId: params.courseId,
+      // courseId: params.courseId,
       type: "Exam",
     },
     include: {

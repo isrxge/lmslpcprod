@@ -41,9 +41,9 @@ const ProgramsPage = async () => {
   let programs: any;
   if (
     userDepartment.title != "BOD" &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Manage all course permission") == -1 &&
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Manage all course permission") == -1 &&
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
       .indexOf("Manage all program permission") == -1

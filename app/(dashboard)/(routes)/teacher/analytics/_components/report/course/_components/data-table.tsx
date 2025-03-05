@@ -167,12 +167,13 @@ export function DataTable<TData, TValue>({
     }
 
     filteredList.forEach((item: any) => {
-      const moduleList = item.Module.map(
-        (module: any) => `${module.title} : ${module.type}`
+      console.log("ITEM", item);
+      const moduleList = item.modules.map(
+        (moduleInCourse: any) => `${moduleInCourse.module.title} : ${moduleInCourse.module.type}`
       ).join(" \n");
-      const moduleListResult = item.Module.map(
-        (module: any) =>
-          `${module.title} :  ${module.UserProgress.map(
+      const moduleListResult = item.modules.map(
+        (moduleInCourse: any) =>
+          `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
             (item: any) =>
               `\n-${item.user.username} : ${item.status}${
                 item?.score != null ? `(${item?.score}%)` : ""

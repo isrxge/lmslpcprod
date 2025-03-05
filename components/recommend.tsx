@@ -68,10 +68,11 @@ export const Recommend = ({ items }: RecommendProps) => {
                     ? true
                     : false
                 }
-                chaptersLength={item.course.Module.length}
-                chapters={item?.course.Module}
+                chaptersLength={item.course.modules.length}
+                chapters={item?.course.modules}
                 bookmark={item.course.BookMark}
-                progress={item?.progress}
+                endDate={item?.course.endDate}
+                // progress={item?.progress}
                 description={item?.course.description}
               />
             </CarouselItem>

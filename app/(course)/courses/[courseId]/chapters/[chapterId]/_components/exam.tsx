@@ -2,6 +2,7 @@
 import { Countdown } from "@/hooks/use-countdown";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { BookmarkCheck, Timer } from "lucide-react";
 import {
   AlertDialog,
@@ -47,13 +48,17 @@ const Exam = ({
   // const [recordId, setRecordId] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
   const confetti = useConfettiStore();
-  const [currentAttempt, setCurrentAttempt] = useState(0);
+  const [currentAttempt, setCurrentAttempt] = useState(1);
   const [startDate, setStartDate]: any = useState(null);
   useEffect(() => {
     const getHistory = async () => {
+      const moduleId = chapter.id;
       let getLatestTestResult: any = await axios.get(
-        `/api/courses/${courseId}/chapters/${chapter.id}/category/exam`
+        // `/api/courses/${courseId}/chapters/${chapter.id}/category/exam`
+        `/api/module/${chapter.id}/category/exam`
       );
+
+      console.log("getLatestTestResult", getLatestTestResult);
 
       setFinishedExam(
         getLatestTestResult?.data?.UserProgress[0]?.status == "finished" &&
@@ -199,7 +204,8 @@ const Exam = ({
         const date = new Date();
         if (currentAttempt >= maxAttempt) {
           await axios.put(
-            `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+            // `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+            `/api/module/${chapter.id}/progress`,
             {
               status:
                 totalScore >= chapter.scoreLimit && passed
@@ -214,7 +220,9 @@ const Exam = ({
           );
         } else {
           await axios.put(
-            `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+            // `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+            `/api/module/${chapter.id}/progress`,
+
             {
               status:
                 totalScore >= chapter.scoreLimit && passed
@@ -231,14 +239,16 @@ const Exam = ({
         if (totalScore >= chapter.scoreLimit && passed) {
           if (nextChapterId != null) {
             let checkIfNextChapterIsFinished = await axios.get(
-              `/api/courses/${courseId}/chapters/${nextChapterId}/progress`
+              // `/api/courses/${courseId}/chapters/${nextChapterId}/progress`
+              `/api/module/${nextChapterId}/progress`
             );
             if (checkIfNextChapterIsFinished.data.status == "finished") {
               if (
                 checkIfNextChapterIsFinished.data.nextChapterId != undefined
               ) {
               } else {
-                await axios.put(`/api/courses/${courseId}/progress`, {
+                // await axios.put(`/api/courses/${courseId}/progress`, {
+                  await axios.put(`/api/module/progress`, {
                   status: "finished",
                   progress: "100%",
                   endDate: date,
@@ -253,14 +263,17 @@ const Exam = ({
               }
             } else {
               await axios.put(
-                `/api/courses/${courseId}/chapters/${nextChapterId}/progress`,
+                // `/api/courses/${courseId}/chapters/${nextChapterId}/progress`,
+                `/api/module/${nextChapterId}/progress`,
+
                 {
                   status: "studying",
                   progress: "0%",
                   startDate: date,
                 }
               );
-              await axios.put(`/api/courses/${courseId}/progress`, {
+              // await axios.put(`/api/courses/${courseId}/progress`, {
+                await axios.put(`/api/module/progress`, {
                 status: "studying",
                 progress:
                   (course.Module.map((item: { id: any }) => item.id).indexOf(
@@ -274,7 +287,9 @@ const Exam = ({
             }
             //router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
           } else {
-            await axios.put(`/api/courses/${courseId}/progress`, {
+            // await axios.put(`/api/courses/${courseId}/progress`, {
+              await axios.put(`/api/module/progress`, {
+
               status: "finished",
               progress: "100%",
               startDate: date,
@@ -369,17 +384,25 @@ const Exam = ({
     setIsPassed(true);
     setStartDate(new Date());
     setIsGeneratingExam(true);
+    const moduleId = chapter.id;
     let questionLists: any = [];
+    
+    
     if (!finishedExam) {
       setCurrentAttempt(currentAttempt + 1);
+      
       let questionList = await axios.get(
-        `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
+        // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
+        `/api/module/${moduleId}/category/exam/shuffle`
+
       );
       questionLists = shuffleArray(questionList.data.ExamList);
       setQuestions(questionLists);
     } else {
       let questionList = await axios.get(
-        `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
+        // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
+                // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
+        `/api/module/${moduleId}/category/exam/shuffle`
       );
 
       questionLists = shuffleArray(questionList.data.ExamList);
@@ -517,117 +540,180 @@ const Exam = ({
           })
         );
       }
+      // debugger
+      // if (!finishedExam) {
+        
+      //   const date = new Date();
+
+      //   if (currentAttempt >= maxAttempt) {
+      //     await axios.put(
+      //       `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+      //       {
+      //         status:
+      //           totalScore >= chapter.scoreLimit && passed
+      //             ? "finished"
+      //             : "failed",
+      //         score: parseInt(finalScore),
+      //         progress:
+      //           totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+      //         endDate: date,
+      //         retakeTime: currentAttempt,
+      //       }
+      //     );
+      //   } else {
+      //     await axios.put(
+      //       `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+      //       {
+      //         status:
+      //           totalScore >= chapter.scoreLimit && passed
+      //             ? "finished"
+      //             : "failed",
+      //         score: parseInt(finalScore),
+      //         progress:
+      //           totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+      //         endDate: date,
+      //         retakeTime: currentAttempt,
+      //       }
+      //     );
+      //   }
+      //   if (totalScore >= chapter.scoreLimit && passed) {
+      //     if (nextChapterId != null) {
+      //       let checkIfNextChapterIsFinished = await axios.get(
+      //         `/api/courses/${courseId}/chapters/${nextChapterId}/progress`
+      //       );
+      //       if (checkIfNextChapterIsFinished.data.status == "finished") {
+      //         if (
+      //           checkIfNextChapterIsFinished.data.nextChapterId != undefined
+      //         ) {
+      //         } else {
+      //           await axios.put(`/api/courses/${courseId}/progress`, {
+      //             status: "finished",
+      //             progress: "100%",
+      //             endDate: date,
+      //           });
+      //         }
+      //       } else {
+      //         await axios.put(
+      //           `/api/courses/${courseId}/chapters/${nextChapterId}/progress`,
+      //           {
+      //             status: "studying",
+      //             progress: "0%",
+      //             startDate: date,
+      //           }
+      //         );
+      //         await axios.put(`/api/courses/${courseId}/progress`, {
+      //           status: "studying",
+      //           progress:
+      //             (course.Module.map((item: { id: any }) => item.id).indexOf(
+      //               nextChapterId
+      //             ) /
+      //               course.Module.length) *
+      //               100 +
+      //             "%",
+      //           startDate: date,
+      //         });
+      //       }
+
+      //       //router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+      //     } else {
+      //       await axios.put(`/api/courses/${courseId}/progress`, {
+      //         status: "finished",
+      //         progress: "100%",
+      //         startDate: date,
+      //       });
+      //       // confetti.onOpen();
+      //       let currentUser = await axios.get(`/api/user`);
+      //       await axios.patch(`/api/user/${currentUser.data.id}/score`, {
+      //         star: parseInt(currentUser.data.star) + parseInt(course.credit),
+      //         starUpdateDate: new Date(),
+      //       });
+      //       // router.push(`/search`);
+      //     }
+      //   }
+      //   await axios.post(
+      //     `/api/user/${currentUserId}/isInExam`,
+      //     JSON.stringify({
+      //       id: reportId,
+      //       isInExam: false,
+      //       note: "Finished Exam.",
+      //       moduleId: chapter.id,
+      //       courseId,
+      //       date: new Date(),
+      //       examRecord: {
+      //         startDate: startDate,
+      //         date: new Date(),
+      //         timePassed: timeLimitRecord,
+      //         questionList: questions,
+      //         timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
+      //         currentQuestion: currentQuestion,
+      //         selectedAnswers: selectedAnswers,
+      //         currentAttempt: currentAttempt,
+      //       },
+      //     })
+      //   );
+      // }
 
       if (!finishedExam) {
         const date = new Date();
-
-        if (currentAttempt >= maxAttempt) {
-          await axios.put(
+    
+        // Cập nhật thông tin tiến độ cho chương hiện tại
+        await axios.put(
             `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
             {
-              status:
-                totalScore >= chapter.scoreLimit && passed
-                  ? "finished"
-                  : "failed",
-              score: parseInt(finalScore),
-              progress:
-                totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-              endDate: date,
-              retakeTime: currentAttempt,
+                status: totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
+                score: parseInt(finalScore),
+                progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+                endDate: date,
+                retakeTime: currentAttempt,
             }
-          );
-        } else {
-          await axios.put(
-            `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
-            {
-              status:
-                totalScore >= chapter.scoreLimit && passed
-                  ? "finished"
-                  : "failed",
-              score: parseInt(finalScore),
-              progress:
-                totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-              endDate: date,
-              retakeTime: currentAttempt,
-            }
-          );
-        }
+        );
+    
+        // Cập nhật trạng thái khóa học dựa trên kết quả chương học cuối cùng
         if (totalScore >= chapter.scoreLimit && passed) {
-          if (nextChapterId != null) {
-            let checkIfNextChapterIsFinished = await axios.get(
-              `/api/courses/${courseId}/chapters/${nextChapterId}/progress`
-            );
-            if (checkIfNextChapterIsFinished.data.status == "finished") {
-              if (
-                checkIfNextChapterIsFinished.data.nextChapterId != undefined
-              ) {
-              } else {
-                await axios.put(`/api/courses/${courseId}/progress`, {
-                  status: "finished",
-                  progress: "100%",
-                  endDate: date,
-                });
-              }
-            } else {
-              await axios.put(
-                `/api/courses/${courseId}/chapters/${nextChapterId}/progress`,
-                {
-                  status: "studying",
-                  progress: "0%",
-                  startDate: date,
-                }
-              );
-              await axios.put(`/api/courses/${courseId}/progress`, {
-                status: "studying",
-                progress:
-                  (course.Module.map((item: { id: any }) => item.id).indexOf(
-                    nextChapterId
-                  ) /
-                    course.Module.length) *
-                    100 +
-                  "%",
-                startDate: date,
-              });
-            }
-
-            //router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
-          } else {
             await axios.put(`/api/courses/${courseId}/progress`, {
-              status: "finished",
-              progress: "100%",
-              startDate: date,
+                status: "finished",
+                progress: "100%",
+                endDate: date,
             });
-            // confetti.onOpen();
+    
+            // Cập nhật điểm của người dùng sau khi hoàn thành khóa học
             let currentUser = await axios.get(`/api/user`);
             await axios.patch(`/api/user/${currentUser.data.id}/score`, {
-              star: parseInt(currentUser.data.star) + parseInt(course.credit),
-              starUpdateDate: new Date(),
+                star: parseInt(currentUser.data.star) + parseInt(course.credit),
+                starUpdateDate: new Date(),
             });
-            // router.push(`/search`);
-          }
+        } else {
+            await axios.put(`/api/courses/${courseId}/progress`, {
+                status: "failed",
+                progress: "0%",
+                endDate: date,
+            });
         }
+    
+        // Gửi thông báo cho hệ thống rằng bài thi đã hoàn thành
         await axios.post(
-          `/api/user/${currentUserId}/isInExam`,
-          JSON.stringify({
-            id: reportId,
-            isInExam: false,
-            note: "Finished Exam.",
-            moduleId: chapter.id,
-            courseId,
-            date: new Date(),
-            examRecord: {
-              startDate: startDate,
-              date: new Date(),
-              timePassed: timeLimitRecord,
-              questionList: questions,
-              timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
-              currentQuestion: currentQuestion,
-              selectedAnswers: selectedAnswers,
-              currentAttempt: currentAttempt,
-            },
-          })
+            `/api/user/${currentUserId}/isInExam`,
+            JSON.stringify({
+                id: reportId,
+                isInExam: false,
+                note: "Finished Exam.",
+                moduleId: chapter.id,
+                courseId,
+                date: new Date(),
+                examRecord: {
+                    startDate: startDate,
+                    date: new Date(),
+                    timePassed: timeLimitRecord,
+                    questionList: questions,
+                    timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
+                    currentQuestion: currentQuestion,
+                    selectedAnswers: selectedAnswers,
+                    currentAttempt: currentAttempt,
+                },
+            })
         );
-      }
+    }
+    
 
       setOnFinish(true);
       setQuestions([]);
@@ -687,7 +773,13 @@ const Exam = ({
     }
 
     let myScore: number = 0;
+    let missingAnswer = false;
     for (let i = 0; i < selectedAnswers.length; i++) {
+
+      if (!selectedAnswers[i]?.categoryId) {
+        missingAnswer = true;
+      }
+
       let categoryIndex = newCategoryList
         .map((item: { id: any }) => item.id)
         .indexOf(selectedAnswers[i].categoryId);
@@ -748,6 +840,11 @@ const Exam = ({
           }
         }
       }
+    }
+
+    if (missingAnswer) {
+      // Toast message for missing answers
+      toast.error("You have skipped some answers. Please make sure all questions are answered.");
     }
 
     // setCategoryList([...newCategoryList]);

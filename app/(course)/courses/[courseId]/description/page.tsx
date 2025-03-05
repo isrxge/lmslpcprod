@@ -22,9 +22,20 @@ const CourseDescriptionPage = async ({
       id: params.courseId,
     },
     include: {
-      Module: {
-        where: {
-          isPublished: true,
+      modules: {
+        // where: {
+        //   isPublished: true,
+        // },
+        include: {
+          module: {
+            include: {
+              UserProgress: {
+                where: {
+                  userId,
+                },
+              },
+            },
+          }
         },
         orderBy: {
           position: "asc",
@@ -59,12 +70,12 @@ const CourseDescriptionPage = async ({
       <div className="border border-blue-800 border-l-8 shadow-lg rounded-lg mt-8 mb-8">
         <h5 className="text-2xl font-bold p-5">Modules</h5>
         <ul className="list-disc ml-5 mr-5 mb-8">
-          {course.Module.map((module: any) => (
+          {course.modules.map((moduleInCourse: any) => (
             <li
-              key={module.id}
+              key={moduleInCourse.module.id}
               className="text-gray-700 text-base ml-3 dark:text-white mb-2"
             >
-              {module.title}
+              {moduleInCourse.module.title}
             </li>
           ))}
         </ul>

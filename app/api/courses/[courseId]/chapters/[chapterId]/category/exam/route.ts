@@ -16,7 +16,7 @@ export async function POST(
     const chapter = await db.module.findUnique({
       where: {
         id: params.chapterId,
-        courseId: params.courseId,
+        // courseId: params.courseId,
       },
     });
 

@@ -47,13 +47,16 @@ const CoursesPage = async () => {
   ) {
     courses = await db.course.findMany({
       where: {
-        OR: [
-          {
-            userId: userId,
-            courseInstructedBy: userId,
-            updatedBy: userId,
-          },
-        ],
+        CourseOnDepartment: {
+          some: {departmentId: userDepartment?.Department?.id,}
+        },
+        // OR: [
+        //   {
+        //     userId: userId,
+        //     courseInstructedBy: userId,
+        //     updatedBy: userId,
+        //   },
+        // ],
       },
       orderBy: {
         startDate: "desc",
@@ -62,9 +65,11 @@ const CoursesPage = async () => {
         user: true,
         updatedUser: true,
         courseInstructor: true,
-        Module: {
+        modules: {
+        },
+        CourseOnDepartment: {
           include: {
-            UserProgress: true,
+            Department: true, // Bao gồm thông tin phòng ban
           },
         },
       },
@@ -74,6 +79,13 @@ const CoursesPage = async () => {
       // where: {
       //   userId,
       // },
+      // where: {
+      //   CourseOnDepartment: {
+      //     some: {
+      //       departmentId: userDepartment?.Department?.id, // Lọc khóa học theo phòng ban người dùng
+      //     },
+      //   },
+      // },
       orderBy: {
         startDate: "desc",
       },
@@ -81,12 +93,11 @@ const CoursesPage = async () => {
         user: true,
         updatedUser: true,
         courseInstructor: true,
-        Module: {
+        modules: {
+        },
+        CourseOnDepartment: {
           include: {
-            UserProgress: true,
-          },
-          orderBy: {
-            position: "asc",
+            Department: true, // Bao gồm thông tin phòng ban
           },
         },
       },

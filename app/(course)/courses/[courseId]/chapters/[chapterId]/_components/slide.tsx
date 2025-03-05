@@ -74,113 +74,170 @@ const Slide = ({
     return supportedFileTypes.includes(extension!) ? extension : "default";
   };
 
-  const onClickNextSlide = async () => {
-    if (hasCompleted == "finished") {
-      setCurrentSlide(currentSlide + 1);
-      setDoc(slide[currentSlide].fileUrl);
-    } else {
-      const date = new Date();
+  // const onClickNextSlide = async () => {
+  //   if (hasCompleted == "finished") {
+  //     setCurrentSlide(currentSlide + 1);
+  //     setDoc(slide[currentSlide].fileUrl);
+  //   } else {
+  //     const date = new Date();
+  //     let moduleId = chapter.id;
 
-      await axios.put(
-        `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
-        {
-          status: "studying",
-          progress: (currentSlide / (slide.length - 1)) * 100 + "%",
-          endDate: date,
-        }
-      );
-      setCurrentSlide(currentSlide + 1);
-      setDoc(slide[currentSlide].fileUrl);
-    }
+  //     const newProgress = currentSlide === slide.length - 1 ? "100%" : (currentSlide / (slide.length - 1)) * 100 + "%";
+
+  //     await axios.put(
+  //       // `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+  //       `/api/module/${moduleId}/progress`,
+  //       {
+  //         status: currentSlide === slide.length - 1 ? "finished" : "studying",
+  //         progress: newProgress,
+  //         endDate: date,
+  //       }
+  //     );
+  //     setCurrentSlide(currentSlide + 1);
+  //     setDoc(slide[currentSlide].fileUrl);
+  //   }
+  //   router.refresh();
+  // };
+
+  const onClickNextSlide = async () => {
+    setCurrentSlide(currentSlide + 1);
+    setDoc(slide[currentSlide].fileUrl);
     router.refresh();
   };
+
   const onClickPre = async () => {
     router.push(`/courses/${courseId}/chapters/${preChapter}`);
   };
+
+  // const onClick = async () => {
+  //   if (hasCompleted == "finished") {
+  //     if (nextChapterId != null) {
+  //       router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+  //     } else {
+  //       router.push(`/`);
+  //     }
+  //   } else {
+  //     const date = new Date();
+  //     let moduleId = chapter.id;
+
+  //     if (chapter.title == "intro") {
+  //     } else {
+  //       await axios.put(
+          
+  //         // `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+  //         `/api/module/${moduleId}/progress`,
+  //         {
+  //           status: "finished",
+  //           progress: "100%",
+  //           endDate: date,
+  //         }
+  //       );
+  //     }
+
+  //     if (nextChapterId != null) {
+  //       let checkIfNextChapterIsFinished = await axios.get(
+  //         // `/api/courses/${courseId}/chapters/${nextChapterId}/progress`
+  //         `/api/module/${nextChapterId}/progress`
+  //       );
+
+  //       if (checkIfNextChapterIsFinished?.data?.status == "finished") {
+  //         if (checkIfNextChapterIsFinished.data.nextChapterId != undefined) {
+  //         } else {
+  //           // await axios.put(`/api/courses/${courseId}/progress`, {
+  //           // await axios.put(`/api/module/${moduleId}/progress`, {
+  //           await axios.put(`/api/module/${moduleId}/progress`, {
+
+  //             status: "finished",
+  //             progress: "100%",
+  //             endDate: date,
+  //           });
+  //         }
+  //       } else {
+  //         await axios.put(
+  //           // `/api/courses/${courseId}/chapters/${nextChapterId}/progress`,
+  //           `/api/module/${nextChapterId}/progress`,
+
+  //           {
+  //             status: "studying",
+  //             progress: "0%",
+  //             startDate: date,
+  //           }
+  //         );
+  //         // await axios.put(`/api/courses/${courseId}/progress`, {
+  //           await axios.put(`/api/module/${moduleId}/progress`, {
+
+  //           status: "studying",
+  //           progress: (
+  //             console.log("course chapter",course.modules),
+  //             course.modules.map((item: { module: { id: string } }) => item.module.id)
+  //               .indexOf(nextChapterId) /
+  //             course.modules.length
+  //           ) *
+  //             100 +
+  //           "%",
+  //           startDate: date,
+  //         });
+  //       }
+  //       router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
+  //       router.refresh();
+  //     } else {
+  //       // await axios.put(`/api/courses/${courseId}/progress`, {
+  //         await axios.put(`/api/module/${moduleId}/progress`, {
+
+  //         status: "finished",
+  //         progress: "100%",
+  //         endDate: date,
+  //       });
+  //       confetti.onOpen();
+  //       let currentUser = await axios.get(`/api/user`);
+  //       await axios.patch(`/api/user/${currentUser.data.id}/score`, {
+  //         star: parseInt(currentUser.data.star) + parseInt(course.credit),
+  //       });
+  //       setOnFinish(true);
+  //       setHasCompleted("finished");
+  //       // router.push(`/`);
+
+  //       setTimeout(function () {
+  //         // function code goes here
+  //       }, 10000);
+  //       if (onFinish) {
+  //         router.push(`/`);
+  //         router.refresh();
+  //       }
+  //     }
+  //   }
+  // };
+
   const onClick = async () => {
-    if (hasCompleted == "finished") {
-      if (nextChapterId != null) {
-        router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
-      } else {
-        router.push(`/`);
-      }
+    let moduleId = chapter.id;
+    if (nextChapterId != null) {
+      router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
     } else {
-      const date = new Date();
-      if (chapter.title == "intro") {
-      } else {
-        await axios.put(
-          `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
-          {
-            status: "finished",
-            progress: "100%",
-            endDate: date,
-          }
-        );
-      }
+      // Khi đã hoàn thành tất cả các chapter, đánh dấu khóa học là "finished"
+      await axios.put(`/api/module/${moduleId}/progress`, {
+        status: "finished", // Đánh dấu trạng thái là "finished"
+        progress: "100%",   // Đặt tiến độ là 100%
+        endDate: new Date(),
+      });
 
-      if (nextChapterId != null) {
-        let checkIfNextChapterIsFinished = await axios.get(
-          `/api/courses/${courseId}/chapters/${nextChapterId}/progress`
-        );
+      // Cập nhật trạng thái khóa học là hoàn thành
+      await axios.put(`/api/courses/${courseId}/progress`, {
+        status: "finished", // Đánh dấu toàn bộ khóa học hoàn thành
+        progress: "100%",   // Đặt tiến độ khóa học là 100%
+      });
 
-        if (checkIfNextChapterIsFinished?.data?.status == "finished") {
-          if (checkIfNextChapterIsFinished.data.nextChapterId != undefined) {
-          } else {
-            await axios.put(`/api/courses/${courseId}/progress`, {
-              status: "finished",
-              progress: "100%",
-              endDate: date,
-            });
-          }
-        } else {
-          await axios.put(
-            `/api/courses/${courseId}/chapters/${nextChapterId}/progress`,
-            {
-              status: "studying",
-              progress: "0%",
-              startDate: date,
-            }
-          );
-          await axios.put(`/api/courses/${courseId}/progress`, {
-            status: "studying",
-            progress:
-              (course.Module.map((item: { id: any }) => item.id).indexOf(
-                nextChapterId
-              ) /
-                course.Module.length) *
-                100 +
-              "%",
-            startDate: date,
-          });
-        }
-
-        router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
-        router.refresh();
-      } else {
-        await axios.put(`/api/courses/${courseId}/progress`, {
-          status: "finished",
-          progress: "100%",
-          endDate: date,
-        });
-        confetti.onOpen();
-        let currentUser = await axios.get(`/api/user`);
-        await axios.patch(`/api/user/${currentUser.data.id}/score`, {
-          star: parseInt(currentUser.data.star) + parseInt(course.credit),
-        });
-        setOnFinish(true);
-        setHasCompleted("finished");
-        // router.push(`/`);
-
-        setTimeout(function () {
-          // function code goes here
-        }, 10000);
-        if (onFinish) {
-          router.push(`/`);
-          router.refresh();
-        }
-      }
+      confetti.onOpen();
+      let currentUser = await axios.get(`/api/user`);
+      await axios.patch(`/api/user/${currentUser.data.id}/score`, {
+        star: parseInt(currentUser.data.star) + parseInt(course.credit),
+      });
+      setOnFinish(true);
+      setHasCompleted("finished");
+      router.push(`/`);
+      router.refresh();
     }
   };
+
   const accept = () => {
     setOnFinish(false);
     router.push(`/`);

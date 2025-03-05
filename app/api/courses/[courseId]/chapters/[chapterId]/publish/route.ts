@@ -28,7 +28,7 @@ export async function PATCH(
     const chapter = await db.module.findUnique({
       where: {
         id: params.chapterId,
-        courseId: params.courseId,
+        // courseId: params.courseId,
       },
     });
 
@@ -38,19 +38,28 @@ export async function PATCH(
     let courseChapterBefore: any = await db.course.findUnique({
       where: {
         id: params.courseId,
+        modules:{
+          some:{
+            module:{
+              isPublished: true,
+            }
+          }
+        }
       },
       include: {
-        Module: {
-          where: {
-            isPublished: true,
+        modules: {
+          include: {
+            module: {
+              
+            },
           },
-        },
+        }
       },
     });
     const publishedChapter = await db.module.update({
       where: {
         id: params.chapterId,
-        courseId: params.courseId,
+        // courseId: params.courseId,
       },
       data: {
         isPublished: true,
@@ -68,13 +77,22 @@ export async function PATCH(
     let courseChapterAfter: any = await db.course.findUnique({
       where: {
         id: params.courseId,
+        modules:{
+          some:{
+            module:{
+              isPublished: true,
+            }
+          }
+        }
       },
       include: {
-        Module: {
-          where: {
-            isPublished: true,
+        modules: {
+          include: {
+            module: {
+              
+            },
           },
-        },
+        }
       },
     });
     const checkClassSessionRecord: any = await db.classSessionRecord.findMany({

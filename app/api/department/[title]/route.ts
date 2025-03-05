@@ -22,7 +22,11 @@ export async function GET(
             course: {
               include: {
                 ClassSessionRecord: true,
-                Module: true,
+                modules:{
+                  include: {
+                    module:true
+                  }
+                }
               },
             },
           },
@@ -31,6 +35,7 @@ export async function GET(
     });
     const coursesWithProgress: any = await Promise.all(
       department.CourseOnDepartment.map(async (course: any) => {
+        console.log(course)
         const progressPercentage = await getProgress(userId, course.course.id);
 
         return {

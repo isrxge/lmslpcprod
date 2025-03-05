@@ -30,6 +30,7 @@ export const getCourses = async ({
         ClassSessionRecord: {
           some: {
             userId: userId,
+            status: {not: "finished"}
           },
         },
       },
@@ -37,14 +38,17 @@ export const getCourses = async ({
         courseWithProgram: true,
         BookMark: true,
         ClassSessionRecord: true,
-        Module: {
-          where: {
-            isPublished: true,
-          },
-          select: {
-            id: true,
-          },
+        modules: {
+          include:{
+            module: {
+              select: {
+                id: true,
+                isPublished: true,
+              },
+            },
+          }
         },
+        
       },
       orderBy: {
         startDate: "desc",
@@ -66,13 +70,15 @@ export const getCourses = async ({
         courseWithProgram: true,
         BookMark: true,
         ClassSessionRecord: true,
-        Module: {
-          where: {
-            isPublished: true,
-          },
-          select: {
-            id: true,
-          },
+        modules: {
+          include:{
+            module: {
+              select: {
+                id: true,
+                isPublished: true,
+              },
+            },
+          }
         },
       },
       orderBy: {

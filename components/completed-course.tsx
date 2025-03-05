@@ -1,5 +1,5 @@
 import { Program, Course } from "@prisma/client";
-import { CourseCard } from "@/components/course-card";
+import { CourseCardComplete } from "./ui/course-card-complete";
 import { CheckCircle, Focus } from "lucide-react";
 import {
   Carousel,
@@ -11,7 +11,7 @@ import {
 
 type CourseWithProgressWithCategory = Course & {
   programs: Program | null;
-  Module: { id: string }[];
+  modules: { id: string }[];
   progress: string | null;
   course: any;
   BookMark: { length: number; id: string };
@@ -47,15 +47,16 @@ export const CompletedCourse = ({ items }: CompletedCourseProps) => {
               key={item?.course.id}
               className="md:basis-1/3 lg:basis-1/4"
             >
-              <CourseCard
+              <CourseCardComplete
                 key={item?.course.id}
                 id={item?.course.id}
                 title={item?.course.title}
                 imageUrl={item?.course.imageUrl!}
-                chaptersLength={item?.course.Module?.length}
-                chapters={item?.course.Module}
+                chaptersLength={item?.course.modules?.length}
+                chapters={item?.course.modules}
                 bookmark={item?.course.BookMark}
-                progress={item?.progress}
+                endDate={item?.course.endDate}
+                // progress={item?.progress}
                 isLocked={false}
                 description={item?.course.description}
               />

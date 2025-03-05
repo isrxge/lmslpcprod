@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [userList, setUserList] = React.useState(data);
+  const [userList, setUserList] = React.useState<any[]>(data || []);
   const [rowSelection, setRowSelection] = React.useState({});
   const [departments, setDepartments] = React.useState([]);
   const [dateRangeEnd, setDateRangeEnd]: any = React.useState<
@@ -135,21 +135,21 @@ export function DataTable<TData, TValue>({
             const [year, month, day] = endDate.split("-");
             const formattedDate = `${day}/${month}/${year}`;
             completedCourses += `\n${session.course.title}: completed on ${formattedDate}\nChapter: `;
-            session.course.Module.forEach((module: any) => {
-              for (let i = 0; i < module.UserProgress.length; i++) {
-                let progress = module.UserProgress[i];
-                if (user.id == module.UserProgress[i].userId) {
-                  completedCourses += `\n${module.title}: ${progress.status} (${progress.progress})\n`;
+            session.course.modules.forEach((modules: any) => {
+              for (let i = 0; i < modules.module.UserProgress.length; i++) {
+                let progress = modules.module.UserProgress[i];
+                if (user.id == modules.module.UserProgress[i].userId) {
+                  completedCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
                 }
               }
             });
           } else {
             ongoingCourses += `${session.course.title}\nStudying\n`;
-            session.course.Module.forEach((module: any) => {
-              for (let i = 0; i < module.UserProgress.length; i++) {
-                let progress = module.UserProgress[i];
-                if (user.id == module.UserProgress[i].userId) {
-                  ongoingCourses += `\n${module.title}: ${progress.status} (${progress.progress})\n`;
+            session.course.modules.forEach((modules: any) => { console.log("dsad",modules)
+              for (let i = 0; i < modules.module.UserProgress.length; i++) {
+                let progress = modules.module.UserProgress[i];
+                if (user.id == modules.module.UserProgress[i].userId) {
+                  ongoingCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
                 }
               }
             });
@@ -258,7 +258,7 @@ export function DataTable<TData, TValue>({
   function onDepartmentChange(departmentId: any) {
     table.getColumn("departmentId")?.setFilterValue(departmentId);
   }
-
+  console.log("userList value:", userList);
   return (
     <div>
       <div className="flex items-center py-4 justify-between">

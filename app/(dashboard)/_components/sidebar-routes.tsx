@@ -14,6 +14,8 @@ import {
   Cctv,
   Waypoints,
   Building,
+  Package,
+  FlaskConical,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -158,6 +160,15 @@ export const SidebarRoutes = ({ userId }: any) => {
           href: "/teacher/users",
         },
       ]);
+    }
+    if (
+      data.userPermission
+        .map((item: { permission: { title: any } }) => item.permission.title)
+        .indexOf("Edit department permission") != -1 &&
+      data.userPermission
+        .map((item: { permission: { title: any } }) => item.permission.title)
+        .indexOf("Create department permission") != -1
+    ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,
         {
@@ -166,6 +177,31 @@ export const SidebarRoutes = ({ userId }: any) => {
           href: "/teacher/departments",
         },
       ]);
+    }
+    if (
+      data.userPermission
+        .map((item: { permission: { title: any } }) => item.permission.title)
+        .indexOf("Edit resource permission") != -1 &&
+      data.userPermission
+        .map((item: { permission: { title: any } }) => item.permission.title)
+        .indexOf("Edit resource permission") != -1
+    ) {
+      setTeacherRoutes((prevState: any) => [
+        ...prevState,
+        {
+          icon: Package,
+          label: "Resources",
+          href: "/teacher/module",
+        },
+      ]);
+      // setTeacherRoutes((prevState: any) => [
+      //   ...prevState,
+      //   {
+      //     icon: FlaskConical,
+      //     label: "Exam",
+      //     href: "/teacher/exam",
+      //   },
+      // ]);
     }
     if (
       data.userPermission

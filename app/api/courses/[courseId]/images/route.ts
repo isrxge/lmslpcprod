@@ -42,10 +42,10 @@ export async function POST(
     const filename = Date.now() + file.name.replaceAll(" ", "_");
 
     try {
-      await writeFile(
-        path.join(process.cwd(), folderName + "/" + filename),
-        buffer
-      );
+      // await writeFile(
+      //   path.join(process.cwd(), folderName + "/" + filename),
+      //   buffer
+      // );
 
       await db.course.update({
         where: {

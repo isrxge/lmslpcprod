@@ -41,7 +41,7 @@ interface DepartmentProps {
   title: string;
 }
 interface DepartmentFormProps {
-  initialData: { Department: DepartmentProps[] };
+  initialData: { Department: DepartmentProps[] , Course: any};
   courseId: string;
   department: DepartmentProps[];
 }
@@ -174,6 +174,17 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
         departmentList,
         assignList,
       });
+
+      for (let user of assignList) {
+        if (user.isEnrolled && user.canUndo) {
+          await axios.post('/api/send-email', {
+            courseName: initialData.title,
+            username: user.username,
+            emailAddress: user.email,
+          });
+        }
+      }
+
       toast.success("Course updated");
       setLoading(false);
       setTriggerAlert(false);
@@ -181,6 +192,8 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+      setLoading(false);
+
     }
   };
   const onConfirm = () => {

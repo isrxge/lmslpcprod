@@ -49,38 +49,39 @@ export async function PATCH(
           checkIfExist?.status == "studying" ||
           checkIfExist?.status == "finished"
         ) {
+          // If the user is already assigned and their status is studying or finished, skip
+          continue;
         } else {
-          // const mess = {
-          //   from: "Webmaster@lp.com.vn",
-          //   to: assignList[i].email,
-          //   cc: "",
-          //   subject: `${assignList[i].email} has been assigned to course ${course.title}.`,
-          //   text: `
-          //     You have been assigned to course ${course.title}.`,
-          //   html: `
-          //     <p>You have been assigned to course ${course.title}</p>`,
-          // };
-          // let transporter = nodemailer.createTransport(
-          //   smtpTransport({
-          //     host: "smtp-mail.outlook.com",
-          //     secureConnection: false, // TLS requires secureConnection to be false
-          //     port: 587, // port for secure SMTP
-          //     auth: {
-          //       user: "Webmaster@lp.com.vn",
-          //       pass: "Lpc@236238$",
-          //     },
-          //     tls: {
-          //       ciphers: "SSLv3",
-          //     },
-          //   })
-          // );
+          const emailMessage = {
+            from: "Webmaster@lp.com.vn",
+            to: assignList[i].email,
+            cc: "",
+            subject: `You have been assigned to course ${course.title}`,
+            text: `You have been assigned to course ${course.title}.`,
+            html: `<p>You have been assigned to course ${course.title}</p>`,
+          };
 
-          // try {
-          //   send email
-          //   const res = await transporter.sendMail(mess);
-          //   return res.status(200).json({ success: true });
-          // } catch (err) {
+          let transporter = nodemailer.createTransport(
+            smtpTransport({
+              host: "smtp-mail.outlook.com",
+              secureConnection: false, // TLS requires secureConnection to be false
+              port: 587, // port for secure SMTP
+              auth: {
+                user: "Webmaster@lp.com.vn",
+                pass: "Lpc@236238$",
+              },
+              tls: {
+                ciphers: "SSLv3",
+              },
+            })
+          );
 
+          try {
+            // Send email notification to the assigned user
+            await transporter.sendMail(emailMessage);
+          } catch (emailError) {
+            console.error("Error sending email to", assignList[i].email, emailError);
+          }
           // }
           await db.classSessionRecord.createMany({
             data: {

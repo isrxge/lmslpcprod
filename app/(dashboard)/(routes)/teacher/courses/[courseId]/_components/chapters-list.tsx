@@ -1,6 +1,4 @@
-"use client";
-
-import { Module } from "@prisma/client";
+import { Module, ModuleInCourse } from "@prisma/client";
 import { useEffect, useState } from "react";
 import {
   DragDropContext,
@@ -8,32 +6,28 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { Grip, Pencil } from "lucide-react";
-
-import { cn } from "@/lib/utils";
+import { Grip } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+// import axios from "axios"
+
 
 interface ChaptersListProps {
+  
   items: Module[];
   onReorder: (updateData: { id: string; position: number }[]) => void;
-  onEdit: (id: string) => void;
 }
 
-export const ChaptersList = ({
-  items,
-  onReorder,
-  onEdit,
-}: ChaptersListProps) => {
+export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
-
+  
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    setChapters(items);
-  }, [items]);
+  
+   
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -60,32 +54,20 @@ export const ChaptersList = ({
   if (!isMounted) {
     return null;
   }
-
+  console.log(chapters)
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="chapters">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {chapters.map((chapter, index) => (
-              <Draggable
-                key={chapter.id}
-                draggableId={chapter.id}
-                index={index}
-              >
+            {chapters.map((chapter : any, index) => (
+              <Draggable key={chapter.module.id} draggableId={chapter.module.id} index={index}>
                 {(provided) => (
                   <div
                     className={cn(
-                      `flex items-center gap-x-2  border-slate-200 border${
-                        chapter.type.toLowerCase() == "slide"
-                          ? "text-sky-700 bg-slate-200 dark:bg-slate-200"
-                          : "text-orange-700 bg-orange-100 dark:bg-orange-100"
-                      }  rounded-md mb-4 text-sm`,
-                      chapter.isPublished &&
-                        `bg-sky-100 border-sky-200 ${
-                          chapter.type.toLowerCase() == "slide"
-                            ? "text-sky-700"
-                            : "text-orange-700"
-                        }`
+                      `flex items-center gap-x-2  border-slate-200 border rounded-md mb-4 text-sm`,
+                      chapter.module.isPublished &&
+                        `bg-sky-100 border-sky-200 `
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -93,14 +75,8 @@ export const ChaptersList = ({
                     <div
                       className={cn(
                         "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition dark:text-black",
-                        chapter.isPublished &&
-                          `border-r-sky-200 hover:bg-sky-200 
-                          ${
-                            chapter.type.toLowerCase() == "slide"
-                              ? "dark:text-blue-800"
-                              : "dark:text-orange-700"
-                          }
-                          `
+                        chapter.module.isPublished &&
+                          `border-r-sky-200 hover:bg-sky-200 `
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -109,15 +85,10 @@ export const ChaptersList = ({
                     <div
                       className={cn(
                         "dark:text-black",
-                        chapter.isPublished &&
-                          `${
-                            chapter.type.toLowerCase() == "slide"
-                              ? "dark:text-blue-800"
-                              : "dark:text-orange-700"
-                          }`
+                        chapter.module.isPublished 
                       )}
                     >
-                      {chapter.title}
+                      {chapter.module.title}
                     </div>
 
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
@@ -125,28 +96,12 @@ export const ChaptersList = ({
                         className={cn(
                           "",
                           "bg-slate-500",
-                          chapter.isPublished &&
-                            `${
-                              chapter.type.toLowerCase() == "slide"
-                                ? "dark:text-blue-800"
-                                : "dark:text-orange-700"
-                            } dark:text-slate-50`
+                          chapter.module.isPublished &&
+                         `dark:text-slate-50`
                         )}
                       >
-                        {chapter.isPublished ? "Published" : "Draft"}
+                        {chapter.module.isPublished ? "Published" : "Draft"}
                       </Badge>
-                      <Pencil
-                        onClick={() => onEdit(chapter.id)}
-                        className={cn(
-                          "w-4 h-4 cursor-pointer hover:opacity-75 transition dark:text-black",
-                          chapter.isPublished &&
-                            `border-r-sky-200 hover:bg-sky-200 ${
-                              chapter.type.toLowerCase() == "slide"
-                                ? "dark:text-blue-800"
-                                : "dark:text-orange-700"
-                            }`
-                        )}
-                      />
                     </div>
                   </div>
                 )}

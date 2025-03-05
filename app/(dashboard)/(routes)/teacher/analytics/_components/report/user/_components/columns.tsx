@@ -149,41 +149,8 @@ export const columns: ColumnDef<User>[] = [
         <div className="flex items-center">
           <div>
             {ClassSessionRecord.map(
-              (item: {
-                id: any | null | undefined;
-                course: {
-                  Module: any;
-                  title:
-                    | string
-                    | number
-                    | boolean
-                    | ReactElement<any, string | JSXElementConstructor<any>>
-                    | Iterable<ReactNode>
-                    | ReactPortal
-                    | PromiseLikeOfReactNode
-                    | null
-                    | undefined;
-                };
-                progress:
-                  | string
-                  | number
-                  | boolean
-                  | ReactElement<any, string | JSXElementConstructor<any>>
-                  | Iterable<ReactNode>
-                  | ReactPortal
-                  | PromiseLikeOfReactNode
-                  | null
-                  | undefined;
-                status:
-                  | string
-                  | number
-                  | boolean
-                  | ReactElement<any, string | JSXElementConstructor<any>>
-                  | Iterable<ReactNode>
-                  | PromiseLikeOfReactNode
-                  | null
-                  | undefined;
-              }) => {
+              (item: any) => {
+                console.log("item 2",item)
                 return (
                   <div key={item.id}>
                     <Accordion key="1">
@@ -213,26 +180,27 @@ export const columns: ColumnDef<User>[] = [
                         }
                       >
                         - All exam result:
-                        {item.course.Module.filter(
-                          (item: { type: string }) => item.type == "Exam"
+                        {item.course.modules.filter(
+                          (item: any) => item.module.type == "Exam"
                         ).map((item: any) => {
+                          console.log("Tjpe",item)
                           return (
                             <>
-                              {item.UserProgress.filter(
+                              {item.module.UserProgress?.filter(
                                 (item: any) => item.userId == id
                               ).length < 1 ? (
-                                <div key={item.id}>
+                                <div key={item.module.id}>
                                   {" "}
-                                  • {item.title}
+                                  • {item.module.title}
                                   {": "}No exam result
                                 </div>
                               ) : (
-                                <div key={item.id}>
-                                  {item.UserProgress.filter(
+                                <div key={item.module.id}>
+                                  {item.module.UserProgress?.filter(
                                     (item: any) => item.userId == id
                                   ).map((item: any) => {
                                     return (
-                                      <div key={item.id}>
+                                      <div key={item.module.id}>
                                         • {item.module.title}
                                         {": "}
                                         <span

@@ -21,21 +21,33 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course: any = await db.course.findUnique({
     where: {
       id: params.courseId,
+      modules:{
+        some:{
+          module:{
+            isPublished: true,
+          }
+        }
+      }
     },
     include: {
-      Module: {
-        where: {
-          isPublished: true,
+      modules: {
+        // where: {
+        //   isPublished: true,
+        // },
+        include: {
+          module: {
+            
+            include: {
+              UserProgress: {
+                where: {
+                  userId,
+                },
+              },
+            },
+          }
         },
         orderBy: {
           position: "asc",
-        },
-        include: {
-          UserProgress: {
-            where: {
-              userId,
-            },
-          },
         },
       },
       ClassSessionRecord: true,
@@ -43,7 +55,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     },
   });
 
-  if (!course) {
+  // Log course và module
+  // console.log("Course Data: ", course); // Log toàn bộ dữ liệu khóa học
+
+  if (!course || !course.isPublished) {
     return redirect("/");
   }
   if (
@@ -55,35 +70,24 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   }
 
   let currentPos = 0;
-  for (let i = 0; i < course.Module.length; i++) {
-    if (
-      course.Module[i].UserProgress.map((item: any) => item.userId).indexOf(
-        userId
-      ) != -1 &&
-      course.Module[i].UserProgress[
-        course.Module[i].UserProgress.map((item: any) => item.userId).indexOf(
-          userId
-        )
-      ].status == "studying"
-    ) {
-      currentPos = i;
-      break;
-    } else if (
-      course.Module[i].UserProgress.map((item: any) => item.userId).indexOf(
-        userId
-      ) != -1 &&
-      course.Module[i].UserProgress[
-        course.Module[i].UserProgress.map((item: any) => item.userId).indexOf(
-          userId
-        )
-      ].status == "finished"
-    ) {
-      currentPos = i;
+  for (let i = 0; i < course.modules.length; i++) {
+    const moduleInCourse = course.modules[i];
+    const currentModule = moduleInCourse.module;
+
+    const userProgressIndex = currentModule .UserProgress.map((item: any) => item.userId).indexOf(userId);
+    if (userProgressIndex != -1) {
+      const userProgress = currentModule .UserProgress[userProgressIndex];
+      
+      if (userProgress.status === "studying") {
+        currentPos = i;
+        break;
+      } else if (userProgress.status === "finished") {
+        currentPos = i;
+      }
     }
   }
-  return redirect(
-    `/courses/${course.id}/chapters/${course.Module[currentPos].id}`
-  );
+
+  return redirect(`/courses/${course.id}/chapters/${course.modules[currentPos].module.id}`);
 };
 
 export default CourseIdPage;

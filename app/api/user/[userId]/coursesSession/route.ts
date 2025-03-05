@@ -20,13 +20,24 @@ export async function GET(
         ClassSessionRecord: {
           where: {
             userId: params.userId,
+           course:{
+            modules:{
+              some:{
+                module:{
+                  type:"Exam"
+                }
+              }
+            }
+           }
           },
           include: {
             course: {
               include: {
-                Module: {
-                  where: {
-                    type: "Exam",
+                modules: {
+                  include: {
+                    module: {
+                      
+                    },
                   },
                 },
               },

@@ -49,8 +49,10 @@ function CreatePage() {
   // }, [programList]);
 
   const onSubmitCourse = async (values: z.infer<typeof formSchema>) => {
+
+    const imageUrl = "https://res.cloudinary.com/derjssgq9/image/upload/v1741085512/courseimg_lwaxee.jpg"
     try {
-      const response = await axios.post("/api/courses", values);
+      const response = await axios.post("/api/courses", {...values, imageUrl});
       router.push(`/teacher/courses/${response.data.id}`);
       toast.success("Course created");
     } catch {
