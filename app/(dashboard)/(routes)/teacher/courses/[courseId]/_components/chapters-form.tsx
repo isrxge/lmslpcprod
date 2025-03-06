@@ -17,13 +17,14 @@ import { ChaptersList } from "./chapters-list";
 interface ChaptersFormProps {
   initialData: any;
   courseId: string;
+  courseType: string;
 }
 
 const formSchema = z.object({
   type: z.string().optional(),
 });
 
-export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
+export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersFormProps) => {
   console.log("initialData:", initialData);
   // console.log("ModuleInCourse data:", initialData.modulesInCourse.map((m) => m.module));
   const [isCreating, setIsCreating] = useState(false);
@@ -47,6 +48,29 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       type: "",
     },
   });
+
+  const filterModules = () => {
+    let filters: any = {
+      type: "Slide", // Default to show Slide modules
+    };
+
+    if (courseType === "Mandatory" || courseType === "Probation") {
+      // For Mandatory and Probation, show Slide and Exam
+      filters.type = "Slide,Exam";
+
+      // For Mandatory: Exam modules where maxAttempt = 1
+      if (courseType === "Mandatory") {
+        filters.maxAttempt = 1;
+      }
+
+      // For Probation: Exam modules where maxAttempt = 2
+      if (courseType === "Probation") {
+        filters.maxAttempt = 2;
+      }
+    }
+
+    return filters;
+  };
 
   const { isSubmitting } = form.formState;
 
@@ -136,7 +160,7 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       toast.success("Module removed from course");
     } catch (error) {
       console.error("Error removing module:", error);
-      toast.error("Something went wrong");
+      // toast.success("Unselect this module");
     }
   };
 
@@ -144,11 +168,15 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
     const fetchModules = async () => {
       try {
         setLoadingModules(true);
+
+        const filters = filterModules(); // code filter theo module
+
         const response = await axios.get(`/api/module`, {
           params: {
             courseId: courseId,
             search: searchKeyword, // Thêm tham số tìm kiếm
             type: filterType, // Thêm tham số lọc loại module
+            maxAttempt: filters.maxAttempt, // code filter theo module
           },
         });
         setModules(response.data);
@@ -164,7 +192,7 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
       // chỉ fetch khi đang tạo module
       fetchModules();
     }
-  }, [isCreating, searchKeyword, filterType, courseId]); // Cập nhật lại khi thay đổi searchKeyword, filterType
+  }, [isCreating, searchKeyword, filterType, courseId, courseType]); // Cập nhật lại khi thay đổi searchKeyword, filterType
 
   //code aP
   // useEffect(() => {
@@ -218,9 +246,10 @@ export const ChaptersForm = ({ initialData, courseId }: ChaptersFormProps) => {
               onChange={(e) => setFilterType(e.target.value)}
               name="type"
               className="mr-4 p-2 border rounded-md"
+              disabled={courseType === "SelfStudy"}
             >
               <option value="Slide">Slide</option>
-              <option value="Exam">Exam</option>
+              {courseType !== "SelfStudy" && <option value="Exam">Exam</option>}
             </select>
 
             {/* Thanh tìm kiếm */}

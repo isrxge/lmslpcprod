@@ -30,7 +30,6 @@ export const IsTeacher = ({ userId }: any) => {
         .map((item: { permission: { title: any } }) => item.permission.title)
         // .indexOf("User personal management permission") != -1 ? (
         .indexOf("Create course report") != -1 ? (
-
       <></>
     ) : (
       <Link href="/teacher/programs">

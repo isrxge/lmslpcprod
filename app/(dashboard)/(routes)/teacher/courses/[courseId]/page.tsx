@@ -17,6 +17,7 @@ import { IconBadge } from "@/components/icon-badge";
 import { Banner } from "@/components/banner";
 
 import { TitleForm } from "./_components/title-form";
+import { TypeForm } from "./_components/type-form";
 import { DescriptionForm } from "./_components/description-form";
 import { ImageForm } from "./_components/image-form";
 
@@ -222,6 +223,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             </div>
             <div className="space-y-6 mt-4">
               <TitleForm initialData={course} courseId={course.id} />
+              <TypeForm initialData={course} courseId={course.id} />
               <CreditForm initialData={course} courseId={course.id} />
               <DescriptionForm initialData={course} courseId={course.id} />
               <ImageForm initialData={course} courseId={course.id} />
@@ -234,7 +236,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 <h2 className="text-xl">Course chapters</h2>
               </div>
               <div className="mt-4">
-                <ChaptersForm initialData={course} courseId={course.id} />
+                <ChaptersForm initialData={course} courseType={course.type} courseId={course.id} />
               </div>
             </div>
             <div>

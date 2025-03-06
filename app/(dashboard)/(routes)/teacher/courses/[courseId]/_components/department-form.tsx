@@ -246,7 +246,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
           <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
             <button className="Button red" onClick={() => onSubmit()}>
-              Confirm {loading ? <Loader /> : <></>}
+            Confirm {loading ? <Loader className="animate-spin" /> : <></>}
             </button>
           </AlertDialogAction>
         </AlertDialogContent>

@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 export async function POST(req: Request) {
   try {
     const { userId, sessionClaims }: any = auth();
-    const { title, imageUrl } = await req.json();
+    const { title, imageUrl, type } = await req.json();
     let userInfo: any = await db.user.findUnique({
       where: { id: userId, status: "approved" },
     });
@@ -17,6 +17,7 @@ export async function POST(req: Request) {
         userId,
         title,
         imageUrl,
+        type,
         startDate: date,
         isPublished: false,
         modules: { }
