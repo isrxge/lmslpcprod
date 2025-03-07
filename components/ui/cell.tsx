@@ -65,6 +65,14 @@ export const Cell = ({ row }: any) => {
     };
     setLoading(true);
     await axios.patch(`/api/user/${id}/status`, values);
+
+    if (userStatus === "approved") {
+      await axios.post("/api/send-email-approve", {
+        username: username,
+        emailAddress: email,
+      });
+    }
+
     setLoading(false);
     setTriggerAlert(false);
     setUserStatus("");
