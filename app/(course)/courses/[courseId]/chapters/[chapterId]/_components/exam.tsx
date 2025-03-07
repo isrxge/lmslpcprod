@@ -248,7 +248,7 @@ const Exam = ({
               ) {
               } else {
                 // await axios.put(`/api/courses/${courseId}/progress`, {
-                  await axios.put(`/api/module/progress`, {
+                await axios.put(`/api/module/progress`, {
                   status: "finished",
                   progress: "100%",
                   endDate: date,
@@ -273,7 +273,7 @@ const Exam = ({
                 }
               );
               // await axios.put(`/api/courses/${courseId}/progress`, {
-                await axios.put(`/api/module/progress`, {
+              await axios.put(`/api/module/progress`, {
                 status: "studying",
                 progress:
                   (course.Module.map((item: { id: any }) => item.id).indexOf(
@@ -288,8 +288,7 @@ const Exam = ({
             //router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
           } else {
             // await axios.put(`/api/courses/${courseId}/progress`, {
-              await axios.put(`/api/module/progress`, {
-
+            await axios.put(`/api/module/progress`, {
               status: "finished",
               progress: "100%",
               startDate: date,
@@ -386,22 +385,20 @@ const Exam = ({
     setIsGeneratingExam(true);
     const moduleId = chapter.id;
     let questionLists: any = [];
-    
-    
+
     if (!finishedExam) {
       setCurrentAttempt(currentAttempt + 1);
-      
+
       let questionList = await axios.get(
         // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
         `/api/module/${moduleId}/category/exam/shuffle`
-
       );
       questionLists = shuffleArray(questionList.data.ExamList);
       setQuestions(questionLists);
     } else {
       let questionList = await axios.get(
         // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
-                // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
+        // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam/shuffle`
         `/api/module/${moduleId}/category/exam/shuffle`
       );
 
@@ -520,6 +517,19 @@ const Exam = ({
         })
       );
     } else {
+      // If the last question, check for unanswered questions
+      const unansweredQuestions = questions.filter((question: any) => {
+        return question.type !== "multiChoice" &&
+          question.type !== "singleChoice"
+          ? false
+          : !question.chooseAnswer || question.chooseAnswer.length === 0;
+      });
+
+      // If there are unanswered questions, show a toast error
+      if (unansweredQuestions.length > 0) {
+        toast.error("Please answer all questions before submitting.");
+        return; // Prevent submission
+      }
       // Nếu đã là câu hỏi cuối cùng, kiểm tra điểm số và hiển thị kết quả
 
       const { finalScore, passed }: any = calculateScore();
@@ -542,7 +552,7 @@ const Exam = ({
       }
       // debugger
       // if (!finishedExam) {
-        
+
       //   const date = new Date();
 
       //   if (currentAttempt >= maxAttempt) {
@@ -655,65 +665,68 @@ const Exam = ({
 
       if (!finishedExam) {
         const date = new Date();
-    
+
         // Cập nhật thông tin tiến độ cho chương hiện tại
         await axios.put(
-            `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
-            {
-                status: totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
-                score: parseInt(finalScore),
-                progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-                endDate: date,
-                retakeTime: currentAttempt,
-            }
+          `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+          {
+            status:
+              totalScore >= chapter.scoreLimit && passed
+                ? "finished"
+                : "failed",
+            score: parseInt(finalScore),
+            progress:
+              totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+            endDate: date,
+            retakeTime: currentAttempt,
+          }
         );
-    
+
         // Cập nhật trạng thái khóa học dựa trên kết quả chương học cuối cùng
         if (totalScore >= chapter.scoreLimit && passed) {
-            await axios.put(`/api/courses/${courseId}/progress`, {
-                status: "finished",
-                progress: "100%",
-                endDate: date,
-            });
-    
-            // Cập nhật điểm của người dùng sau khi hoàn thành khóa học
-            let currentUser = await axios.get(`/api/user`);
-            await axios.patch(`/api/user/${currentUser.data.id}/score`, {
-                star: parseInt(currentUser.data.star) + parseInt(course.credit),
-                starUpdateDate: new Date(),
-            });
+          await axios.put(`/api/courses/${courseId}/progress`, {
+            status: "finished",
+            progress: "100%",
+            endDate: date,
+          });
+
+          // Cập nhật điểm của người dùng sau khi hoàn thành khóa học
+          let currentUser = await axios.get(`/api/user`);
+          await axios.patch(`/api/user/${currentUser.data.id}/score`, {
+            star: parseInt(currentUser.data.star) + parseInt(course.credit),
+            starUpdateDate: new Date(),
+          });
         } else {
-            await axios.put(`/api/courses/${courseId}/progress`, {
-                status: "failed",
-                progress: "0%",
-                endDate: date,
-            });
+          await axios.put(`/api/courses/${courseId}/progress`, {
+            status: "failed",
+            progress: "0%",
+            endDate: date,
+          });
         }
-    
+
         // Gửi thông báo cho hệ thống rằng bài thi đã hoàn thành
         await axios.post(
-            `/api/user/${currentUserId}/isInExam`,
-            JSON.stringify({
-                id: reportId,
-                isInExam: false,
-                note: "Finished Exam.",
-                moduleId: chapter.id,
-                courseId,
-                date: new Date(),
-                examRecord: {
-                    startDate: startDate,
-                    date: new Date(),
-                    timePassed: timeLimitRecord,
-                    questionList: questions,
-                    timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
-                    currentQuestion: currentQuestion,
-                    selectedAnswers: selectedAnswers,
-                    currentAttempt: currentAttempt,
-                },
-            })
+          `/api/user/${currentUserId}/isInExam`,
+          JSON.stringify({
+            id: reportId,
+            isInExam: false,
+            note: "Finished Exam.",
+            moduleId: chapter.id,
+            courseId,
+            date: new Date(),
+            examRecord: {
+              startDate: startDate,
+              date: new Date(),
+              timePassed: timeLimitRecord,
+              questionList: questions,
+              timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
+              currentQuestion: currentQuestion,
+              selectedAnswers: selectedAnswers,
+              currentAttempt: currentAttempt,
+            },
+          })
         );
-    }
-    
+      }
 
       setOnFinish(true);
       setQuestions([]);
@@ -775,7 +788,6 @@ const Exam = ({
     let myScore: number = 0;
     let missingAnswer = false;
     for (let i = 0; i < selectedAnswers.length; i++) {
-
       if (!selectedAnswers[i]?.categoryId) {
         missingAnswer = true;
       }
@@ -844,7 +856,9 @@ const Exam = ({
 
     if (missingAnswer) {
       // Toast message for missing answers
-      toast.error("You have skipped some answers. Please make sure all questions are answered.");
+      toast.error(
+        "You have skipped some answers. Please make sure all questions are answered."
+      );
     }
 
     // setCategoryList([...newCategoryList]);
@@ -933,7 +947,7 @@ const Exam = ({
               Make sure you are in a quiet environment to avoid distractions.
             </li>
           </ul>
-          <AlertDialog open={onFinish}>
+          {/* <AlertDialog open={onFinish}>
             <AlertDialogContent className="AlertDialogContent">
               <AlertDialogTitle className="AlertDialogTitle">
                 <div
@@ -1028,7 +1042,105 @@ const Exam = ({
                 )}
               </div>
             </AlertDialogContent>
+          </AlertDialog> */}
+          <AlertDialog open={onFinish}>
+            <AlertDialogContent className="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md mx-auto p-6">
+              <AlertDialogTitle className="text-center">
+                <div
+                  className={`${
+                    (finalScore >= chapter.scoreLimit && isPassed) ||
+                    finishedExam
+                      ? "bg-green-500"
+                      : "bg-red-500"
+                  } text-white p-6 rounded-t-lg`}
+                >
+                  <h2 className="text-2xl font-semibold">
+                    Your score is{" "}
+                    <span className="text-4xl font-bold">{finalScore}</span>
+                  </h2>
+                </div>
+
+                <div className="p-6 text-center">
+                  <p className="text-lg mb-4">
+                    {(finalScore >= chapter.scoreLimit && isPassed) ||
+                    finishedExam
+                      ? nextChapterId != null
+                        ? "Congratulations on completing the exam!"
+                        : "You have successfully completed the exam."
+                      : "Sorry, you have failed. Better luck next time!"}
+                  </p>
+
+                  {(finalScore >= chapter.scoreLimit && isPassed) ||
+                  finishedExam ? (
+                    <div className="flex justify-center mt-4">
+                      <Image
+                        src="/congratulationLPC.svg"
+                        alt="Congratulations"
+                        height={300}
+                        width={500}
+                        className="object-cover rounded-md border-4 border-white shadow-lg"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex justify-center mt-4">
+                      <Image
+                        src="/failurewh.png"
+                        alt="Failure"
+                        height={300}
+                        width={500}
+                        className="object-cover rounded-md border-4 border-white shadow-lg"
+                      />
+                    </div>
+                  )}
+                </div>
+              </AlertDialogTitle>
+
+              <div className="flex justify-between p-6">
+                {(finalScore >= chapter.scoreLimit && isPassed) ||
+                finishedExam ? (
+                  <AlertDialogCancel
+                    onClick={() => setOnFinish(false)}
+                    className="px-4 py-2 bg-gray-300 text-black rounded-lg shadow-md"
+                  >
+                    Stay
+                  </AlertDialogCancel>
+                ) : isCompleted == "failed" && currentAttempt >= maxAttempt ? (
+                  <span className="text-red-500 font-semibold">
+                    Sorry, please wait for the exam reset to retake this test.
+                  </span>
+                ) : (
+                  <AlertDialogCancel
+                    onClick={() => accept()}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md"
+                  >
+                    Retake Exam
+                  </AlertDialogCancel>
+                )}
+
+                {isCompleted == "failed" ? (
+                  <AlertDialogCancel
+                    onClick={() => setOnFinish(false)}
+                    className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md"
+                  >
+                    Close
+                  </AlertDialogCancel>
+                ) : null}
+
+                {(finalScore >= chapter.scoreLimit && isPassed) ||
+                finishedExam ? (
+                  <AlertDialogAction asChild>
+                    <button
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
+                      onClick={() => onLeaving()}
+                    >
+                      {nextChapterId != null ? "Next" : "Leave"}
+                    </button>
+                  </AlertDialogAction>
+                ) : null}
+              </div>
+            </AlertDialogContent>
           </AlertDialog>
+
           <div className="mt-6">
             <p className="text-lg mb-4">Include:</p>
             <ul className="list-disc pl-5">
@@ -1195,7 +1307,7 @@ const Exam = ({
               </div>
 
               <hr className="my-3" />
-              <p className="text-2xl font-bold mb-4 flex items-center">
+              <p className="text-2xl font-bold mb-4 flex items-center select-none">
                 {currentQuestion +
                   1 +
                   ". " +
@@ -1307,5 +1419,4 @@ const Exam = ({
     </main>
   );
 };
-
 export default Exam;

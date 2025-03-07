@@ -152,24 +152,59 @@ export async function PATCH(
   }
 }
 
+// export async function DELETE(req: Request) {
+//   try {
+//     const { userId } = auth();
+//     const { moduleId, courseId } = await req.json();
+
+//     // Xóa module khỏi ModuleInCourse
+//     await db.moduleInCourse.delete({
+//       where: {
+//         moduleId_courseId: { // Cần đảm bảo rằng bạn có một unique constraint trên cặp (moduleId, courseId)
+//           moduleId: moduleId,
+//           courseId: courseId,
+//         },
+//       },
+//     });
+
+//     return NextResponse.json({ message: "Module removed from course" });
+//   } catch (error) {
+//     console.log("[MODULEINCORSE DELETE API]", error);
+//     return new NextResponse("Internal Error", { status: 500 });
+//   }
+// }
+
 export async function DELETE(req: Request) {
   try {
     const { userId } = auth();
-    const { moduleId, courseId } = await req.json();
+    const { moduleId, courseId }: { moduleId: string; courseId: string } = await req.json();
 
-    // Xóa module khỏi ModuleInCourse
-    await db.moduleInCourse.delete({
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    // Kiểm tra xem mối quan hệ moduleId và courseId có tồn tại trong ModuleInCourse không
+    const moduleInCourse = await db.moduleInCourse.findUnique({
       where: {
-        moduleId_courseId: { // Cần đảm bảo rằng bạn có một unique constraint trên cặp (moduleId, courseId)
-          moduleId: moduleId,
-          courseId: courseId,
-        },
+        moduleId_courseId: { moduleId, courseId },
       },
     });
 
-    return NextResponse.json({ message: "Module removed from course" });
+    // Nếu không tìm thấy mối quan hệ, trả về lỗi
+    if (!moduleInCourse) {
+      return new NextResponse("Module not found in course", { status: 404 });
+    }
+
+    // Xóa mối quan hệ module và khóa học từ ModuleInCourse
+    await db.moduleInCourse.delete({
+      where: {
+        moduleId_courseId: { moduleId, courseId },
+      },
+    });
+
+    return NextResponse.json({ message: "Module removed from course successfully" });
   } catch (error) {
-    console.log("[MODULEINCORSE DELETE API]", error);
+    console.log("[MODULE_IN_COURSE DELETE API]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
