@@ -224,7 +224,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
           </AlertDialogTitle>
           <AlertDialogDescription className="AlertDialogDescription">
             Are you sure you want to add these staff members to the course?
-            <span className="text-red-500 text-sm font-medium">
+            <span className="text-red-500 text-xs font-medium">
     **Once submitted, the assignment cannot be undone as per our policy. Already assigned staff will not be affected.**
   </span>
             <br/>
