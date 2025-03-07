@@ -67,10 +67,14 @@ export const Cell = ({ row }: any) => {
     await axios.patch(`/api/user/${id}/status`, values);
 
     if (userStatus === "approved") {
-      await axios.post("/api/send-email-approve", {
-        username: username,
-        emailAddress: email,
-      });
+      try {
+        await axios.post("/api/send-mail-approve", {
+          username: username,
+          emailAddress: email,
+        });
+      } catch (error) {
+        console.error("Error sending email:", error);
+      }
     }
 
     setLoading(false);
@@ -208,7 +212,7 @@ export const Cell = ({ row }: any) => {
                 className="Button red"
                 onClick={() => onChangeStatus(id, status)}
               >
-                Confirm {loading ? <Loader /> : <></>}
+                Confirm {loading ? <Loader className="animate-spin" /> : <></>}
               </button>
             </AlertDialogAction>
           </AlertDialogContent>

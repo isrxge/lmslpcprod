@@ -251,7 +251,7 @@ export default function Page() {
                 className="bg-blue-500 justify-center text-white inline-flex py-2 rounded-md hover:bg-blue-600 transition duration-300"
               >
                 <span>Confirm</span>
-                {verificationChecking ? <Loader2 /> : <></>}
+                {verificationChecking ? <Loader2 className="animate-spin"/> : <></>}
               </button>
             </form>
           </div>
