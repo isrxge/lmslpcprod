@@ -50,9 +50,23 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
   // Get the reset method directly from the useForm hook
   const { reset } = form;
 
+  // const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  //   try {
+  //     await axios.patch(`/api/courses/${courseId}`, { endDate: values.endDate });
+  //     toast.success("End Date updated");
+  //     toggleEdit();
+  //     router.refresh();
+  //   } catch {
+  //     toast.error("Something went wrong");
+  //   }
+  // };
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}`, { endDate: values.endDate });
+      // Convert endDate to UTC+7 before sending it to the server
+      const utcEndDate = new Date(values.endDate);
+      utcEndDate.setHours(utcEndDate.getHours() + 7); // Convert to UTC+7
+
+      await axios.patch(`/api/courses/${courseId}`, { endDate: utcEndDate.toISOString() });
       toast.success("End Date updated");
       toggleEdit();
       router.refresh();

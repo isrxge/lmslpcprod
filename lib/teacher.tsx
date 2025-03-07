@@ -18,25 +18,53 @@ export const IsTeacher = ({ userId }: any) => {
     return <></>;
   }
   if (isLoading) {
-    return <></>;
-  } else {
-    return data.userPermission.length <= 2 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        // .indexOf("Create personal report") != -1 &&
-        .indexOf("Create course permission") != -1 &&
+    return <></>; }
 
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        // .indexOf("User personal management permission") != -1 ? (
-        .indexOf("Create course report") != -1 ? (
-      <></>
-    ) : (
-      <Link href="/teacher/programs">
-        <Button size="sm" variant="ghost">
-          Teacher mode
-        </Button>
-      </Link>
-    );
-  }
+// Kiểm tra nếu người dùng có cả 2 quyền: "Create course permission" và "Create course report"
+const hasCreateCoursePermission =
+data.userPermission.some(
+  (item: { permission: { title: string } }) =>
+    item.permission.title === "Create course permission"
+);
+
+const hasCreateCourseReport =
+data.userPermission.some(
+  (item: { permission: { title: string } }) =>
+    item.permission.title === "Create course report"
+);
+
+// Nếu người dùng không có đủ 2 quyền, không hiển thị nút
+if (!hasCreateCoursePermission || !hasCreateCourseReport) {
+return <></>;
+}
+
+return (
+<Link href="/teacher/programs">
+  <Button size="sm" variant="ghost">
+    Teacher mode
+  </Button>
+</Link>
+);
 };
+//   } else {
+//     return data.userPermission.length <= 2 &&
+//       data.userPermission
+//         .map((item: { permission: { title: any } }) => item.permission.title)
+//         // .indexOf("Create personal report") != -1 &&
+//         .indexOf("Create course permission") != -1 &&
+
+//       data.userPermission
+//         .map((item: { permission: { title: any } }) => item.permission.title)
+//         // .indexOf("User personal management permission") != -1 ? (
+//         .indexOf("Create course report") != -1 ? (
+//       <></>
+//     ) : (
+//       <Link href="/teacher/programs">
+//         <Button size="sm" variant="ghost">
+//           Teacher mode
+//         </Button>
+//       </Link>
+//     );
+//   }
+// };
+

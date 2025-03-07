@@ -269,9 +269,17 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
   const endDateObj = new Date(endDate);
 
   // Compare end date with the current date to determine if it's "Opening" or "Closed"
-  const isOpening = currentDate <= endDateObj; // If current date is less than endDate, it's opening
+  const isOpening = currentDate < endDateObj; // If current date is less than endDate, it's opening
   const statusText = isOpening ? "Opening" : "Closed";
-  const statusColor = isOpening ? "text-green-500" : "text-red-500";
+  const statusColor = isOpening ? "text-green-500" : "text-red-500"; 
+
+  // const isClosed = currentDate > endDateObj; // If current date is less than endDate, it's opening
+  // const statusText = isClosed ? "Closed" : "Opening";
+  // const statusColor = isClosed ? "text-red-500" : "text-green-500";
+
+  // const isClosed = currentDateUTC > endDateObj; // Nếu currentDate > endDate, khóa học đã đóng
+  // const statusText = isClosed ? "Closed" : "Opening"; // Hiển thị trạng thái "Closed" nếu quá hạn
+  // const statusColor = isClosed ? "text-red-500" : "text-green-500"; // Màu sắc thay đổi tùy theo trạng thái
 
   return (
     <div className="flex items-center">
