@@ -41,7 +41,7 @@ interface DepartmentProps {
   title: string;
 }
 interface DepartmentFormProps {
-  initialData: { Department: DepartmentProps[] , Course: any};
+  initialData: { Department: DepartmentProps[]; Course: any };
   courseId: string;
   department: DepartmentProps[];
 }
@@ -177,7 +177,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
 
       for (let user of assignList) {
         if (user.isEnrolled && user.canUndo) {
-          await axios.post('/api/send-email', {
+          await axios.post("/api/send-email", {
             courseName: initialData.title,
             username: user.username,
             emailAddress: user.email,
@@ -193,7 +193,6 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
     } catch {
       toast.error("Something went wrong");
       setLoading(false);
-
     }
   };
   const onConfirm = () => {
@@ -221,12 +220,14 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
       >
         <AlertDialogContent className="AlertDialogContent">
           <AlertDialogTitle className="AlertDialogTitle">
-            Submit list of staff assigned to course
+            Submit Staff Assignment
           </AlertDialogTitle>
           <AlertDialogDescription className="AlertDialogDescription">
-            Are you sure you want to add these attendees to this course?(Note
-            that after submit, you cannot undo the assign of staffs due to our
-            policy)(Staff that has been assigned already will not be effected)
+            Are you sure you want to add these staff members to the course?
+            <span className="text-red-500 text-sm font-medium">
+    **Once submitted, the assignment cannot be undone as per our policy. Already assigned staff will not be affected.**
+  </span>
+            <br/>
             <br />
             <div className="grid grid-cols-2 gap-0">
               {assignList
@@ -236,7 +237,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
                 .map((item: { id: any; username: any }, index: any) => {
                   return (
                     <div key={item.id}>
-                      _{index + 1} {item.username}
+                      {index + 1}. {item.username}
                     </div>
                   );
                 })}
@@ -246,7 +247,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
           <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
             <button className="Button red" onClick={() => onSubmit()}>
-            Confirm {loading ? <Loader className="animate-spin" /> : <></>}
+              Confirm {loading ? <Loader className="animate-spin" /> : <></>}
             </button>
           </AlertDialogAction>
         </AlertDialogContent>

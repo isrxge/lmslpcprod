@@ -210,6 +210,20 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
     setIsMounted(true);
   }, []);
 
+  useEffect(() => {
+    // Sorting the chapters, placing "exam" type modules at the end
+    const sortedChapters = [...items].sort((a, b) => {
+      if (a.type === "Exam" && b.type !== "Exam") {
+        return 1;
+      }
+      if (a.type !== "Exam" && b.type === "Exam") {
+        return -1;
+      }
+      return 0;
+    });
+    setChapters(sortedChapters);
+  }, [items]);
+
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 

@@ -145,7 +145,7 @@ model Course {
   updateDate         DateTime?
   type              String?
   isPublished        Boolean              @default(false)
-  credit             Int?
+  credit             Int?                 @default(10)
   ClassSessionRecord ClassSessionRecord[]
   courseWithProgram  courseWithProgram[]
   BookMark           BookMark[]

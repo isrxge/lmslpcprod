@@ -172,7 +172,7 @@ function CreatePage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-60">
+    <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-40">
       <div>
         <h1 className="text-2xl">Name your course</h1>
         <p className="text-sm text-slate-600">
@@ -212,7 +212,7 @@ function CreatePage() {
                 <FormItem>
                   <FormLabel>Course Type</FormLabel>
                   <FormControl>
-                    <select {...field} disabled={isSubmitting} className="border rounded-md p-2">
+                    <select {...field} disabled={isSubmitting} className="border rounded-md p-1 w-full ">
                       <option value="Mandatory">Mandatory</option>
                       <option value="Probation">Probation</option>
                       <option value="SelfStudy">Self Study</option>
