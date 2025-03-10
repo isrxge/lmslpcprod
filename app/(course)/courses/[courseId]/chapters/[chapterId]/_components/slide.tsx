@@ -66,6 +66,12 @@ const Slide = ({
       : "studying"
   );
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleIframeLoad = () => {
+    setIsLoading(false); // Set loading to false when iframe finishes loading
+  };
+
   const confetti = useConfettiStore();
   const supportedFileTypes = ["pdf", "pptx", "docx"];
   const getFileType = (fileName: string) => {
@@ -102,6 +108,7 @@ const Slide = ({
   const onClickNextSlide = async () => {
     setCurrentSlide(currentSlide + 1);
     setDoc(slide[currentSlide].fileUrl);
+    setIsLoading(true);
     router.refresh();
   };
 
@@ -123,7 +130,7 @@ const Slide = ({
   //     if (chapter.title == "intro") {
   //     } else {
   //       await axios.put(
-          
+
   //         // `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
   //         `/api/module/${moduleId}/progress`,
   //         {
@@ -216,14 +223,14 @@ const Slide = ({
       // Khi đã hoàn thành tất cả các chapter, đánh dấu khóa học là "finished"
       await axios.put(`/api/module/${moduleId}/progress`, {
         status: "finished", // Đánh dấu trạng thái là "finished"
-        progress: "100%",   // Đặt tiến độ là 100%
+        progress: "100%", // Đặt tiến độ là 100%
         endDate: new Date(),
       });
 
       // Cập nhật trạng thái khóa học là hoàn thành
       await axios.put(`/api/courses/${courseId}/progress`, {
         status: "finished", // Đánh dấu toàn bộ khóa học hoàn thành
-        progress: "100%",   // Đặt tiến độ khóa học là 100%
+        progress: "100%", // Đặt tiến độ khóa học là 100%
       });
 
       confetti.onOpen();
@@ -319,17 +326,29 @@ const Slide = ({
               theme={{ disableThemeScrollbar: false }}
             />
           ) : (
-            <iframe
-              key={slide[currentSlide].fileUrl}
-              // src={slide[currentSlide].fileUrl}
-              // src={`https://docs.google.com/viewer?url=${encodeURIComponent(slide[currentSlide].fileUrl)}&embedded=true`}
-              // style={{ width: 1080, height: 650 }}
-              src={`https://docs.google.com/viewer?url=${encodeURIComponent(slide[currentSlide].fileUrl)}&embedded=true`}
-              style={{ width: "100%", height: 650 }}
-              loading="lazy"
-              // loading="lazy"
-              frameBorder="0"             
-            />
+            <>
+              {isLoading && (
+                <div>
+                  {" "}
+                  <div className="w-6 h-6 border-4 border-t-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>{" "}
+                  Loading ...
+                </div>
+              )}
+              <iframe
+                key={slide[currentSlide].fileUrl}
+                // src={slide[currentSlide].fileUrl}
+                // src={`https://docs.google.com/viewer?url=${encodeURIComponent(slide[currentSlide].fileUrl)}&embedded=true`}
+                // style={{ width: 1080, height: 650 }}
+                src={`https://docs.google.com/viewer?url=${encodeURIComponent(
+                  slide[currentSlide].fileUrl
+                )}&embedded=true`}
+                style={{ width: "100%", height: 650 }}
+                loading="lazy"
+                // loading="lazy"
+                frameBorder="0"
+                onLoad={handleIframeLoad}
+              />
+            </>
             // <DocViewer
             //   key={slide[currentSlide].fileUrl}
             //   prefetchMethod="GET"
