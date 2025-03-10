@@ -20,13 +20,13 @@ import { Button } from "@/components/ui/button";
 
 interface TypeFormProps {
   initialData: {
-    type: "Mandatory" | "Probation" | "SelfStudy";
+    type: "Mandatory" | "Probation" | "Self Study";
   };
   courseId: string;
 }
 
 const formSchema = z.object({
-  type: z.enum(["Mandatory", "Probation", "SelfStudy"], {
+  type: z.enum(["Mandatory", "Probation", "Self Study"], {
     invalid_type_error: "Course type is required",
   }),
 });
@@ -98,7 +98,7 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
                     >
                       <option value="Mandatory">Mandatory</option>
                       <option value="Probation">Probation</option>
-                      <option value="SelfStudy">Self Study</option>
+                      <option value="Self Study">Self Study</option>
                     </select>
                   </FormControl>
                   <FormMessage />

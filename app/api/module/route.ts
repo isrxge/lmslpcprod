@@ -139,7 +139,7 @@ export async function GET(req: Request) {
           { type: "Slide" },  // Include Slide modules
           { type: "Exam", maxAttempt: 2 },  // Include Exam modules with maxAttempt = 2
         ];
-      } else if (courseType === "SelfStudy") {
+      } else if (courseType === "Self Study") {
         // For Self-Study course, only show Slide modules (no Exam modules)
         filters.type = "Slide";  // Only include Slide modules
       }

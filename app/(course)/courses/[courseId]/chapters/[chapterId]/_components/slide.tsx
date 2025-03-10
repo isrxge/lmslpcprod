@@ -323,6 +323,7 @@ const Slide = ({
               key={slide[currentSlide].fileUrl}
               src={slide[currentSlide].fileUrl}
               style={{ width: 1080, height: 650 }}
+              sandbox="true"
             />
             // <DocViewer
             //   key={slide[currentSlide].fileUrl}

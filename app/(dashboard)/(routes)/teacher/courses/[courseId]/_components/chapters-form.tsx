@@ -246,10 +246,10 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
               onChange={(e) => setFilterType(e.target.value)}
               name="type"
               className="mr-4 p-2 border rounded-md"
-              disabled={courseType === "SelfStudy"}
+              disabled={courseType === "Self Study"}
             >
               <option value="Slide">Slide</option>
-              {courseType !== "SelfStudy" && <option value="Exam">Exam</option>}
+              {courseType !== "Self Study" && <option value="Exam">Exam</option>}
             </select>
 
             {/* Thanh tìm kiếm */}

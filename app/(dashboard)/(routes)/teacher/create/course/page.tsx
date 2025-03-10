@@ -215,7 +215,7 @@ function CreatePage() {
                     <select {...field} disabled={isSubmitting} className="border rounded-md p-1 w-full ">
                       <option value="Mandatory" title="One-time exam required">Mandatory</option>
                       <option value="Probation" title="Two-time exam required">Probation</option>
-                      <option value="SelfStudy" title="No exam required">Self Study</option>
+                      <option value="Self Study" title="No exam required">Self Study</option>
                     </select>
                   </FormControl>
                   <FormMessage />
