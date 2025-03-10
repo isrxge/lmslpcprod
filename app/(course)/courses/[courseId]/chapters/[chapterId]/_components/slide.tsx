@@ -325,6 +325,7 @@ const Slide = ({
               src={`https://docs.google.com/viewer?url=${encodeURIComponent(slide[currentSlide].fileUrl)}&embedded=true`}
               // style={{ width: 1080, height: 650 }}
               style={{ width: "100%", height: 650 }}
+              loading="lazy"
               frameBorder="0"             
             />
             // <DocViewer
