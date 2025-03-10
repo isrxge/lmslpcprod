@@ -321,9 +321,11 @@ const Slide = ({
           ) : (
             <iframe
               key={slide[currentSlide].fileUrl}
-              src={slide[currentSlide].fileUrl}
-              style={{ width: 1080, height: 650 }}
-              sandbox="allow-scripts allow-same-origin"
+              // src={slide[currentSlide].fileUrl}
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(slide[currentSlide].fileUrl)}&embedded=true`}
+              // style={{ width: 1080, height: 650 }}
+              style={{ width: "100%", height: 650 }}
+              frameBorder="0"             
             />
             // <DocViewer
             //   key={slide[currentSlide].fileUrl}
