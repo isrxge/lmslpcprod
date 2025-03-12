@@ -342,10 +342,10 @@ const Slide = ({
                 //   slide[currentSlide].fileUrl
                 // )}&embedded=true`}
                 style={{ width: "100%", height: 650 }}
-                loading="lazy"
                 // loading="lazy"
-                frameBorder="0"
-                onLoad={handleIframeLoad}
+                // loading="lazy"
+                // frameBorder="0"
+                // onLoad={handleIframeLoad}
               />
             </>
             // <DocViewer
