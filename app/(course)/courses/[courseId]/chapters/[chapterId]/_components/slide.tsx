@@ -326,14 +326,14 @@ const Slide = ({
               theme={{ disableThemeScrollbar: false }}
             />
           ) : (
-            <>
-              {isLoading && (
-                <div>
-                  {" "}
-                  <div className="w-6 h-6 border-4 border-t-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>{" "}
-                  Loading ...
-                </div>
-              )}
+            // <>
+              // {isLoading && (
+              //   <div>
+              //     {" "}
+              //     <div className="w-6 h-6 border-4 border-t-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>{" "}
+              //     Loading ...
+              //   </div>
+              // )}
               <iframe
                 key={slide[currentSlide].fileUrl}
                 src={slide[currentSlide].fileUrl}
@@ -347,7 +347,7 @@ const Slide = ({
                 // frameBorder="0"
                 // onLoad={handleIframeLoad}
               />
-            </>
+            // </>
             // <DocViewer
             //   key={slide[currentSlide].fileUrl}
             //   prefetchMethod="GET"
