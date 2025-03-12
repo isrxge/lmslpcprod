@@ -11,7 +11,7 @@ interface CourseSidebarItemProps {
   id: string;
   isCompleted: string;
   courseId: string;
-  isLocked: boolean;
+  // isLocked: boolean;
 }
 
 export const CourseSidebarItem = ({
@@ -19,7 +19,7 @@ export const CourseSidebarItem = ({
   id,
   isCompleted,
   courseId,
-  isLocked,
+  // isLocked,
 }: CourseSidebarItemProps) => {
   const pathname = usePathname();
   const router = useRouter();
@@ -33,7 +33,7 @@ export const CourseSidebarItem = ({
 
   return (
     <button
-      disabled={isLocked}
+      // disabled={isLocked}
       onClick={onClick}
       type="button"
       className={cn(

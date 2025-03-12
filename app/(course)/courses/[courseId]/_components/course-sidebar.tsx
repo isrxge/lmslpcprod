@@ -55,18 +55,18 @@ export const CourseSidebar = async (
 
             return (
               <CourseSidebarItem
-                key={currentModule .id}
-                id={currentModule .id}
-                label={currentModule .title} // Hiển thị tiêu đề của module
+                key={currentModule.id}
+                id={currentModule.id}
+                label={currentModule.title} // Hiển thị tiêu đề của module
                 isCompleted={isCompleted} // Truyền trạng thái hoàn thành vào component
                 courseId={course.id}
-                isLocked={
-                  (course.modules[index - 1]?.module.userProgress?.[0]?.status !==
-                    "finished" && index > 0) ||
-                  module.id == params?.chapterId
-                    ? true
-                    : false
-                }
+                // isLocked={
+                //   (course.modules[index - 1]?.module.userProgress?.[0]?.status !==
+                //     "finished" && index > 0) ||
+                //   module.id == params?.chapterId
+                //     ? true
+                //     : false
+                // }
               />
             );
           })
