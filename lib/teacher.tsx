@@ -41,7 +41,7 @@ return <></>;
 return (
 <Link href="/teacher/programs">
   <Button size="sm" variant="ghost">
-    Teacher mode
+    Admin mode
   </Button>
 </Link>
 );
