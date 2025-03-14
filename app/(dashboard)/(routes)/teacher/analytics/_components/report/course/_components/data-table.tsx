@@ -171,15 +171,27 @@ export function DataTable<TData, TValue>({
       const moduleList = item.modules.map(
         (moduleInCourse: any) => `${moduleInCourse.module.title} : ${moduleInCourse.module.type}`
       ).join(" \n");
-      const moduleListResult = item.modules.map(
-        (moduleInCourse: any) =>
-          `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
-            (item: any) =>
-              `\n-${item.user.username} : ${item.status}${
-                item?.score != null ? `(${item?.score}%)` : ""
-              }`
-          )}`
-      ).join(" \n");
+      // const moduleListResult = item.modules.map(
+      //   (moduleInCourse: any) =>
+      //     `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
+      //       (item: any) =>
+      //         `\n-${item.user.username} : ${item.status}${
+      //           item?.score != null ? `(${item?.score}%)` : ""
+      //         }`
+      //     )}`
+      // ).join(" \n");
+      const moduleListResult = item.modules
+  .filter((moduleInCourse: any) => moduleInCourse.module.type === "Exam") 
+  .map((moduleInCourse: any) =>
+    `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
+      (item: any) =>
+        `\n-${item.user.username} : ${item.status}${
+          item?.score != null ? `(${item?.score}%)` : ""
+        }`
+    )}`
+  )
+  .join(" \n");
+
       const attendees = item.ClassSessionRecord.map(
         (session: any) => `${session.user.username} : ${session.status}`
       ).join(" \n");
