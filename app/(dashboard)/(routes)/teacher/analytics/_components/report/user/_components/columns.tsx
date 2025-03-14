@@ -213,18 +213,18 @@ export const columns: ColumnDef<User>[] = [
                                           }`}
                                         >
                                           {item.status === "finished"
-                                            ? `Pass (${item.score}%)`
-                                            : `Fail (${item.score}%)`}
+                                            ? `Pass (${item.progress})`
+                                            : `Fail (${item.progress})`}
                                         </span>{" "}
                                         on{" "}
                                         {new Date(
-                                          item.endDate
+                                          item.startDate
                                         ).toLocaleTimeString([], {
                                           hour: "2-digit",
                                           minute: "2-digit",
                                         })}{" "}
                                         {new Date(
-                                          item.endDate
+                                          item.startDate
                                         ).toLocaleDateString("vi-VN", {
                                           day: "2-digit",
                                           month: "2-digit",
