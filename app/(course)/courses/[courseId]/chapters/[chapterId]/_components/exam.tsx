@@ -204,8 +204,8 @@ const Exam = ({
         const date = new Date();
         if (currentAttempt >= maxAttempt) {
           await axios.put(
-            // `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
-            `/api/module/${chapter.id}/progress`,
+            `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+            // `/api/module/${chapter.id}/progress`,
             {
               status:
                 totalScore >= chapter.scoreLimit && passed
@@ -533,7 +533,7 @@ const Exam = ({
       // Nếu đã là câu hỏi cuối cùng, kiểm tra điểm số và hiển thị kết quả
 
       const { finalScore, passed }: any = calculateScore();
-
+      console.log(parseInt(finalScore))
       const totalScore = finalScore;
       if (isCompleted != "finished") {
         await axios.post(
@@ -688,6 +688,7 @@ const Exam = ({
             status: "finished",
             progress: "100%",
             endDate: date,
+            score: parseInt(finalScore),
           });
 
           // Cập nhật điểm của người dùng sau khi hoàn thành khóa học
@@ -701,6 +702,7 @@ const Exam = ({
             status: "failed",
             progress: "0%",
             endDate: date,
+            score: parseInt(finalScore),
           });
         }
 
@@ -860,7 +862,7 @@ const Exam = ({
         "You have skipped some answers. Please make sure all questions are answered."
       );
     }
-
+    console.log(myScore)
     // setCategoryList([...newCategoryList]);
     let maxScore = 100;
 

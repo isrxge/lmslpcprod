@@ -9,6 +9,7 @@ interface CoursesListProps {
 
 export const CoursesList = ({ title, items }: CoursesListProps) => {
   const { userId }: any = useAuth();
+  console.log(items)
   return (
     <div>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">

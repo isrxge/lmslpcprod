@@ -37,6 +37,8 @@ export async function PUT(
         status,
         startDate: date,
         attempt: 0,
+        score:score,
+        endDate
       },
     });
 

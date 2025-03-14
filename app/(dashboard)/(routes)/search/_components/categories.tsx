@@ -22,7 +22,7 @@ export const Categories = ({ items, userId }: any) => {
     } else {
       setCurrentTitle(title);
       const { data } = await axios.get(`/api/department/${title}`);
-
+      console.log(data)
       setInitialCourseList(data);
     }
 

@@ -33,23 +33,24 @@ export async function GET(
         },
       },
     });
+    console.log(department)
     const coursesWithProgress: any = await Promise.all(
       department.CourseOnDepartment.map(async (course: any) => {
-        console.log(course)
-        const progressPercentage = await getProgress(userId, course.course.id);
+        
+        
 
         return {
           ...course,
-          progress: progressPercentage,
         };
       })
     );
     // console.log(coursesWithProgress);
     let newList = [];
     for (let i = 0; i < coursesWithProgress.length; i++) {
-      coursesWithProgress[i].course["progress"] =
-        coursesWithProgress[i].progress;
-      newList.push(coursesWithProgress[i].course);
+      if(coursesWithProgress[i].course != null){
+        newList.push(coursesWithProgress[i].course);
+      }
+      
     }
     return NextResponse.json(newList);
   } catch (error) {

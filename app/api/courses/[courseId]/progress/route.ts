@@ -9,8 +9,8 @@ export async function PUT(
 ) {
   try {
     const { userId } = auth();
-    const { progress, status, endDate } = await req.json();
-
+    const { progress, status, endDate ,score} = await req.json();
+    console.log(score)
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -27,6 +27,7 @@ export async function PUT(
         progress,
         status,
         endDate,
+        score:score
       },
       create: {
         userId,
@@ -34,6 +35,7 @@ export async function PUT(
         progress,
         status,
         startDate: date,
+        score:score
       },
     });
 
