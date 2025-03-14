@@ -9,15 +9,30 @@ export async function POST(req: Request) {
     const { courseName, username, emailAddress } = await req.json();
 
     // Thiết lập nội dung email
+    // const emailContent = {
+    //   from: "webmaster@lp.com.vn",
+    //   to: emailAddress, // Gửi tới người dùng
+    //   subject: `You have been assigned to the course: ${courseName}`,
+    //   text: `Hello ${username},\n\nYou have been successfully assigned to the course: ${courseName}.`,
+    //   html: `
+    //     <p>Hello ${username},</p>
+    //     <p>You have been successfully assigned to the course: <strong>${courseName}</strong>.</p>
+    //     <p>If you have any questions, feel free to reach out.</p>
+    //   `,
+    // };
+
     const emailContent = {
       from: "webmaster@lp.com.vn",
       to: emailAddress, // Gửi tới người dùng
-      subject: `You have been assigned to the course: ${courseName}`,
-      text: `Hello ${username},\n\nYou have been successfully assigned to the course: ${courseName}.`,
+      subject: `[LMS] You've been assigned to the course: ${courseName}`,
+      text: `Dear ${username},\n\nYou have been successfully assigned to the course: ${courseName}.\n\nPlease access the learning system at your earliest convenience to review course materials and further instructions.\nIf you have any questions or require assistance, please feel free to reach out.\n\nBest regards,\nLearning Management System Administration`,
       html: `
-        <p>Hello ${username},</p>
-        <p>You have been successfully assigned to the course: <strong>${courseName}</strong>.</p>
-        <p>If you have any questions, feel free to reach out.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Dear ${username},</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">You have been successfully assigned to the course: <strong>${courseName}</strong>.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Please access the learning system at your earliest convenience to review course materials and further instructions.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">If you have any questions or require assistance, please feel free to reach out.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Best regards,</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Learning Management System Administration</p>
       `,
     };
 
