@@ -246,7 +246,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
 
           <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <button className="Button red" onClick={() => onSubmit()}>
+            <button className="Button red" onClick={() => onSubmit()} disabled={loading}>
               Confirm {loading ? <Loader className="animate-spin" /> : <></>}
             </button>
           </AlertDialogAction>
@@ -329,7 +329,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
             })}
 
             <div className="flex items-center gap-x-2">
-              <Button onClick={() => onConfirm()}>Save</Button>
+              <Button onClick={() => onConfirm()} disabled={loading}>Save</Button>
             </div>
           </form>
         </Form>

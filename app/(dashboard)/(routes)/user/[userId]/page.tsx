@@ -8,6 +8,7 @@ import UserInformation from "./_components/infomation-form";
 import CourseHistory from "./_components/courses-history";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
+import { title } from "process";
 
 interface userValue {
   userId: string;
@@ -68,6 +69,7 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
           module: {
             select: {
               // type: "Exam",
+              title: true,
               type: true,
               UserProgress: {
                 where: {
