@@ -119,10 +119,11 @@ export const columns: ColumnDef<Course>[] = [
                 const courseModule = item.module; // Truy cập vào module từ bảng ModuleInCourse
                 return (
                   <li key={module.id}>
-                    {courseModule.title}:{" "}
+                    {courseModule.title}{" "}
                     {courseModule.UserProgress && courseModule.UserProgress.length > 0
-                      ? `${courseModule.UserProgress[0]?.status} (${courseModule.UserProgress[0]?.score}%) in ${courseModule.UserProgress[0]?.attempt} attempts`
-                      : "No Result"}
+                      ? `${courseModule.UserProgress[0]?.status} (${courseModule.UserProgress[0]?.score}%)`
+                      //  in ${courseModule.UserProgress[0]?.attempt} attempts`
+                      : ""}
                   </li>
                 );
               })

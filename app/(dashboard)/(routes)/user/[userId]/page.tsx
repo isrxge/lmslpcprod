@@ -9,6 +9,7 @@ import CourseHistory from "./_components/courses-history";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import { title } from "process";
+import { select } from "@nextui-org/react";
 
 interface userValue {
   userId: string;
@@ -71,10 +72,15 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
               // type: "Exam",
               title: true,
               type: true,
-              UserProgress: {
+              UserProgress: 
+              {
                 where: {
                   userId: userId,
                 },
+                select: {
+                  score: true,
+                  status: true
+                }
               },
             },
           },

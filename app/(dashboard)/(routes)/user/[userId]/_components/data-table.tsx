@@ -128,15 +128,16 @@ export function DataTable<TData, TValue>({
     }
 
     filteredList.forEach((item: any) => {
-      let testResult = item.Module.map(
-        (item: any) =>
-          item.title +
+      console.log(item)
+      let testResult = item.modules.map(
+        (moduleItem: any) =>
+          moduleItem.title +
           " : " +
-          item.UserProgress[0].score +
+          moduleItem.UserProgress[0].score +
           "%/" +
-          item.UserProgress[0].status +
+          moduleItem.UserProgress[0].status +
           "/" +
-          item.UserProgress[0].attempt +
+          moduleItem.UserProgress[0].attempt +
           " attempt"
       );
 
@@ -258,7 +259,7 @@ export function DataTable<TData, TValue>({
             <></>
           )}
         </div>
-        {canPrintReport ? (
+        {/* {canPrintReport ? (
           table.getSelectedRowModel().rows.length > 1 ? (
             <Button onClick={() => getSheetData("Selected Rows")}>
               <FileDown className="h-4 w-4 mr-2" />
@@ -272,7 +273,7 @@ export function DataTable<TData, TValue>({
           )
         ) : (
           <></>
-        )}
+        )} */}
       </div>
       <div className="rounded-md border">
         <Table>
