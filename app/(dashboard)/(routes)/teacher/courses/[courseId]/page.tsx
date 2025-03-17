@@ -89,61 +89,79 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       User: true,
     },
   });
+//advance permission
+  const checkUserPermissions = checkUser
+  .map((item: { permission: { title: any } }) => item.permission.title);
+
+const hasEditAdvancedPermission = checkUserPermissions.includes("Edit advance course permission");
+
+let filteredDepartment = [];
+
+if (hasEditAdvancedPermission) {
+  // If the user has "Edit advance course permission", show all departments
+  filteredDepartment = department;
+} else {
+  // Otherwise, filter departments based on the user's department
+  filteredDepartment = department.filter(
+    (dept: any) => dept.id === userDepartment?.Department?.id
+  );
+}
+
 
   // const filteredDepartment = department.filter(
   //   (dept:any) => dept.id === userDepartment?.Department?.id
   // );
 
-  // for (let i = 0; i < filteredDepartment.length; i++) {
-  //   filteredDepartment[i]["isEnrolled"] = false;
-  //   for (let j = 0; j < filteredDepartment[i]?.User.length; j++) {
-  //     if (
-  //       course.ClassSessionRecord.map((item: any) => item.userId).indexOf(
-  //         filteredDepartment[i].User[j].id
-  //       ) !== -1
-  //     ) {
-  //       filteredDepartment[i].User[j]["isEnrolled"] = true;
-  //       filteredDepartment[i].User[j]["canUndo"] = false;
-  //       filteredDepartment[i]["isEnrolled"] = true;
-  //       filteredDepartment[i]["canUndo"] = false;
-  //     } else {
-  //       filteredDepartment[i].User[j]["isEnrolled"] = false;
-  //       filteredDepartment[i].User[j]["canUndo"] = true;
-  //       filteredDepartment[i]["isEnrolled"] = false;
-  //       filteredDepartment[i]["canUndo"] = true;
-  //     }
-  //   }
-  // }
-
-  for (let i = 0; i < department.length; i++) {
-    // if (
-    //   course.CourseOnDepartment.map((item: any) => item.departmentId).indexOf(
-    //     department[i].id
-    //   ) !== -1
-    // ) {
-
-    // } else {
-
-    // }
-    department[i]["isEnrolled"] = false;
-    for (let j = 0; j < department[i]?.User.length; j++) {
+  for (let i = 0; i < filteredDepartment.length; i++) {
+    filteredDepartment[i]["isEnrolled"] = false;
+    for (let j = 0; j < filteredDepartment[i]?.User.length; j++) {
       if (
         course.ClassSessionRecord.map((item: any) => item.userId).indexOf(
-          department[i].User[j].id
+          filteredDepartment[i].User[j].id
         ) !== -1
       ) {
-        department[i].User[j]["isEnrolled"] = true;
-        department[i].User[j]["canUndo"] = false;
-        department[i]["isEnrolled"] = true;
-        department[i]["canUndo"] = false;
+        filteredDepartment[i].User[j]["isEnrolled"] = true;
+        filteredDepartment[i].User[j]["canUndo"] = false;
+        filteredDepartment[i]["isEnrolled"] = true;
+        filteredDepartment[i]["canUndo"] = false;
       } else {
-        department[i].User[j]["isEnrolled"] = false;
-        department[i].User[j]["canUndo"] = true;
-        department[i]["isEnrolled"] = false;
-        department[i]["canUndo"] = true;
+        filteredDepartment[i].User[j]["isEnrolled"] = false;
+        filteredDepartment[i].User[j]["canUndo"] = true;
+        filteredDepartment[i]["isEnrolled"] = false;
+        filteredDepartment[i]["canUndo"] = true;
       }
     }
   }
+
+  // for (let i = 0; i < department.length; i++) {
+  //   // if (
+  //   //   course.CourseOnDepartment.map((item: any) => item.departmentId).indexOf(
+  //   //     department[i].id
+  //   //   ) !== -1
+  //   // ) {
+
+  //   // } else {
+
+  //   // }
+  //   department[i]["isEnrolled"] = false;
+  //   for (let j = 0; j < department[i]?.User.length; j++) {
+  //     if (
+  //       course.ClassSessionRecord.map((item: any) => item.userId).indexOf(
+  //         department[i].User[j].id
+  //       ) !== -1
+  //     ) {
+  //       department[i].User[j]["isEnrolled"] = true;
+  //       department[i].User[j]["canUndo"] = false;
+  //       department[i]["isEnrolled"] = true;
+  //       department[i]["canUndo"] = false;
+  //     } else {
+  //       department[i].User[j]["isEnrolled"] = false;
+  //       department[i].User[j]["canUndo"] = true;
+  //       department[i]["isEnrolled"] = false;
+  //       department[i]["canUndo"] = true;
+  //     }
+  //   }
+  // }
 
   if (!course) {
     return redirect("/");
@@ -262,7 +280,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 <DepartmentForm
                   initialData={course}
                   courseId={course.id}
-                  department={department}
+                  department={filteredDepartment}
                 />
                 <InstructorAssignForm
                   initialData={course}  

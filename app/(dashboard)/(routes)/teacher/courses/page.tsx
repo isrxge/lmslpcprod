@@ -6,12 +6,142 @@ import { db } from "@/lib/db";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 
+// const CoursesPage = async () => {
+//   const { userId } = auth();
+
+//   if (!userId) {
+//     return redirect("/");
+//   }
+//   const checkUser = await db.userPermission.findMany({
+//     where: {
+//       userId: userId,
+//     },
+//     include: {
+//       permission: true,
+//     },
+//   });
+//   const userDepartment: any = await db.user.findUnique({
+//     where: {
+//       id: userId,
+//     },
+//     include: {
+//       Department: true,
+//     },
+//   });
+//   if (
+//     checkUser
+//       .map((item: { permission: { title: any } }) => item.permission.title)
+//       .indexOf("Edit course permission") == -1 &&
+//     checkUser
+//       .map((item: { permission: { title: any } }) => item.permission.title)
+//       .indexOf("Create course permission") == -1
+//   ) {
+//     return redirect("/");
+//   }
+
+//   const hasEditAdvancedPermission = checkUser
+//     .map((item: { permission: { title: any } }) => item.permission.title)
+//     .indexOf("Edit advance course permission") !== -1;
+
+//   let courses;
+//   if (
+//     userDepartment.title != "BOD" &&
+//     checkUser
+//       .map((item: { permission: { title: any } }) => item.permission.title)
+//       .indexOf("Manage all course permission") == -1
+//   ) {
+//     courses = await db.course.findMany({
+//       where: {
+//         CourseOnDepartment: {
+//           some: {departmentId: userDepartment?.Department?.id,}
+//         },
+//         // OR: [
+//         //   {
+//         //     userId: userId,
+//         //     courseInstructedBy: userId,
+//         //     updatedBy: userId,
+//         //   },
+//         // ],
+//       },
+//       orderBy: {
+//         startDate: "desc",
+//       },
+//       include: {
+//         user: true,
+//         updatedUser: true,
+//         courseInstructor: true,
+//         modules: {
+//         },
+//         CourseOnDepartment: {
+//           include: {
+//             Department: true, // Bao gồm thông tin phòng ban
+//           },
+//         },
+//       },
+//     });
+//   } else {
+//     courses = await db.course.findMany({
+//       // where: {
+//       //   userId,
+//       // },
+//       where: {
+//         CourseOnDepartment: {
+//           some: {
+//             departmentId: userDepartment?.Department?.id, // Lọc khóa học theo phòng ban người dùng
+//           },
+//         },
+//       },
+//       orderBy: {
+//         startDate: "desc",
+//       },
+//       include: {
+//         user: true,
+//         updatedUser: true,
+//         courseInstructor: true,
+//         modules: {
+//         },
+//         CourseOnDepartment: {
+//           include: {
+//             Department: true, // Bao gồm thông tin phòng ban
+//           },
+//         },
+//       },
+//     });
+//   }
+
+//   return (
+//     <div className="p-6">
+//       <DataTable
+//         columns={columns}
+//         data={courses}
+//         canCreate={
+//           checkUser
+//             .map(
+//               (item: { permission: { title: any } }) => item.permission.title
+//             )
+//             .indexOf("Create course permission") != -1
+//         }
+//         canEdit={
+//           checkUser
+//             .map(
+//               (item: { permission: { title: any } }) => item.permission.title
+//             )
+//             .indexOf("Edit course permission") != -1
+//         }
+//       />
+//     </div>
+//   );
+// };
+
+// export default CoursesPage;
+
 const CoursesPage = async () => {
   const { userId } = auth();
 
   if (!userId) {
     return redirect("/");
   }
+
   const checkUser = await db.userPermission.findMany({
     where: {
       userId: userId,
@@ -20,6 +150,7 @@ const CoursesPage = async () => {
       permission: true,
     },
   });
+
   const userDepartment: any = await db.user.findUnique({
     where: {
       id: userId,
@@ -28,6 +159,7 @@ const CoursesPage = async () => {
       Department: true,
     },
   });
+
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
@@ -38,25 +170,29 @@ const CoursesPage = async () => {
   ) {
     return redirect("/");
   }
+
+  const hasEditAdvancedPermission = checkUser
+    .map((item: { permission: { title: any } }) => item.permission.title)
+    .indexOf("Edit advance course permission") !== -1;
+
+  const hasManageAllCoursePermission = checkUser
+    .map((item: { permission: { title: any } }) => item.permission.title)
+    .indexOf("Manage all course permission") !== -1;
+
   let courses;
+
   if (
-    userDepartment.title != "BOD" &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Manage all course permission") == -1
+    userDepartment.title !== "BOD" && // User is not in BOD department
+    !hasManageAllCoursePermission // User does not have "Manage all course permission"
   ) {
+    // User can only see courses within their own department
     courses = await db.course.findMany({
       where: {
         CourseOnDepartment: {
-          some: {departmentId: userDepartment?.Department?.id,}
+          some: {
+            departmentId: userDepartment?.Department?.id,
+          },
         },
-        // OR: [
-        //   {
-        //     userId: userId,
-        //     courseInstructedBy: userId,
-        //     updatedBy: userId,
-        //   },
-        // ],
       },
       orderBy: {
         startDate: "desc",
@@ -65,27 +201,42 @@ const CoursesPage = async () => {
         user: true,
         updatedUser: true,
         courseInstructor: true,
-        modules: {
-        },
+        modules: {},
         CourseOnDepartment: {
           include: {
-            Department: true, // Bao gồm thông tin phòng ban
+            Department: true, // Include department information
+          },
+        },
+      },
+    });
+  } else if (hasEditAdvancedPermission) {
+    // If the user has "Edit advance course permission", show all courses
+    courses = await db.course.findMany({
+      orderBy: {
+        startDate: "desc",
+      },
+      include: {
+        user: true,
+        updatedUser: true,
+        courseInstructor: true,
+        modules: {},
+        CourseOnDepartment: {
+          include: {
+            Department: true, // Include department information
           },
         },
       },
     });
   } else {
+    // If the user doesn't have the necessary permissions, show their department's courses
     courses = await db.course.findMany({
-      // where: {
-      //   userId,
-      // },
-      // where: {
-      //   CourseOnDepartment: {
-      //     some: {
-      //       departmentId: userDepartment?.Department?.id, // Lọc khóa học theo phòng ban người dùng
-      //     },
-      //   },
-      // },
+      where: {
+        CourseOnDepartment: {
+          some: {
+            departmentId: userDepartment?.Department?.id,
+          },
+        },
+      },
       orderBy: {
         startDate: "desc",
       },
@@ -93,11 +244,10 @@ const CoursesPage = async () => {
         user: true,
         updatedUser: true,
         courseInstructor: true,
-        modules: {
-        },
+        modules: {},
         CourseOnDepartment: {
           include: {
-            Department: true, // Bao gồm thông tin phòng ban
+            Department: true, // Include department information
           },
         },
       },

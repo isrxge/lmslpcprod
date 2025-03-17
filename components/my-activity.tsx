@@ -49,7 +49,6 @@ export const MyActivity = ({ items }: MyActivityProps) => {
       >
         <CarouselContent>
           {items.map((item) => (
-            console.log("Itmdas",item.progress),
             <CarouselItem
               key={item?.course.id}
               className="md:basis-1/3 lg:basis-1/4"
