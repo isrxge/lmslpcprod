@@ -157,19 +157,21 @@ export const columns: ColumnDef<User>[] = [
                       <AccordionItem
                         startContent={
                           <div>
+                            {console.log("Item in course:", item)}  
                             {item.course.title}:{" "}
                             {item.status === "finished" ? (
                               <span className="text-green-500 font-medium">
-                                Completed
+                                Successful
                               </span>
-                            ) : item.progress === "0%" ? (
+                            ) : item.status === "failed" ? (
                               <span className="text-red-500 font-medium">
-                                Uncomplete
+                                Failed
                               </span>
                             ) : item.status === "studying" ? (
                               <span className="text-yellow-500 font-medium">
-                                Studying (
-                                {parseFloat(item.progress + "").toFixed(0)}%)
+                                Studying 
+                                {/* (
+                                {parseFloat(item.progress + "").toFixed(0)}%) */}
                               </span>
                             ) : (
                               <>
@@ -183,7 +185,7 @@ export const columns: ColumnDef<User>[] = [
                         {item.course.modules.filter(
                           (item: any) => item.module.type == "Exam"
                         ).map((item: any) => {
-                          console.log("Tjpe",item)
+                          console.log("Item status inside map:", item.status);
                           return (
                             <>
                               {item.module.UserProgress?.filter(
