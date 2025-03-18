@@ -53,3 +53,33 @@ export async function PATCH(
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const { userId } = auth(); // Lấy userId từ Clerk
+    
+    // Kiểm tra nếu không có userId, trả về lỗi Unauthorized
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    // Lấy quyền của người dùng từ cơ sở dữ liệu (giả sử có bảng userPermission)
+    const userPermissions = await db.userPermission.findMany({
+      where: {
+        userId: userId, // Tìm quyền theo userId
+      },
+      include: {
+        permission: true, // Bao gồm thông tin quyền
+      },
+    });
+
+    // Chỉ lấy tên quyền từ kết quả
+    const permissions = userPermissions.map((userPermission) => userPermission.permission.title);
+
+    // Trả về danh sách quyền dưới dạng JSON
+    return NextResponse.json(permissions);
+  } catch (error) {
+    console.error("[PERMISSIONS]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
