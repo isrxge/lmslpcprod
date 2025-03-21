@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
-import { getUser } from "@/actions/get-user";
+import { getUserRanking } from "@/actions/get-user-ranking";
 
 const UserRank = async () => {
   const { sessionClaims }: any = auth();
@@ -51,7 +51,7 @@ const UserRank = async () => {
   //   },
   // });
 
-  const users: any = await getUser();
+  const users: any = await getUserRanking();
   return (
     <div className="p-6">
       <DataTable
