@@ -24,7 +24,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
               item?.ClassSessionRecord.map(
                 (item: { userId: any }) => item.userId
               ).indexOf(userId) == -1
-                ? "/istockphoto-936681148-612x612.jpg"
+                ? "/courselock.jpg"
                 : item.imageUrl!
             }
             chapters={item?.modules.module}

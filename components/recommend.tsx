@@ -58,7 +58,7 @@ export const Recommend = ({ items }: RecommendProps) => {
                   item.course.ClassSessionRecord.map(
                     (item: { userId: any }) => item.userId
                   ).indexOf(userId) == -1
-                    ? "/istockphoto-936681148-612x612.jpg"
+                    ? "/courselock.jpg"
                     : item.course.imageUrl!
                 }
                 isLocked={

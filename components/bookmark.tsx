@@ -53,7 +53,7 @@ export const Bookmark = ({ items }: BookmarkProps) => {
                   item.ClassSessionRecord.map(
                     (item: { userId: any }) => item.userId
                   ).indexOf(userId) == -1
-                    ? "/istockphoto-936681148-612x612.jpg"
+                    ? "/courselock.jpg"
                     : item.imageUrl!
                 }
                 isLocked={
