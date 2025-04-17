@@ -115,6 +115,19 @@ export async function GET(
         },
       },
     });
+
+    // Thêm đoạn này: Xoá trường `isCorrect` trong tất cả answer
+    for (const cat of questionsList.Category) {
+      for (const exam of cat.Exam) {
+        exam.answer.forEach((ans: any) => {
+          // cách 1
+          delete ans.isCorrect;
+          // hoặc
+          // ans.isCorrect = undefined;
+        });
+      }
+    }
+
     for (let i = 0; i < questionsList.Category.length; i++) {
       questionsList.Category[i]["question"] = questionsList.Category[i].Exam;
     }
