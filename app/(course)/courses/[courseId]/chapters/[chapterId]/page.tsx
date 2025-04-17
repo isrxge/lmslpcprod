@@ -18,6 +18,33 @@ const ChapterIdPage = async ({
   if (!userId) {
     return redirect("/");
   }
+
+  // 1) Kiểm tra xem user có record trong ClassSessionRecord (tức được assign vào course) không
+  const session = await db.classSessionRecord.findUnique({
+    where: {
+      courseId_userId: {
+        courseId: params.courseId,
+        userId,
+      },
+    },
+  });
+
+   // 2) Nếu chưa được assign => chỉ hiển thị description hoặc redirect
+   if (!session) {
+    // Nếu bạn muốn redirect thẳng về homepage:
+    return redirect("/");
+
+    // Hoặc nếu có trang course riêng để show description, dùng redirect về đó:
+    // return redirect(`/courses/${params.courseId}`);
+
+    // Hoặc nếu bạn đã có component CourseDescription, render luôn phần mô tả bên dưới
+    // let course = await db.course.findUnique({
+    //   where: { id: params.courseId },
+    // });
+    // if (!course) return redirect("/");
+    // return <CourseDescription course={course} />;
+  }
+
   let userInfo: any = await db.user.findUnique({
     where: { id: userId },
     include: {
