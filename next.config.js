@@ -15,6 +15,21 @@ const nextConfig = {
 
   env: {},
   reactStrictMode: false,
+
+  // Enable XSS Protection header for older browsers
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
