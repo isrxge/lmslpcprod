@@ -27,12 +27,35 @@ import { authMiddleware } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import type { NextRequest, NextFetchEvent } from "next/server";
 
-// 1. Hàm lọc chỉ cho phép đường dẫn nội bộ (/foo, /bar?x=y…), bác bỏ //, http://, javascript:…
-function isInternalPath(path: string): boolean {
-  return /^\/(?!\/)/.test(path);
+/**
+ * Trả về đường dẫn an toàn:
+ * - Nếu `param` là full URL cùng origin, lấy `pathname+search`
+ * - Nếu `param` là internal path (/foo…), giữ nguyên
+ * - Ngược lại fallback về `/`
+ */
+function getSafeRedirect(param: string, origin: string): string {
+  try {
+    // decode first, in case it's percent‐encoded
+    const decoded = decodeURIComponent(param);
+    const url = new URL(decoded, origin);
+
+    // chỉ cho phép cùng origin
+    if (url.origin === origin) {
+      return url.pathname + url.search;
+    }
+  } catch {
+    // decode hoặc new URL lỗi → không phải full URL
+  }
+
+  // nếu không phải full URL, thử regex internal path
+  if (/^\/(?!\/)/.test(param)) {
+    return param;
+  }
+
+  // fallback
+  return "/";
 }
 
-// 2. Khởi tạo middleware của Clerk như cũ
 const clerkAuth = authMiddleware({
   publicRoutes: [
     "/api/webhook",
@@ -42,22 +65,26 @@ const clerkAuth = authMiddleware({
     "/api/signup",
     "/api/departments",
     "/api/department",
-    // “https://rest.ably.io/**”,
   ],
   // debug: true,
 });
 
 export default function middleware(req: NextRequest, ev: NextFetchEvent) {
   const { nextUrl } = req;
-  const redirectParam = nextUrl.searchParams.get("redirect_url");
+  const pathname = nextUrl.pathname;
 
-  if (redirectParam) {
-    // 3. Validate: nếu safe thì redirect, nếu không thì về /
-    const safePath = isInternalPath(redirectParam) ? redirectParam : "/";
-    return NextResponse.redirect(new URL(safePath, nextUrl.origin));
+  // CHỈ apply redirect_url logic trên trang /sign-in
+  if (pathname === "/sign-in") {
+    const redirectParam = nextUrl.searchParams.get("redirect_url");
+    if (redirectParam) {
+      const safePath = getSafeRedirect(redirectParam, nextUrl.origin);
+      return NextResponse.redirect(new URL(safePath, nextUrl.origin));
+    }
+    // chưa có param thì tiếp tục để Clerk show form
+    return clerkAuth(req, ev);
   }
 
-  // 4. Nếu không có redirect_url, tiếp tục Clerk auth
+  // Các route khác: chạy luôn Clerk auth
   return clerkAuth(req, ev);
 }
 
