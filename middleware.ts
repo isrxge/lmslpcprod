@@ -5,6 +5,8 @@ import { authMiddleware } from "@clerk/nextjs";
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
 export default authMiddleware({
   publicRoutes: [
+    "/sign-in",
+    "/sign-in/*",
     "/api/webhook",
     "/api/checkLDAP",
     "/api/authLDAP",
