@@ -27,7 +27,8 @@ export default function Page() {
   const { isSignedIn }: any = useAuth();
   if (isSignedIn) {
     if (searchParams.get("redirect_url") != undefined) {
-      window.location.href = searchParams.get("redirect_url") + "";
+      // window.location.href = searchParams.get("redirect_url") + "";
+      router.push("sign-in")
     } else {
       window.location.href = "/";
     }

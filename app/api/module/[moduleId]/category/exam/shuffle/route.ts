@@ -13,6 +13,36 @@ export async function GET(
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+
+    // 1) Kiểm tra userExamReport để xem user đã set isInExam = true chưa
+    const examReport = await db.userExamReport.findFirst({
+      where: {
+        userId: userId,
+        moduleId: params.moduleId,
+        isInExam: true, // Phải đúng
+      },
+    });
+    if (!examReport) {
+      // => user chưa Start exam => cấm
+      return new NextResponse("Forbidden: You haven't started the exam yet.", {
+        status: 403,
+      });
+    }
+    
+
+    const record = await db.classSessionRecord.findFirst({
+      where: {
+        courseId: params.courseId,
+        userId: userId,
+      },
+    });
+    if (!record) {
+      // Nếu không tìm thấy => user chưa tham gia course => chặn
+      return new NextResponse("Forbidden: You are not in this course", {
+        status: 403,
+      });
+    }
+
     console.log("Module ID:", params.moduleId);
     const questionsList: any = await db.module.findUnique({
       where: {
@@ -25,7 +55,15 @@ export async function GET(
               include: {
                 Exam: {
                   include: {
-                    answer: true,
+                    //answer: true,
+                    answer: {
+                      select: {
+                        id: true,
+                        text: true,
+                        // isCorrect: false  // tuỳ cú pháp Prisma, 
+                        // hoặc không khai báo => mặc định là false
+                      },
+                    },
                   },
                 },
               },

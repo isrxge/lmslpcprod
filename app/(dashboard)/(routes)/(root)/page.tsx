@@ -19,9 +19,9 @@ export default async function Dashboard({
   const { sessionClaims }: any = auth();
 
   if (!sessionClaims?.userId) {
-    // if (params.email != undefined && params.task != undefined) {
-    //   return redirect(`/sign-in/?email=${params.email}&task=${params.task}`);
-    // }
+    if (params.email != undefined && params.task != undefined) {
+      return redirect(`/sign-in/?email=${params.email}&task=${params.task}`);
+    }
     return redirect("/sign-in");
   }
   let userInfo: any = await db.user.findUnique({

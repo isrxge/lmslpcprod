@@ -1541,6 +1541,85 @@ const Exam = ({
   }, [chapter.id, courseId]);
 
   // Xử lý countdown
+  
+  // useEffect(() => {
+  //   const getHistory = async () => {
+  //     const moduleId = chapter.id;
+  
+  //     // 1) Lấy user hiện tại
+  //     let currentUser = await axios.get(`/api/user`);
+  //     setCurrentUserId(currentUser.data.id);
+  
+  //     // 2) Kiểm tra user IsInExam
+  //     let chekIfUserIsInExam: any = await axios.get(
+  //       `/api/user/${currentUser.data.id}/isInExam`
+  //     );
+  
+  //     // Nếu user đang thi & moduleId khớp => khôi phục state exam
+  //     let inExam = false;
+  //     if (
+  //       chekIfUserIsInExam?.data?.isInExam === true &&
+  //       chapter.id == chekIfUserIsInExam?.data?.moduleId
+  //     ) {
+  //       inExam = true;
+  //     }
+  
+  //     // 3) Nếu user đang thi => Gọi API lấy exam + userProgress
+  //     let getLatestTestResult: any = null;
+  //     if (inExam) {
+  //       getLatestTestResult = await axios.get(
+  //         `/api/module/${moduleId}/category/exam`
+  //       );
+  
+  //       setFinishedExam(
+  //         getLatestTestResult?.data?.UserProgress[0]?.status === "finished" &&
+  //           getLatestTestResult !== undefined
+  //       );
+  
+  //       setCurrentAttempt(
+  //         getLatestTestResult?.data?.UserProgress[0]?.retakeTime || 0
+  //       );
+  //       setFinalScore(getLatestTestResult?.data?.UserProgress[0]?.score || 0);
+  //       setCategoryList(getLatestTestResult?.data?.Category);
+  //     } else {
+  //       // Nếu user không ở trạng thái exam, 
+  //       // có thể gán giá trị mặc định hoặc setCategoryList([])
+  //       setCategoryList(chapter.Category || []);
+  //     }
+  
+  //     // 4) Lấy examRecord (lịch sử) - tuỳ bạn
+  //     let getLatestExamRecord: any = await axios.get(
+  //       `/api/user/${currentUser.data.id}/examRecord/${moduleId}`
+  //     );
+  //     setExamRecord(getLatestExamRecord.data);
+  
+  //     // 5) Nếu user đang thi => khôi phục questionList, v.v.
+  //     if (inExam) {
+  //       setReportId(chekIfUserIsInExam.data.id);
+  //       const examObj: any = chekIfUserIsInExam.data.examRecord as Prisma.JsonObject;
+  
+  //       setQuestions(examObj.questionList || []);
+  //       setCurrentQuestion(examObj.currentQuestion || 0);
+  
+  //       if (!examObj.isEmergency) {
+  //         setStartDate(examObj?.startDate);
+  //         setTimeLimit(examObj.timePassed * 60);
+  //         setTimeLimitRecord(examObj.timePassed);
+  //       } else {
+  //         setStartDate(examObj?.startDate);
+  //         setTimeLimit(chapter.timeLimit);
+  //         setTimeLimitRecord(chapter.timeLimit * 60);
+  //       }
+  
+  //       setSelectedAnswers(examObj.selectedAnswers || []);
+  //       setCurrentAttempt(examObj.currentAttempt || 1);
+  //     }
+  //   };
+  
+  //   getHistory();
+  // }, [chapter.id, courseId]);
+  
+  
   useEffect(() => {
     if (questions.length > 0) {
       window.addEventListener("beforeunload", alertUser);
@@ -1748,6 +1827,55 @@ const Exam = ({
   };
 
   // Hàm “bắt đầu thi” (retakeExam)
+  // const accept = async () => {
+  //   setFinalScore(0);
+  //   setOnFinish(false);
+  //   setCurrentQuestion(0);
+  //   setSelectedAnswers([]);
+  //   setIsPassed(true);
+  //   setStartDate(new Date());
+  //   setIsGeneratingExam(true);
+
+  //   const moduleId = chapter.id;
+  //   let questionLists: any = [];
+
+  //   if (!finishedExam) {
+  //     setCurrentAttempt(currentAttempt + 1);
+  //     let questionList = await axios.get(
+  //       `/api/module/${moduleId}/category/exam/shuffle`
+  //     );
+  //     questionLists = shuffleArray(questionList.data.ExamList);
+  //     setQuestions(questionLists);
+  //   } else {
+  //     let questionList = await axios.get(
+  //       `/api/module/${moduleId}/category/exam/shuffle`
+  //     );
+  //     questionLists = shuffleArray(questionList.data.ExamList);
+  //     setQuestions(questionLists);
+  //   }
+
+  //   let currentUser = await axios.get(`/api/user`);
+  //   let report = await axios.post(`/api/user/${currentUser.data.id}/isInExam`, {
+  //     id: "0",
+  //     examRecord: {
+  //       questionList: questionLists,
+  //       timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
+  //       currentQuestion: 0,
+  //       selectedAnswers: [],
+  //       currentAttempt: currentAttempt,
+  //     },
+  //     note: "",
+  //     isInExam: true,
+  //     moduleId: chapter.id,
+  //     date: new Date(),
+  //     courseId,
+  //   });
+  //   setReportId(report.data.id);
+  //   setIsGeneratingExam(false);
+  //   setTimeLimit(chapter.timeLimit);
+  //   setTimeLimitRecord(chapter.timeLimit * 60);
+  // };
+
   const accept = async () => {
     setFinalScore(0);
     setOnFinish(false);
@@ -1756,30 +1884,15 @@ const Exam = ({
     setIsPassed(true);
     setStartDate(new Date());
     setIsGeneratingExam(true);
-
+  
     const moduleId = chapter.id;
-    let questionLists: any = [];
-
-    if (!finishedExam) {
-      setCurrentAttempt(currentAttempt + 1);
-      let questionList = await axios.get(
-        `/api/module/${moduleId}/category/exam/shuffle`
-      );
-      questionLists = shuffleArray(questionList.data.ExamList);
-      setQuestions(questionLists);
-    } else {
-      let questionList = await axios.get(
-        `/api/module/${moduleId}/category/exam/shuffle`
-      );
-      questionLists = shuffleArray(questionList.data.ExamList);
-      setQuestions(questionLists);
-    }
-
-    let currentUser = await axios.get(`/api/user`);
-    let report = await axios.post(`/api/user/${currentUser.data.id}/isInExam`, {
+  
+    // 1) Gọi API đánh dấu isInExam = true TRƯỚC KHI gọi /shuffle
+    const currentUser = await axios.get(`/api/user`);
+    const report = await axios.post(`/api/user/${currentUser.data.id}/isInExam`, {
       id: "0",
       examRecord: {
-        questionList: questionLists,
+        questionList: [], // Để rỗng hoặc tuỳ
         timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
         currentQuestion: 0,
         selectedAnswers: [],
@@ -1792,10 +1905,25 @@ const Exam = ({
       courseId,
     });
     setReportId(report.data.id);
+  
+    // 2) Nếu chưa finishedExam => tăng số lần Attempt
+    if (!finishedExam) {
+      setCurrentAttempt(currentAttempt + 1);
+    }
+  
+    // 3) Gọi API /shuffle để lấy đề
+    let questionList = await axios.get(
+      `/api/module/${moduleId}/category/exam/shuffle`
+    );
+    let questionLists = shuffleArray(questionList.data.ExamList);
+    setQuestions(questionLists);
+  
+    // 4) Các cập nhật state còn lại
     setIsGeneratingExam(false);
     setTimeLimit(chapter.timeLimit);
     setTimeLimitRecord(chapter.timeLimit * 60);
   };
+  
 
   // Khi user chọn đáp án
   const handleAnswerClick = async (question: any, option: any) => {
