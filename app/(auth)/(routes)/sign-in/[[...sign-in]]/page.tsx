@@ -25,17 +25,30 @@ export default function Page() {
   const router = useRouter();
   const [verificationChecking, setVerificationChecking] = useState(false);
   const { isSignedIn }: any = useAuth();
-  if (isSignedIn) {
-    if (searchParams.get("redirect_url") != undefined) {
-      // window.location.href = searchParams.get("redirect_url") + "";
-      router.push("sign-in")
-    } else {
-      window.location.href = "/";
-    }
-  }
+  // if (isSignedIn) {
+  //   if (searchParams.get("redirect_url") != undefined) {
+  //     // window.location.href = searchParams.get("redirect_url") + "";
+  //     router.push("sign-in")
+  //   } else {
+  //     window.location.href = "/";
+  //   }
+  // }
   // useEffect(() => {
   //   animatePageIn();
   // }, []);
+  
+  if (isSignedIn) {
+    if (searchParams.get("redirect_url") != undefined) {
+      router.push("/sign-in");
+    } else {
+      window.location.href = "/";
+    }
+  } else {
+    if (searchParams.get("redirect_url") != undefined) {
+      router.push("/sign-in");
+    }
+  }
+  
   const handleCodeChange = (e: any) => {
     const value = e.target.value;
     const formattedValue = value.replace(/\D/g, "").slice(0, 6);
