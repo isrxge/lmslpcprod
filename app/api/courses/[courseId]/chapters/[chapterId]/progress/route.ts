@@ -2,15 +2,19 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-
+var CryptoJS = require("crypto-js");
 export async function PUT(
   req: Request,
   { params }: { params: { courseId: string; chapterId: string } }
 ) {
   try {
     const { userId }: any = auth();
-    const { progress, status, endDate, score, retakeTime } = await req.json();
-
+    const {finalResult} = await req.json();
+    //const { progress, status, endDate, score, retakeTime } = await req.json();
+    //console.log("data abc",finalResult)
+    //console.log("encrypt data",CryptoJS.AES.decrypt(finalResult, "1"))
+    var { progress, status, endDate, score, retakeTime }  = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(finalResult, "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz")));
+    //console.log("progressABCDEF", score, progress, status, endDate, retakeTime);
     const year = new Date();
     const date = new Date();
     const userProgress = await db.userProgress.upsert({

@@ -1444,7 +1444,7 @@ import shuffleArray from "@/lib/shuffle";
 import DoughnutChart from "@/components/ui/doughnut-chart";
 import Image from "next/image";
 import { Prisma } from "@prisma/client";
-
+var CryptoJS = require("crypto-js");
 const Exam = ({
   chapter,
   nextChapterId,
@@ -1461,7 +1461,9 @@ const Exam = ({
   const [finalScore, setFinalScore] = useState(0); // kết quả từ server
   const [examMaxScore, setExamMaxScore] = useState(100); // hiển thị chart
   const [timeLimit, setTimeLimit]: any = useState(chapter.timeLimit);
-  const [timeLimitRecord, setTimeLimitRecord]: any = useState(chapter.timeLimit * 60);
+  const [timeLimitRecord, setTimeLimitRecord]: any = useState(
+    chapter.timeLimit * 60
+  );
   const [maxAttempt, setMaxAttempt]: any = useState(chapter.maxAttempt);
 
   // Xử lý questions
@@ -1518,7 +1520,8 @@ const Exam = ({
         chapter.id == chekIfUserIsInExam?.data?.moduleId
       ) {
         setReportId(chekIfUserIsInExam.data.id);
-        const examObj: any = chekIfUserIsInExam.data.examRecord as Prisma.JsonObject;
+        const examObj: any = chekIfUserIsInExam.data
+          .examRecord as Prisma.JsonObject;
 
         setQuestions(examObj.questionList || []);
         setCurrentQuestion(examObj.currentQuestion || 0);
@@ -1541,20 +1544,20 @@ const Exam = ({
   }, [chapter.id, courseId]);
 
   // Xử lý countdown
-  
+
   // useEffect(() => {
   //   const getHistory = async () => {
   //     const moduleId = chapter.id;
-  
+
   //     // 1) Lấy user hiện tại
   //     let currentUser = await axios.get(`/api/user`);
   //     setCurrentUserId(currentUser.data.id);
-  
+
   //     // 2) Kiểm tra user IsInExam
   //     let chekIfUserIsInExam: any = await axios.get(
   //       `/api/user/${currentUser.data.id}/isInExam`
   //     );
-  
+
   //     // Nếu user đang thi & moduleId khớp => khôi phục state exam
   //     let inExam = false;
   //     if (
@@ -1563,44 +1566,44 @@ const Exam = ({
   //     ) {
   //       inExam = true;
   //     }
-  
+
   //     // 3) Nếu user đang thi => Gọi API lấy exam + userProgress
   //     let getLatestTestResult: any = null;
   //     if (inExam) {
   //       getLatestTestResult = await axios.get(
   //         `/api/module/${moduleId}/category/exam`
   //       );
-  
+
   //       setFinishedExam(
   //         getLatestTestResult?.data?.UserProgress[0]?.status === "finished" &&
   //           getLatestTestResult !== undefined
   //       );
-  
+
   //       setCurrentAttempt(
   //         getLatestTestResult?.data?.UserProgress[0]?.retakeTime || 0
   //       );
   //       setFinalScore(getLatestTestResult?.data?.UserProgress[0]?.score || 0);
   //       setCategoryList(getLatestTestResult?.data?.Category);
   //     } else {
-  //       // Nếu user không ở trạng thái exam, 
+  //       // Nếu user không ở trạng thái exam,
   //       // có thể gán giá trị mặc định hoặc setCategoryList([])
   //       setCategoryList(chapter.Category || []);
   //     }
-  
+
   //     // 4) Lấy examRecord (lịch sử) - tuỳ bạn
   //     let getLatestExamRecord: any = await axios.get(
   //       `/api/user/${currentUser.data.id}/examRecord/${moduleId}`
   //     );
   //     setExamRecord(getLatestExamRecord.data);
-  
+
   //     // 5) Nếu user đang thi => khôi phục questionList, v.v.
   //     if (inExam) {
   //       setReportId(chekIfUserIsInExam.data.id);
   //       const examObj: any = chekIfUserIsInExam.data.examRecord as Prisma.JsonObject;
-  
+
   //       setQuestions(examObj.questionList || []);
   //       setCurrentQuestion(examObj.currentQuestion || 0);
-  
+
   //       if (!examObj.isEmergency) {
   //         setStartDate(examObj?.startDate);
   //         setTimeLimit(examObj.timePassed * 60);
@@ -1610,16 +1613,15 @@ const Exam = ({
   //         setTimeLimit(chapter.timeLimit);
   //         setTimeLimitRecord(chapter.timeLimit * 60);
   //       }
-  
+
   //       setSelectedAnswers(examObj.selectedAnswers || []);
   //       setCurrentAttempt(examObj.currentAttempt || 1);
   //     }
   //   };
-  
+
   //   getHistory();
   // }, [chapter.id, courseId]);
-  
-  
+
   useEffect(() => {
     if (questions.length > 0) {
       window.addEventListener("beforeunload", alertUser);
@@ -1691,7 +1693,9 @@ const Exam = ({
         // Chỉ cần array ID
         return {
           examId: q.id, // q.id = examId
-          selected: q.chooseAnswer ? q.chooseAnswer.map((ans: any) => ans.id) : [],
+          selected: q.chooseAnswer
+            ? q.chooseAnswer.map((ans: any) => ans.id)
+            : [],
         };
       });
 
@@ -1729,42 +1733,60 @@ const Exam = ({
     handleFinalizeExam(finalScore, passed);
   };
 
-  // (D) XỬ LÝ KHI CÓ finalScore, passed
+  //(D) XỬ LÝ KHI CÓ finalScore, passed
   const handleFinalizeExam = async (finalScore: number, passed: boolean) => {
     if (!finishedExam) {
       // Giữ nguyên logic cũ
       const date = new Date();
       const totalScore = finalScore;
       const courseCredit = course.credit || 0; // fallback
-
+      const finalResult = CryptoJS.AES.encrypt(
+        JSON.stringify({
+          status:
+            totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
+          score: parseInt(totalScore + ""),
+          progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+          endDate: date,
+          retakeTime: currentAttempt,
+        }),
+        "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
+      ).toString();
       // 1) Cập nhật progress chapter
       if (currentAttempt >= maxAttempt) {
-        await axios.put(`/api/courses/${courseId}/chapters/${chapter.id}/progress`, {
-          status:
-            totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
-          score: parseInt(totalScore + ""),
-          progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-          endDate: date,
-          retakeTime: currentAttempt,
-        });
+        await axios.put(
+          `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+          {
+            finalResult: finalResult,
+          }
+        );
       } else {
-        await axios.put(`/api/courses/${courseId}/chapters/${chapter.id}/progress`, {
-          status:
-            totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
-          score: parseInt(totalScore + ""),
-          progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-          endDate: date,
-          retakeTime: currentAttempt,
-        });
+        await axios.put(
+          `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+          {
+            finalResult: finalResult,
+          }
+        );
       }
 
-      // 2) Nếu đậu => update course, user star
+      const courseResult = CryptoJS.AES.encrypt(
+        JSON.stringify({
+          status:
+          totalScore >= chapter.scoreLimit && passed
+            ? "finished"
+            : "failed",
+        progress:
+          totalScore >= chapter.scoreLimit && passed
+            ? "100%"
+            : "0%",
+        endDate: date,
+        score: parseInt(totalScore + ""),
+        }),
+        "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
+      ).toString();
+      
       if (totalScore >= chapter.scoreLimit && passed) {
         await axios.put(`/api/courses/${courseId}/progress`, {
-          status: "finished",
-          progress: "100%",
-          endDate: date,
-          score: parseInt(totalScore + ""),
+          courseResult : courseResult,
         });
 
         let currentUser = await axios.get(`/api/user`);
@@ -1775,12 +1797,34 @@ const Exam = ({
       } else {
         // Fail -> update course
         await axios.put(`/api/courses/${courseId}/progress`, {
-          status: "failed",
-          progress: "0%",
-          endDate: date,
-          score: parseInt(totalScore + ""),
+          courseResult : courseResult,
         });
       }
+
+
+      // 2) Nếu đậu => update course, user star
+      // if (totalScore >= chapter.scoreLimit && passed) {
+      //   await axios.put(`/api/courses/${courseId}/progress`, {
+      //     status: "finished",
+      //     progress: "100%",
+      //     endDate: date,
+      //     score: parseInt(totalScore + ""),
+      //   });
+
+      //   let currentUser = await axios.get(`/api/user`);
+      //   await axios.patch(`/api/user/${currentUser.data.id}/score`, {
+      //     star: parseInt(currentUser.data.star) + parseInt(courseCredit),
+      //     starUpdateDate: new Date(),
+      //   });
+      // } else {
+      //   // Fail -> update course
+      //   await axios.put(`/api/courses/${courseId}/progress`, {
+      //     status: "failed",
+      //     progress: "0%",
+      //     endDate: date,
+      //     score: parseInt(totalScore + ""),
+      //   });
+      // }
 
       // 3) Gửi thông báo isInExam => false
       await axios.post(
@@ -1826,54 +1870,31 @@ const Exam = ({
     router.refresh();
   };
 
-  // Hàm “bắt đầu thi” (retakeExam)
-  // const accept = async () => {
-  //   setFinalScore(0);
-  //   setOnFinish(false);
-  //   setCurrentQuestion(0);
-  //   setSelectedAnswers([]);
-  //   setIsPassed(true);
-  //   setStartDate(new Date());
-  //   setIsGeneratingExam(true);
+  // const handleFinalizeExam = async (finalScore: number, passed: boolean) => {
+  //   // 1. Cập nhật UI
+  //   setOnFinish(true);
+  //   setQuestions([]);
+  //   setFinalScore(finalScore);
+  //   setIsPassed(passed);
 
-  //   const moduleId = chapter.id;
-  //   let questionLists: any = [];
-
-  //   if (!finishedExam) {
-  //     setCurrentAttempt(currentAttempt + 1);
-  //     let questionList = await axios.get(
-  //       `/api/module/${moduleId}/category/exam/shuffle`
-  //     );
-  //     questionLists = shuffleArray(questionList.data.ExamList);
-  //     setQuestions(questionLists);
-  //   } else {
-  //     let questionList = await axios.get(
-  //       `/api/module/${moduleId}/category/exam/shuffle`
-  //     );
-  //     questionLists = shuffleArray(questionList.data.ExamList);
-  //     setQuestions(questionLists);
-  //   }
-
-  //   let currentUser = await axios.get(`/api/user`);
-  //   let report = await axios.post(`/api/user/${currentUser.data.id}/isInExam`, {
-  //     id: "0",
-  //     examRecord: {
-  //       questionList: questionLists,
-  //       timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
-  //       currentQuestion: 0,
-  //       selectedAnswers: [],
-  //       currentAttempt: currentAttempt,
-  //     },
-  //     note: "",
-  //     isInExam: true,
-  //     moduleId: chapter.id,
-  //     date: new Date(),
-  //     courseId,
+  //   // 2. Đánh dấu người dùng không còn ở trạng thái thi
+  //   const currentUser = await axios.get("/api/user");
+  //   await axios.patch(`/api/user/${currentUser.data.id}/isInExam`, {
+  //     id: reportId,
+  //     values: { isInExam: false, moduleId: chapter.id, courseId },
   //   });
-  //   setReportId(report.data.id);
-  //   setIsGeneratingExam(false);
-  //   setTimeLimit(chapter.timeLimit);
-  //   setTimeLimitRecord(chapter.timeLimit * 60);
+
+  //   // (tuỳ chọn) log examRecord lần cuối – KHÔNG ghi điểm
+  //   await axios.post(`/api/user/${currentUserId}/isInExam`, {
+  //     id: reportId,
+  //     isInExam: false,
+  //     note: "Finished Exam.",
+  //     moduleId: chapter.id,
+  //     courseId,
+  //     date: new Date(),
+  //   });
+
+  //   router.refresh();
   // };
 
   const accept = async () => {
@@ -1884,46 +1905,48 @@ const Exam = ({
     setIsPassed(true);
     setStartDate(new Date());
     setIsGeneratingExam(true);
-  
+
     const moduleId = chapter.id;
-  
+
     // 1) Gọi API đánh dấu isInExam = true TRƯỚC KHI gọi /shuffle
     const currentUser = await axios.get(`/api/user`);
-    const report = await axios.post(`/api/user/${currentUser.data.id}/isInExam`, {
-      id: "0",
-      examRecord: {
-        questionList: [], // Để rỗng hoặc tuỳ
-        timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
-        currentQuestion: 0,
-        selectedAnswers: [],
-        currentAttempt: currentAttempt,
-      },
-      note: "",
-      isInExam: true,
-      moduleId: chapter.id,
-      date: new Date(),
-      courseId,
-    });
+    const report = await axios.post(
+      `/api/user/${currentUser.data.id}/isInExam`,
+      {
+        id: "0",
+        examRecord: {
+          questionList: [], // Để rỗng hoặc tuỳ
+          timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
+          currentQuestion: 0,
+          selectedAnswers: [],
+          currentAttempt: currentAttempt,
+        },
+        note: "",
+        isInExam: true,
+        moduleId: chapter.id,
+        date: new Date(),
+        courseId,
+      }
+    );
     setReportId(report.data.id);
-  
+
     // 2) Nếu chưa finishedExam => tăng số lần Attempt
     if (!finishedExam) {
       setCurrentAttempt(currentAttempt + 1);
     }
-  
+
     // 3) Gọi API /shuffle để lấy đề
     let questionList = await axios.get(
       `/api/module/${moduleId}/category/exam/shuffle`
     );
     let questionLists = shuffleArray(questionList.data.ExamList);
     setQuestions(questionLists);
-  
+
     // 4) Các cập nhật state còn lại
     setIsGeneratingExam(false);
     setTimeLimit(chapter.timeLimit);
     setTimeLimitRecord(chapter.timeLimit * 60);
   };
-  
 
   // Khi user chọn đáp án
   const handleAnswerClick = async (question: any, option: any) => {
@@ -2072,7 +2095,9 @@ const Exam = ({
   // Format time
   const minutes = Math.floor(timeLimitRecord / 60);
   const seconds = timeLimitRecord % 60;
-  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+    seconds
+  ).padStart(2, "0")}`;
 
   // Render
   return questions.length === 0 ? (
@@ -2082,10 +2107,13 @@ const Exam = ({
         <div className="bg-white shadow-lg rounded-lg p-6 dark:bg-slate-600">
           <h2 className="text-2xl font-bold mb-4">Welcome to the Exam</h2>
           <p className="text-lg mb-4">
-            Before you begin, please take a moment to review the following information about the exam.
+            Before you begin, please take a moment to review the following
+            information about the exam.
           </p>
           <ul className="list-disc pl-5 mb-4">
-            <li className="mb-2">This exam consists of multiple-choice questions.</li>
+            <li className="mb-2">
+              This exam consists of multiple-choice questions.
+            </li>
             {isCompleted === "finished" ? null : (
               <li className="mb-2">
                 You will have{" "}
@@ -2105,7 +2133,8 @@ const Exam = ({
             </li>
             <li className="mb-2">
               You need at least{" "}
-              <span className="text-red-600">{chapter.scoreLimit}%</span> to pass the exam.
+              <span className="text-red-600">{chapter.scoreLimit}%</span> to
+              pass the exam.
             </li>
             <li className="mb-2">
               Make sure you are in a quiet environment to avoid distractions.
@@ -2118,7 +2147,8 @@ const Exam = ({
               <AlertDialogTitle className="text-center">
                 <div
                   className={`${
-                    (finalScore >= chapter.scoreLimit && isPassed) || finishedExam
+                    (finalScore >= chapter.scoreLimit && isPassed) ||
+                    finishedExam
                       ? "bg-green-500"
                       : "bg-red-500"
                   } text-white p-6 rounded-t-lg`}
@@ -2131,14 +2161,16 @@ const Exam = ({
 
                 <div className="p-6 text-center">
                   <p className="text-lg mb-4">
-                    {(finalScore >= chapter.scoreLimit && isPassed) || finishedExam
+                    {(finalScore >= chapter.scoreLimit && isPassed) ||
+                    finishedExam
                       ? nextChapterId !== null
                         ? "Congratulations on completing the exam!"
                         : "You have successfully completed the exam."
                       : "Sorry, you have failed. Better luck next time!"}
                   </p>
 
-                  {(finalScore >= chapter.scoreLimit && isPassed) || finishedExam ? (
+                  {(finalScore >= chapter.scoreLimit && isPassed) ||
+                  finishedExam ? (
                     <div className="flex justify-center mt-4">
                       <Image
                         src="/congratulationLPC.svg"
@@ -2163,39 +2195,40 @@ const Exam = ({
               </AlertDialogTitle>
 
               <div className="flex justify-between p-6">
-  {isCompleted === "failed" && currentAttempt < maxAttempt ? (
-    <AlertDialogCancel
-      onClick={() => accept()}
-      className="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md"
-    >
-      Retake Exam
-    </AlertDialogCancel>
-  ) : isCompleted === "failed" && currentAttempt >= maxAttempt ? (
-    <span className="text-red-500 font-semibold">
-      Sorry, please wait for the exam reset to retake this test.
-    </span>
-  ) : null}
+                {isCompleted === "failed" && currentAttempt < maxAttempt ? (
+                  <AlertDialogCancel
+                    onClick={() => accept()}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md"
+                  >
+                    Retake Exam
+                  </AlertDialogCancel>
+                ) : isCompleted === "failed" && currentAttempt >= maxAttempt ? (
+                  <span className="text-red-500 font-semibold">
+                    Sorry, please wait for the exam reset to retake this test.
+                  </span>
+                ) : null}
 
-  {isCompleted === "failed" ? (
-    <AlertDialogCancel
-      onClick={() => setOnFinish(false)}
-      className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md"
-    >
-      Close
-    </AlertDialogCancel>
-  ) : null}
+                {isCompleted === "failed" ? (
+                  <AlertDialogCancel
+                    onClick={() => setOnFinish(false)}
+                    className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md"
+                  >
+                    Close
+                  </AlertDialogCancel>
+                ) : null}
 
-  {(finalScore >= chapter.scoreLimit && isPassed) || finishedExam ? (
-    <AlertDialogAction asChild>
-      <button
-        className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
-        onClick={() => onLeaving()}
-      >
-        {nextChapterId != null ? "Next" : "Leave"}
-      </button>
-    </AlertDialogAction>
-  ) : null}
-</div>
+                {(finalScore >= chapter.scoreLimit && isPassed) ||
+                finishedExam ? (
+                  <AlertDialogAction asChild>
+                    <button
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
+                      onClick={() => onLeaving()}
+                    >
+                      {nextChapterId != null ? "Next" : "Leave"}
+                    </button>
+                  </AlertDialogAction>
+                ) : null}
+              </div>
             </AlertDialogContent>
           </AlertDialog>
 
@@ -2210,7 +2243,8 @@ const Exam = ({
                       (parseInt(item.numOfAppearance) /
                         parseInt(
                           chapter.Category.reduce(
-                            (n: number, { numOfAppearance }: any) => n + numOfAppearance,
+                            (n: number, { numOfAppearance }: any) =>
+                              n + numOfAppearance,
                             0
                           )
                         )) *
@@ -2227,7 +2261,8 @@ const Exam = ({
             <div className="font-bold ml-2 rounded-lg">
               {isGeneratingExam ? (
                 <div>Please wait while we generate your exam...</div>
-              ) : isCompleted === "failed" && currentAttempt >= maxAttempt ? null : (
+              ) : isCompleted === "failed" &&
+                currentAttempt >= maxAttempt ? null : (
                 <AlertDialogTrigger className="flex justify-center items-center">
                   <>👉Take an exam</>
                 </AlertDialogTrigger>
@@ -2239,7 +2274,9 @@ const Exam = ({
               ) : null}
             </div>
             <AlertDialogContent className="AlertDialogContent">
-              <AlertDialogTitle className="AlertDialogTitle">Exam note</AlertDialogTitle>
+              <AlertDialogTitle className="AlertDialogTitle">
+                Exam note
+              </AlertDialogTitle>
               <AlertDialogDescription className="AlertDialogDescription">
                 {!finishedExam && isCompleted === "studying" ? (
                   <>Do you want to do the exam?</>
@@ -2249,10 +2286,13 @@ const Exam = ({
                   <>Do you want to retake this exam?</>
                 )}
               </AlertDialogDescription>
-              <div style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}>
+              <div
+                style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}
+              >
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction asChild>
-                  {isCompleted === "failed" && currentAttempt >= maxAttempt ? null : (
+                  {isCompleted === "failed" &&
+                  currentAttempt >= maxAttempt ? null : (
                     <button className="Button red" onClick={() => accept()}>
                       Yes
                     </button>
@@ -2272,7 +2312,9 @@ const Exam = ({
           </div>
           {finishedExam ? (
             <div>
-              <p className="text-lg mb-2">You finished the exam. Retakes will not count.</p>
+              <p className="text-lg mb-2">
+                You finished the exam. Retakes will not count.
+              </p>
             </div>
           ) : (
             <div>
@@ -2341,7 +2383,9 @@ const Exam = ({
                 <div className="ml-auto">
                   <BookmarkCheck
                     className={`${
-                      questions[currentQuestion]?.bookmark ? "bg-yellow-400" : ""
+                      questions[currentQuestion]?.bookmark
+                        ? "bg-yellow-400"
+                        : ""
                     }`}
                     cursor={"pointer"}
                     onClick={() => setBookmark(currentQuestion)}
@@ -2349,22 +2393,28 @@ const Exam = ({
                 </div>
               </p>
               <ul>
-                {questions[currentQuestion]?.answer?.map((option: any, index: any) => (
-                  <li
-                    key={index}
-                    onClick={() => handleAnswerClick(questions[currentQuestion], option)}
-                    className={`cursor-pointer py-2 px-4 mb-2 border ${
-                      selectedAnswers[currentQuestion] &&
-                      selectedAnswers[currentQuestion]?.chooseAnswer?.some(
-                        (ans: any) => ans.id === option.id
-                      )
-                        ? "border-blue-600 text-white bg-blue-600"
-                        : "border-gray-300 text-black dark:text-white"
-                    } rounded-md hover:border-blue-600 hover:bg-blue-600 hover:text-white select-none`}
-                  >
-                    {(index + 10).toString(36).toUpperCase() + ". " + option.text}
-                  </li>
-                ))}
+                {questions[currentQuestion]?.answer?.map(
+                  (option: any, index: any) => (
+                    <li
+                      key={index}
+                      onClick={() =>
+                        handleAnswerClick(questions[currentQuestion], option)
+                      }
+                      className={`cursor-pointer py-2 px-4 mb-2 border ${
+                        selectedAnswers[currentQuestion] &&
+                        selectedAnswers[currentQuestion]?.chooseAnswer?.some(
+                          (ans: any) => ans.id === option.id
+                        )
+                          ? "border-blue-600 text-white bg-blue-600"
+                          : "border-gray-300 text-black dark:text-white"
+                      } rounded-md hover:border-blue-600 hover:bg-blue-600 hover:text-white select-none`}
+                    >
+                      {(index + 10).toString(36).toUpperCase() +
+                        ". " +
+                        option.text}
+                    </li>
+                  )
+                )}
               </ul>
               <div className="flex justify-between mt-4">
                 <button
@@ -2402,7 +2452,9 @@ const Exam = ({
                         ? "bg-green-600"
                         : ""
                     }
-                    ${currentQuestion === index ? "bg-blue-700" : "bg-gray-500"}`}
+                    ${
+                      currentQuestion === index ? "bg-blue-700" : "bg-gray-500"
+                    }`}
                 >
                   {index + 1}
                 </button>
