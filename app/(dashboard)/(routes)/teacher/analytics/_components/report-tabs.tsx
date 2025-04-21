@@ -8,11 +8,11 @@ import RankingReportPage from "./report/ranking/page";
 export const ReportTabs = () => {
   return (
     <Tabs defaultValue="users" aria-label="Options">
-      <TabsList className="grid w-full grid-cols-4">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="users">Users</TabsTrigger>
         <TabsTrigger value="courses">Courses</TabsTrigger>
         <TabsTrigger value="ranking">Ranking</TabsTrigger>
-        <TabsTrigger value="programs">Programs</TabsTrigger>
+        {/* <TabsTrigger value="programs">Programs</TabsTrigger> */}
       </TabsList>
       <TabsContent value="users">
         <UserReportPage></UserReportPage>

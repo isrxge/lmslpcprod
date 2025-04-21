@@ -90,9 +90,9 @@ export const SidebarRoutes = ({ userId }: any) => {
       ]);
     }
     if (
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create program report") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create program report") != -1 &&
       data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
         .indexOf("Create course report") != -1 &&

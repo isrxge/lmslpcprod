@@ -95,7 +95,7 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
       <div className="p-6">
         <div className="flex flex-col items-center">
           <Avatar imageUrl={user?.imageUrl} className="w-32 h-32" />
-          <p className="mt-2 text-lg font-semibold">
+          <p className="mt-2 mb-3 text-lg font-semibold">
             Information about {user?.username}
           </p>
         </div>

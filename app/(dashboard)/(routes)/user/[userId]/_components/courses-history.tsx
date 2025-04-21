@@ -8,7 +8,7 @@ const CourseHistory = ({ userId, coursesJoined }: any) => {
 
   return courses.length == 0 ? (
     <div className="text-black dark:text-white">
-      You have not finished any course.
+      {/* No courses have been assigned to you. */}
     </div>
   ) : (
     <>

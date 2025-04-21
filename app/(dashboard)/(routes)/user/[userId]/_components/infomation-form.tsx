@@ -31,7 +31,7 @@ const UserInformation = ({ user }: any) => {
       className=" text-black  grid grid-cols-2 gap-4 p-4 rounded-md border bg-gradient-to-r from-gray-800 to-blue-600 shadow-md"
     >
       {/* Left Column */}
-      <div className="">
+      {/* <div className="">
         <label className="block text-white text-sm font-bold mb-2">ID</label>
         <input
           type="text"
@@ -39,11 +39,11 @@ const UserInformation = ({ user }: any) => {
           readOnly
           className="w-full bg-gray-100 border border-gray-300 rounded-md p-2 pointer-events-none"
         />
-      </div>
+      </div> */}
  
       <div>
         <label className="block text-white text-sm font-bold mb-2">
-          Username
+          Full Name
         </label>
         <input
           type="text"

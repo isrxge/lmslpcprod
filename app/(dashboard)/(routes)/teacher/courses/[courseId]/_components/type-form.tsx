@@ -64,7 +64,7 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
           <Asterisk className="size-4" color="red" />
         </div>
 
-        <Button onClick={toggleEdit} variant="ghost">
+        {/* <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
           ) : (
@@ -73,7 +73,7 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
               Edit type
             </>
           )}
-        </Button>
+        </Button> */}
       </div>
       {!isEditing && (
         <p className="text-sm mt-2 dark:text-slate-50">{initialData.type}</p>

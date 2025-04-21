@@ -64,6 +64,10 @@ export default function Page() {
       setError("Please enter a valid email address.");
       return;
     }
+    if (password == "") {
+      setError("Please enter password.");
+      return;
+    }
     var ciphertext = CryptoJS.AES.encrypt(password, "1").toString();
     let user = await axios.post("/api/authLDAP", {
       emailAddress,

@@ -39,7 +39,7 @@ return <></>;
 }
 
 return (
-<Link href="/teacher/programs">
+<Link href="/teacher/courses">
   <Button size="sm" variant="ghost">
     Admin mode
   </Button>

@@ -10,8 +10,16 @@ export async function POST(req: Request) {
     let result: boolean = false;
 
     var client = new LdapClient({ url: "ldap://10.20.1.11:389" });
-    await client.bind(emailAddress, originalpassword);
-    result = true;
+    // await client.bind(emailAddress, originalpassword);
+    // result = true;
+    try {
+      await client.bind(emailAddress, originalpassword);
+      result = true;
+    } catch (e) {
+      console.log("Bind failed");
+    } finally {
+      return NextResponse.json(result);
+    }
     // try {
     //   (&(mail=${emailAddress})(userPassword=${originalpassword}))
     //   const options = {
@@ -26,7 +34,7 @@ export async function POST(req: Request) {
     // } catch (e) {
 
     // }
-    return NextResponse.json(result);
+    
   } catch (error) {
     console.log("[PROGRAMS]", error);
     return NextResponse.json(false);

@@ -34,7 +34,7 @@ export const Categories = ({ items, userId }: any) => {
   };
   return (
     <>
-      <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+      {/* <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
         {data && (
           <CategoryItem
             key={"0"}
@@ -54,7 +54,7 @@ export const Categories = ({ items, userId }: any) => {
               onClickItem={() => onClickItem(item.title)}
             />
           ))}
-      </div>
+      </div> */}
       <CoursesList title={currentTitle} items={initialCourseList} />
     </>
   );

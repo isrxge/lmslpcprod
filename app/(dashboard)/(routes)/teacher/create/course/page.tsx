@@ -141,9 +141,12 @@ import { Input } from "@/components/ui/input";
 function CreatePage() {
   // Extend the form schema to include "type" for course type
   const formSchema = z.object({
-    title: z.string().min(1, {
-      message: "Title is required",
-    }),
+    title: z
+    .string()
+    .min(1, {
+      message: "Title must follow: Tên khóa học - Đợt X",
+    })
+    .refine((value: any) => /^[\p{L}\p{N}\s]+ - Đợt \d+$/u.test(value ?? "")),
     type: z.enum(["Mandatory", "Probation", "Self Study"], {
       invalid_type_error: "Course type is required",
     }),
@@ -161,9 +164,21 @@ function CreatePage() {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmitCourse = async (values: z.infer<typeof formSchema>) => {
+    // Get today's date in DD/MM/YYYY format
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const yyyy = now.getFullYear();
+    const today = `${dd}/${mm}/${yyyy}`;
+
+    // Append date automatically
+    const fullTitle = `${values.title.trim()} - ${today}`;
+
     const imageUrl = "https://res.cloudinary.com/derjssgq9/image/upload/v1741085512/courseimg_lwaxee.jpg";
     try {
-      const response = await axios.post("/api/courses", { ...values, imageUrl });
+      const response = await axios.post("/api/courses", { title: fullTitle,
+        type: values.type,
+        imageUrl, });
       router.push(`/teacher/courses/${response.data.id}`);
       toast.success("Course created");
     } catch {
@@ -192,7 +207,7 @@ function CreatePage() {
                     <Input
                       disabled={isSubmitting}
                       maxLength={50}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder="[Tên khóa học] - Đợt [số]"
                       {...field}
                     />
                   </FormControl>

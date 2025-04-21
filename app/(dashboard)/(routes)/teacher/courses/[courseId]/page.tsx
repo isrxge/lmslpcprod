@@ -184,7 +184,6 @@ if (hasEditAdvancedPermission) {
 
   const completionText = `(${completedFields}/${totalFields})`;
 
-  const isComplete = requiredFields.every(Boolean);
   const users: any = await db.user.findMany({
     where: {
       userPermission: {
@@ -207,6 +206,15 @@ if (hasEditAdvancedPermission) {
     }
   }
 
+  if (course.type != "Self Study") {
+    requiredFields.push(
+      course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam")
+    );
+  }
+  const isComplete = requiredFields.every(Boolean);
+
+  // console.log("Course modules ABCD:", course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam"));
+  // console.log("requiredFields:", requiredFields);
   return (
     <>
       {!course.isPublished && (
