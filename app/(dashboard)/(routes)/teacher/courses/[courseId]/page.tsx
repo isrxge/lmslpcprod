@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Target } from "lucide-react";
+import { useRouter } from 'next/navigation'
 
 import {
   CircleDollarSign,
@@ -60,7 +61,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       modules: {
         include: {
           module: {},
-        }
+        },
+        orderBy: {
+          position: "desc",
+        },
       },
       ClassSessionRecord: { include: { user: true } },
       CourseOnDepartment: {

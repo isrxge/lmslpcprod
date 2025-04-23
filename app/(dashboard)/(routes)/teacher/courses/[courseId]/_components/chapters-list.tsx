@@ -14,10 +14,12 @@ import { useRouter } from "next/navigation";
 
 interface ChaptersListProps {
   items: Module[];
+  courseId: string;
   onReorder: (updateData: { id: string; position: number }[]) => void;
 }
 
 const deleteModule = async (moduleId: string, courseId: string) => {
+  console.log("Deleting module with ID:", moduleId, "from course ID:", courseId);
   try {
     const response = await fetch("/api/moduleincourse", {
       method: "DELETE",
@@ -43,10 +45,11 @@ const deleteModule = async (moduleId: string, courseId: string) => {
   }
 };
 
-export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
+export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
   const router = useRouter();
+  console.log("ChaptersList itemsđâsdsad:", courseId);
 
   useEffect(() => {
     setIsMounted(true);
@@ -68,7 +71,6 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-
     const items = Array.from(chapters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -88,8 +90,9 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
     onReorder(bulkUpdateData);
   };
 
-  const handleDelete = async (moduleId: string, courseId: string) => {
+  const handleDelete = async (moduleId: string) => {
     const result = await deleteModule(moduleId, courseId);
+    console.log("Result of deleteModulessss:", result);
     if (result) {
       // Loại bỏ module khỏi danh sách trong state chapters ngay lập tức
       setChapters((prevChapters) => {
@@ -118,15 +121,15 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {chapters.map((chapter: any, index) => (
               <Draggable
-                key={chapter.module.id}
-                draggableId={chapter.module.id}
+                key={chapter.id}
+                draggableId={chapter.id}
                 index={index}
               >
                 {(provided) => (
                   <div
                     className={cn(
                       `flex items-center gap-x-2  border-slate-200 border rounded-md mb-4 text-sm`,
-                      chapter.module.isPublished && `bg-sky-100 border-sky-200 `
+                      chapter.isPublished && `bg-sky-100 border-sky-200 `
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -134,7 +137,7 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
                     <div
                       className={cn(
                         "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition dark:text-black",
-                        chapter.module.isPublished &&
+                        chapter.isPublished &&
                           `border-r-sky-200 hover:bg-sky-200 `
                       )}
                       {...provided.dragHandleProps}
@@ -144,10 +147,10 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
                     <div
                       className={cn(
                         "dark:text-black",
-                        chapter.module.isPublished
+                        chapter.isPublished
                       )}
                     >
-                      {chapter.module.title}
+                      {chapter.title}
                     </div>
 
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
@@ -155,15 +158,15 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
                         className={cn(
                           "",
                           "bg-slate-500",
-                          chapter.module.isPublished && `dark:text-slate-50`
+                          chapter.isPublished && `dark:text-slate-50`
                         )}
                       >
-                        {chapter.module.isPublished ? "Published" : "Draft"}
+                        {chapter.isPublished ? "Published" : "Draft"}
                       </Badge>
 
                       <button
                         onClick={() =>
-                          handleDelete(chapter.module.id, chapter.courseId)
+                          handleDelete(chapter.id)
                         }
                         className="text-red-500 hover:text-red-700"
                       >

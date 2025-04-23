@@ -33,9 +33,18 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
   const [searchKeyword, setSearchKeyword] = useState(""); // Thanh tìm kiếm
   const [modules, setModules] = useState<Module[]>([]);
   const [loadingModules, setLoadingModules] = useState(false);
-  const [selectedModules, setSelectedModules] = useState<Module[]>([]); // Lưu trữ các module đã chọn
-  const [moduleInCourse, setModuleInCourse] = useState<ModuleInCourse[]>([]);
-
+  const [moduleInCourse, setModuleInCourse] = useState<Module[]>(
+    initialData.modules || []
+  );
+  const flatArray1 = moduleInCourse.map((item:  any )=>item.module.position = item.position);
+  console.log("ModuleInCourse data flatArray1:", flatArray1); // In dữ liệu trả về
+  const flatArray2 = moduleInCourse.map((item:  any )=>item.module).sort((a: any, b: any) => a.position - b.position);
+  console.log("ModuleInCourse data flatArray2:", flatArray2); // In dữ liệu trả về
+  const [selectedModules, setSelectedModules] = useState<Module[]>(
+    flatArray2||
+     []
+  ); // Lưu trữ các module đã chọn
+  console.log(selectedModules)
   const toggleCreating = () => {
     setIsCreating((current) => !current);
   };
@@ -82,16 +91,41 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
 
     try {
       // Gửi các module đã chọn và courseId tới backend
+      // await axios.post(`/api/moduleincourse`, {
+      //   modules: selectedModules.map((module) => ({
+      //     moduleId: module.id,
+      //   })),
+      //   courseId: courseId, // Đảm bảo bạn gửi đúng courseId
+      // });
+
+      // toast.success("Modules added to course");
+      // toggleCreating();
+      // setSelectedModules([]);
+      // router.refresh();
+      // Gửi các module đã chọn và courseId tới backend
+
+      // await axios.post(`/api/moduleincourse`, {
+      //   modules: selectedModules.map((module) => ({
+      //     moduleId: module.id,
+      //     position: module.position,
+      //   })),
+      //   courseId: courseId, // Đảm bảo bạn gửi đúng courseId
+      // });
+
       await axios.post(`/api/moduleincourse`, {
-        modules: selectedModules.map((module) => ({
-          moduleId: module.id,
-        })),
+        modules: selectedModules.map((module:any) => {
+          console.log('Module Position:', module.positionmodule); // Log vị trí của mỗi module
+          return {
+            moduleId: module.id,
+            position: module.positionmodule,
+          };
+        }),
         courseId: courseId, // Đảm bảo bạn gửi đúng courseId
       });
-
+      
       toast.success("Modules added to course");
       toggleCreating();
-      setSelectedModules([]);
+      //setSelectedModules([]);
       router.refresh();
     } catch (error) {
       console.error("Error submitting modules:", error);
@@ -129,7 +163,8 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
   //   }
   // };
 
-  const handleModuleSelect = (module: Module) => {
+  //code 23/4
+  const handleModuleSelect = (module: any) => {
     if (module.type === "Slide") {
       // Nếu là Slide, cho phép chọn nhiều module
       setSelectedModules((prev) => {
@@ -138,16 +173,78 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
           removeModuleFromCourse(module.id);
           return prev.filter((m) => m.id !== module.id);
         } else {
+         
+          module["positionmodule"] = selectedModules.length;
+          console.log("Số lượng sau khi thêm:", selectedModules.length);
           return [...prev, module];
         }
       });
     } else if (module.type === "Exam") {
       // Nếu là Exam, chỉ cho phép chọn một module
-      setSelectedModules([module]);
-      removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
+      // setSelectedModules([module]);
+      // removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
+      setSelectedModules((prev) => {
+        // Có exam cũ không?
+        const alreadyHasExam = prev.findIndex((m) => m.type === "Exam");
+        // Tùy logic, bạn có thể xóa exam cũ ra khỏi danh sách
+        if (alreadyHasExam !== -1) {
+          removeModuleFromCourse(prev[alreadyHasExam].id);
+          prev.splice(alreadyHasExam, 1);
+        }
+    
+        // Gán position = cuối mảng
+        module["positionmodule"] = prev.length;
+        removeModuleFromCourse(module.id);
+    
+        // Thêm module exam mới
+        return [...prev, module];
+      });
     }
   };
-
+  
+  // const handleModuleSelect = (module: any) => {
+  //   if (module.type === "Slide") {
+  //     // Nếu là Slide, cho phép chọn nhiều module
+  //     setSelectedModules((prev) => {
+  //       if (prev.some((m) => m.id === module.id)) {
+  //         // Bỏ chọn module và gọi API xóa
+  //         removeModuleFromCourse(module.id);
+  //         return prev.filter((m) => m.id !== module.id);
+  //       } else {
+  //         let checkIfExamExist = selectedModules.indexOf((item: { type: string; })=> item.type === "Exam");
+  //         if (checkIfExamExist !== -1) {
+  //           module["positionmodule"] = selectedModules.length -1;
+  //         }else{
+  //           module["positionmodule"] = selectedModules.length;
+  //         }
+  //         console.log("Số lượng sau khi thêm:", selectedModules.length);
+  //         return [...prev, module];
+  //       }
+  //     });
+  //   } else if (module.type === "Exam") {
+  //     // Nếu là Exam, chỉ cho phép chọn một module
+  //     // setSelectedModules([module]);
+  //     // removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
+  //     setSelectedModules((prev) => {
+  //       // Có exam cũ không?
+  //       const alreadyHasExam = prev.findIndex((m) => m.type === "Exam");
+  //       // Tùy logic, bạn có thể xóa exam cũ ra khỏi danh sách
+  //       if (alreadyHasExam !== -1) {
+  //         removeModuleFromCourse(prev[alreadyHasExam].id);
+  //         prev.splice(alreadyHasExam, 1);
+  //       }
+    
+  //       // Gán position = cuối mảng
+  //       module["positionmodule"] = selectedModules.length;
+  //       removeModuleFromCourse(module.id);
+    
+  //       // Thêm module exam mới
+  //       return [...prev, module];
+  //     });
+  //   }
+  // };
+  
+  
   // Hàm gọi API xóa module khỏi ModuleInCourse
   const removeModuleFromCourse = async (moduleId: string) => {
     try {
@@ -157,7 +254,9 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
           courseId, // Đảm bảo rằng bạn gửi đúng courseId
         },
       });
+      // setSelectedModules([]);
       toast.success("Module removed from course");
+      router.refresh();
     } catch (error) {
       console.error("Error removing module:", error);
       // toast.success("Unselect this module");
@@ -306,7 +405,7 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
           )}
         >
           {!initialData.modules.length && "No chapters"}
-          <ChaptersList items={initialData.modules} onReorder={onReorder} />
+          <ChaptersList items={selectedModules} onReorder={onReorder} courseId={courseId} />
         </div>
       )}
 

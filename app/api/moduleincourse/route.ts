@@ -2,50 +2,50 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function POST(req: Request) {
-  try {
-    const { userId } = auth();
-    const { modules, courseId }: { modules: { moduleId: string }[]; courseId: string } =
-      await req.json();
+// export async function POST(req: Request) {
+//   try {
+//     const { userId } = auth();
+//     const { modules, courseId }: { modules: { moduleId: string }[]; courseId: string } =
+//       await req.json();
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
+//     if (!userId) {
+//       return new NextResponse("Unauthorized", { status: 401 });
+//     }
 
-    // Tạo một mảng để lưu các mối quan hệ module và khóa học
-    const createdModulesInCourse = [];
+//     // Tạo một mảng để lưu các mối quan hệ module và khóa học
+//     const createdModulesInCourse = [];
 
-    for (const { moduleId } of modules) {
-      // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa
-      const existingModuleInCourse = await db.moduleInCourse.findUnique({
-        where: {
-          moduleId_courseId: {
-            moduleId,
-            courseId,
-          },
-        },
-      });
+//     for (const { moduleId } of modules) {
+//       // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa
+//       const existingModuleInCourse = await db.moduleInCourse.findUnique({
+//         where: {
+//           moduleId_courseId: {
+//             moduleId,
+//             courseId,
+//           },
+//         },
+//       });
 
-      if (!existingModuleInCourse) {
-        // Nếu chưa có, tạo mới mối quan hệ giữa module và khóa học
-        const newModuleInCourse = await db.moduleInCourse.create({
-          data: {
-            courseId,
-            moduleId,
-            position: 1, // Đặt vị trí mặc định là 1, có thể thay đổi sau
-          },
-        });
-        createdModulesInCourse.push(newModuleInCourse);
-      }
-    }
+//       if (!existingModuleInCourse) {
+//         // Nếu chưa có, tạo mới mối quan hệ giữa module và khóa học
+//         const newModuleInCourse = await db.moduleInCourse.create({
+//           data: {
+//             courseId,
+//             moduleId,
+//             position: 0, // Đặt vị trí mặc định là 1, có thể thay đổi sau
+//           },
+//         });
+//         createdModulesInCourse.push(newModuleInCourse);
+//       }
+//     }
 
-    // Trả về các mối quan hệ module và khóa học đã được tạo
-    return NextResponse.json(createdModulesInCourse);
-  } catch (error) {
-    console.log("[MODULE_IN_COURSE_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
-  }
-}
+//     // Trả về các mối quan hệ module và khóa học đã được tạo
+//     return NextResponse.json(createdModulesInCourse);
+//   } catch (error) {
+//     console.log("[MODULE_IN_COURSE_POST]", error);
+//     return new NextResponse("Internal Error", { status: 500 });
+//   }
+// }
 
 // export async function GET(req: Request) {
 //   try {
@@ -95,6 +95,63 @@ export async function POST(req: Request) {
 // }
 
 // GET - Lấy danh sách module đã liên kết với khóa học
+
+export async function POST(req: Request) {
+  try {
+    const { userId } = auth();
+    const {
+      modules,
+      courseId,
+      position,
+    }: { modules: {
+      id: any;
+      position: any; moduleId: string 
+}[]; courseId: string; position: any } =
+      await req.json();
+ 
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+ 
+    // Tạo một mảng để lưu các mối quan hệ module và khóa học
+    const createdModulesInCourse = [];
+ 
+    console.log("Danh sách modules được gửi từ client:", modules);
+    for (const  module of modules) {
+     
+      // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa
+      const existingModuleInCourse = await db.moduleInCourse.findFirst({
+        where: {
+        
+            moduleId: module.moduleId,
+            courseId,
+          
+        },
+      });
+     
+ 
+      if (!existingModuleInCourse) {
+        // Nếu chưa có, tạo mới mối quan hệ giữa module và khóa học
+        const newModuleInCourse = await db.moduleInCourse.create({
+          data: {
+            courseId,
+            moduleId:module.moduleId,
+            position: module.position, // Đặt vị trí mặc định là 1, có thể thay đổi sau
+          },
+        });
+        createdModulesInCourse.push(newModuleInCourse);
+      }
+    }
+ 
+    // Trả về các mối quan hệ module và khóa học đã được tạo
+    return NextResponse.json(createdModulesInCourse);
+  } catch (error) {
+    console.log("[MODULE_IN_COURSE_POST]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+ 
+
 export async function GET(req: Request) {
   try {
     const { userId } = auth(); // Lấy userId từ thông tin xác thực
@@ -176,6 +233,7 @@ export async function PATCH(
 
 export async function DELETE(req: Request) {
   try {
+    
     const { userId } = auth();
     const { moduleId, courseId }: { moduleId: string; courseId: string } = await req.json();
 

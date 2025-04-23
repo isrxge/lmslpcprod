@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({
     DateRange | undefined
   >();
   const [datePickerDisabled, setDatePickerDisabled] = React.useState(false); // State to manage date picker disable
-
+  const [canViewAll, setCanViewAll] = React.useState<boolean>(false);
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const table = useReactTable({
     data: userList,
@@ -88,6 +88,22 @@ export function DataTable<TData, TValue>({
       },
     },
   });
+
+  // Gọi API lấy danh sách user & đồng thời check quyền
+  React.useEffect(() => {
+    async function fetchUsers() {
+      try {
+        // API đã trả về { users, canViewAll }
+        const res = await axios.get("/api/users");
+        setUserList(res.data.users || []);
+        setCanViewAll(res.data.canViewAll || false);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    }
+
+    fetchUsers();
+  }, []);
 
   React.useEffect(() => {
     async function getDepartments() {
@@ -241,7 +257,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <select
+        {/* <select
           name="status"
           id="filterByStatus"
           onChange={(event) => onDepartmentChange(event.target.value)}
@@ -257,7 +273,26 @@ export function DataTable<TData, TValue>({
               {item.title}
             </option>
           ))}
-        </select>
+        </select> */}
+        {canViewAll && (
+  <select
+    name="status"
+    id="filterByStatus"
+    onChange={(event) => onDepartmentChange(event.target.value)}
+    className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
+  >
+    <option value="">All Departments</option>
+    {departments.map((item: any) => (
+      <option
+        key={item.id}
+        value={item.id}
+        className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
+      >
+        {item.title}
+      </option>
+    ))}
+  </select>
+)}
         <div className="flex gap-2 items-center">
           <DatePickerWithRange
             placeHolder={"Filter date range"}

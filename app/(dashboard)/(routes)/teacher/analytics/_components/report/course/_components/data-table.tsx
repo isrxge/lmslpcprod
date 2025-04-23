@@ -63,6 +63,7 @@ export function DataTable<TData, TValue>({
   >();
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [canViewAll, setCanViewAll] = React.useState<boolean>(false);
   const table = useReactTable({
     data: courseList,
     columns,
@@ -84,6 +85,21 @@ export function DataTable<TData, TValue>({
       },
     },
   });
+
+  // 1. Gọi API /api/course => { course, canViewAll }
+  React.useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const res = await axios.get("/api/courses");
+        // API trả về { course, canViewAll }
+        setCourseList(res.data.course || []);
+        setCanViewAll(res.data.canViewAll || false);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    }
+    fetchCourses();
+  }, []);
 
   React.useEffect(() => {
     async function getInstructors() {
@@ -259,7 +275,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <select
+        {/* <select
           name="status"
           id="filterByStatus"
           onChange={(event) =>
@@ -279,7 +295,26 @@ export function DataTable<TData, TValue>({
               {item.username}
             </option>
           ))}
-        </select>
+        </select> */}
+        {canViewAll && (
+          <select
+            name="instructor"
+            id="filterByInstructor"
+            onChange={(event) =>
+              table
+                .getColumn("courseInstructedBy")
+                ?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
+          >
+            <option value="">All Instructors</option>
+            {instructors.map((inst: any) => (
+              <option key={inst.id} value={inst.id}>
+                {inst.username}
+              </option>
+            ))}
+          </select>
+        )}
         <DatePickerWithRange
           date={dateRange}
           setDate={setDateRange}

@@ -208,7 +208,7 @@ model Module {
   type         String
   user         User           @relation(fields: [userId], references: [id])
   userId       String
-  position     Int
+  position     Int?
   isPublished  Boolean
   UserProgress UserProgress[]
   Slide        Slide[]
