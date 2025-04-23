@@ -116,14 +116,13 @@ export async function POST(req: Request) {
     // Tạo một mảng để lưu các mối quan hệ module và khóa học
     const createdModulesInCourse = [];
  
-    console.log("Danh sách modules được gửi từ client:", modules);
-    for (const  module of modules) {
+    for (const moduleData of modules) {
      
       // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa
       const existingModuleInCourse = await db.moduleInCourse.findFirst({
         where: {
         
-            moduleId: module.moduleId,
+            moduleId: moduleData.moduleId,
             courseId,
           
         },
@@ -135,8 +134,8 @@ export async function POST(req: Request) {
         const newModuleInCourse = await db.moduleInCourse.create({
           data: {
             courseId,
-            moduleId:module.moduleId,
-            position: module.position, // Đặt vị trí mặc định là 1, có thể thay đổi sau
+            moduleId:moduleData.moduleId,
+            position: moduleData.position, // Đặt vị trí mặc định là 1, có thể thay đổi sau
           },
         });
         createdModulesInCourse.push(newModuleInCourse);
