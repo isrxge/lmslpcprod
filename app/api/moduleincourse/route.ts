@@ -104,6 +104,7 @@ export async function POST(req: Request) {
       courseId,
       position,
     }: { modules: {
+      type: string;
       id: any;
       position: any; moduleId: string 
 }[]; courseId: string; position: any } =
@@ -115,7 +116,18 @@ export async function POST(req: Request) {
  
     // Tạo một mảng để lưu các mối quan hệ module và khóa học
     const createdModulesInCourse = [];
- 
+    for(let i = 0; i < modules.length - 1; i++){
+      let temp = 0
+      if(modules[i].type === "Exam"){
+        if(modules[i].position < modules[i + 1].position){
+           temp = modules[i].position
+           modules[i].position = modules[i + 1].position
+           modules[i + 1].position = temp
+        }
+      }
+      
+    }
+    console.log(modules,"this is the sorted modules with bubble sort")
     for (const moduleData of modules) {
      
       // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa
@@ -139,6 +151,19 @@ export async function POST(req: Request) {
           },
         });
         createdModulesInCourse.push(newModuleInCourse);
+      }else{
+        const updateModuleInCourse = await db.moduleInCourse.update({
+          where: {
+            moduleId_courseId: {
+              courseId,
+            moduleId:moduleData.moduleId,
+            },
+          },
+          data: {
+           
+            position: moduleData.position, // Đặt vị trí mặc định là 1, có thể thay đổi sau
+          },
+        });
       }
     }
  

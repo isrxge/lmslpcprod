@@ -13,6 +13,7 @@ import { Module, Course, ModuleInCourse } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChaptersList } from "./chapters-list";
+import { Reorder } from "framer-motion";
 
 interface ChaptersFormProps {
   initialData: any;
@@ -24,7 +25,11 @@ const formSchema = z.object({
   type: z.string().optional(),
 });
 
-export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersFormProps) => {
+export const ChaptersForm = ({
+  initialData,
+  courseId,
+  courseType,
+}: ChaptersFormProps) => {
   console.log("initialData:", initialData);
   // console.log("ModuleInCourse data:", initialData.modulesInCourse.map((m) => m.module));
   const [isCreating, setIsCreating] = useState(false);
@@ -36,15 +41,18 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
   const [moduleInCourse, setModuleInCourse] = useState<Module[]>(
     initialData.modules || []
   );
-  const flatArray1 = moduleInCourse.map((item:  any )=>item.module.position = item.position);
+  const flatArray1 = moduleInCourse.map(
+    (item: any) => (item.module.position = item.position)
+  );
   console.log("ModuleInCourse data flatArray1:", flatArray1); // In dữ liệu trả về
-  const flatArray2 = moduleInCourse.map((item:  any )=>item.module).sort((a: any, b: any) => a.position - b.position);
+  const flatArray2 = moduleInCourse
+    .map((item: any) => item.module)
+    .sort((a: any, b: any) => a.position - b.position);
   console.log("ModuleInCourse data flatArray2:", flatArray2); // In dữ liệu trả về
   const [selectedModules, setSelectedModules] = useState<Module[]>(
-    flatArray2||
-     []
+    flatArray2 || []
   ); // Lưu trữ các module đã chọn
-  console.log(selectedModules)
+  console.log(selectedModules);
   const toggleCreating = () => {
     setIsCreating((current) => !current);
   };
@@ -113,16 +121,17 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
       // });
 
       await axios.post(`/api/moduleincourse`, {
-        modules: selectedModules.map((module:any) => {
-          console.log('Module Position:', module.positionmodule); // Log vị trí của mỗi module
+        modules: selectedModules.map((module: any) => {
+          console.log("Module Position:", module.positionmodule); // Log vị trí của mỗi module
           return {
             moduleId: module.id,
-            position: module.positionmodule,
+            position: module.positionmodule || module.position,
+            type: module.type,
           };
         }),
         courseId: courseId, // Đảm bảo bạn gửi đúng courseId
       });
-      
+
       toast.success("Modules added to course");
       toggleCreating();
       //setSelectedModules([]);
@@ -167,14 +176,17 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
   const handleModuleSelect = (module: any) => {
     if (module.type === "Slide") {
       // Nếu là Slide, cho phép chọn nhiều module
-      setSelectedModules((prev) => {
-        if (prev.some((m) => m.id === module.id)) {
+      setSelectedModules((prev: any) => {
+        if (prev.some((m: { id: any }) => m.id === module.id)) {
           // Bỏ chọn module và gọi API xóa
           removeModuleFromCourse(module.id);
-          return prev.filter((m) => m.id !== module.id);
+          return prev.filter((m: { id: any }) => m.id !== module.id);
         } else {
-         
+          const alreadyHasExam = prev.findIndex(
+            (m: { type: string }) => m.type === "Exam"
+          );
           module["positionmodule"] = selectedModules.length;
+
           console.log("Số lượng sau khi thêm:", selectedModules.length);
           return [...prev, module];
         }
@@ -183,25 +195,30 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
       // Nếu là Exam, chỉ cho phép chọn một module
       // setSelectedModules([module]);
       // removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
-      setSelectedModules((prev) => {
+      setSelectedModules((prev: any) => {
         // Có exam cũ không?
-        const alreadyHasExam = prev.findIndex((m) => m.type === "Exam");
+        const alreadyHasExam = prev.findIndex(
+          (m: { type: string }) => m.type === "Exam"
+        );
         // Tùy logic, bạn có thể xóa exam cũ ra khỏi danh sách
         if (alreadyHasExam !== -1) {
-          removeModuleFromCourse(prev[alreadyHasExam].id);
-          prev.splice(alreadyHasExam, 1);
+          if (prev.some((m: { id: any }) => m.id === module.id)) {
+            // Bỏ chọn module và gọi API xóa
+            removeModuleFromCourse(module.id);
+            return prev.filter((m: { id: any }) => m.id !== module.id);
+          } else {
+            alert("Bạn chỉ được chọn 1 bài thi trong khóa học này!");
+            return prev;
+          }
+        } else {
+          module["positionmodule"] = selectedModules.length;
+          console.log("Số lượng sau khi thêm:", selectedModules.length);
+          return [...prev, module];
         }
-    
-        // Gán position = cuối mảng
-        module["positionmodule"] = prev.length;
-        removeModuleFromCourse(module.id);
-    
-        // Thêm module exam mới
-        return [...prev, module];
       });
     }
   };
-  
+
   // const handleModuleSelect = (module: any) => {
   //   if (module.type === "Slide") {
   //     // Nếu là Slide, cho phép chọn nhiều module
@@ -233,18 +250,17 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
   //         removeModuleFromCourse(prev[alreadyHasExam].id);
   //         prev.splice(alreadyHasExam, 1);
   //       }
-    
+
   //       // Gán position = cuối mảng
   //       module["positionmodule"] = selectedModules.length;
   //       removeModuleFromCourse(module.id);
-    
+
   //       // Thêm module exam mới
   //       return [...prev, module];
   //     });
   //   }
   // };
-  
-  
+
   // Hàm gọi API xóa module khỏi ModuleInCourse
   const removeModuleFromCourse = async (moduleId: string) => {
     try {
@@ -348,7 +364,9 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
               disabled={courseType === "Self Study"}
             >
               <option value="Slide">Slide</option>
-              {courseType !== "Self Study" && <option value="Exam">Exam</option>}
+              {courseType !== "Self Study" && (
+                <option value="Exam">Exam</option>
+              )}
             </select>
 
             {/* Thanh tìm kiếm */}
@@ -405,7 +423,11 @@ export const ChaptersForm = ({ initialData, courseId, courseType }: ChaptersForm
           )}
         >
           {!initialData.modules.length && "No chapters"}
-          <ChaptersList items={selectedModules} onReorder={onReorder} courseId={courseId} />
+          <ChaptersList
+            items={selectedModules}
+            onReorder={onReorder}
+            courseId={courseId}
+          />
         </div>
       )}
 

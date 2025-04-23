@@ -124,6 +124,7 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
                 key={chapter.id}
                 draggableId={chapter.id}
                 index={index}
+                isDragDisabled={chapter.type === "Exam"}
               >
                 {(provided) => (
                   <div
@@ -138,7 +139,8 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
                       className={cn(
                         "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition dark:text-black",
                         chapter.isPublished &&
-                          `border-r-sky-200 hover:bg-sky-200 `
+                          `border-r-sky-200 hover:bg-sky-200 `,
+                          chapter.type === "Exam" && "opacity-50 cursor-not-allowed bg-blue-200"
                       )}
                       {...provided.dragHandleProps}
                     >
