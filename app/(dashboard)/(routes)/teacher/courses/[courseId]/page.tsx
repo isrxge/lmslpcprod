@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Target } from "lucide-react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 import {
   CircleDollarSign,
@@ -79,38 +79,41 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       // },
     },
   });
-  
+
   const userDepartment: any = await db.user.findUnique({
-    where:{
+    where: {
       id: userId,
     },
-    include:{
+    include: {
       Department: true,
-    }});
+    },
+  });
 
   const department: any = await db.department.findMany({
     include: {
       User: true,
     },
   });
-//advance permission
-  const checkUserPermissions = checkUser
-  .map((item: { permission: { title: any } }) => item.permission.title);
-
-const hasEditAdvancedPermission = checkUserPermissions.includes("Edit advance course permission");
-
-let filteredDepartment = [];
-
-if (hasEditAdvancedPermission) {
-  // If the user has "Edit advance course permission", show all departments
-  filteredDepartment = department;
-} else {
-  // Otherwise, filter departments based on the user's department
-  filteredDepartment = department.filter(
-    (dept: any) => dept.id === userDepartment?.Department?.id
+  //advance permission
+  const checkUserPermissions = checkUser.map(
+    (item: { permission: { title: any } }) => item.permission.title
   );
-}
 
+  const hasEditAdvancedPermission = checkUserPermissions.includes(
+    "Edit advance course permission"
+  );
+
+  let filteredDepartment = [];
+
+  if (hasEditAdvancedPermission) {
+    // If the user has "Edit advance course permission", show all departments
+    filteredDepartment = department;
+  } else {
+    // Otherwise, filter departments based on the user's department
+    filteredDepartment = department.filter(
+      (dept: any) => dept.id === userDepartment?.Department?.id
+    );
+  }
 
   // const filteredDepartment = department.filter(
   //   (dept:any) => dept.id === userDepartment?.Department?.id
@@ -212,7 +215,9 @@ if (hasEditAdvancedPermission) {
 
   if (course.type != "Self Study") {
     requiredFields.push(
-      course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam")
+      course.modules.some(
+        (chapter: { module: any }) => chapter.module.type == "Exam"
+      )
     );
   }
   const isComplete = requiredFields.every(Boolean);
@@ -244,6 +249,9 @@ if (hasEditAdvancedPermission) {
             disabled={!isComplete}
             courseId={params.courseId}
             isPublished={course.isPublished}
+            endDate={course.endDate}
+            creatorId={course.userId}
+            canDeleteAny={hasEditAdvancedPermission}
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
@@ -267,16 +275,23 @@ if (hasEditAdvancedPermission) {
                 <h2 className="text-xl">Course chapters</h2>
               </div>
               <div className="mt-4">
-                <ChaptersForm initialData={course} courseType={course.type} courseId={course.id} />
+                <ChaptersForm
+                  initialData={course}
+                  courseType={course.type}
+                  courseId={course.id}
+                />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Target} />
-                <h2 className="text-xl">Deadline</h2>               
+                <h2 className="text-xl">Deadline</h2>
               </div>
-              <div className="mt-4">
-              <EndDateForm
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              Note: The course will end at 00:00 on the end date.
+              </p>
+              <div>
+                <EndDateForm
                   initialData={course}
                   courseId={course.id}
                   // deadline={endDate}
@@ -286,7 +301,9 @@ if (hasEditAdvancedPermission) {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={UserPlus} />
-                <h2 className="text-xl">Assign staff & instructor for this course</h2>
+                <h2 className="text-xl">
+                  Assign staff & instructor for this course
+                </h2>
               </div>
               <div className="mt-4">
                 <DepartmentForm
@@ -295,7 +312,7 @@ if (hasEditAdvancedPermission) {
                   department={filteredDepartment}
                 />
                 <InstructorAssignForm
-                  initialData={course}  
+                  initialData={course}
                   courseId={course.id}
                   Instructor={users}
                 />

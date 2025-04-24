@@ -135,6 +135,7 @@ export const ChaptersForm = ({
       toast.success("Modules added to course");
       toggleCreating();
       //setSelectedModules([]);
+      window.location.reload(); // Tải lại trang để cập nhật danh sách module
       router.refresh();
     } catch (error) {
       console.error("Error submitting modules:", error);
@@ -150,6 +151,7 @@ export const ChaptersForm = ({
         list: updateData,
       });
       toast.success("Chapters reordered");
+      // window.location.reload();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
@@ -272,6 +274,7 @@ export const ChaptersForm = ({
       });
       // setSelectedModules([]);
       toast.success("Module removed from course");
+      // window.location.reload();
       router.refresh();
     } catch (error) {
       console.error("Error removing module:", error);

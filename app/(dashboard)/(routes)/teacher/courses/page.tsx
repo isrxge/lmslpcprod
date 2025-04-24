@@ -188,11 +188,26 @@ const CoursesPage = async () => {
     // User can only see courses within their own department
     courses = await db.course.findMany({
       where: {
-        CourseOnDepartment: {
-          some: {
-            departmentId: userDepartment?.Department?.id,
+        OR: [
+          {
+            userId: userId,
           },
-        },
+          {
+            CourseOnDepartment: {
+              some: {
+                departmentId: userDepartment?.Department?.id,
+              },
+            },
+          }
+          // {
+          //   updatedBy: userId,
+          // },
+        ],
+        // CourseOnDepartment: {
+        //   some: {
+        //     departmentId: userDepartment?.Department?.id,
+        //   },
+        // },
       },
       orderBy: {
         startDate: "desc",
@@ -231,11 +246,26 @@ const CoursesPage = async () => {
     // If the user doesn't have the necessary permissions, show their department's courses
     courses = await db.course.findMany({
       where: {
-        CourseOnDepartment: {
-          some: {
-            departmentId: userDepartment?.Department?.id,
+        // CourseOnDepartment: {
+        //   some: {
+        //     departmentId: userDepartment?.Department?.id,
+        //   },
+        // },
+        OR: [
+          {
+            userId: userId,
           },
-        },
+          {
+            CourseOnDepartment: {
+              some: {
+                departmentId: userDepartment?.Department?.id,
+              },
+            },
+          }
+          // {
+          //   updatedBy: userId,
+          // },
+        ],
       },
       orderBy: {
         startDate: "desc",

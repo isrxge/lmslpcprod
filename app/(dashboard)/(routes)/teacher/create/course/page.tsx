@@ -142,11 +142,11 @@ function CreatePage() {
   // Extend the form schema to include "type" for course type
   const formSchema = z.object({
     title: z
-    .string()
-    .min(1, {
-      message: "Title must follow: Tên khóa học - Đợt X",
-    })
-    .refine((value: any) => /^[\p{L}\p{N}\s]+ - Đợt \d+$/u.test(value ?? "")),
+      .string()
+      .min(1, {
+        message: "Title must follow: Tên khóa học - Đợt X",
+      })
+      .refine((value: any) => /^[\p{L}\p{N}\s]+ - Đợt \d+$/u.test(value ?? "")),
     type: z.enum(["Mandatory", "Probation", "Self Study"], {
       invalid_type_error: "Course type is required",
     }),
@@ -166,19 +166,22 @@ function CreatePage() {
   const onSubmitCourse = async (values: z.infer<typeof formSchema>) => {
     // Get today's date in DD/MM/YYYY format
     const now = new Date();
-    const dd = String(now.getDate()).padStart(2, '0');
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, "0");
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
     const yyyy = now.getFullYear();
     const today = `${dd}/${mm}/${yyyy}`;
 
     // Append date automatically
     const fullTitle = `${values.title.trim()} - ${today}`;
 
-    const imageUrl = "https://res.cloudinary.com/derjssgq9/image/upload/v1741085512/courseimg_lwaxee.jpg";
+    const imageUrl =
+      "https://res.cloudinary.com/derjssgq9/image/upload/v1741085512/courseimg_lwaxee.jpg";
     try {
-      const response = await axios.post("/api/courses", { title: fullTitle,
+      const response = await axios.post("/api/courses", {
+        title: fullTitle,
         type: values.type,
-        imageUrl, });
+        imageUrl,
+      });
       router.push(`/teacher/courses/${response.data.id}`);
       toast.success("Course created");
     } catch {
@@ -195,7 +198,10 @@ function CreatePage() {
           change this later.
         </p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmitCourse)} className="space-y-8 mt-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmitCourse)}
+            className="space-y-4 mt-8"
+          >
             {/* Title Field */}
             <FormField
               control={form.control}
@@ -227,12 +233,26 @@ function CreatePage() {
                 <FormItem>
                   <FormLabel>Course Type</FormLabel>
                   <FormControl>
-                    <select {...field} disabled={isSubmitting} className="border rounded-md p-1 w-full ">
-                      <option value="Mandatory" title="One-time exam required">Mandatory</option>
-                      <option value="Probation" title="Two-time exam required">Probation</option>
-                      <option value="Self Study" title="No exam required">Self Study</option>
+                    <select
+                      {...field}
+                      disabled={isSubmitting}
+                      className="border rounded-md p-1 w-full "
+                    >
+                      <option value="Mandatory" title="One-time exam required">
+                        Mandatory
+                      </option>
+                      <option value="Probation" title="Two-time exam required">
+                        Probation
+                      </option>
+                      <option value="Self Study" title="No exam required">
+                        Self Study
+                      </option>
                     </select>
                   </FormControl>
+                  <FormDescription>
+                    Note: Once you choose a course type, you will not be able
+                    to change it.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

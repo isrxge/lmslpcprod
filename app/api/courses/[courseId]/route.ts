@@ -17,14 +17,12 @@ export async function DELETE(
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
-        userId: userId,
+        // userId: userId,
       },
     });
 
     if (!course) {
-      return new NextResponse(
-        "Course not found or you don't have permission to delete this course"
-      );
+      return new NextResponse("Course not found", { status: 404 });
     }
 
     const deletedCourse = await db.course.delete({
