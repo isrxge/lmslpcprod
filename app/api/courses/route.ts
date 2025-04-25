@@ -62,7 +62,7 @@ export async function GET(req: Request) {
     if (!permission) {
       course = await db.course.findMany({
         where: {
-          isPublished: true,
+          // isPublished: true,
           courseInstructedBy: userId,
         },
         include: {
@@ -113,7 +113,18 @@ export async function GET(req: Request) {
           ClassSessionRecord: {
             include: {
               user: true,
+              course:{
+                include:{
+                  examRecord:{
+                    include:{
+                      user:true,
+                    },
+                  
+                  }
+                }
+              }
             },
+
           },
           CourseOnDepartment: {
             include: {
@@ -127,9 +138,9 @@ export async function GET(req: Request) {
       canViewAll = false;
     } else {
       course = await db.course.findMany({
-        where: {
-          isPublished: true,
-        },
+        // where: {
+        //   isPublished: true,
+        // },
         include: {
           courseInstructor: true,
           courseWithProgram: {
@@ -178,7 +189,18 @@ export async function GET(req: Request) {
           ClassSessionRecord: {
             include: {
               user: true,
+              course:{
+                include:{
+                  examRecord:{
+                    include:{
+                      user:true,
+                    },
+                  
+                  }
+                }
+              }
             },
+
           },
           CourseOnDepartment: {
             include: {

@@ -30,10 +30,11 @@ export const MyActivity = ({ items }: MyActivityProps) => {
         My Activity
       </h2>
       <p className="mb-4 italic">
-        Start studying now:{" "}
+        {/* Start studying now:{" "}
         <Link href="/search" className="text-blue-700 hover:underline">
           Browse courses
-        </Link>
+        </Link> */}
+        No activity
       </p>
     </>
   ) : (

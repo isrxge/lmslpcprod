@@ -44,7 +44,7 @@ export const Modal: React.FC<ModalProps> = ({
                 {exam.title} ({exam.passedCount}/{exam.totalUsers})
               </h3>
               <div className="mb-2">
-                <h4 className="font-medium">Passed:</h4>
+                <h4 className="font-medium">Pass:</h4>
                 <ul className="space-y-2">
                   {exam.passedUsers.length === 0 ? (
                     <li className="italic text-gray-500">Nobody</li>

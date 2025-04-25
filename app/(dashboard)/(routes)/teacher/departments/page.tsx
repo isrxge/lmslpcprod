@@ -21,20 +21,41 @@ const PermissionsPage = async () => {
     },
   });
   if (
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Edit department permission") == -1 &&
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Create department permission") == -1
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit department permission") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create department permission") == -1
-  )  {
+      .indexOf("View department permission") == -1
+  ) {
     return redirect("/");
   }
-  const departments = await db.department.findMany({
-    include: {
-      User: true,
-    },
-  });
+
+  let departments;
+  if (
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Advance department permission") == -1
+  ) {
+    departments = await db.department.findMany({
+      where: {
+        User: { some: { id: userId } },
+      },
+      include: {
+        User: true,
+      },
+    });
+  } else {
+     departments = await db.department.findMany({
+      
+      include: {
+        User: true,
+      },
+    });
+  }
 
   return (
     <div className="p-6">

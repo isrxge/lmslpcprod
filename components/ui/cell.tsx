@@ -177,7 +177,7 @@ export const Cell = ({ row }: any) => {
               <></>
             )}
 
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onClick={() =>
                 onChangeAlertMessage(
                   "inActive",
@@ -187,7 +187,7 @@ export const Cell = ({ row }: any) => {
             >
               <BadgeX className="h-4 w-4 mr-2" />
               Disable
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialog

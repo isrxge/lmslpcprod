@@ -26,12 +26,14 @@ const guestRoutes = [
     icon: Home,
     label: "Home",
     href: "/",
-  },
-  {
-    icon: Compass,
-    label: "Browse",
-    href: "/search",
-  },
+  }
+  // ,
+  // {
+  //   icon: Compass,
+  //   label: "Browse",
+  //   href: "/search",
+  // }
+  ,
   {
     icon: Star,
     label: "Bright Star",
@@ -70,12 +72,15 @@ export const SidebarRoutes = ({ userId }: any) => {
       ]);
     }
     if (
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create course permission") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Edit course permission") != -1
       data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create course permission") != -1 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Edit course permission") != -1
+        .indexOf("View course permission") != -1
     ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,

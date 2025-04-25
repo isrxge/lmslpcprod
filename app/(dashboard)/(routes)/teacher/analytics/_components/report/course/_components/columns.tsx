@@ -154,20 +154,20 @@ export const columns: ColumnDef<Course>[] = [
     ),
     cell: AttendeesCell,
   },
-  {
-    accessorKey: "Module",
-    header: ({ column }) => {
-      return (
-        <span
-          className="flex items-center cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          <span className="mr-2">Exams</span>
-        </span>
-      );
-    },
-    cell: ExamsCell,
-  },
+  // {
+  //   accessorKey: "Module",
+  //   header: ({ column }) => {
+  //     return (
+  //       <span
+  //         className="flex items-center cursor-pointer"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         <span className="mr-2">Exams</span>
+  //       </span>
+  //     );
+  //   },
+  //   cell: ExamsCell,
+  // },
   // {
   //   accessorKey: "Module",
   //   header: ({ column }) => {

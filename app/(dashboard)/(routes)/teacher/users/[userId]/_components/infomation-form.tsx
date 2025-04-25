@@ -63,7 +63,7 @@ const UserInformation = ({ user }: any) => {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Username:
+          Full Name:
         </label>
         <div className="relative">
           <input
@@ -76,7 +76,7 @@ const UserInformation = ({ user }: any) => {
               isUsernameEditing ? "border-blue-500" : ""
             }`}
           />
-          <div
+          {/* <div
             className="absolute right-2 top-2 cursor-pointer"
             onClick={handleUsernameEditClick}
           >
@@ -85,7 +85,7 @@ const UserInformation = ({ user }: any) => {
             ) : (
               <Pencil className="text-blue-500 w-5 h-5" />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
 

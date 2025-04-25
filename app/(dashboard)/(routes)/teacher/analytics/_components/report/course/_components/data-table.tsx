@@ -42,6 +42,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import Exam from "@/app/(dashboard)/(routes)/teacher/module/[moduleId]/_components/module-exam-form";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -211,6 +212,9 @@ export function DataTable<TData, TValue>({
       const attendees = item.ClassSessionRecord.map(
         (session: any) => `${session.user.username} : ${session.status}`
       ).join(" \n");
+      const exam = item.ClassSessionRecord.map(
+        (session: any) => `${session.user.username} : ${session.score}%`
+      ).join(" \n");
       const departments = item?.CourseOnDepartment.map(
         (item: any) => item?.Department?.title
       ).join(" \n");
@@ -224,6 +228,7 @@ export function DataTable<TData, TValue>({
         "Module list": moduleList,
         "Module list result": moduleListResult,
         Attendees: attendees,
+        Exam: exam,
       });
     });
 
@@ -235,6 +240,7 @@ export function DataTable<TData, TValue>({
       { wch: 10 },
       { wch: 10 },
       { wch: 10 },
+      { wch: 50 },
       { wch: 50 },
       { wch: 50 },
       { wch: 50 },

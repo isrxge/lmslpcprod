@@ -41,7 +41,7 @@ export const ModuleActionCell = ({ row }: any) => {
   } else {
     return data.userPermission
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit program permission") != -1 ? (
+      .indexOf("Edit resource permission") != -1 ? (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-4 w-8 p-0">

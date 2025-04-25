@@ -220,6 +220,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       )
     );
   }
+  if (course.type === "Self Study") {
+    course.credit = 0;
+  }
   const isComplete = requiredFields.every(Boolean);
 
   // console.log("Course modules ABCD:", course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam"));

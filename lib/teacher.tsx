@@ -20,22 +20,33 @@ export const IsTeacher = ({ userId }: any) => {
   if (isLoading) {
     return <></>; }
 
-// Kiểm tra nếu người dùng có cả 2 quyền: "Create course permission" và "Create course report"
-const hasCreateCoursePermission =
-data.userPermission.some(
+// // Kiểm tra nếu người dùng có cả 2 quyền: "Create course permission" và "Create course report"
+// const hasCreateCoursePermission =
+// data.userPermission.some(
+//   (item: { permission: { title: string } }) =>
+//     item.permission.title === "Create course permission"
+// );
+
+// const hasCreateCourseReport =
+// data.userPermission.some(
+//   (item: { permission: { title: string } }) =>
+//     item.permission.title === "Create course report"
+// );
+
+// // Nếu người dùng không có đủ 2 quyền, không hiển thị nút
+// if (!hasCreateCoursePermission || !hasCreateCourseReport) {
+// return <></>;
+// }
+
+// Kiểm tra nếu người dùng có quyền "Advance mode permission"
+const hasAdvanceModePermission = data.userPermission.some(
   (item: { permission: { title: string } }) =>
-    item.permission.title === "Create course permission"
+    item.permission.title === "Advance mode permission"
 );
 
-const hasCreateCourseReport =
-data.userPermission.some(
-  (item: { permission: { title: string } }) =>
-    item.permission.title === "Create course report"
-);
-
-// Nếu người dùng không có đủ 2 quyền, không hiển thị nút
-if (!hasCreateCoursePermission || !hasCreateCourseReport) {
-return <></>;
+// Nếu người dùng không có quyền, không hiển thị nút
+if (!hasAdvanceModePermission) {
+  return <></>;
 }
 
 return (

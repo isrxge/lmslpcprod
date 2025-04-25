@@ -66,7 +66,7 @@ export async function GET(req: Request) {
             },
             where: {
               course: {
-                isPublished: true,
+                // isPublished: true,
               },
             },
           },
@@ -110,7 +110,7 @@ export async function GET(req: Request) {
             },
             where: {
               course: {
-                isPublished: true,
+                // isPublished: true,
               },
             },
           },
