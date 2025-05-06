@@ -181,7 +181,7 @@ export const columns: ColumnDef<User>[] = [
                           </div>
                         }
                       >
-                        - Exam result:
+                        {/* - Exam result: */}
                         {item.course.modules.filter(
                           (item: any) => item.module.type == "Exam"
                         ).map((item: any) => {

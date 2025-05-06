@@ -12,7 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
+import * as XLSX from "xlsx-js-style";
 import {
   Table,
   TableBody,
@@ -138,50 +139,102 @@ export function DataTable<TData, TValue>({
     const workbook = XLSX.utils.book_new();
     let exportList = [];
 
-    const processUserList = (list: any[]) => {
-      return list.map((user) => {
-        let completedCourses = "";
-        let ongoingCourses = "";
+    // const processUserList = (list: any[]) => {
+    //   return list.map((user) => {
+    //     let completedCourses = "";
+    //     let ongoingCourses = "";
 
+    //     user.ClassSessionRecord.forEach((session: any) => {
+    //       if (session.status === "finished") {
+    //         const endDate = new Date(session.endDate)
+    //           .toISOString()
+    //           .split("T")[0];
+    //         const [year, month, day] = endDate.split("-");
+    //         const formattedDate = `${day}/${month}/${year}`;
+    //         completedCourses += `\n${session.course.title}: completed on ${formattedDate}`;
+    //         session.course.modules.forEach((modules: any) => {
+    //           for (let i = 0; i < modules.module.UserProgress.length; i++) {
+    //             let progress = modules.module.UserProgress[i];
+    //             if (user.id == modules.module.UserProgress[i].userId) {
+    //               completedCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
+    //             }
+    //           }
+    //         });
+    //       } else {
+    //         ongoingCourses += `${session.course.title}\nStudying\n`;
+    //         session.course.modules.forEach((modules: any) => { console.log("dsad",modules)
+    //           for (let i = 0; i < modules.module.UserProgress.length; i++) {
+    //             let progress = modules.module.UserProgress[i];
+    //             if (user.id == modules.module.UserProgress[i].userId) {
+    //               ongoingCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
+    //             }
+    //           }
+    //         });
+    //       }
+    //     });
+
+    //     return {
+    //       Name: user.username,
+    //       Points: user.star,
+    //       Email: user.email,
+    //       Department: user.Department.title,
+    //       "Completed Courses": completedCourses,
+    //       "Uncompleted Courses": ongoingCourses,
+    //     };
+    //   });
+    // };
+
+    const processUserList = (list: any[]) =>
+      list.map((user) => {
+        const completed: string[] = [];
+        const uncompleted: string[] = [];        // chứa cả studying + failed
+    
         user.ClassSessionRecord.forEach((session: any) => {
+          const lines: string[] = [];
+          const title = session.course.title;
+    
+          // Lấy ngày (nếu có)
+          const iso = session.endDate
+            ? new Date(session.endDate).toISOString().split("T")[0]
+            : "";
+          const [y, m, d] = iso ? iso.split("-") : ["", "", ""];
+    
+          // 1️⃣ Tiêu đề khóa + trạng thái
           if (session.status === "finished") {
-            const endDate = new Date(session.endDate)
-              .toISOString()
-              .split("T")[0];
-            const [year, month, day] = endDate.split("-");
-            const formattedDate = `${day}/${month}/${year}`;
-            completedCourses += `\n${session.course.title}: completed on ${formattedDate}\nChapter: `;
-            session.course.modules.forEach((modules: any) => {
-              for (let i = 0; i < modules.module.UserProgress.length; i++) {
-                let progress = modules.module.UserProgress[i];
-                if (user.id == modules.module.UserProgress[i].userId) {
-                  completedCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
-                }
-              }
-            });
+            lines.push(`${title} (completed: ${d}/${m}/${y})`);
+          } else if (session.status === "failed") {
+            lines.push(`${title} (failed${iso ? `: ${d}/${m}/${y}` : ""})`);
           } else {
-            ongoingCourses += `${session.course.title}\nStudying\n`;
-            session.course.modules.forEach((modules: any) => { console.log("dsad",modules)
-              for (let i = 0; i < modules.module.UserProgress.length; i++) {
-                let progress = modules.module.UserProgress[i];
-                if (user.id == modules.module.UserProgress[i].userId) {
-                  ongoingCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
-                }
-              }
-            });
+            // mặc định là studying
+            lines.push(`${title} (studying)`);
+          }
+    
+          // 2️⃣ Danh sách module & tiến độ
+          session.course.modules.forEach((mod: any) => {
+            const p = mod.module.UserProgress.find(
+              (up: any) => up.userId === user.id
+            );
+            if (p) lines.push(`- ${mod.module.title}: ${p.status} (${p.progress})`);
+          });
+    
+          // 3️⃣ Đưa vào nhóm thích hợp
+          if (session.status === "finished") {
+            completed.push(lines.join("\n"));
+          } else {
+            uncompleted.push(lines.join("\n"));
           }
         });
-
+    
         return {
           Name: user.username,
-          Score: user.star,
+          Points: user.star,
           Email: user.email,
           Department: user.Department.title,
-          "Completed Courses": completedCourses,
-          "Uncompleted Courses": ongoingCourses,
+          "Completed Courses": completed.join("\n\n"),
+          "Uncompleted Courses": uncompleted.join("\n\n"),
         };
       });
-    };
+    
 
     switch (filter) {
       case "All":
@@ -240,35 +293,48 @@ export function DataTable<TData, TValue>({
     }
 
     const worksheet = XLSX.utils.json_to_sheet(exportList);
+    
     XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
 
     // Set column widths
     worksheet["!cols"] = [
-      { wch: 20 }, // Name column width
+      { wch: 30 }, // Name column width
       { wch: 10 }, // Score column width
       { wch: 30 }, // Email column width
-      { wch: 20 }, // Department column width
+      { wch: 15 }, // Department column width
       { wch: 50 }, // Completed Courses column width
       { wch: 50 }, // Ongoing Courses column width
     ];
 
-    // Bold the header row
-    const range = XLSX.utils.decode_range(worksheet["!ref"] || "");
+    const range = XLSX.utils.decode_range(worksheet["!ref"]!);
+  for (let R = range.s.r; R <= range.e.r; ++R) {
     for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cell_address = { c: C, r: range.s.r };
-      const cell_ref = XLSX.utils.encode_cell(cell_address);
-      if (worksheet[cell_ref]) {
-        worksheet[cell_ref].s = {
-          font: { bold: true },
-        };
-      }
+      const ref = XLSX.utils.encode_cell({ r: R, c: C });
+      const cell = worksheet[ref];
+      if (!cell) continue;
+
+      cell.s = {
+        ...(cell.s || {}),
+        font: {
+          name: "Arial",
+          sz: 12,
+          bold: R === 0,                 // hàng tiêu đề in đậm
+        },
+        alignment: { vertical: "top", wrapText: true },
+        ...(R === 0 && {
+          fill: { patternType: "solid", fgColor: { rgb: "EAEAEA" } },
+        }),
+      };
     }
+  }
 
     const date = new Date();
     XLSX.writeFile(
       workbook,
-      `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`
-    );
+      `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`, {
+        cellStyles: true,
+      });
+    
   }
 
   function onDepartmentChange(departmentId: any) {
@@ -324,7 +390,7 @@ export function DataTable<TData, TValue>({
     ))}
   </select>
 )}
-        <div className="flex gap-2 items-center">
+        {/* <div className="flex gap-2 items-center">
           <DatePickerWithRange
             placeHolder={"Filter by date for complete course"}
             date={dateRangeEnd}
@@ -344,7 +410,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <></>
           )}
-        </div>
+        </div> */}
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -368,7 +434,7 @@ export function DataTable<TData, TValue>({
                     Report (Selected Rows)
                   </DropdownMenuItem>
                 )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
+                {/* {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Week")}>
                     Report (This Week)
                   </DropdownMenuItem>
@@ -388,7 +454,7 @@ export function DataTable<TData, TValue>({
                   </DropdownMenuItem>
                 ) : (
                   <></>
-                )}
+                )} */}
               </DropdownMenuContent>
             )}
           </DropdownMenu>

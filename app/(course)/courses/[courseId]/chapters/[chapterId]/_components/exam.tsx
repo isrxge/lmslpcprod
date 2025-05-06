@@ -1867,6 +1867,16 @@ const Exam = ({
       },
     });
 
+    await axios.post("/api/exam-result", {
+      userId: currentUserId,
+      courseTitle: course.title,
+      moduleTitle: chapter.title,
+      score: finalScore,
+      passed: passed,
+      attempt: currentAttempt,
+      date: new Date(),
+    });
+
     router.refresh();
   };
 

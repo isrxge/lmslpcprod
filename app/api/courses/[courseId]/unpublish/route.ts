@@ -77,7 +77,10 @@ export async function PATCH(
       await db.classSessionRecord.updateMany({
         where: {
           courseId: params.courseId,
-          NOT: { status: "finished" },
+          // NOT: { status: "finished" },
+          status: {
+            not: "finished",
+          },
         },
         data: {
           status: "failed",

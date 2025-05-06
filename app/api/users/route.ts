@@ -28,7 +28,7 @@ export async function GET(req: Request) {
     if (!permission) {
       
       const user:any = await db.user.findUnique({
-        where: { id: userId },
+        where: { id: userId},
         include: {
           Department: {},
         },
@@ -40,7 +40,10 @@ export async function GET(req: Request) {
           },
           Department: {
             id: user.Department.id,
+            title: {
+              not: "BOD",
           },
+        }
         },
         include: {
           ClassSessionRecord: {
@@ -84,6 +87,11 @@ export async function GET(req: Request) {
         where: {
           status: {
             not: "inActive",
+          },
+          Department: {
+            title: {
+              not: "BOD",
+            },
           },
         },
         include: {

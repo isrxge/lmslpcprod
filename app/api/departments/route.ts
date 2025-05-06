@@ -5,7 +5,11 @@ import { db } from "@/lib/db";
 
 export async function GET(req: Request) {
   try {
-    const department = await db.department.findMany({});
+    const department = await db.department.findMany({
+      where: {
+        title: { not: "BOD" },  
+      },
+    });
     return NextResponse.json(department);
   } catch (error) {
     console.log("DEPARTMENT_GET_ERROR", error);

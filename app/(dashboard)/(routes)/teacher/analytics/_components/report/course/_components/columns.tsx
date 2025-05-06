@@ -146,6 +146,34 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
+    accessorKey: "endDate",
+    header: ({ column }) => {
+      return (
+        <span
+          className="flex items-center cursor-pointer"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <span className="mr-2">End Date</span>
+        </span>
+      );
+    },
+    cell: ({ row }: any) => {
+      const { endDate } = row.original;
+
+      return (
+        <div>
+          {endDate
+            ? new Date(endDate).toLocaleDateString("vi-VN", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })
+            : "N/A"}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "ClassSessionRecord",
     header: ({ column }) => (
       <span className="flex items-center cursor-pointer">

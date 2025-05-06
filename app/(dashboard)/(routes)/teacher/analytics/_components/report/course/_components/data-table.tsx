@@ -13,7 +13,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { PlusCircle, FileDown, ChevronDown } from "lucide-react";
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
+import * as XLSX from "xlsx-js-style";
 import {
   Table,
   TableBody,
@@ -185,9 +186,12 @@ export function DataTable<TData, TValue>({
 
     filteredList.forEach((item: any) => {
       console.log("ITEM", item);
-      const moduleList = item.modules.map(
-        (moduleInCourse: any) => `${moduleInCourse.module.title} : ${moduleInCourse.module.type}`
-      ).join(" \n");
+      const moduleList = item.modules
+        .map(
+          (moduleInCourse: any) =>
+            `${moduleInCourse.module.title} (${moduleInCourse.module.type})`
+        )
+        .join(" \n");
       // const moduleListResult = item.modules.map(
       //   (moduleInCourse: any) =>
       //     `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
@@ -198,52 +202,102 @@ export function DataTable<TData, TValue>({
       //     )}`
       // ).join(" \n");
       const moduleListResult = item.modules
-  .filter((moduleInCourse: any) => moduleInCourse.module.type === "Exam") 
-  .map((moduleInCourse: any) =>
-    `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
-      (item: any) =>
-        `\n-${item.user.username} : ${item.status}${
-          item?.score != null ? `(${item?.score}%)` : ""
-        }`
-    )}`
-  )
-  .join(" \n");
+        .filter((moduleInCourse: any) => moduleInCourse.module.type === "Exam")
+        .map(
+          (moduleInCourse: any) =>
+            `${
+              moduleInCourse.module.title
+            } :  ${moduleInCourse.module.UserProgress.map(
+              (item: any) =>
+                `\n-${item.user.username} : ${item.status}${
+                  item?.score != null ? `(${item?.score}%)` : ""
+                }`
+            )}`
+        )
+        .join(" \n");
 
-      const attendees = item.ClassSessionRecord.map(
-        (session: any) => `${session.user.username} : ${session.status}`
-      ).join(" \n");
+      // const attendees = item.ClassSessionRecord.map(
+      //   (session: any) => `${session.user.username} : ${session.status}`
+      // ).join(" \n");
       const exam = item.ClassSessionRecord.map(
-        (session: any) => `${session.user.username} : ${session.score}%`
+        (session: any) => `${session.user.username} : ${session.score}% ${session.status}`
       ).join(" \n");
       const departments = item?.CourseOnDepartment.map(
         (item: any) => item?.Department?.title
       ).join(" \n");
+      const startDate = item.startDate
+        ? new Date(item.startDate).toLocaleDateString("en-GB", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+        : "";
+      const endDate = item.endDate
+        ? new Date(item.endDate).toLocaleDateString("en-GB", {
+          year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+        : "";
 
       exportList.push({
-        Title: item.title || "",
+        "Course Title": item.title || "",
         Department: departments,
-        Credit: item.credit || "",
+        "Point": item.credit || "",
+        "Course Type": item.type || "",
+        "Start Date": startDate,
+        "End Date": endDate,
         Instructor:
           (item.courseInstructor && item.courseInstructor.username) || "",
-        "Module list": moduleList,
-        "Module list result": moduleListResult,
-        Attendees: attendees,
-        Exam: exam,
+        "Modules": moduleList,
+        // "Module list result": moduleListResult,
+        // Attendees: attendees,
+        "Exam Results": exam,
       });
     });
 
     const worksheet = XLSX.utils.json_to_sheet(exportList);
+    /* --- ÁP DỤNG FONT ARIAL 12 & BOLD CHO DÒNG TIÊU ÐỀ --- */
+  const range = XLSX.utils.decode_range(worksheet["!ref"]!); // {s:{r,c}, e:{r,c}}
+  for (let R = range.s.r; R <= range.e.r; ++R) {
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+      const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
+      const cell = worksheet[cellRef];
+      if (!cell) continue; // ô trống
+
+      cell.s = {
+        ...(cell.s || {}),
+        font: {
+          name: "Arial",
+          sz: 12,
+          bold: R === 0, // chỉ hàng 0 (tiêu đề) in đậm
+        },
+        alignment: { vertical: "top", wrapText: true },
+      };
+
+      // Nếu là hàng tiêu đề -> thêm fill xám nhạt
+      if (R === 0) {
+        cell.s.fill = {
+          patternType: "solid",
+          fgColor: { rgb: "EAEAEA" }, // #EAEAEA ~ xám nhẹ
+        };
+      }
+    }
+  }
 
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
     worksheet["!cols"] = [
-      { wch: 10 },
-      { wch: 10 },
-      { wch: 10 },
-      { wch: 50 },
-      { wch: 50 },
-      { wch: 50 },
-      { wch: 50 },
+    { wch: 30 }, // Title
+    { wch: 15 }, // Department
+    { wch: 10 },  // Point
+    { wch: 15 }, // Start Date
+    { wch: 15 }, // End Date
+    { wch: 15 }, // Instructor
+    { wch: 50 }, // Module list
+    { wch: 50 }, // Module list result
+    // { wch: 50 }, // Attendees
+    { wch: 50 }, // Exam
     ];
 
     const currentDate = new Date();
@@ -267,7 +321,11 @@ export function DataTable<TData, TValue>({
       dateSuffix = new Date().toISOString().split("T")[0];
     }
 
-    XLSX.writeFile(workbook, `${filter}_Course_${dateSuffix}.xlsx`);
+    // XLSX.writeFile(workbook, `${filter}_Course_${dateSuffix}.xlsx`);
+    // Ghi file – nhớ thêm { cellStyles:true }
+    XLSX.writeFile(workbook, `${filter}_Course_${dateSuffix}.xlsx`, {
+      cellStyles: true,
+    });
   }
 
   return (
@@ -349,7 +407,7 @@ export function DataTable<TData, TValue>({
                     Report (Selected Rows)
                   </DropdownMenuItem>
                 )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
+                {/* {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Week")}>
                     Report (This Week)
                   </DropdownMenuItem>
@@ -369,7 +427,7 @@ export function DataTable<TData, TValue>({
                   </DropdownMenuItem>
                 ) : (
                   <></>
-                )}
+                )} */}
               </DropdownMenuContent>
             )}
           </DropdownMenu>
@@ -459,7 +517,7 @@ function DatePickerWithRange({
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
-        <PopoverTrigger asChild>
+        {/* <PopoverTrigger asChild>
           <Button
             id="date"
             variant={"outline"}
@@ -482,7 +540,7 @@ function DatePickerWithRange({
               <span>Check course created between</span>
             )}
           </Button>
-        </PopoverTrigger>
+        </PopoverTrigger> */}
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus

@@ -12,7 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsx-js-style";
+// import * as XLSX from "xlsx";
 import {
   Table,
   TableBody,
@@ -149,7 +150,7 @@ export function DataTable<TData, TValue>({
           Name: user.username,
           Email: user.email,
           Department: user.Department.title,
-          Score: user.star,
+          Points: user.star,
         };
       });
     };
@@ -215,29 +216,38 @@ export function DataTable<TData, TValue>({
 
     // Set column widths
     worksheet["!cols"] = [
-      { wch: 20 }, // Name column width
+      { wch: 30 }, // Name column width
       { wch: 30 }, // Email column width
-      { wch: 20 }, // Department column width
+      { wch: 15 }, // Department column width
       { wch: 10 }, // Score column width
     ];
 
-    // Bold the header row
-    const range = XLSX.utils.decode_range(worksheet["!ref"] || "");
+    
+  /* --- ÁP DỤNG STYLE CHUNG & HEADER --- */
+  const range = XLSX.utils.decode_range(worksheet["!ref"]!);
+  for (let R = range.s.r; R <= range.e.r; ++R) {
     for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cell_address = { c: C, r: range.s.r };
-      const cell_ref = XLSX.utils.encode_cell(cell_address);
-      if (worksheet[cell_ref]) {
-        worksheet[cell_ref].s = {
-          font: { bold: true },
-        };
-      }
+      const ref = XLSX.utils.encode_cell({ r: R, c: C });
+      const cell: any = worksheet[ref];
+      if (!cell) continue;
+
+      cell.s = {
+        ...(cell.s || {}),
+        font: { name: "Arial", sz: 12, bold: R === 0, color: { rgb: "000000" } },
+        alignment: { vertical: "top", wrapText: true },
+        ...(R === 0 && {
+          fill: { patternType: "solid", fgColor: { rgb: "EAEAEA" } },
+        }),
+      };
     }
+  }
 
     const date = new Date();
     XLSX.writeFile(
       workbook,
-      `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`
-    );
+      `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`, {
+        cellStyles: true,
+      });
   }
 
   function onDepartmentChange(departmentId: any) {
@@ -293,7 +303,7 @@ export function DataTable<TData, TValue>({
     ))}
   </select>
 )}
-        <div className="flex gap-2 items-center">
+        {/* <div className="flex gap-2 items-center">
           <DatePickerWithRange
             placeHolder={"Filter date range"}
             date={dateRangeEnd}
@@ -313,7 +323,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <></>
           )}
-        </div>
+        </div> */}
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -337,7 +347,7 @@ export function DataTable<TData, TValue>({
                     Report (Selected Rows)
                   </DropdownMenuItem>
                 )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
+                {/* {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Week")}>
                     Report (This Week)
                   </DropdownMenuItem>
@@ -357,7 +367,7 @@ export function DataTable<TData, TValue>({
                   </DropdownMenuItem>
                 ) : (
                   <></>
-                )}
+                )} */}
               </DropdownMenuContent>
             )}
           </DropdownMenu>
