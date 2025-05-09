@@ -76,7 +76,7 @@ export default function Page() {
     });
 
     if (!user.data) {
-      setError("User not found.");
+      setError("Wrong username/password.");
       return;
     }
     try {
