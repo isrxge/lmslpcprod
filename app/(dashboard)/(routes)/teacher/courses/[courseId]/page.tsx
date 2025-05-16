@@ -254,9 +254,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               Back to course
             </Link>
             <h1 className="text-2xl font-medium">Course setup</h1>
-            <span className="text-sm text-slate-700">
+            {/* <span className="text-sm text-slate-700">
               Complete all fields {completionText}
-            </span>
+            </span> */}
           </div>
           <Actions
             title={course.title}

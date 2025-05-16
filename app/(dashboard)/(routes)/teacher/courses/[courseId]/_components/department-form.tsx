@@ -4,7 +4,7 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Loader, Pencil } from "lucide-react";
+import { Asterisk, Loader, Pencil } from "lucide-react";
 import {
   JSXElementConstructor,
   Key,
@@ -44,7 +44,7 @@ interface DepartmentFormProps {
   initialData: { Department: DepartmentProps[]; Course: any };
   courseId: string;
   department: DepartmentProps[];
-  readOnly?: boolean; 
+  readOnly?: boolean;
 }
 const Department = z.object({
   id: z.string(),
@@ -52,7 +52,12 @@ const Department = z.object({
 });
 const formSchema = z.array(Department);
 
-export const DepartmentForm = ({ initialData, courseId, department, readOnly = false }: any) => {
+export const DepartmentForm = ({
+  initialData,
+  courseId,
+  department,
+  readOnly = false,
+}: any) => {
   const [isEditing, setIsEditing] = useState(false);
   const [departmentList, setDepartmentList] = useState([...department]);
   const [assignList, setAssignList]: any = useState([]);
@@ -68,13 +73,17 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
   });
   useEffect(() => {
     let newAssignList: any = [...assignList];
-    for (let i = 0; i < departmentList.length; i++) {
-      let users = departmentList[i].User;
+    const filteredDepartments = department.filter(
+      (dept: any) => dept.title !== "BOD" 
+    );
+    for (let i = 0; i < filteredDepartments.length; i++) {
+      let users = filteredDepartments[i].User;
       for (let j = 0; j < users.length; j++) {
         newAssignList.push(users[j]);
       }
     }
     setAssignList(newAssignList);
+    setDepartmentList(filteredDepartments);
   }, []);
   const onChangeDepartmentList = (index: any) => {
     // e.preventDefault();
@@ -196,6 +205,8 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
       setLoading(false);
     }
   };
+
+  
   const onConfirm = () => {
     let canSubmit = false;
     for (let i = 0; i < assignList.length; i++) {
@@ -226,46 +237,61 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
           <AlertDialogDescription className="AlertDialogDescription">
             Are you sure you want to add these staff members to the course?
             <span className="text-red-500 text-xs font-medium">
-    **Once submitted, the assignment cannot be undone as per our policy. Already assigned staff will not be affected.**
-  </span>
-            <br/>
+              **Once submitted, the assignment cannot be undone as per our
+              policy. Already assigned staff will not be affected.**
+            </span>
+            <br />
             <br />
             <div className="grid grid-cols-2 gap-0">
               {assignList
                 .filter(
                   (item: any) => item.isEnrolled == true && item.canUndo == true
                 )
-                .map((item: { id: any; username: any }, index: any) => {
-                  return (
-                    <div key={item.id}>
-                      {index + 1}. {item.username}
-                    </div>
-                  );
-                })}
+                .map(
+                  (
+                    item: { id: any; username: any; typeUser: string },
+                    index: any
+                  ) => {
+                    const isProbationary = item.typeUser === "probation";
+                    return (
+                      <div key={item.id}>
+                        {index + 1}. {item.username}{" "}
+                        {isProbationary && "(Thử việc)"}
+                      </div>
+                    );
+                  }
+                )}
             </div>
           </AlertDialogDescription>
 
           <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <button className="Button red" onClick={() => onSubmit()} disabled={loading}>
+            <button
+              className="Button red"
+              onClick={() => onSubmit()}
+              disabled={loading}
+            >
               Confirm {loading ? <Loader className="animate-spin" /> : <></>}
             </button>
           </AlertDialogAction>
         </AlertDialogContent>
       </AlertDialog>
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-        Staff
+        <div className="flex items-center">
+          Staff
+          <Asterisk className="size-4" color="red" />
+        </div>
         {!readOnly && (
-        <Button onClick={toggleEdit} variant="ghost" disabled={readOnly} >
-          {isEditing ? (
-            <>Cancel</>
-          ) : (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit
-            </>
-          )}
-        </Button>
+          <Button onClick={toggleEdit} variant="ghost" disabled={readOnly}>
+            {isEditing ? (
+              <>Cancel</>
+            ) : (
+              <>
+                <Pencil className="h-4 w-4 mr-2" />
+                Edit
+              </>
+            )}
+          </Button>
         )}
       </div>
 
@@ -276,11 +302,20 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
           ) : (
             assignList
               .filter((item: any) => item.isEnrolled)
-              .map((item: { id: any; username: any }, index: any) => (
-                <div key={item.id}>
-                  {index + 1}. {item.username}
-                </div>
-              ))
+              .map(
+                (
+                  item: { id: any; username: any; typeUser: string },
+                  index: any
+                ) => {
+                  const isProbationary = item.typeUser === "probation";
+                  return (
+                    <div key={item.id}>
+                      {index + 1}. {item.username}{" "}
+                      {isProbationary && "(Thử việc)"}
+                    </div>
+                  );
+                }
+              )
           )}
         </div>
       )}
@@ -322,6 +357,7 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
                         {item.User.length == 0
                           ? "NO USER"
                           : item.User.map((item: any, j: any) => {
+                            const isProbationary = item.typeUser === "probation";
                               return (
                                 <div
                                   key={item.id}
@@ -337,7 +373,7 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
                                     checked={item.isEnrolled}
                                     defaultChecked={item.isEnrolled}
                                   />
-                                  <span>{item.username}</span>
+                                  <span>{item.username} {isProbationary && "(Thử việc)"}</span>
                                 </div>
                               );
                             })}
@@ -349,7 +385,9 @@ export const DepartmentForm = ({ initialData, courseId, department, readOnly = f
             })}
 
             <div className="flex items-center gap-x-2">
-              <Button onClick={() => onConfirm()} disabled={loading}>Save</Button>
+              <Button onClick={() => onConfirm()} disabled={loading}>
+                Save
+              </Button>
             </div>
           </form>
         </Form>

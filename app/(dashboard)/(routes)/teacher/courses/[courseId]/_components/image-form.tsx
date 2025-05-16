@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import axios from "axios";
-import { Pencil, PlusCircle, ImageIcon, Asterisk } from "lucide-react";
+import { Pencil, PlusCircle, ImageIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -84,7 +84,8 @@ export const ImageForm = ({ initialData, courseId, readOnly = false }: ImageForm
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Course image <Asterisk className="size-4" color="red" />
+          Course image 
+          {/* <Asterisk className="size-4" color="red" /> */}
         </div>
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">

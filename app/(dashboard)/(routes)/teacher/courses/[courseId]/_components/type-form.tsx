@@ -8,7 +8,7 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Asterisk } from "lucide-react";
+// import { Asterisk } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -61,7 +61,7 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
           Course type
-          <Asterisk className="size-4" color="red" />
+          {/* <Asterisk className="size-4" color="red" /> */}
         </div>
 
         {/* <Button onClick={toggleEdit} variant="ghost">

@@ -91,7 +91,7 @@ export const InstructorAssignForm = ({
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
           Instructor
-          {/* <Asterisk className="size-4" color="red" /> */}
+          <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
