@@ -181,6 +181,7 @@ function CreatePage() {
         title: fullTitle,
         type: values.type,
         imageUrl,
+        status: "open",
       });
       router.push(`/teacher/courses/${response.data.id}`);
       toast.success("Course created");
@@ -241,7 +242,7 @@ function CreatePage() {
                       <option value="Mandatory" title="One-time exam required">
                         Mandatory
                       </option>
-                      <option value="Probation" title="Two-time exam required">
+                      <option value="Probation" title="One-time exam required">
                         Probation
                       </option>
                       <option value="Self Study" title="No exam required">

@@ -194,16 +194,25 @@ export function DataTable<TData, TValue>({
           const title = session.course.title;
     
           // Lấy ngày (nếu có)
-          const iso = session.endDate
-            ? new Date(session.endDate).toISOString().split("T")[0]
-            : "";
-          const [y, m, d] = iso ? iso.split("-") : ["", "", ""];
+          // const iso = session.endDate
+          //   ? new Date(session.endDate).toISOString().split("T")[0]
+          //   : "";
+          // const [y, m, d] = iso ? iso.split("-") : ["", "", ""];
     
           // 1️⃣ Tiêu đề khóa + trạng thái
-          if (session.status === "finished") {
-            lines.push(`${title} (completed: ${d}/${m}/${y})`);
-          } else if (session.status === "failed") {
-            lines.push(`${title} (failed${iso ? `: ${d}/${m}/${y}` : ""})`);
+          // if (session.status == "finished") {
+          //   lines.push(`${title} (completed: ${d}/${m}/${y})`);
+          // } else if (session.status == "failed") {
+          //   lines.push(`${title} (failed${iso ? `: ${d}/${m}/${y}` : ""})`);
+          // } else {
+          //   // mặc định là studying
+          //   lines.push(`${title} (studying)`);
+          // }
+
+          if (session.status == "finished") {
+            lines.push(`${title} (completed)`);
+          } else if (session.status == "failed") {
+            lines.push(`${title} (failed)`);
           } else {
             // mặc định là studying
             lines.push(`${title} (studying)`);

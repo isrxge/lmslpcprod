@@ -10,6 +10,7 @@ const UserInformation = ({ user }: any) => {
   const [isDepartmentEditing, setIsDepartmentEditing] = useState(false);
   const [isUsernameEditing, setIsUsernameEditing] = useState(false);
   const [isStatusEditing, setIsStatusEditing] = useState(false);
+  const [isTypeUserEditing, setIsTypeUserEditing] = useState(false);
 
   const handleRoleEditClick = () => {
     setIsRoleEditing(!isRoleEditing);
@@ -17,6 +18,10 @@ const UserInformation = ({ user }: any) => {
 
   const handleStatusEditClick = () => {
     setIsStatusEditing(!isStatusEditing);
+  };
+
+  const handleTypeUserEditClick = () => {
+    setIsTypeUserEditing(!isTypeUserEditing);
   };
 
   const handleDepartmentEditClick = () => {
@@ -33,9 +38,10 @@ const UserInformation = ({ user }: any) => {
     setIsDepartmentEditing(false);
     setIsUsernameEditing(false);
     setIsStatusEditing(false);
+    setIsTypeUserEditing(false);
     let values = {
       department: e.target.department.value,
-
+      typeUser: e.target.typeUser.value,
       username: e.target.username.value,
       status: e.target.status.value,
     };
@@ -51,7 +57,7 @@ const UserInformation = ({ user }: any) => {
       {/* Left Column */}
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          ID:
+          ID
         </label>
         <input
           type="text"
@@ -63,7 +69,7 @@ const UserInformation = ({ user }: any) => {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Full Name:
+          Full Name
         </label>
         <div className="relative">
           <input
@@ -92,7 +98,7 @@ const UserInformation = ({ user }: any) => {
       {/* Right Column */}
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Email:
+          Email
         </label>
         <input
           type="text"
@@ -104,7 +110,7 @@ const UserInformation = ({ user }: any) => {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Department:
+          Department
         </label>
         <div className="relative">
           <input
@@ -143,7 +149,7 @@ const UserInformation = ({ user }: any) => {
       </div>
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Status:
+          Status
         </label>
         <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
           <select
@@ -171,10 +177,41 @@ const UserInformation = ({ user }: any) => {
           </div>
         </div>
       </div>
+      <div>
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Type
+        </label>
+        <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
+          <select
+            defaultValue={user?.typeUser}
+            name="typeUser"
+            disabled={!isTypeUserEditing}
+            // style={{backgroundColor:"#f3f4f6",textColor:"#11111"}}
+            className={`appearance:none w-full bg-gray-100 border border-gray-300 rounded-md p-2 ${
+              isTypeUserEditing ? "border-blue-500" : ""
+            }`}
+          >
+            <option value="official">Official</option>
+            <option value="probation">Probation</option>
+          </select>
+
+          <div
+            className="absolute right-2 top-2 cursor-pointer"
+            onClick={handleTypeUserEditClick}
+          >
+            {isTypeUserEditing ? (
+              <X className="text-blue-500 w-5 h-5" />
+            ) : (
+              <Pencil className="text-blue-500 w-5 h-5" />
+            )}
+          </div>
+        </div>
+      </div>
       <div className="col-span-2 text-right">
         {isDepartmentEditing ||
         isRoleEditing ||
         isStatusEditing ||
+        isTypeUserEditing ||
         isUsernameEditing ? (
           <button
             type="submit"

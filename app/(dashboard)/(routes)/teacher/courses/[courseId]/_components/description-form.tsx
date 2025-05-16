@@ -14,15 +14,17 @@ import { Editor } from "@tinymce/tinymce-react";
 interface DescriptionFormProps {
   initialData: Course;
   courseId: string;
+  readOnly?: boolean;  
 }
 
 export const DescriptionForm = ({
   initialData,
   courseId,
+  readOnly = false,
 }: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(initialData?.description || "");
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
 
   const router = useRouter();
 
@@ -44,6 +46,7 @@ export const DescriptionForm = ({
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">Course Description</div>
+        {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -54,6 +57,7 @@ export const DescriptionForm = ({
             </>
           )}
         </Button>
+        )}
       </div>
       {!isEditing && (
         <div

@@ -90,6 +90,7 @@ model User {
   star           Int?
   imageUrl       String?
   status         String      @default("active")
+  typeUser       String?
 
   Course             Course[]             @relation("userId")
   updatedCourse      Course[]             @relation("updatedBy")
@@ -143,9 +144,12 @@ model Course {
   startDate          DateTime             @default(now())
   endDate            DateTime?
   updateDate         DateTime?
-  type              String?
+  type               String?
   isPublished        Boolean              @default(false)
   credit             Int?                 @default(10)
+  status             String?
+  notifyDate         Int?                 @default(0)
+
   ClassSessionRecord ClassSessionRecord[]
   courseWithProgram  courseWithProgram[]
   BookMark           BookMark[]

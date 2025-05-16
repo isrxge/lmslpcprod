@@ -38,11 +38,13 @@ export async function PATCH(
       data: {
         status: values.status,
         username: values.username,
+        typeUser: values.typeUser,
       },
     });
 
     delete values.status;
     delete values.username;
+    delete values.typeUser;
     const updatedUser = await clerkClient.users.updateUser(params.userId, {
       publicMetadata: values,
     });

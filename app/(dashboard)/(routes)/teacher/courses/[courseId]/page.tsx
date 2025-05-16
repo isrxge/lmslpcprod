@@ -224,13 +224,24 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.credit = 0;
   }
   const isComplete = requiredFields.every(Boolean);
+  const isClosed = course.status === "closed";
 
   // console.log("Course modules ABCD:", course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam"));
   // console.log("requiredFields:", requiredFields);
   return (
     <>
-      {!course.isPublished && (
+      {/* {!course.isPublished && (
         <Banner label="This course is unpublished. It will not be visible to the staff." />
+      )} */}
+      {isClosed ? (
+        <Banner
+          label="This course has been closed. All editing actions are disabled."
+          variant="success" 
+        />
+      ) : (
+        !course.isPublished && (
+          <Banner label="This course is unpublished. It will not be visible to the staff." />
+        )
       )}
       <div className="p-6">
         <div className="flex items-center justify-between">
@@ -254,7 +265,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             isPublished={course.isPublished}
             endDate={course.endDate}
             creatorId={course.userId}
+            status={course.status}
             canDeleteAny={hasEditAdvancedPermission}
+            canCloseAny={hasEditAdvancedPermission}
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
@@ -264,11 +277,11 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <h2 className="text-xl">Customize your course</h2>
             </div>
             <div className="space-y-6 mt-4">
-              <TitleForm initialData={course} courseId={course.id} />
+              <TitleForm initialData={course} courseId={course.id} readOnly={isClosed} />
               <TypeForm initialData={course} courseId={course.id} />
               <CreditForm initialData={course} courseId={course.id} />
-              <DescriptionForm initialData={course} courseId={course.id} />
-              <ImageForm initialData={course} courseId={course.id} />
+              <DescriptionForm initialData={course} courseId={course.id} readOnly={isClosed}/>
+              <ImageForm initialData={course} courseId={course.id} readOnly={isClosed}/>
             </div>
           </div>
           <div className="space-y-6">
@@ -282,6 +295,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                   initialData={course}
                   courseType={course.type}
                   courseId={course.id}
+                  readOnly={isClosed} 
                 />
               </div>
             </div>
@@ -291,12 +305,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 <h2 className="text-xl">Deadline</h2>
               </div>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Note: The course will end at 00:00 on the end date.
+                Note: The course will end at 00:00 on the end date.
               </p>
               <div>
                 <EndDateForm
                   initialData={course}
                   courseId={course.id}
+                  readOnly={isClosed} 
                   // deadline={endDate}
                 />
               </div>
@@ -313,11 +328,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                   initialData={course}
                   courseId={course.id}
                   department={filteredDepartment}
+                  readOnly={isClosed}
                 />
                 <InstructorAssignForm
                   initialData={course}
                   courseId={course.id}
                   Instructor={users}
+                  readOnly={isClosed}
                 />
               </div>
             </div>

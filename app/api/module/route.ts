@@ -134,10 +134,10 @@ export async function GET(req: Request) {
           { type: "Exam", maxAttempt: 1 },  // Include Exam modules with maxAttempt = 1
         ];
       } else if (courseType === "Probation") {
-        // For Probation course, show both Slide and Exam with maxAttempt = 2
+        // For Probation course, show both Slide and Exam with maxAttempt = 1
         filters.OR = [
           { type: "Slide" },  // Include Slide modules
-          { type: "Exam", maxAttempt: 2 },  // Include Exam modules with maxAttempt = 2
+          { type: "Exam", maxAttempt: 1 },  // Include Exam modules with maxAttempt = 1
         ];
       } else if (courseType === "Self Study") {
         // For Self-Study course, only show Slide modules (no Exam modules)

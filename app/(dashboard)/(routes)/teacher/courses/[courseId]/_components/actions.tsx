@@ -124,20 +124,24 @@ interface ActionsProps {
   disabled: boolean;
   courseId: string;
   isPublished: boolean;
+  status: string;
   title: string;
   endDate?: string | null;  // ISO string hoặc null
   creatorId: string;
   canDeleteAny: boolean;
+  canCloseAny?: boolean;
 }
 
 export const Actions = ({
   disabled,
   courseId,
   isPublished,
+  status: courseStatus,
   title,
   endDate,
   creatorId,
-  canDeleteAny
+  canDeleteAny,
+  canCloseAny = false,
 }: ActionsProps) => {
   const router = useRouter();
   const confetti = useConfettiStore();
@@ -145,37 +149,44 @@ export const Actions = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const isOwner = userId === creatorId;
+  const showClose = isOwner || canCloseAny;
 
   const showDelete = isOwner || canDeleteAny;
+  const isClosed = courseStatus === "closed";
+
 
   // Tính xem course đã hết hạn chưa
-  const isExpired = endDate
-    ? new Date(endDate) <= new Date()
-    : false;
+  // const isExpired = endDate
+  //   ? new Date(endDate) <= new Date()
+  //   : false;
 
   // Auto-unpublish ngay khi mount nếu hết hạn và vẫn đang published
-  useEffect(() => {
-    if (isExpired && isPublished) {
-      axios
-        .patch(`/api/courses/${courseId}/unpublish`)
-        .then(() => {
-          toast.success(`Course automatically unpublished (deadline passed)`);
-          router.refresh();
-        })
-        .catch(() => {
-          toast.error("Failed to auto-unpublish");
-        });
-    }
-  }, [isExpired, isPublished, courseId, router]);
+  // useEffect(() => {
+  //   if (isExpired && isPublished) {
+  //     axios
+  //       .patch(`/api/courses/${courseId}/unpublish`)
+  //       .then(() => {
+  //         toast.success(`Course automatically unpublished (deadline passed)`);
+  //         router.refresh();
+  //       })
+  //       .catch(() => {
+  //         toast.error("Failed to auto-unpublish");
+  //       });
+  //   }
+  // }, [isExpired, isPublished, courseId, router]);
 
   const onClick = async () => {
-    // Ngăn publish nếu đã hết hạn
-    if (isExpired) {
-      toast.error(
-        "Cannot publish: the course deadline has passed. It remains unpublished."
-      );
+    if (isClosed) {                                  
+      toast.error("This course is closed, you cannot change publish state.");
       return;
     }
+    // Ngăn publish nếu đã hết hạn
+    // if (isExpired) {
+    //   toast.error(
+    //     "Cannot publish: the course deadline has passed. It remains unpublished."
+    //   );
+    //   return;
+    // }
 
     try {
       setIsLoading(true);
@@ -192,6 +203,21 @@ export const Actions = ({
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onCloseCourse = async () => {
+    if (isClosed) return;
+
+    try {
+      setIsLoading(true);
+      await axios.patch(`/api/courses/${courseId}/close`);
+      toast.success("Course closed");
+      router.refresh();
+    } catch {
+      toast.error("Failed to close course");
     } finally {
       setIsLoading(false);
     }
@@ -214,20 +240,47 @@ export const Actions = ({
     <div className="flex items-center gap-x-2">
       <Button
         onClick={onClick}
-        disabled={disabled || isLoading || isExpired}
+        disabled={disabled || isLoading || isClosed}
         variant="outline"
         size="sm"
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
+      {showClose && (
+  <ConfirmModal
+    title="Close course"
+    description="Are you sure you want to close this course? Students will no longer be able to continue."
+    onConfirm={onCloseCourse}
+    confirmLabel="Close"
+  >
+    <Button
+      size="sm"
+      variant="destructive"
+      disabled={isLoading || isClosed}
+    >
+      Close
+    </Button>
+  </ConfirmModal>
+)}
       {/* <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading}>
             <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal> */}
-      {showDelete && (
+      {/* {showDelete && (
         <ConfirmModal onConfirm={onDelete}>
-          <Button size="sm" disabled={isLoading}>
+          <Button size="sm" disabled={isLoading || isClosed}>
+            <Trash className="h-4 w-4" />
+          </Button>
+        </ConfirmModal>
+      )} */}
+      {showDelete && (
+        <ConfirmModal
+          title="Delete course"
+          description="This action cannot be undone."
+          onConfirm={onDelete}
+        >
+          <Button size="sm" disabled={isLoading || isClosed}>
             <Trash className="h-4 w-4" />
           </Button>
         </ConfirmModal>

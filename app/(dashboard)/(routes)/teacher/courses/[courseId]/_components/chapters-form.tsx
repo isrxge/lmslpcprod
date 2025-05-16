@@ -19,6 +19,7 @@ interface ChaptersFormProps {
   initialData: any;
   courseId: string;
   courseType: string;
+  readOnly?: boolean;
 }
 
 const formSchema = z.object({
@@ -29,6 +30,7 @@ export const ChaptersForm = ({
   initialData,
   courseId,
   courseType,
+  readOnly = false
 }: ChaptersFormProps) => {
   console.log("initialData:", initialData);
   // console.log("ModuleInCourse data:", initialData.modulesInCourse.map((m) => m.module));
@@ -53,8 +55,7 @@ export const ChaptersForm = ({
     flatArray2 || []
   ); // Lưu trữ các module đã chọn
   console.log(selectedModules);
-  const toggleCreating = () => {
-    setIsCreating((current) => !current);
+  const toggleCreating = () => { !readOnly && setIsCreating((current) => !current);
   };
 
   const router = useRouter();
@@ -344,6 +345,7 @@ export const ChaptersForm = ({
         <div className="flex items-center">
           Course chapters <Asterisk className="size-4" color="red" />
         </div>
+        {!readOnly && (
         <Button onClick={toggleCreating} variant="ghost">
           {isCreating ? (
             <>Cancel</>
@@ -354,6 +356,7 @@ export const ChaptersForm = ({
             </>
           )}
         </Button>
+        )}
       </div>
 
       {isCreating && (
@@ -430,7 +433,8 @@ export const ChaptersForm = ({
             items={selectedModules}
             onReorder={onReorder}
             courseId={courseId}
-          />
+            readOnly={readOnly}
+       />
         </div>
       )}
 

@@ -44,6 +44,7 @@ interface DepartmentFormProps {
   initialData: { Department: DepartmentProps[]; Course: any };
   courseId: string;
   department: DepartmentProps[];
+  readOnly?: boolean; 
 }
 const Department = z.object({
   id: z.string(),
@@ -51,14 +52,14 @@ const Department = z.object({
 });
 const formSchema = z.array(Department);
 
-export const DepartmentForm = ({ initialData, courseId, department }: any) => {
+export const DepartmentForm = ({ initialData, courseId, department, readOnly = false }: any) => {
   const [isEditing, setIsEditing] = useState(false);
   const [departmentList, setDepartmentList] = useState([...department]);
   const [assignList, setAssignList]: any = useState([]);
   const [triggerAlert, setTriggerAlert] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -253,8 +254,9 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
         </AlertDialogContent>
       </AlertDialog>
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-        Department
-        <Button onClick={toggleEdit} variant="ghost">
+        Staff
+        {!readOnly && (
+        <Button onClick={toggleEdit} variant="ghost" disabled={readOnly} >
           {isEditing ? (
             <>Cancel</>
           ) : (
@@ -264,7 +266,25 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
             </>
           )}
         </Button>
+        )}
       </div>
+
+      {!isEditing && (
+        <div className="mt-3 space-y-1 pl-1 dark:text-slate-50 text-sm">
+          {assignList.filter((item: any) => item.isEnrolled).length === 0 ? (
+            <span className="italic text-slate-500">No staff assigned.</span>
+          ) : (
+            assignList
+              .filter((item: any) => item.isEnrolled)
+              .map((item: { id: any; username: any }, index: any) => (
+                <div key={item.id}>
+                  {index + 1}. {item.username}
+                </div>
+              ))
+          )}
+        </div>
+      )}
+
       {isEditing && (
         <Form {...form}>
           <form

@@ -5,7 +5,7 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Asterisk, Pencil, TrendingUp } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -17,6 +17,7 @@ interface InstructorFormProps {
   initialData: { Instructor: any[] };
   courseId: string;
   Instructor: any[];
+  readOnly?: boolean;
 }
 const Instructor = z.object({
   id: z.string(),
@@ -28,11 +29,13 @@ export const InstructorAssignForm = ({
   initialData,
   courseId,
   Instructor,
+  readOnly = false
 }: InstructorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [instructorList, setInstructorList] = useState(Instructor);
+  const [assignedInstructor, setAssignedInstructor] = useState<any>(null);
 
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
 
   const router = useRouter();
 
@@ -40,20 +43,35 @@ export const InstructorAssignForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData.Instructor,
   });
+
+  useEffect(() => {
+    // Check if any instructor is assigned and update the state
+    const assigned = instructorList.find((instructor: any) => instructor.isAssign);
+    setAssignedInstructor(assigned || null);
+  }, [instructorList]);
+
+  // const onChangeInstructorList = async (i: any) => {
+  //   let newList = [...instructorList];
+  //   for (let i = 0; i < newList.length; i++) {
+  //     newList[i].isAssign = false;
+  //   }
+  //   newList[i].isAssign = true;
+  //   // if (newList[i].isAssign) {
+  //   //   newList[i].isAssign = false;
+  //   // } else {
+  //   //   newList[i].isAssign = true;
+  //   // }
+  //   setInstructorList(newList);
+  // };
+  // // const { isSubmitting, isValid } = form.formState;
+
   const onChangeInstructorList = async (i: any) => {
     let newList = [...instructorList];
-    for (let i = 0; i < newList.length; i++) {
-      newList[i].isAssign = false;
-    }
+    // Reset all instructors to unassigned
+    newList.forEach((instructor) => (instructor.isAssign = false));
     newList[i].isAssign = true;
-    // if (newList[i].isAssign) {
-    //   newList[i].isAssign = false;
-    // } else {
-    //   newList[i].isAssign = true;
-    // }
     setInstructorList(newList);
   };
-  // const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async () => {
     try {
@@ -75,7 +93,7 @@ export const InstructorAssignForm = ({
           Instructor
           {/* <Asterisk className="size-4" color="red" /> */}
         </div>
-
+        {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -86,7 +104,19 @@ export const InstructorAssignForm = ({
             </>
           )}
         </Button>
+        )}
       </div>
+
+      {!isEditing && (
+        <div className="mt-3 space-y-1 pl-1 dark:text-slate-50 text-sm">
+          {assignedInstructor ? (
+            <div>{assignedInstructor.username} ({assignedInstructor.Department.title})</div>
+          ) : (
+            <div className="italic text-slate-500">No instructor assigned.</div>
+          )}
+        </div>
+      )}
+
       {isEditing && (
         <Form {...form}>
           <form

@@ -262,16 +262,16 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
     return <div>{formattedEndDate}</div>; // Or handle it as per your requirements
   }
 
-  // Get current date
-  const currentDate = new Date();
+  // // Get current date
+  // const currentDate = new Date();
 
-  // Check if endDate is not null and then compare
-  const endDateObj = new Date(endDate);
+  // // Check if endDate is not null and then compare
+  // const endDateObj = new Date(endDate);
 
-  // Compare end date with the current date to determine if it's "Opening" or "Closed"
-  const isOpening = currentDate < endDateObj; // If current date is less than endDate, it's opening
-  const statusText = isOpening ? "Opening" : "Closed";
-  const statusColor = isOpening ? "text-green-500" : "text-red-500"; 
+  // // Compare end date with the current date to determine if it's "Opening" or "Closed"
+  // const isOpening = currentDate < endDateObj; // If current date is less than endDate, it's opening
+  // const statusText = isOpening ? "Opening" : "Closed";
+  // const statusColor = isOpening ? "text-green-500" : "text-red-500"; 
 
   // const isClosed = currentDate > endDateObj; // If current date is less than endDate, it's opening
   // const statusText = isClosed ? "Closed" : "Opening";
@@ -284,7 +284,7 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
   return (
     <div className="flex items-center">
       <div>{formattedEndDate}</div>
-      <span className={`ml-2 ${statusColor} text-sm`}>({statusText})</span>
+      {/* <span className={`ml-2 ${statusColor} text-sm`}>({statusText})</span> */}
     </div>
   );
 };

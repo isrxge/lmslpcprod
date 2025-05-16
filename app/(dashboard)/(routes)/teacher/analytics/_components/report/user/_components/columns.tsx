@@ -13,6 +13,7 @@ import {
   HTMLProps,
 } from "react";
 import React from "react";
+import { CourseAttendeeCell } from "@/components/ui/user-record-cell";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -133,6 +134,8 @@ export const columns: ColumnDef<User>[] = [
   //     );
   //   },
   // },
+
+  // Code cũ 13/5
   {
     accessorKey: "ClassSessionRecord",
     header: ({ column }) => {
@@ -142,117 +145,118 @@ export const columns: ColumnDef<User>[] = [
         </span>
       );
     },
-    cell: ({ row }) => {
-      const { id, ClassSessionRecord }: any = row.original;
+    // cell: ({ row }) => {
+    //   const { id, ClassSessionRecord }: any = row.original;
 
-      return (
-        <div className="flex items-center">
-          <div>
-            {ClassSessionRecord.map(
-              (item: any) => {
-                console.log("item 2",item)
-                return (
-                  <div key={item.id}>
-                    <Accordion key="1">
-                      <AccordionItem
-                        startContent={
-                          <div>
-                            {console.log("Item in course:", item)}  
-                            {item.course.title}:{" "}
-                            {item.status === "finished" ? (
-                              <span className="text-green-500 font-medium">
-                                Successful
-                              </span>
-                            ) : item.status === "failed" ? (
-                              <span className="text-red-500 font-medium">
-                                Failed
-                              </span>
-                            ) : item.status === "studying" ? (
-                              <span className="text-yellow-500 font-medium">
-                                Studying 
-                                {/* (
-                                {parseFloat(item.progress + "").toFixed(0)}%) */}
-                              </span>
-                            ) : (
-                              <>
-                                {item.progress} (<span>{item.status}</span>)
-                              </>
-                            )}
-                          </div>
-                        }
-                      >
-                        {/* - Exam result: */}
-                        {item.course.modules.filter(
-                          (item: any) => item.module.type == "Exam"
-                        ).map((item: any) => {
-                          console.log("Item status inside map:", item.status);
-                          return (
-                            <>
-                              {item.module.UserProgress?.filter(
-                                (item: any) => item.userId == id
-                              ).length < 1 ? (
-                                <div key={item.module.id}>
-                                  {" "}
-                                  • {item.module.title}
-                                  {": "}No exam result
-                                </div>
-                              ) : (
-                                <div key={item.module.id}>
-                                  {item.module.UserProgress?.filter(
-                                    (item: any) => item.userId == id
-                                  ).map((item: any) => {
-                                    return (
-                                      <div key={item.module.id}>
-                                        • {item.module.title}
-                                        {": "}
-                                        <span
-                                          className={`${
-                                            item.status == "finished"
-                                              ? "text-green-500 font-medium"
-                                              : item.status == "studying"
-                                              ? "text-yellow-500 font-medium"
-                                              : ""
-                                          }`}
-                                        >
-                                          {item.status === "finished"
-                                            ? `Pass (${item.score}%)`
-                                            : `Fail (${item.score}%)`}
-                                        </span>{" "}
-                                        on{" "}
-                                        {new Date(
-                                          item.endDate
-                                        ).toLocaleTimeString([], {
-                                          hour: "2-digit",
-                                          minute: "2-digit",
-                                        })}{" "}
-                                        {new Date(
-                                          item.endDate
-                                        ).toLocaleDateString("vi-VN", {
-                                          day: "2-digit",
-                                          month: "2-digit",
-                                          year: "numeric",
-                                        })}{" "}
-                                        {item.attempt > 1 && (
-                                          <span>({item.attempt - 1} 🐓)</span>
-                                        )}
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
-                            </>
-                          );
-                        })}
-                      </AccordionItem>
-                    </Accordion>
-                  </div>
-                );
-              }
-            )}
-          </div>
-        </div>
-      );
-    },
+    //   return (
+    //     <div className="flex items-center">
+    //       <div>
+    //         {ClassSessionRecord.map(
+    //           (item: any) => {
+    //             console.log("item 2",item)
+    //             return (
+    //               <div key={item.id}>
+    //                 <Accordion key="1">
+    //                   <AccordionItem
+    //                     startContent={
+    //                       <div>
+    //                         {console.log("Item in course:", item)}  
+    //                         {item.course.title}:{" "}
+    //                         {item.status === "finished" ? (
+    //                           <span className="text-green-500 font-medium">
+    //                             Successful
+    //                           </span>
+    //                         ) : item.status === "failed" ? (
+    //                           <span className="text-red-500 font-medium">
+    //                             Failed
+    //                           </span>
+    //                         ) : item.status === "studying" ? (
+    //                           <span className="text-yellow-500 font-medium">
+    //                             Studying 
+    //                             {/* (
+    //                             {parseFloat(item.progress + "").toFixed(0)}%) */}
+    //                           </span>
+    //                         ) : (
+    //                           <>
+    //                             {item.progress} (<span>{item.status}</span>)
+    //                           </>
+    //                         )}
+    //                       </div>
+    //                     }
+    //                   >
+    //                     {/* - Exam result: */}
+    //                     {item.course.modules.filter(
+    //                       (item: any) => item.module.type == "Exam"
+    //                     ).map((item: any) => {
+    //                       console.log("Item status inside map:", item.status);
+    //                       return (
+    //                         <>
+    //                           {item.module.UserProgress?.filter(
+    //                             (item: any) => item.userId == id
+    //                           ).length < 1 ? (
+    //                             <div key={item.module.id}>
+    //                               {" "}
+    //                               • {item.module.title}
+    //                               {": "}No exam result
+    //                             </div>
+    //                           ) : (
+    //                             <div key={item.module.id}>
+    //                               {item.module.UserProgress?.filter(
+    //                                 (item: any) => item.userId == id
+    //                               ).map((item: any) => {
+    //                                 return (
+    //                                   <div key={item.module.id}>
+    //                                     • {item.module.title}
+    //                                     {": "}
+    //                                     <span
+    //                                       className={`${
+    //                                         item.status == "finished"
+    //                                           ? "text-green-500 font-medium"
+    //                                           : item.status == "studying"
+    //                                           ? "text-yellow-500 font-medium"
+    //                                           : ""
+    //                                       }`}
+    //                                     >
+    //                                       {item.status === "finished"
+    //                                         ? `Pass (${item.score}%)`
+    //                                         : `Fail (${item.score}%)`}
+    //                                     </span>{" "}
+    //                                     on{" "}
+    //                                     {new Date(
+    //                                       item.endDate
+    //                                     ).toLocaleTimeString([], {
+    //                                       hour: "2-digit",
+    //                                       minute: "2-digit",
+    //                                     })}{" "}
+    //                                     {new Date(
+    //                                       item.endDate
+    //                                     ).toLocaleDateString("vi-VN", {
+    //                                       day: "2-digit",
+    //                                       month: "2-digit",
+    //                                       year: "numeric",
+    //                                     })}{" "}
+    //                                     {item.attempt > 1 && (
+    //                                       <span>({item.attempt - 1} 🐓)</span>
+    //                                     )}
+    //                                   </div>
+    //                                 );
+    //                               })}
+    //                             </div>
+    //                           )}
+    //                         </>
+    //                       );
+    //                     })}
+    //                   </AccordionItem>
+    //                 </Accordion>
+    //               </div>
+    //             );
+    //           }
+    //         )}
+    //       </div>
+    //     </div>
+    //   );
+    // },
+    cell: CourseAttendeeCell,
   },
 ];
 function IndeterminateCheckbox({

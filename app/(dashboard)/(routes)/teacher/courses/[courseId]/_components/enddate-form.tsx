@@ -16,8 +16,10 @@ import { Calendar } from "@/components/ui/calendar";  // Ensure this is working 
 interface EndDateFormProps {
   initialData: {
     endDate: string; // End Date as a string, might need conversion
+    notifyDate: number | null;
   };
   courseId: string;
+  readOnly?: boolean;
 }
 const timeZone = 'Asia/Ho_Chi_Minh';
 const formSchema = z.object({
@@ -32,10 +34,14 @@ const formSchema = z.object({
   }),
 });
 
-export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
+export const EndDateForm = ({ initialData, courseId, readOnly = false }: EndDateFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [notifyDate, setNotifyDate] = useState<number | null>(initialData.notifyDate || 0);
+  const [isNotifyEnabled, setIsNotifyEnabled] = useState(initialData.notifyDate !== 0);
+  const [isEndDateValid, setIsEndDateValid] = useState(true);
+  const [isNotifyDateValid, setIsNotifyDateValid] = useState(true);
 
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
 
   const [formattedEndDate, setFormattedEndDate] = useState<string | null>(null);
   const router = useRouter();
@@ -45,10 +51,27 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
     defaultValues: initialData,
   });
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting} = form.formState;
 
   // Get the reset method directly from the useForm hook
-  const { reset } = form;
+  const { reset, setValue, getValues } = form;
+
+  const validateEndDate = (date: string) => {
+    const parsedDate = new Date(date);
+    if (!isNaN(parsedDate.getTime()) && parsedDate > new Date()) {
+      setIsEndDateValid(true);
+    } else {
+      setIsEndDateValid(false);
+    }
+  };
+
+  const validateNotifyDate = (value: number | null) => {
+    if (value && value > 0 && value <= 5) {
+      setIsNotifyDateValid(true);
+    } else {
+      setIsNotifyDateValid(false);
+    }
+  };
 
   // const onSubmit = async (values: z.infer<typeof formSchema>) => {
   //   try {
@@ -66,7 +89,7 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
       const utcEndDate = new Date(values.endDate);
       utcEndDate.setHours(utcEndDate.getHours() + 7); // Convert to UTC+7
 
-      await axios.patch(`/api/courses/${courseId}`, { endDate: utcEndDate.toISOString() });
+      await axios.patch(`/api/courses/${courseId}`, { endDate: utcEndDate.toISOString(), notifyDate: isNotifyEnabled ? notifyDate : 0 });
       toast.success("End Date updated");
       toggleEdit();
       router.refresh();
@@ -94,9 +117,17 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
       year: "numeric",
     });
       setFormattedEndDate(formattedEndDate);
+      validateEndDate(initialData.endDate);
       // setFormattedEndDate(new Date(initialData.endDate).toLocaleDateString());
     }
   }, [initialData.endDate]);
+
+  useEffect(() => {
+    // Cập nhật trạng thái hợp lệ khi notifyDate thay đổi
+    validateNotifyDate(notifyDate);
+  }, [notifyDate]);
+
+  const isSaveButtonEnabled = isEndDateValid && (isNotifyEnabled ? isNotifyDateValid : true);
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
@@ -105,7 +136,7 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
           End Date
           {/* <Asterisk className="size-4" color="red" /> */}
         </div>
-
+        {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -116,10 +147,18 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
             </>
           )}
         </Button>
+        )}
       </div>
       {!isEditing && formattedEndDate && (
         <p className="text-sm mt-2 dark:text-slate-50">{formattedEndDate}</p>
       )}
+      {isNotifyEnabled && notifyDate && (
+              <div className="mt-4 text-sm text-gray-600">
+                <p>
+                  You have set a reminder for <strong>{notifyDate} days</strong> before the course end date.
+                </p>
+              </div>
+            )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -137,6 +176,7 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
                       fromDate={tomorrow}
                       onDayClick={(date) => {
                         field.onChange(date.toISOString());
+                        validateEndDate(date.toISOString());
                       }}
                     />
                   </FormControl>
@@ -144,8 +184,39 @@ export const EndDateForm = ({ initialData, courseId }: EndDateFormProps) => {
                 </FormItem>
               )}
             />
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={isNotifyEnabled}
+                onChange={() => setIsNotifyEnabled(!isNotifyEnabled)}
+                className="h-4 w-4"
+              />
+              <label className="text-sm">Enable Reminder Notification</label>
+            </div>
+
+            {isNotifyEnabled && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Reminder Date (in days)</label>
+                <select
+                  value={notifyDate || ''}
+                  onChange={(e) => setNotifyDate(Number(e.target.value))}
+                  className="w-full p-2 border rounded-md text-sm"
+                >
+                  <option value="">Select a reminder date</option>
+                  {[1, 2, 3, 4, 5].map((days) => (
+                    <option key={days} value={days}>
+                      {days} days before
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            
+
             <div className="flex items-center gap-x-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">
+              <Button disabled={!isSaveButtonEnabled  || isSubmitting} type="submit">
                 Save
               </Button>
               <Button type="button" variant="outline" onClick={handleCancel}>

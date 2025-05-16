@@ -24,6 +24,7 @@ interface TitleFormProps {
     title: string;
   };
   courseId: string;
+  readOnly?: boolean
 }
 
 const formSchema = z.object({
@@ -32,10 +33,10 @@ const formSchema = z.object({
   }),
 });
 
-export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
+export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
 
   const router = useRouter();
 
@@ -65,6 +66,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           <Asterisk className="size-4" color="red" />
         </div>
 
+        {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -75,6 +77,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
             </>
           )}
         </Button>
+        )}
       </div>
       {!isEditing && (
         <p className="text-sm mt-2 dark:text-slate-50">{initialData.title}</p>

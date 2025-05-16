@@ -16,6 +16,7 @@ interface ChaptersListProps {
   items: Module[];
   courseId: string;
   onReorder: (updateData: { id: string; position: number }[]) => void;
+  readOnly?: boolean;
 }
 
 const deleteModule = async (moduleId: string, courseId: string) => {
@@ -45,7 +46,7 @@ const deleteModule = async (moduleId: string, courseId: string) => {
   }
 };
 
-export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) => {
+export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
   const router = useRouter();
@@ -70,7 +71,7 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
   }, [items]);
 
   const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
+    if (readOnly  || !result.destination) return;
     const items = Array.from(chapters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -91,8 +92,9 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
   };
 
   const handleDelete = async (moduleId: string) => {
+    if (readOnly) return;
     const result = await deleteModule(moduleId, courseId);
-    console.log("Result of deleteModulessss:", result);
+    // console.log("Result of deleteModulessss:", result);
     if (result) {
       // Loại bỏ module khỏi danh sách trong state chapters ngay lập tức
       setChapters((prevChapters) => {
@@ -124,7 +126,7 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
                 key={chapter.id}
                 draggableId={chapter.id}
                 index={index}
-                isDragDisabled={chapter.type === "Exam"}
+                isDragDisabled={readOnly || chapter.type === "Exam"}
               >
                 {(provided) => (
                   <div
@@ -139,8 +141,8 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
                       className={cn(
                         "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition dark:text-black",
                         chapter.isPublished &&
-                          `border-r-sky-200 hover:bg-sky-200 `,
-                          chapter.type === "Exam" && "opacity-50 cursor-not-allowed bg-blue-200"
+                          `border-r-sky-200 hover:bg-sky-200 `, 
+                          (readOnly || chapter.type === "Exam") && "opacity-50 cursor-not-allowed bg-blue-200"
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -165,7 +167,7 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
                       >
                         {chapter.isPublished ? "Published" : "Draft"}
                       </Badge>
-
+                      {!readOnly && (
                       <button
                         onClick={() =>
                           handleDelete(chapter.id)
@@ -174,6 +176,7 @@ export const ChaptersList = ({ items, onReorder, courseId }: ChaptersListProps) 
                       >
                         <Trash className="h-5 w-5" />
                       </button>
+                      )}
                     </div>
                   </div>
                 )}

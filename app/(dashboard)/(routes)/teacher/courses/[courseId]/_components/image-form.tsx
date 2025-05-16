@@ -15,6 +15,7 @@ import { FileUpload } from "@/components/file-upload";
 interface ImageFormProps {
   initialData: Course;
   courseId: string;
+  readOnly?: boolean;
 }
 
 const formSchema = z.object({
@@ -23,12 +24,12 @@ const formSchema = z.object({
   }),
 });
 
-export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
+export const ImageForm = ({ initialData, courseId, readOnly = false }: ImageFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const [selectedFile, setSelectedFile]: any = useState<File | null>(null);
 
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
 
   const router = useRouter();
 
@@ -85,6 +86,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
         <div className="flex items-center">
           Course image <Asterisk className="size-4" color="red" />
         </div>
+        {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -104,6 +106,7 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
             </>
           )}
         </Button>
+        )}
       </div>
       {!isEditing && (
         <>
