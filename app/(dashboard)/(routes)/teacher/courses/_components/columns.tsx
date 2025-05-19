@@ -138,24 +138,24 @@ export const columns: ColumnDef<Course>[] = [
     },
     cell: CourseTitleCell,
   },
-  {
-    accessorKey: "user",
-    header: ({ column }) => {
-      return (
-        <span
-          className="flex items-center cursor-pointer"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          <span className="mr-2">Created By</span>
-          <ArrowUpDown className="h-4 w-4" />
-        </span>
-      );
-    },
-    cell: ({ row }: any) => {
-      const { user } = row.original;
-      return <div>{user.username}</div>;
-    },
-  },
+  // {
+  //   accessorKey: "user",
+  //   header: ({ column }) => {
+  //     return (
+  //       <span
+  //         className="flex items-center cursor-pointer"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         <span className="mr-2">Created By</span>
+  //         <ArrowUpDown className="h-4 w-4" />
+  //       </span>
+  //     );
+  //   },
+  //   cell: ({ row }: any) => {
+  //     const { user } = row.original;
+  //     return <div>{user.username}</div>;
+  //   },
+  // },
   // {
   //   accessorKey: "updatedUser",
   //   header: ({ column }) => {
@@ -232,7 +232,63 @@ export const columns: ColumnDef<Course>[] = [
       );
     },
   },
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return (
+        <span
+          className="flex items-center cursor-pointer"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <span className="mr-2">Status</span>
+          <ArrowUpDown className="h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+    // giá trị status trả về từ DB (ví dụ: "open" | "closed")
+    const rawStatus: string = row.original.status ?? "";
 
+    // Chuẩn hoá tên hiển thị
+    const label =
+      rawStatus.toLowerCase() === "closed"
+        ? "Closed"
+        : rawStatus.toLowerCase() === "open"
+        ? "Open"
+        : rawStatus;
+
+    // Chọn màu theo trạng thái
+    const badgeClass = cn(
+      "bg-slate-500",                  // mặc định xám (nếu tình cờ status khác)
+      rawStatus.toLowerCase() === "open" && "bg-green-600",
+      rawStatus.toLowerCase() === "closed" && "bg-red-600"
+    );
+
+    return <Badge className={badgeClass}>{label}</Badge>;
+  },
+},
+  // {
+  //   accessorKey: "status",
+  //   header: ({ column }) => {
+  //     return (
+  //       <span
+  //         className="flex items-center cursor-pointer"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         <span className="mr-2">Published</span>
+  //         <ArrowUpDown className="h-4 w-4" />
+  //       </span>
+  //     );
+  //   },
+  //   cell: ({ row }) => {
+  //     const isPublished = row.getValue("isPublished") || false;
+  //     return (
+  //       <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
+  //         {isPublished ? "Published" : "Draft"}
+  //       </Badge>
+  //     );
+  //   },
+  // },
   {
     id: "actions",
     accessorKey: "Action",

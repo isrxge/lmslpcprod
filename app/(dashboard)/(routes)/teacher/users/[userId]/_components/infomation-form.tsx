@@ -4,6 +4,8 @@ import { Pencil, X } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
+import toast from "react-hot-toast";  
+
 const UserInformation = ({ user }: any) => {
   const router = useRouter();
   const [isRoleEditing, setIsRoleEditing] = useState(false);
@@ -45,9 +47,20 @@ const UserInformation = ({ user }: any) => {
       username: e.target.username.value,
       status: e.target.status.value,
     };
-
+    const toastId = toast.loading("Saving changes…");
+try {
     await axios.patch(`/api/user/${user?.id}`, values);
+    toast.success("Saved successfully 🎉", { id: toastId });
     router.refresh();
+  } catch (err: any) {
+      // Attempt to grab a message from the response, fall back to generic
+      const message =
+        err?.response?.data?.message ??
+        err?.message ??
+        "Something went wrong, please try again";
+
+      toast.error(`Save failed: ${message}`, { id: toastId });
+    }
   };
   return (
     <form

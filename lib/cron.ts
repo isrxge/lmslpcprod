@@ -64,7 +64,7 @@ const sendFinalReport = async (to: string, courseTitle: string, body: string) =>
   });
 
 /* ---------- CRON 07:00 ---------- */
-cron.schedule("45 9 * * *", async () => {
+cron.schedule("30 8 * * *", async () => {
   //cron.schedule("34 17 * * *", async () => {
   try {
     /* 1. lấy mọi khóa open hết hạn */

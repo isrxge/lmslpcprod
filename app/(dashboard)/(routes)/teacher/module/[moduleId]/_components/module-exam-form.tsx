@@ -25,6 +25,9 @@ export default function Exam({ chapter }: any) {
   const [timeLimit, setTimeLimit]: any = useState(60);
   const [passPercentage, setPassPercentage] = useState(80);
   const [retakeTime, setRetakeTime] = useState(1);
+  const [examFile, setExamFile] = useState<File | null>(null);
+  const [examFileUrl, setExamFileUrl] = useState<string>("");
+
   useEffect(() => {
     async function loadQuestion() {
       const moduleId = chapter.id;
@@ -32,10 +35,14 @@ export default function Exam({ chapter }: any) {
       let questionList = await axios.get(
         // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam`
         `/api/module/${moduleId}/category/exam`
-
       );
 
       setQuizList(questionList.data.Category);
+
+      const mRes = await axios.get(`/api/module/${moduleId}`);
+ if (mRes.data.examFilePath) {
+     setExamFileUrl(mRes.data.examFilePath);   // <-- gán URL để hiển thị nút
+   }
       setPassPercentage(chapter.scoreLimit == null ? 80 : chapter.scoreLimit);
       setRetakeTime(chapter.maxAttempt == null ? 1 : chapter.maxAttempt);
 
@@ -44,7 +51,6 @@ export default function Exam({ chapter }: any) {
     loadQuestion();
   }, []);
   function getRandomInt(max: number) {
-    
     return Math.floor(Math.random() * max);
   }
   function addCategory() {
@@ -289,16 +295,29 @@ export default function Exam({ chapter }: any) {
       `/api/module/${moduleId}/category/exam`,
       quizList
     );
+
+    if (examFile) {
+      const fd = new FormData();
+      fd.append("file", examFile);
+
+      const { data } = await axios.post(
+        `/api/module/${moduleId}/exam/upload`,
+        fd,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      setExamFileUrl(data.url); // lưu URL để hiển thị nút tải
+    }
+
     toast.success("Exam updated");
     router.push(
       // `/teacher/courses/${chapter?.courseId}/chapters/${chapter?.id}`
       `/teacher/module/${moduleId}`
-
     );
     router.refresh();
     let questionList = await axios.get(
       // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam`
-      `/api/module/${moduleId}/category/exam`,
+      `/api/module/${moduleId}/category/exam`
     );
 
     setQuizList(questionList.data.Category);
@@ -357,6 +376,7 @@ export default function Exam({ chapter }: any) {
   };
   const handleFileFull = (e: { target: any }) => {
     const file = e.target.files[0];
+    setExamFile(file);
     let newQuizList: any = [];
 
     if (!file) return;
@@ -561,7 +581,15 @@ export default function Exam({ chapter }: any) {
             <PlusCircle className="h-4 w-4 mr-2" />
             Category
           </button>
-
+          {examFileUrl && (
+            <a
+              href={examFileUrl}
+              download
+              className="bg-green-600 text-white px-4 py-2 rounded ml-2 inline-flex items-center"
+            >
+              Download Exam File
+            </a>
+          )}
           <button
             className="bg-black text-white px-4 py-2 rounded flex items-center ml-2"
             onClick={() => submit()}

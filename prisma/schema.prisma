@@ -219,6 +219,7 @@ model Module {
   maxAttempt   Int            @default(1)
   timeLimit    Float?
   scoreLimit   Int?
+  examFilePath String?
 
   Category       Category[]
   Resource       Resource[]
