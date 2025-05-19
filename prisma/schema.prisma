@@ -105,6 +105,7 @@ model User {
   userPermission userPermission[]
   examRecord     examRecord[]
   userExamReport userExamReport[]
+  userExamRecord userExamRecord[]
 
   @@index([departmentId])
 }
@@ -157,6 +158,7 @@ model Course {
   userExamReport     userExamReport[]
   examRecord         examRecord[]
   modules            ModuleInCourse[]
+  userExamRecord     userExamRecord[]
 
   @@index([userId])
   @@index([updatedBy])
@@ -226,6 +228,7 @@ model Module {
   examRecord     examRecord[]
   userExamReport userExamReport[]
   courses        ModuleInCourse[]
+  userExamRecord userExamRecord[]
 
   @@index([userId])
 }
@@ -350,6 +353,22 @@ model userExamReport {
   note       String
   date       DateTime
 
+  @@index([userId])
+  @@index([moduleId])
+  @@index([courseId])
+}
+
+model userExamRecord {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  course     Course   @relation(fields: [courseId], references: [id])
+  courseId   String
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
+  result     String
+  date       DateTime
+ 
   @@index([userId])
   @@index([moduleId])
   @@index([courseId])
