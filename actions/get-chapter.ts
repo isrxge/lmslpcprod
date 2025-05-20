@@ -296,13 +296,17 @@ export const getChapter = async ({
     )[currentChapterPos > 0 ? currentChapterPos - 1 : -1];
  
     // Lấy thông tin về tiến độ của người dùng trong module
-    const userProgress = await db.userExamRecord.findFirst({
+    const userProgress = await db.userExamRecord.findMany({
       where: {
         moduleId: moduleId,
         userId: userId,
-        courseId: courseId,
+        // courseId: courseId,
       },
+      orderBy:{
+        date:"desc"
+      }
     });
+   
     return {
       chapter,
       course,

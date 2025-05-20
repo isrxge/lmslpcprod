@@ -1100,6 +1100,8 @@ const Exam = ({
   courseId,
   course,
   isCompleted,
+  isFailed,
+  dateRemain,
 }: any) => {
   const router = useRouter();
   const confetti = useConfettiStore();
@@ -1113,7 +1115,6 @@ const Exam = ({
   const [timeLimitRecord, setTimeLimitRecord]: any = useState(
     chapter.timeLimit * 60
   );
-  const [maxAttempt, setMaxAttempt]: any = useState(chapter.maxAttempt);
 
   // Xử lý questions
   const [questions, setQuestions]: any = useState([]);
@@ -1142,7 +1143,7 @@ const Exam = ({
         `/api/module/${chapter.id}/category/exam/examRecord`
       );
       console.log(getLatestTestResult.data);
-      
+
       setFinishedExam(
         getLatestTestResult?.data[0]?.result !== "studying" &&
           getLatestTestResult !== undefined
@@ -1362,30 +1363,6 @@ const Exam = ({
         });
       }
 
-      // 2) Nếu đậu => update course, user star
-      // if (totalScore >= chapter.scoreLimit && passed) {
-      //   await axios.put(`/api/courses/${courseId}/progress`, {
-      //     status: "finished",
-      //     progress: "100%",
-      //     endDate: date,
-      //     score: parseInt(totalScore + ""),
-      //   });
-
-      //   let currentUser = await axios.get(`/api/user`);
-      //   await axios.patch(`/api/user/${currentUser.data.id}/score`, {
-      //     star: parseInt(currentUser.data.star) + parseInt(courseCredit),
-      //     starUpdateDate: new Date(),
-      //   });
-      // } else {
-      //   // Fail -> update course
-      //   await axios.put(`/api/courses/${courseId}/progress`, {
-      //     status: "failed",
-      //     progress: "0%",
-      //     endDate: date,
-      //     score: parseInt(totalScore + ""),
-      //   });
-      // }
-
       // 3) Gửi thông báo isInExam => false
       await axios.post(
         `/api/user/${currentUserId}/isInExam`,
@@ -1444,33 +1421,6 @@ const Exam = ({
     });
     router.refresh();
   };
-
-  // const handleFinalizeExam = async (finalScore: number, passed: boolean) => {
-  //   // 1. Cập nhật UI
-  //   setOnFinish(true);
-  //   setQuestions([]);
-  //   setFinalScore(finalScore);
-  //   setIsPassed(passed);
-
-  //   // 2. Đánh dấu người dùng không còn ở trạng thái thi
-  //   const currentUser = await axios.get("/api/user");
-  //   await axios.patch(`/api/user/${currentUser.data.id}/isInExam`, {
-  //     id: reportId,
-  //     values: { isInExam: false, moduleId: chapter.id, courseId },
-  //   });
-
-  //   // (tuỳ chọn) log examRecord lần cuối – KHÔNG ghi điểm
-  //   await axios.post(`/api/user/${currentUserId}/isInExam`, {
-  //     id: reportId,
-  //     isInExam: false,
-  //     note: "Finished Exam.",
-  //     moduleId: chapter.id,
-  //     courseId,
-  //     date: new Date(),
-  //   });
-
-  //   router.refresh();
-  // };
 
   const accept = async () => {
     setFinalScore(0);
@@ -1674,6 +1624,8 @@ const Exam = ({
     seconds
   ).padStart(2, "0")}`;
 
+  let scheduledDate: any = new Date(dateRemain).toDateString();
+  console.log(scheduledDate);
   // Render
   return questions.length === 0 ? (
     <>
@@ -1689,12 +1641,7 @@ const Exam = ({
             <li className="mb-2">
               This exam consists of multiple-choice questions.
             </li>
-            {isCompleted ? null : (
-              <li className="mb-2">
-                You will have <span className="text-red-600">1 time</span> to do
-                the exam.
-              </li>
-            )}
+
             <li className="mb-2">
               You will have{" "}
               <span className="text-red-600">{chapter.timeLimit} minutes</span>{" "}
@@ -1716,8 +1663,7 @@ const Exam = ({
               <AlertDialogTitle className="text-center">
                 <div
                   className={`${
-                    (finalScore >= chapter.scoreLimit && isPassed) ||
-                    finishedExam
+                    finalScore >= chapter.scoreLimit && isPassed
                       ? "bg-green-500"
                       : "bg-red-500"
                   } text-white p-6 rounded-t-lg`}
@@ -1730,16 +1676,14 @@ const Exam = ({
 
                 <div className="p-6 text-center">
                   <p className="text-lg mb-4">
-                    {(finalScore >= chapter.scoreLimit && isPassed) ||
-                    finishedExam
+                    {finalScore >= chapter.scoreLimit && isPassed
                       ? nextChapterId !== null
                         ? "Congratulations on completing the exam!"
                         : "You have successfully completed the exam."
                       : "Sorry, you have failed. Better luck next time!"}
                   </p>
 
-                  {(finalScore >= chapter.scoreLimit && isPassed) ||
-                  finishedExam ? (
+                  {finalScore >= chapter.scoreLimit && isPassed ? (
                     <div className="flex justify-center mt-4">
                       <Image
                         src="/congratulationLPC.svg"
@@ -1764,15 +1708,21 @@ const Exam = ({
               </AlertDialogTitle>
 
               <div className="flex justify-between p-6">
-                {isCompleted === "failed" ? (
+                {isCompleted && isFailed ? (
                   <span className="text-red-500 font-semibold">
-                    Sorry, please wait for the exam reset to retake this test.
+                    You can retake on {scheduledDate}.
                   </span>
                 ) : (
                   <></>
                 )}
-
-                {isCompleted === "failed" ? (
+                {isCompleted && !isFailed ? (
+                  <span className="text-red-500 font-semibold">
+                    You cannot retake.
+                  </span>
+                ) : (
+                  <></>
+                )}
+                {isCompleted && isFailed ? (
                   <AlertDialogCancel
                     onClick={() => setOnFinish(false)}
                     className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md"
@@ -1781,8 +1731,7 @@ const Exam = ({
                   </AlertDialogCancel>
                 ) : null}
 
-                {(finalScore >= chapter.scoreLimit && isPassed) ||
-                finishedExam ? (
+                {finalScore >= chapter.scoreLimit && isPassed ? (
                   <AlertDialogAction asChild>
                     <button
                       className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
@@ -1830,10 +1779,13 @@ const Exam = ({
                   <>👉Take an exam</>
                 </AlertDialogTrigger>
               )}
-              {isCompleted ? (
+              {isCompleted && isFailed ? (
                 <span className="text-red-500">
-                  Sorry, please wait for the exam reset to retake this test
+                  You can retake on {scheduledDate}.
                 </span>
+              ) : null}
+              {isCompleted && !isFailed ? (
+                <span className="text-red-500">You cannot retake.</span>
               ) : null}
             </div>
             <AlertDialogContent className="AlertDialogContent">
@@ -1874,9 +1826,7 @@ const Exam = ({
           </div>
           {finishedExam ? (
             <div>
-              <p className="text-lg mb-2">
-                You finished the exam. Retakes will not count.
-              </p>
+              <p className="text-lg mb-2">You finished the exam.</p>
             </div>
           ) : (
             <div>
@@ -2048,3 +1998,4 @@ const Exam = ({
 };
 
 export default Exam;
+

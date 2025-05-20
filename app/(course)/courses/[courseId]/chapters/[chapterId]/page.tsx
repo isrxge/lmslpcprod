@@ -201,21 +201,27 @@ const ChapterIdPage = async ({
   }
  
   let currentDate: any = new Date();
+  let examDate: any = new Date(userProgress?.date);
   const oneDay = 1000 * 60 * 60 * 24;
   let dateGap = userInfo.typeUser == "probation" ? 3 : 7;
-  let period = (currentDate - userProgress?.date) / oneDay;
+  let period = (currentDate - examDate) / oneDay;
+  console.log(userProgress, "Some progress");
   let ifInSameCourseAndFailed =
-    userProgress?.courseId == params.courseId &&
-    userProgress?.result == "failed";
+    userProgress[0]?.courseId == params.courseId &&
+    userProgress[0]?.result == "failed";
+  let ifInDiffCourseAndFailed =
+    userProgress[0]?.courseId !== params.courseId &&
+    userProgress[0]?.result == "failed";
   let ifInSameCourseAndCompleted =
-    userProgress?.courseId == params.courseId &&
-    userProgress?.result == "completed";
+    userProgress[0]?.courseId == params.courseId &&
+    userProgress[0]?.result == "completed";
   let ifFailedAndDateGapBellowPolicy = period >= dateGap;
-  console.log(
-    ifInSameCourseAndFailed ||
-      ifInSameCourseAndCompleted ||
-      (!ifInSameCourseAndFailed && ifFailedAndDateGapBellowPolicy)
-  );
+  const addDaysToDate = (date: string | number | Date, n: number) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() + n);
+    return d;
+  };
+ 
   return chapter.module.type == "Exam" ? (
     <>
       <Exam
@@ -223,10 +229,12 @@ const ChapterIdPage = async ({
         nextChapterId={nextChapter}
         courseId={params.courseId}
         course={course}
+        isFailed={ifInDiffCourseAndFailed}
+        dateRemain={addDaysToDate(examDate, dateGap)}
         isCompleted={
           ifInSameCourseAndFailed ||
           ifInSameCourseAndCompleted ||
-          (!ifInSameCourseAndFailed && ifFailedAndDateGapBellowPolicy)
+          (!ifInSameCourseAndFailed && !ifFailedAndDateGapBellowPolicy)
         }
       />
     </>
@@ -256,19 +264,9 @@ const ChapterIdPage = async ({
             isCompleted={
               ifInSameCourseAndFailed ||
               ifInSameCourseAndCompleted ||
-              (!ifInSameCourseAndFailed && ifFailedAndDateGapBellowPolicy)
+              (!ifInSameCourseAndFailed && !ifFailedAndDateGapBellowPolicy)
             }
           ></Slide>
-          {/* Extra resources:{" "}
-          <ul className="list-decimal">
-            {chapter.Resource.map((item: any) => (
-              <li key={item.attachment}>
-                <Link key={item.attachment} href={item.attachment} className="text-blue-600 hover:underline">
-                  {item.attachment.split("/").pop() as string}
-                </Link>
-              </li>
-            ))}
-          </ul> */}
         </div>
         <div>
           <div>

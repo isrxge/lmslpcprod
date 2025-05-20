@@ -42,14 +42,14 @@ const RolesPage = async () => {
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
-            .indexOf("Create program permission") != -1
+            .indexOf("Create role permission") != -1
         }
         canEdit={
           checkUser
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
-            .indexOf("Edit program permission") != -1
+            .indexOf("Edit role permission") != -1
         }
       />
     </div>
