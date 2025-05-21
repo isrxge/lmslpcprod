@@ -61,9 +61,9 @@ function CreatePage() {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-60">
       <div>
         <>
-          <h1 className="text-2xl">Name your permission</h1>
+          <h1 className="text-2xl">Name your department</h1>
           <p className="text-sm text-slate-600">
-            What would you like to name your permission? Don&apos;t worry, you
+            What would you like to name your department? Don&apos;t worry, you
             can change this later.
           </p>
           <Form {...form}>
