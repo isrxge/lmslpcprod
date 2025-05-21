@@ -112,7 +112,7 @@ export const Cell = ({ row }: any) => {
               .map(
                 (item: { permission: { title: any } }) => item.permission.title
               )
-              .indexOf("User management permission") == -1 ? (
+              .indexOf("Edit user permission") == -1 ? (
               <></>
             ) : (
               <Link href={`/teacher/users/${id}`}>

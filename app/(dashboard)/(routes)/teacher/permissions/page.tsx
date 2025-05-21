@@ -21,12 +21,15 @@ const PermissionsPage = async () => {
     },
   });
   if (
-    checkUser
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Edit permission permission") == -1 &&
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Create permission permission") == -1
+      checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit permission permission") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create permission permission") == -1
+      .indexOf("View permission permission") == -1
   ) {
     return redirect("/");
   }

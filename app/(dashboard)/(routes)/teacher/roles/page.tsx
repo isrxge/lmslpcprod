@@ -21,12 +21,15 @@ const RolesPage = async () => {
     },
   });
   if (
-    checkUser
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Edit role permission") == -1 &&
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Create role permission") == -1
+      checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit role permission") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create role permission") == -1
+      .indexOf("View role permission") == -1
   ) {
     return redirect("/");
   }

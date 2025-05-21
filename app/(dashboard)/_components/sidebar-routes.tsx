@@ -98,12 +98,16 @@ export const SidebarRoutes = ({ userId }: any) => {
       // data.userPermission
       //   .map((item: { permission: { title: any } }) => item.permission.title)
       //   .indexOf("Create program report") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create course report") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create exam report") != -1
+
       data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create course report") != -1 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create exam report") != -1
+        .indexOf("Create report permission") != -1
     ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,
@@ -116,12 +120,15 @@ export const SidebarRoutes = ({ userId }: any) => {
     }
 
     if (
-      data.userPermission
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create role permission") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Manage role permission") != -1
+        data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create role permission") != -1 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Manage role permission") != -1
+        .indexOf("View role permission") != -1
     ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,
@@ -133,12 +140,16 @@ export const SidebarRoutes = ({ userId }: any) => {
       ]);
     }
     if (
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create permission permission") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Edit permission permission") != -1
       data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create permission permission") != -1 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Manage permission permission") != -1
+        .indexOf("View permission permission") != -1
+      
     ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,
@@ -150,12 +161,15 @@ export const SidebarRoutes = ({ userId }: any) => {
       ]);
     }
     if (
-      data.userPermission
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("User approval permission") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("User management permission") != -1
+        data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("User approval permission") != -1 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("User management permission") != -1
+        .indexOf("View user permission") != -1
     ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,
@@ -187,12 +201,15 @@ export const SidebarRoutes = ({ userId }: any) => {
       ]);
     }
     if (
-      data.userPermission
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Create resource permission") != -1 &&
+      // data.userPermission
+      //   .map((item: { permission: { title: any } }) => item.permission.title)
+      //   .indexOf("Edit resource permission") != -1
+        data.userPermission
         .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Create resource permission") != -1 &&
-      data.userPermission
-        .map((item: { permission: { title: any } }) => item.permission.title)
-        .indexOf("Edit resource permission") != -1
+        .indexOf("View resource permission") != -1
     ) {
       setTeacherRoutes((prevState: any) => [
         ...prevState,

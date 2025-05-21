@@ -100,7 +100,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   );
 
   const hasEditAdvancedPermission = checkUserPermissions.includes(
-    "Edit advance course permission"
+    "All department in course permission"
   );
 
   let filteredDepartment = [];

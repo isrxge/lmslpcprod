@@ -28,12 +28,15 @@ const ModulePage = async () => {
     },
   });
   if (
-    checkUser
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Edit resource permission") == -1 &&
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Create resource permission") == -1
+      checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit resource permission") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create resource permission") == -1
+      .indexOf("View resource permission") == -1
   ) {
     return redirect("/");
   }

@@ -24,12 +24,15 @@ const AnalyticsPage = async () => {
     },
   });
   if (
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Create course report") == -1 &&
+    // checkUser
+    //   .map((item: { permission: { title: any } }) => item.permission.title)
+    //   .indexOf("Create exam report") == -1
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create course report") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create exam report") == -1
+      .indexOf("Create report permission") == -1
   ) {
     return redirect("/");
   }
