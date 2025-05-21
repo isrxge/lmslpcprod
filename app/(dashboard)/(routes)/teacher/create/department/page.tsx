@@ -76,11 +76,11 @@ function CreatePage() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Permission title</FormLabel>
+                    <FormLabel>Department title</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isSubmitting}
-                        placeholder="e.g. 'Create course permission'"
+                        placeholder="e.g. 'PRD'"
                         {...field}
                       />
                     </FormControl>
