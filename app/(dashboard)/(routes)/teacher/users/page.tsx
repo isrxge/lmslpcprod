@@ -37,7 +37,7 @@ const UsersPage = async ({
     //   .indexOf("User management permission") == -1
       checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit user permission") == -1
+      .indexOf("View user permission") == -1
   ) {
     return redirect("/");
   }
