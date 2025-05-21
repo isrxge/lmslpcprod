@@ -27,7 +27,7 @@ const RoleIdPage = async ({ params }: { params: { roleId: string } }) => {
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Manage role permission") == -1
+      .indexOf("Edit role permission") == -1
   ) {
     return redirect("/");
   }
