@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
-    "start": "next start",
+    "start": "NODE_OPTIONS='-r dd-trace/cli' next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
@@ -47,6 +47,7 @@
     "cmdk": "^0.2.0",
     "crypto-js": "^4.2.0",
     "date-fns": "^3.6.0",
+    "dd-trace": "^5.53.0",
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
     "eslint": "8.56.0",
