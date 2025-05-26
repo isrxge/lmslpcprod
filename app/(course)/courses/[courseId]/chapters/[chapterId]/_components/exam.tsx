@@ -358,7 +358,7 @@
 //         }),
 //         "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
 //       ).toString();
-      
+
 //       if (totalScore >= chapter.scoreLimit && passed) {
 //         await axios.put(`/api/courses/${courseId}/progress`, {
 //           courseResult : courseResult,
@@ -375,7 +375,6 @@
 //           courseResult : courseResult,
 //         });
 //       }
-
 
 //       // 2) Nếu đậu => update course, user star
 //       // if (totalScore >= chapter.scoreLimit && passed) {
@@ -1102,6 +1101,7 @@ const Exam = ({
   isCompleted,
   isFailed,
   dateRemain,
+  isSameCourseAndFailed
 }: any) => {
   const router = useRouter();
   const confetti = useConfettiStore();
@@ -1142,12 +1142,14 @@ const Exam = ({
       let getLatestTestResult: any = await axios.get(
         `/api/module/${chapter.id}/category/exam/examRecord`
       );
-      console.log(getLatestTestResult.data);
 
-      setFinishedExam(
-        getLatestTestResult?.data[0]?.result !== "studying" &&
-          getLatestTestResult !== undefined
-      );
+      if (getLatestTestResult?.data.length > 0) {
+        setFinishedExam(
+          getLatestTestResult?.data[0]?.result !== "studying" &&
+            getLatestTestResult !== undefined
+        );
+      }
+
       let getLatestTestResultScore: any = await axios.get(
         `/api/module/${chapter.id}/category/exam`
       );
@@ -1305,87 +1307,79 @@ const Exam = ({
   // (C) HÀM XỬ LÝ EXAM Ở CÂU CUỐI CÙNG (NÚT SUBMIT)
   const handleExamSubmit = async () => {
     // Gọi server
+
     const { finalScore, passed } = await submitExamToServer();
     handleFinalizeExam(finalScore, passed);
   };
 
   //(D) XỬ LÝ KHI CÓ finalScore, passed
   const handleFinalizeExam = async (finalScore: number, passed: boolean) => {
-    if (!finishedExam) {
-      // Giữ nguyên logic cũ
-      const date = new Date();
-      const totalScore = finalScore;
-      const courseCredit = course.credit || 0; // fallback
-      const finalResult = CryptoJS.AES.encrypt(
-        JSON.stringify({
-          status:
-            totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
-          score: parseInt(totalScore + ""),
-          progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-          endDate: date,
-          retakeTime: 0,
-        }),
-        "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
-      ).toString();
-      // 1) Cập nhật progress chapter
-      await axios.put(
-        `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
-        {
-          finalResult: finalResult,
-        }
-      );
-
-      const courseResult = CryptoJS.AES.encrypt(
-        JSON.stringify({
-          status:
-            totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
-          progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
-          endDate: date,
-          score: parseInt(totalScore + ""),
-        }),
-        "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
-      ).toString();
-
-      if (totalScore >= chapter.scoreLimit && passed) {
-        await axios.put(`/api/courses/${courseId}/progress`, {
-          courseResult: courseResult,
-        });
-
-        let currentUser = await axios.get(`/api/user`);
-        await axios.patch(`/api/user/${currentUser.data.id}/score`, {
-          star: parseInt(currentUser.data.star) + parseInt(courseCredit),
-          starUpdateDate: new Date(),
-        });
-      } else {
-        // Fail -> update course
-        await axios.put(`/api/courses/${courseId}/progress`, {
-          courseResult: courseResult,
-        });
+    // Giữ nguyên logic cũ
+    const date = new Date();
+    const totalScore = finalScore;
+    const courseCredit = course.credit || 0; // fallback
+    const finalResult = CryptoJS.AES.encrypt(
+      JSON.stringify({
+        status:
+          totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
+        score: parseInt(totalScore + ""),
+        progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+        endDate: date,
+        retakeTime: 0,
+      }),
+      "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
+    ).toString();
+    // 1) Cập nhật progress chapter
+    await axios.put(
+      `/api/courses/${courseId}/chapters/${chapter.id}/progress`,
+      {
+        finalResult: finalResult,
       }
+    );
 
-      // 3) Gửi thông báo isInExam => false
-      await axios.post(
-        `/api/user/${currentUserId}/isInExam`,
-        JSON.stringify({
-          id: reportId,
-          isInExam: false,
-          note: "Finished Exam.",
-          moduleId: chapter.id,
-          courseId,
+    const courseResult = CryptoJS.AES.encrypt(
+      JSON.stringify({
+        status:
+          totalScore >= chapter.scoreLimit && passed ? "finished" : "failed",
+        progress: totalScore >= chapter.scoreLimit && passed ? "100%" : "0%",
+        endDate: date,
+        score: parseInt(totalScore + ""),
+      }),
+      "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz"
+    ).toString();
+
+    await axios.put(`/api/courses/${courseId}/progress`, {
+      courseResult: courseResult,
+    });
+
+    let currentUser = await axios.get(`/api/user`);
+    await axios.patch(`/api/user/${currentUser.data.id}/score`, {
+      star: parseInt(currentUser.data.star) + parseInt(courseCredit),
+      starUpdateDate: new Date(),
+    });
+
+    // 3) Gửi thông báo isInExam => false
+    await axios.post(
+      `/api/user/${currentUserId}/isInExam`,
+      JSON.stringify({
+        id: reportId,
+        isInExam: false,
+        note: "Finished Exam.",
+        moduleId: chapter.id,
+        courseId,
+        date: new Date(),
+        examRecord: {
+          startDate: startDate,
           date: new Date(),
-          examRecord: {
-            startDate: startDate,
-            date: new Date(),
-            timePassed: timeLimitRecord,
-            questionList: questions,
-            timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
-            currentQuestion: currentQuestion,
-            selectedAnswers: selectedAnswers,
-            // currentAttempt: currentAttempt,
-          },
-        })
-      );
-    }
+          timePassed: timeLimitRecord,
+          questionList: questions,
+          timeLimit: parseInt(timeLimitRecord / 60 + "").toFixed(2),
+          currentQuestion: currentQuestion,
+          selectedAnswers: selectedAnswers,
+          // currentAttempt: currentAttempt,
+        },
+      })
+    );
 
     // 4) Cập nhật state hiển thị
     setOnFinish(true);
@@ -1394,7 +1388,7 @@ const Exam = ({
     setIsPassed(passed);
 
     // Cuối cùng, patch user isInExam => false
-    let currentUser = await axios.get(`/api/user`);
+
     await axios.patch(`/api/user/${currentUser.data.id}/isInExam`, {
       id: reportId,
       values: {
@@ -1417,7 +1411,7 @@ const Exam = ({
       user_Id: currentUserId,
       courseId: course.id,
       moduleId: chapter.id,
-      result: passed ? "completed" : "failed",
+      result: passed ? "finished" : "failed",
     });
     router.refresh();
   };
@@ -1717,9 +1711,12 @@ const Exam = ({
                 )}
                 {isCompleted && !isFailed ? (
                   <span className="text-red-500 font-semibold">
-                    You cannot retake.
+                    You cannot retake. {isFailed}
                   </span>
                 ) : (
+                  // <AlertDialogTrigger className="flex justify-center items-center">
+                  //   <>👉Take an exam {isFailed + ""} </>
+                  // </AlertDialogTrigger>
                   <></>
                 )}
                 {isCompleted && isFailed ? (
@@ -1731,16 +1728,14 @@ const Exam = ({
                   </AlertDialogCancel>
                 ) : null}
 
-                {finalScore >= chapter.scoreLimit && isPassed ? (
-                  <AlertDialogAction asChild>
-                    <button
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
-                      onClick={() => onLeaving()}
-                    >
-                      {nextChapterId != null ? "Next" : "Leave"}
-                    </button>
-                  </AlertDialogAction>
-                ) : null}
+                <AlertDialogAction asChild>
+                  <button
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
+                    onClick={() => onLeaving()}
+                  >
+                    Leave
+                  </button>
+                </AlertDialogAction>
               </div>
             </AlertDialogContent>
           </AlertDialog>
@@ -1774,19 +1769,25 @@ const Exam = ({
             <div className="font-bold ml-2 rounded-lg">
               {isGeneratingExam ? (
                 <div>Please wait while we generate your exam...</div>
-              ) : isCompleted ? null : (
+              ) : !isCompleted || (isCompleted && !isFailed && !isSameCourseAndFailed) ? (
                 <AlertDialogTrigger className="flex justify-center items-center">
                   <>👉Take an exam</>
                 </AlertDialogTrigger>
-              )}
+              ) : isCompleted && isFailed ? null : null}
               {isCompleted && isFailed ? (
                 <span className="text-red-500">
                   You can retake on {scheduledDate}.
                 </span>
-              ) : null}
-              {isCompleted && !isFailed ? (
-                <span className="text-red-500">You cannot retake.</span>
-              ) : null}
+              ) : !isCompleted ? (
+                // <AlertDialogTrigger className="flex justify-center items-center">
+                //   <>👉Take an exam </>
+                // </AlertDialogTrigger>
+                <></>
+              ) : (
+                <span className="text-red-500 font-semibold">
+                  {/* You cannot retake. */}
+                </span>
+              )}
             </div>
             <AlertDialogContent className="AlertDialogContent">
               <AlertDialogTitle className="AlertDialogTitle">
@@ -1795,8 +1796,6 @@ const Exam = ({
               <AlertDialogDescription className="AlertDialogDescription">
                 {!finishedExam && isCompleted ? (
                   <>Do you want to do the exam?</>
-                ) : isCompleted ? (
-                  <>Please wait until admin reset</>
                 ) : (
                   <>Do you want to retake this exam?</>
                 )}
@@ -1806,11 +1805,9 @@ const Exam = ({
               >
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction asChild>
-                  {isCompleted ? null : (
-                    <button className="Button red" onClick={() => accept()}>
-                      Yes
-                    </button>
-                  )}
+                  <button className="Button red" onClick={() => accept()}>
+                    Yes
+                  </button>
                 </AlertDialogAction>
               </div>
             </AlertDialogContent>
@@ -1824,13 +1821,17 @@ const Exam = ({
           <div className="mb-6">
             <DoughnutChart score={finalScore} maxScore={examMaxScore} />
           </div>
-          {finishedExam ? (
+          {isCompleted && isFailed ? (
             <div>
-              <p className="text-lg mb-2">You finished the exam.</p>
+              <p className="text-lg mb-2">Your current score. Keep going!</p>
+            </div>
+          ) : !isCompleted ? (
+            <div>
+              <p className="text-lg mb-2">You have not take the test!</p>
             </div>
           ) : (
             <div>
-              <p className="text-lg mb-2">Your current score. Keep going!</p>
+              <p className="text-lg mb-2">You finished the exam.</p>
             </div>
           )}
         </div>

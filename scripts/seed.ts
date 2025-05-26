@@ -18,7 +18,7 @@ async function main() {
     //   ]
     // });
 
-    console.log("Success");
+    // console.log("Success");
   } catch (error) {
     console.log("Error seeding the database categories", error);
   } finally {

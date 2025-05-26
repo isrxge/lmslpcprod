@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport(
     port: 587,
     auth: {
       user: "webmaster@lp.com.vn", // Địa chỉ email của bạn
-      pass: "yqpcfbbvhfrvfbwz",   // Mật khẩu email của bạn
+      pass: "yqpcfbbvhfrvfbwz", // Mật khẩu email của bạn
     },
     tls: {
       ciphers: "SSLv3", // Thiết lập cipher
@@ -19,7 +19,10 @@ const transporter = nodemailer.createTransport(
 );
 
 // Hàm gửi email nhắc nhở
-const sendReminderEmail = async (userEmail: string, courseTitle: string): Promise<void> => {
+const sendReminderEmail = async (
+  userEmail: string,
+  courseTitle: string
+): Promise<void> => {
   const emailContent = {
     from: "webmaster@lp.com.vn", // Địa chỉ email gửi
     to: userEmail, // Địa chỉ người nhận
@@ -35,7 +38,7 @@ const sendReminderEmail = async (userEmail: string, courseTitle: string): Promis
 
   try {
     await transporter.sendMail(emailContent);
-    console.log(`Reminder sent to: ${userEmail}`);
+    // console.log(`Reminder sent to: ${userEmail}`);
   } catch (error) {
     console.error("Error sending email:", error);
   }
@@ -43,13 +46,14 @@ const sendReminderEmail = async (userEmail: string, courseTitle: string): Promis
 
 // Hàm cron job
 const scheduleReminder = (reminderDate: string): void => {
-  cron.schedule("30 8 * * *", async () => { // Chạy vào 18h06 mỗi ngày
+  cron.schedule("30 8 * * *", async () => {
+    // Chạy vào 18h06 mỗi ngày
     const today = new Date();
     const reminderDateObj = new Date(reminderDate);
 
     // Kiểm tra nếu hôm nay là ngày nhắc nhở hoặc sau ngày nhắc nhở
     if (today >= reminderDateObj) {
-      console.log("Running cron job to send reminder emails...");
+      // console.log("Running cron job to send reminder emails...");
 
       const courses = await db.course.findMany({
         where: {
@@ -77,7 +81,7 @@ const scheduleReminder = (reminderDate: string): void => {
       for (const course of courses) {
         for (const classRecord of course.ClassSessionRecord) {
           const user = classRecord.user;
-          
+
           // Kiểm tra xem người dùng đã nhận email chưa
           if (user && user.email && !sentUsers.has(user.id)) {
             // Gửi email nhắc nhở cho user nếu chưa gửi trước đó
@@ -86,36 +90,68 @@ const scheduleReminder = (reminderDate: string): void => {
           }
         }
 
-        // 2) Soạn & gửi báo cáo cho giảng viên
-        if (course.courseInstructor?.email) {
-          const rows = course.ClassSessionRecord
-            .map((r) => {
-              return `
-                <tr>
-                  <td>${r.user?.username ?? r.user?.email ?? "N/A"}</td>
-                  <td>${r.progress ?? "—"}</td>
-                  <td>${r.status ?? "—"}</td>
-                </tr>`;
-            })
+        // // 2) Soạn & gửi báo cáo cho giảng viên
+        // if (course.courseInstructor?.email) {
+        //   const rows = course.ClassSessionRecord
+        //     .map((r) => {
+        //       return `
+        //         <tr>
+        //           <td>${r.user?.username ?? r.user?.email ?? "N/A"}</td>
+        //           <td>${r.progress ?? "—"}</td>
+        //           <td>${r.status ?? "—"}</td>
+        //         </tr>`;
+        //     })
+        //     .join("");
+
+        //   const reportHtml = `
+        //     <table border="1" cellpadding="4" style="border-collapse:collapse;font-family:'Times New Roman',serif;font-size:12pt;">
+        //       <thead>
+        //         <tr><th>Staff</th><th>Progress</th><th>Status</th></tr>
+        //       </thead>
+        //       <tbody>${rows}</tbody>
+        //     </table>`;
+
+        //   await sendInstructorReportEmail(
+        //     course.courseInstructor.email,
+        //     course.title,
+        //     reportHtml,
+        //   );
+        // }
+        // 2) Soạn & gửi báo cáo cho giảng viên — CHỈ KHI CÓ NGƯỜI ĐANG STUDYING
+        const studyingRecords = course.ClassSessionRecord; // đã được where { status:"studying" }
+        if (
+          studyingRecords.length > 0 && // ← điều kiện mới
+          course.courseInstructor?.email
+        ) {
+          const rows = studyingRecords
+            .map(
+              (r) => `
+      <tr>
+        <td>${r.user?.username ?? r.user?.email ?? "N/A"}</td>
+        <td>${r.progress ?? "—"}</td>
+        <td>${r.status ?? "—"}</td>
+      </tr>`
+            )
             .join("");
 
           const reportHtml = `
-            <table border="1" cellpadding="4" style="border-collapse:collapse;font-family:'Times New Roman',serif;font-size:12pt;">
-              <thead>
-                <tr><th>Staff</th><th>Progress</th><th>Status</th></tr>
-              </thead>
-              <tbody>${rows}</tbody>
-            </table>`;
+    <table border="1" cellpadding="4" style="border-collapse:collapse;font-family:'Times New Roman',serif;font-size:12pt;">
+      <thead>
+        <tr><th>Staff</th><th>Progress</th><th>Status</th></tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
 
           await sendInstructorReportEmail(
             course.courseInstructor.email,
             course.title,
-            reportHtml,
+            reportHtml
           );
+        } else {
+          // Không còn ai đang học → không gửi báo cáo
+          // optional: console.log(`[LMS] No learners in progress for ${course.title}, skip report.`);
         }
       }
-
-      
     }
   });
 };
@@ -123,7 +159,7 @@ const scheduleReminder = (reminderDate: string): void => {
 const sendInstructorReportEmail = async (
   instructorEmail: string,
   courseTitle: string,
-  reportHtml: string,
+  reportHtml: string
 ): Promise<void> => {
   const emailContent = {
     from: "webmaster@lp.com.vn",
@@ -143,14 +179,17 @@ const sendInstructorReportEmail = async (
 
   try {
     await transporter.sendMail(emailContent);
-    console.log(`Instructor report sent to: ${instructorEmail}`);
+    // console.log(`Instructor report sent to: ${instructorEmail}`);
   } catch (error) {
     console.error("Error sending instructor email:", error);
   }
 };
 
 // Hàm tính toán ngày nhắc nhở
-const calculateReminderDate = (endDate: Date | null, notifyDate: number): string => {
+const calculateReminderDate = (
+  endDate: Date | null,
+  notifyDate: number
+): string => {
   if (!endDate) {
     throw new Error("End date is required");
   }
@@ -168,7 +207,10 @@ export const sendReminders = async (): Promise<void> => {
   });
 
   for (const course of courses) {
-    const reminderDate = calculateReminderDate(course.endDate, course.notifyDate || 0);
+    const reminderDate = calculateReminderDate(
+      course.endDate,
+      course.notifyDate || 0
+    );
     scheduleReminder(reminderDate); // Lên lịch cron job cho ngày nhắc nhở
   }
 };
@@ -176,4 +218,4 @@ export const sendReminders = async (): Promise<void> => {
 // Gọi hàm để chạy
 // sendReminders();
 
-console.log("Cron job setup complete.");
+// console.log("Cron job setup complete.");

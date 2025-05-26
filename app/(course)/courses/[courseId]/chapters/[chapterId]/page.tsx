@@ -201,27 +201,30 @@ const ChapterIdPage = async ({
   }
  
   let currentDate: any = new Date();
-  let examDate: any = new Date(userProgress?.date);
+  let examDate: any = userProgress[0]?.date;
   const oneDay = 1000 * 60 * 60 * 24;
   let dateGap = userInfo.typeUser == "probation" ? 3 : 7;
   let period = (currentDate - examDate) / oneDay;
-  console.log(userProgress, "Some progress");
   let ifInSameCourseAndFailed =
     userProgress[0]?.courseId == params.courseId &&
     userProgress[0]?.result == "failed";
   let ifInDiffCourseAndFailed =
     userProgress[0]?.courseId !== params.courseId &&
     userProgress[0]?.result == "failed";
+ 
   let ifInSameCourseAndCompleted =
     userProgress[0]?.courseId == params.courseId &&
-    userProgress[0]?.result == "completed";
+    userProgress[0]?.result == "finished";
+ 
   let ifFailedAndDateGapBellowPolicy = period >= dateGap;
   const addDaysToDate = (date: string | number | Date, n: number) => {
     const d = new Date(date);
     d.setDate(d.getDate() + n);
     return d;
   };
- 
+  if (ifInSameCourseAndCompleted) {
+    return redirect("/");
+  }
   return chapter.module.type == "Exam" ? (
     <>
       <Exam
@@ -230,11 +233,13 @@ const ChapterIdPage = async ({
         courseId={params.courseId}
         course={course}
         isFailed={ifInDiffCourseAndFailed}
+        isSameCourseAndFailed={ifInSameCourseAndFailed}
         dateRemain={addDaysToDate(examDate, dateGap)}
         isCompleted={
-          ifInSameCourseAndFailed ||
-          ifInSameCourseAndCompleted ||
-          (!ifInSameCourseAndFailed && !ifFailedAndDateGapBellowPolicy)
+          userProgress.length > 0 &&
+          (ifInSameCourseAndFailed ||
+            ifInSameCourseAndCompleted ||
+            (!ifInSameCourseAndFailed && !ifFailedAndDateGapBellowPolicy))
         }
       />
     </>
@@ -279,3 +284,5 @@ const ChapterIdPage = async ({
 };
  
 export default ChapterIdPage;
+ 
+ 
