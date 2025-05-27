@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
-    "start": "NODE_OPTIONS='-r dd-trace/cli' next start",
+    "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
