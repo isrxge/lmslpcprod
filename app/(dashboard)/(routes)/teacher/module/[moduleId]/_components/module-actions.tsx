@@ -30,17 +30,17 @@ export const ModuleActions = ({
       setIsLoading(true);
   
       // Log the current state for debugging
-      console.log(`Module ID: ${moduleId}, Is Published: ${isPublished}`);
+      // console.log(`Module ID: ${moduleId}, Is Published: ${isPublished}`);
   
       if (isPublished) {
-        console.log('Unpublishing module...');
+        // console.log('Unpublishing module...');
         const response = await axios.patch(`/api/module/${moduleId}/unpublish`);
-        console.log('Unpublish Response:', response); // Log the response
+        // console.log('Unpublish Response:', response); // Log the response
         toast.success("Module unpublished");
       } else {
-        console.log('Publishing module...');
+        // console.log('Publishing module...');
         const response = await axios.patch(`/api/module/${moduleId}/publish`);
-        console.log('Publish Response:', response); // Log the response
+        // console.log('Publish Response:', response); // Log the response
         toast.success("Module published");
       }
   

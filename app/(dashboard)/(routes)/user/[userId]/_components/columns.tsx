@@ -251,7 +251,7 @@ export const columns: ColumnDef<Course>[] = [
     },
     cell: ({ row }) => {
       const { modules, ClassSessionRecord }: any = row.original;
-      console.log(ClassSessionRecord, "Row");
+      // console.log(ClassSessionRecord, "Row");
       return (
         <div className="flex items-center">
           <ul>

@@ -146,7 +146,7 @@ export async function PATCH(
         });
 
         if (existingCourseOnDepartment) {
-          console.log(`Course ${params.courseId} is already assigned to department ${departmentList[i].id}`);
+          // console.log(`Course ${params.courseId} is already assigned to department ${departmentList[i].id}`);
           continue; // Nếu đã có bản ghi, bỏ qua
         }
 

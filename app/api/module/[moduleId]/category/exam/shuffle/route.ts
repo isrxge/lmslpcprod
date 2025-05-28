@@ -43,7 +43,7 @@ export async function GET(
       });
     }
 
-    console.log("Module ID:", params.moduleId);
+    // console.log("Module ID:", params.moduleId);
     const questionsList: any = await db.module.findUnique({
       where: {
         id: params.moduleId,
@@ -80,8 +80,8 @@ export async function GET(
       
     });
 
-    console.log("Questions List:", questionsList);  // Log toàn bộ questionsList
-    console.log("Categories:", questionsList.Categories);  // Log phần Category từ questionsList
+    // console.log("Questions List:", questionsList);  // Log toàn bộ questionsList
+    // console.log("Categories:", questionsList.Categories);  // Log phần Category từ questionsList
     
     let questionUnShuffleList: any = [];
     let examMaxScore = 0;

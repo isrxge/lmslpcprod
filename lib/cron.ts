@@ -170,23 +170,23 @@ cron.schedule("30 8 * * *", async () => {
             course.title,
             htmlBody
           );
-          console.log(
-            `[CRON] Report sent to ${course.courseInstructor.email} (${course.title})`
-          );
+          // console.log(
+          //   `[CRON] Report sent to ${course.courseInstructor.email} (${course.title})`
+          // );
         } catch (e) {
           console.error("[CRON] Instructor mail error", e);
         }
       }
     }
 
-    console.log(
-      `[CRON] Closed ${
-        expired.length
-      } courses – Updated ${totalSessionsUpdated} sessions – ${new Date().toISOString()}`
-    );
+    // console.log(
+    //   `[CRON] Closed ${
+    //     expired.length
+    //   } courses – Updated ${totalSessionsUpdated} sessions – ${new Date().toISOString()}`
+    // );
   } catch (err) {
     console.error("[CRON] Error while closing courses:", err);
   }
 });
 
-console.log("[CRON] Scheduler initialised");
+// console.log("[CRON] Scheduler initialised");

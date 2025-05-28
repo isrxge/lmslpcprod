@@ -32,7 +32,7 @@ export async function POST(
 
       if (existingModule) {
         // Nếu module đã tồn tại, bỏ qua và không thêm module này
-        console.log(`Module with title "${chapterModule.title}" already exists in the course.`);
+        // console.log(`Module with title "${chapterModule.title}" already exists in the course.`);
         continue;  // Bỏ qua việc tạo module mới nếu nó đã tồn tại
       }
 

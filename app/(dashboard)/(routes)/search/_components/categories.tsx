@@ -22,7 +22,7 @@ export const Categories = ({ items, userId }: any) => {
     } else {
       setCurrentTitle(title);
       const { data } = await axios.get(`/api/department/${title}`);
-      console.log(data)
+      // console.log(data)
 
       const filteredCourses = data.filter((course: any) => {
         return course.ClassSessionRecord.some((record: any) => record.status === "studying" && record.userId === userId);

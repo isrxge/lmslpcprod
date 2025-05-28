@@ -20,7 +20,7 @@ interface ChaptersListProps {
 }
 
 const deleteModule = async (moduleId: string, courseId: string) => {
-  console.log("Deleting module with ID:", moduleId, "from course ID:", courseId);
+  // console.log("Deleting module with ID:", moduleId, "from course ID:", courseId);
   try {
     const response = await fetch("/api/moduleincourse", {
       method: "DELETE",
@@ -38,7 +38,7 @@ const deleteModule = async (moduleId: string, courseId: string) => {
     }
 
     const data = await response.json();
-    console.log("Module removed:", data);
+    // console.log("Module removed:", data);
     return data;
   } catch (error) {
     console.error("Error deleting module:", error);
@@ -50,7 +50,7 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
   const router = useRouter();
-  console.log("ChaptersList itemsđâsdsad:", courseId);
+  // console.log("ChaptersList itemsđâsdsad:", courseId);
 
   useEffect(() => {
     setIsMounted(true);

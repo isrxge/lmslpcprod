@@ -531,7 +531,7 @@ export function DataTable<TData, TValue>({
     }
  
     filteredList.forEach((item: any) => {
-      console.log(item)
+      // console.log(item)
       let testResult = item.modules.map(
         (moduleItem: any) =>
           moduleItem.title +

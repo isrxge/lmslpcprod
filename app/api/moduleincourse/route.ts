@@ -127,7 +127,7 @@ export async function POST(req: Request) {
       }
       
     }
-    console.log(modules,"this is the sorted modules with bubble sort")
+    // console.log(modules,"this is the sorted modules with bubble sort")
     for (const moduleData of modules) {
      
       // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa

@@ -32,7 +32,7 @@ export const ChaptersForm = ({
   courseType,
   readOnly = false
 }: ChaptersFormProps) => {
-  console.log("initialData:", initialData);
+  // console.log("initialData:", initialData);
   // console.log("ModuleInCourse data:", initialData.modulesInCourse.map((m) => m.module));
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -46,15 +46,15 @@ export const ChaptersForm = ({
   const flatArray1 = moduleInCourse.map(
     (item: any) => (item.module.position = item.position)
   );
-  console.log("ModuleInCourse data flatArray1:", flatArray1); // In dữ liệu trả về
+  // console.log("ModuleInCourse data flatArray1:", flatArray1); // In dữ liệu trả về
   const flatArray2 = moduleInCourse
     .map((item: any) => item.module)
     .sort((a: any, b: any) => a.position - b.position);
-  console.log("ModuleInCourse data flatArray2:", flatArray2); // In dữ liệu trả về
+  // console.log("ModuleInCourse data flatArray2:", flatArray2); // In dữ liệu trả về
   const [selectedModules, setSelectedModules] = useState<Module[]>(
     flatArray2 || []
   ); // Lưu trữ các module đã chọn
-  console.log(selectedModules);
+  // console.log(selectedModules);
   const toggleCreating = () => { !readOnly && setIsCreating((current) => !current);
   };
 
@@ -123,7 +123,7 @@ export const ChaptersForm = ({
 
       await axios.post(`/api/moduleincourse`, {
         modules: selectedModules.map((module: any) => {
-          console.log("Module Position:", module.positionmodule); // Log vị trí của mỗi module
+          // console.log("Module Position:", module.positionmodule); // Log vị trí của mỗi module
           return {
             moduleId: module.id,
             position: module.positionmodule || module.position,
@@ -190,7 +190,7 @@ export const ChaptersForm = ({
           );
           module["positionmodule"] = selectedModules.length;
 
-          console.log("Số lượng sau khi thêm:", selectedModules.length);
+          // console.log("Số lượng sau khi thêm:", selectedModules.length);
           return [...prev, module];
         }
       });
@@ -215,7 +215,7 @@ export const ChaptersForm = ({
           }
         } else {
           module["positionmodule"] = selectedModules.length;
-          console.log("Số lượng sau khi thêm:", selectedModules.length);
+          // console.log("Số lượng sau khi thêm:", selectedModules.length);
           return [...prev, module];
         }
       });

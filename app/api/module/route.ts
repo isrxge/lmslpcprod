@@ -145,7 +145,7 @@ export async function GET(req: Request) {
       }
     }
 
-    console.log("Applying filters:", filters);  // Add logging to check applied filters
+    // console.log("Applying filters:", filters);  // Add logging to check applied filters
 
     // Fetch modules from the database based on filters
     const modules = await db.module.findMany({

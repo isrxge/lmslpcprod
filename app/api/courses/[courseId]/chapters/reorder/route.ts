@@ -17,7 +17,7 @@ export async function PUT(
     const { list } = await req.json();
 
     for (let item of list) {
-      console.log("itemssss", item);
+      // console.log("itemssss", item);
 
       await db.moduleInCourse.update({
         where: {moduleId_courseId:{moduleId: item.id, courseId: params.courseId}  },

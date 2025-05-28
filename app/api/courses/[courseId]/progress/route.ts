@@ -15,7 +15,7 @@ export async function PUT(
     }
     var { progress, status, endDate ,score }  = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(courseResult, "4Qz!9vB#xL7$rT8&hY2^mK0@wN5*pS1Zx!a2Lz")));
     // const { progress, status, endDate ,score} = await req.json();
-    console.log(score)
+    // console.log(score)
     const year = new Date();
     const date = new Date();
     const userProgress = await db.classSessionRecord.upsert({

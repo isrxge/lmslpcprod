@@ -48,7 +48,7 @@ function CreatePage() {
       const response = await axios.post(`/api/module/`, values);
       const newModuleId = response.data.id; // Get the id of the created module
 
-      console.log("Navigating to edit page with module id:", newModuleId);
+      // console.log("Navigating to edit page with module id:", newModuleId);
       onEdit(newModuleId);
       toast.success("Module created");
     } catch {

@@ -33,7 +33,7 @@ export async function GET(
         },
       },
     });
-    console.log(department)
+    // console.log(department)
     const coursesWithProgress: any = await Promise.all(
       department.CourseOnDepartment.map(async (course: any) => {
         

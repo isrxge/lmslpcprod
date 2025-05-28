@@ -13,8 +13,8 @@ export async function GET(
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    console.log(params.userId);
-    console.log(params.chapterId);
+    // console.log(params.userId);
+    // console.log(params.chapterId);
     const userCourse = await db.examRecord.findMany({
       where: { userId: params.userId, moduleId: params.chapterId },
       orderBy: {

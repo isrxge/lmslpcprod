@@ -212,15 +212,15 @@ export const getChapter = async ({
       },
     });
  
-    console.log("Course data: ", course); // Kiểm tra dữ liệu khóa học
+    // console.log("Course data: ", course); // Kiểm tra dữ liệu khóa học
  
     if (!course) {
       throw new Error("Course not found");
     }
  
     // Kiểm tra xem moduleId có hợp lệ không
-    console.log("Module ID: ", moduleId); // Kiểm tra giá trị moduleId
-    console.log("Course ID: ", courseId); // Kiểm tra giá trị courseId
+    // console.log("Module ID: ", moduleId); // Kiểm tra giá trị moduleId
+    // console.log("Course ID: ", courseId); // Kiểm tra giá trị courseId
  
     // Truy vấn moduleInCourse để lấy chapter (chương học)
     const chapter: any = await db.moduleInCourse.findUnique({
@@ -275,7 +275,7 @@ export const getChapter = async ({
     //   },
     // },
     // Resource: true,
-    console.log("Chapter data: ", chapter); // Kiểm tra dữ liệu chương học (chapter)
+    // console.log("Chapter data: ", chapter); // Kiểm tra dữ liệu chương học (chapter)
  
     if (!chapter) {
       throw new Error("Chapter not found");
@@ -285,7 +285,7 @@ export const getChapter = async ({
     const currentChapterPos = course.modules
       .map((item: { module: { id: string } }) => item.module.id)
       .indexOf(moduleId);
-    console.log("Current chapter position: ", currentChapterPos); // Kiểm tra vị trí của chương hiện tại
+    // console.log("Current chapter position: ", currentChapterPos); // Kiểm tra vị trí của chương hiện tại
  
     // Tính toán chương tiếp theo và chương trước đó
     const nextChapter = course.modules.map(

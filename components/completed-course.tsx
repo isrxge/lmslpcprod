@@ -94,7 +94,7 @@ interface CompletedCourseProps {
 }
  
 export const CompletedCourse = ({ items }: CompletedCourseProps) => {
-  console.log(items, "Failed course");
+  // console.log(items, "Failed course");
   return items.length == 0 ? (
     <>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">

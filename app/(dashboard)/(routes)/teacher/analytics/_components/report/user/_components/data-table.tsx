@@ -223,7 +223,7 @@ export function DataTable<TData, TValue>({
             const p = mod.module.UserProgress.find(
               (up: any) => up.userId === user.id
             );
-            if (p) lines.push(`- ${mod.module.title}: ${p.status} (${p.progress})`);
+            if (p) lines.push(`- ${mod.module.title}: ${p.status}`);
           });
     
           // 3️⃣ Đưa vào nhóm thích hợp
@@ -349,7 +349,7 @@ export function DataTable<TData, TValue>({
   function onDepartmentChange(departmentId: any) {
     table.getColumn("departmentId")?.setFilterValue(departmentId);
   }
-  console.log("userList value:", userList);
+  // console.log("userList value:", userList);
   return (
     <div>
       <div className="flex items-center py-4 justify-between">

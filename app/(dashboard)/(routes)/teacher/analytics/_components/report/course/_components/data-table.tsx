@@ -185,7 +185,7 @@ export function DataTable<TData, TValue>({
     }
 
     filteredList.forEach((item: any) => {
-      console.log("ITEM", item);
+      // console.log("ITEM", item);
       const moduleList = item.modules
         .map(
           (moduleInCourse: any) =>

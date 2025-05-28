@@ -1619,7 +1619,7 @@ const Exam = ({
   ).padStart(2, "0")}`;
 
   let scheduledDate: any = new Date(dateRemain).toDateString();
-  console.log(scheduledDate);
+  // console.log(scheduledDate);
   // Render
   return questions.length === 0 ? (
     <>
