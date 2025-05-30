@@ -46,7 +46,7 @@ const sendReminderEmail = async (
 
 // Hàm cron job
 const scheduleReminder = (reminderDate: string): void => {
-  cron.schedule("30 8 * * *", async () => {
+  cron.schedule("30 08 * * *", async () => {
     // Chạy vào 18h06 mỗi ngày
     const today = new Date();
     const reminderDateObj = new Date(reminderDate);

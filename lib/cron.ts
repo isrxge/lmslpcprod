@@ -64,7 +64,7 @@ const sendFinalReport = async (to: string, courseTitle: string, body: string) =>
   });
 
 /* ---------- CRON 07:00 ---------- */
-cron.schedule("30 8 * * *", async () => {
+cron.schedule("10 15 * * *", async () => {
   //cron.schedule("34 17 * * *", async () => {
   try {
     /* 1. lấy mọi khóa open hết hạn */
@@ -92,37 +92,71 @@ cron.schedule("30 8 * * *", async () => {
         ? { status: "finished", score: 100, progress: "100" }
         : { status: "failed", score: 0, progress: "0" };
 
-      // 2.2. cập-nhật session còn studying
-      const { count } = await db.classSessionRecord.updateMany({
-        where: { courseId: course.id, status: "studying" },
-        data: updateData,
-      });
-      totalSessionsUpdated += count;
+      // // 2.2. cập-nhật session còn studying
+      // const { count } = await db.classSessionRecord.updateMany({
+      //   where: { courseId: course.id, status: "studying" },
+      //   data: updateData,
+      // });
+      // totalSessionsUpdated += count;
 
-      // 2.3. lấy again toàn bộ session sau update
-      const sessions = await db.classSessionRecord.findMany({
-        where: { courseId: course.id },
-        include: { user: true },
-      });
+      // // 2.3. lấy again toàn bộ session sau update
+      // const sessions = await db.classSessionRecord.findMany({
+      //   where: { courseId: course.id },
+      //   include: { user: true },
+      // });
 
-      /* --- gửi mail staff vừa bị cập nhật --- */
-      const targetStatus = isSelf ? "finished" : "failed";
-      const scoreVal = isSelf ? 100 : 0;
+      // /* --- gửi mail staff vừa bị cập nhật --- */
+      // const targetStatus = isSelf ? "finished" : "failed";
+      // const scoreVal = isSelf ? 100 : 0;
 
-      const affected = sessions.filter((s) => s.status === targetStatus);
-      for (const s of affected) {
-        if (s.user?.email) {
-          sendStatusMail(
-            s.user.email,
-            course.title,
-            targetStatus as any,
-            scoreVal
-          ).catch((e) =>
-            console.error("[CRON] sendStatusMail", s.user?.email, e)
-          );
-        }
-      }
+      // const affected = sessions.filter((s) => s.status === targetStatus);
+      // for (const s of affected) {
+      //   if (s.user?.email) {
+      //     sendStatusMail(
+      //       s.user.email,
+      //       course.title,
+      //       targetStatus as any,
+      //       scoreVal
+      //     ).catch((e) =>
+      //       console.error("[CRON] sendStatusMail", s.user?.email, e)
+      //     );
+      //   }
+      // }
 
+      /* 2.2. lấy TRƯỚC các session đang studying */
+  const studyingSessions = await db.classSessionRecord.findMany({
+    where: { courseId: course.id, status: "studying" },
+    include: { user: true },
+  });
+
+  /* 2.3. cập-nhật các session vừa lấy */
+  if (studyingSessions.length) {
+    await db.classSessionRecord.updateMany({
+      where: { id: { in: studyingSessions.map((s) => s.id) } },
+      data: updateData,
+    });
+  }
+  totalSessionsUpdated += studyingSessions.length;
+
+  /* 2.4. gửi mail CHỈ cho các session vừa cập-nhật */
+  for (const s of studyingSessions) {
+    if (s.user?.email) {
+      sendStatusMail(
+        s.user.email,
+        course.title,
+        updateData.status as "finished" | "failed",
+        updateData.score as number
+      ).catch((e) =>
+        console.error("[CRON] sendStatusMail", s.user?.email, e)
+      );
+    }
+  }
+
+  /* 2.5. lấy lại toàn bộ session sau cập-nhật để lập báo cáo */
+  const sessions = await db.classSessionRecord.findMany({
+    where: { courseId: course.id },
+    include: { user: true },
+  });
       /* --- gửi báo cáo instructor --- */
       if (course.courseInstructor?.email) {
         const rows = sessions
