@@ -45,10 +45,11 @@ export const columns: ColumnDef<{
       );
     },
     cell: DepartmentUserCell,
-  },
-  {
-      id: "actions",
-      accessorKey: "Action",
-      cell: DepartmentUserCell,
-    },
+  }
+  // ,
+  // {
+  //     id: "actions",
+  //     accessorKey: "Action",
+  //     cell: DepartmentUserCell,
+  //   },
 ];
