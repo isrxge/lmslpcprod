@@ -305,7 +305,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 <h2 className="text-xl">Deadline</h2>
               </div>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Note: The course will end at 08:30 on the end date.
+                Note: The course will end at 18:00 on the end date.
               </p>
               <div>
                 <EndDateForm
