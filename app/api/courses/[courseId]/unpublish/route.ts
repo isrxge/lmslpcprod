@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { auth } from "@clerk/nextjs";
 // import { NextResponse } from "next/server";
 
@@ -106,6 +107,8 @@
 //   }
 // }
 
+=======
+>>>>>>> 8b13b57 (commit)
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
@@ -138,4 +141,8 @@ export async function PATCH(
     console.log("[COURSE_ID_UNPUBLISH]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8b13b57 (commit)

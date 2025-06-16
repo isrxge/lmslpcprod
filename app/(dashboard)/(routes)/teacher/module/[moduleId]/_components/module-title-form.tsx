@@ -51,6 +51,7 @@ export const ModuleTitleForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+<<<<<<< HEAD
       await axios.patch(
         `/api/module/${moduleId}`,
         values
@@ -60,6 +61,14 @@ export const ModuleTitleForm = ({
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+=======
+      await axios.patch(`/api/module/${moduleId}`, values);
+      toast.success("Học Phần Đã Được Cập Nhật");
+      toggleEdit();
+      router.refresh();
+    } catch {
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
+>>>>>>> 8b13b57 (commit)
     }
   };
 

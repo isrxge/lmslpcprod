@@ -60,7 +60,11 @@ export async function PATCH(
     }
     return NextResponse.json(user);
   } catch (error) {
+<<<<<<< HEAD
     console.log("[PROGRAMS]", error);
+=======
+    console.log("[USER STATUS]", error);
+>>>>>>> 8b13b57 (commit)
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -88,7 +92,11 @@ export async function GET(
 
     return NextResponse.json(user);
   } catch (error) {
+<<<<<<< HEAD
     console.log("[PROGRAMS]", error);
+=======
+    console.log("[USER STATUS]", error);
+>>>>>>> 8b13b57 (commit)
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

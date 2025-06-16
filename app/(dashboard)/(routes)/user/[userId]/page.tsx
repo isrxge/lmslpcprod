@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { auth } from "@clerk/nextjs";
 // import { redirect } from "next/navigation";
 
@@ -123,6 +124,11 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
  
+=======
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+
+>>>>>>> 8b13b57 (commit)
 import { db } from "@/lib/db";
 import Avatar from "./_components/avatar";
 import Star from "./_components/star";
@@ -130,9 +136,13 @@ import UserInformation from "./_components/infomation-form";
 import CourseHistory from "./_components/courses-history";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
+<<<<<<< HEAD
 import { title } from "process";
 import { select } from "@nextui-org/react";
  
+=======
+
+>>>>>>> 8b13b57 (commit)
 interface userValue {
   userId: string;
   star: number;
@@ -142,7 +152,11 @@ interface userValue {
 }
 const UserPage = async ({ params }: { params: { userId: string } }) => {
   const { userId } = auth();
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   if (!userId) {
     return redirect("/");
   }
@@ -169,7 +183,11 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
       Department: true,
     },
   });
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   const courses = await db.course.findMany({
     where: {
       ClassSessionRecord: {
@@ -192,12 +210,16 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
           module: {
             select: {
               // type: "Exam",
+<<<<<<< HEAD
               title: true,
+=======
+>>>>>>> 8b13b57 (commit)
               type: true,
               UserProgress: {
                 where: {
                   userId: userId,
                 },
+<<<<<<< HEAD
                 select: {
                   score: true,
                   status: true,
@@ -209,12 +231,27 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
       },
     },
   });
+=======
+              },
+            },
+          },
+        }
+      }
+      
+    },
+  });
+
+>>>>>>> 8b13b57 (commit)
   return (
     user && (
       <div className="p-6">
         <div className="flex flex-col items-center">
           <Avatar imageUrl={user?.imageUrl} className="w-32 h-32" />
+<<<<<<< HEAD
           <p className="mt-2 mb-3 text-lg font-semibold">
+=======
+          <p className="mt-2 text-lg font-semibold">
+>>>>>>> 8b13b57 (commit)
             Information about {user?.username}
           </p>
         </div>
@@ -236,5 +273,10 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
     )
   );
 };
+<<<<<<< HEAD
  
 export default UserPage;
+=======
+
+export default UserPage;
+>>>>>>> 8b13b57 (commit)

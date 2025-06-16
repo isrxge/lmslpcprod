@@ -131,13 +131,18 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Title</span>
+=======
+          <span className="mr-2">Tiêu Đề</span>
+>>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
     },
     cell: CourseTitleCell,
   },
+<<<<<<< HEAD
   // {
   //   accessorKey: "user",
   //   header: ({ column }) => {
@@ -156,6 +161,26 @@ export const columns: ColumnDef<Course>[] = [
   //     return <div>{user.username}</div>;
   //   },
   // },
+=======
+  {
+    accessorKey: "user",
+    header: ({ column }) => {
+      return (
+        <span
+          className="flex items-center cursor-pointer"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <span className="mr-2">Tạo Bởi</span>
+          <ArrowUpDown className="h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }: any) => {
+      const { user } = row.original;
+      return <div>{user.username}</div>;
+    },
+  },
+>>>>>>> 8b13b57 (commit)
   // {
   //   accessorKey: "updatedUser",
   //   header: ({ column }) => {
@@ -182,7 +207,11 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Instructed By</span>
+=======
+          <span className="mr-2">Hướng Dẫn Bởi</span>
+>>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -193,6 +222,27 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
+<<<<<<< HEAD
+=======
+    accessorKey: "startDate", // Add endDate column
+    header: ({ column }) => {
+      return (
+        <span
+          className="flex items-center cursor-pointer"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <span className="mr-2">Ngày Bắt Đầu</span>
+          <ArrowUpDown className="h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }: any) => {
+      const { startDate } = row.original;
+      return <EndDateCell endDate={startDate} />;
+    },
+  },
+  {
+>>>>>>> 8b13b57 (commit)
     accessorKey: "endDate", // Add endDate column
     header: ({ column }) => {
       return (
@@ -200,7 +250,11 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">End Date</span>
+=======
+          <span className="mr-2">Ngày Kết Thúc</span>
+>>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -218,7 +272,11 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Published</span>
+=======
+          <span className="mr-2">Trạng Thái Phát Hành</span>
+>>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -227,11 +285,16 @@ export const columns: ColumnDef<Course>[] = [
       const isPublished = row.getValue("isPublished") || false;
       return (
         <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
+<<<<<<< HEAD
           {isPublished ? "Published" : "Draft"}
+=======
+          {isPublished ? "Đã Phát Hành" : "Bản Phát Thảo"}
+>>>>>>> 8b13b57 (commit)
         </Badge>
       );
     },
   },
+<<<<<<< HEAD
   {
     accessorKey: "status",
     header: ({ column }) => {
@@ -289,6 +352,9 @@ export const columns: ColumnDef<Course>[] = [
   //     );
   //   },
   // },
+=======
+
+>>>>>>> 8b13b57 (commit)
   {
     id: "actions",
     accessorKey: "Action",
@@ -318,6 +384,7 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
     return <div>{formattedEndDate}</div>; // Or handle it as per your requirements
   }
 
+<<<<<<< HEAD
   // // Get current date
   // const currentDate = new Date();
 
@@ -328,6 +395,18 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
   // const isOpening = currentDate < endDateObj; // If current date is less than endDate, it's opening
   // const statusText = isOpening ? "Opening" : "Closed";
   // const statusColor = isOpening ? "text-green-500" : "text-red-500"; 
+=======
+  // Get current date
+  const currentDate = new Date();
+
+  // Check if endDate is not null and then compare
+  const endDateObj = new Date(endDate);
+
+  // Compare end date with the current date to determine if it's "Opening" or "Closed"
+  const isOpening = currentDate < endDateObj; // If current date is less than endDate, it's opening
+  const statusText = isOpening ? "Đang Mở" : "Đã Đóng";
+  const statusColor = isOpening ? "text-green-500" : "text-red-500";
+>>>>>>> 8b13b57 (commit)
 
   // const isClosed = currentDate > endDateObj; // If current date is less than endDate, it's opening
   // const statusText = isClosed ? "Closed" : "Opening";
@@ -340,7 +419,11 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
   return (
     <div className="flex items-center">
       <div>{formattedEndDate}</div>
+<<<<<<< HEAD
       {/* <span className={`ml-2 ${statusColor} text-sm`}>({statusText})</span> */}
+=======
+      <span className={`ml-2 ${statusColor} text-sm`}>({statusText})</span>
+>>>>>>> 8b13b57 (commit)
     </div>
   );
 };

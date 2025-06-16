@@ -23,10 +23,17 @@ import { Input } from "@/components/ui/input";
 function CreatePage() {
   const formSchema = z.object({
     title: z.string().min(1, {
+<<<<<<< HEAD
       message: "Title is required",
     }),
     type: z.enum(["Slide", "Exam"], {
       invalid_type_error: "Type must be either Slide or Exam", // Corrected message handling
+=======
+      message: "Vui Lòng Điền Tên Học Phần",
+    }),
+    type: z.enum(["Slide", "Exam"], {
+      invalid_type_error: "Loại Học Phần Phải Là Bài Giảng Hoặc Bài Kiểm Tra", // Corrected message handling
+>>>>>>> 8b13b57 (commit)
     }),
   });
 
@@ -48,11 +55,18 @@ function CreatePage() {
       const response = await axios.post(`/api/module/`, values);
       const newModuleId = response.data.id; // Get the id of the created module
 
+<<<<<<< HEAD
       // console.log("Navigating to edit page with module id:", newModuleId);
       onEdit(newModuleId);
       toast.success("Module created");
     } catch {
       toast.error("Something went wrong");
+=======
+      onEdit(newModuleId);
+      toast.success("Học Phần Đã Được Tạo");
+    } catch {
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -63,11 +77,19 @@ function CreatePage() {
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-40">
       <div>
+<<<<<<< HEAD
         <h1 className="text-2xl">Name your module</h1>
         <p className="text-sm text-slate-600">
           What would you like to name your module? Don&apos;t worry, you can
           change this later.
         </p>
+=======
+        <h1 className="text-2xl">Tên Học Phần</h1>
+        {/* <p className="text-sm text-slate-600">
+          What would you like to name your module? Don&apos;t worry, you can
+          change this later.
+        </p> */}
+>>>>>>> 8b13b57 (commit)
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmitCourse)}
@@ -78,7 +100,11 @@ function CreatePage() {
               name="title"
               render={({ field }) => (
                 <FormItem>
+<<<<<<< HEAD
                   <FormLabel>Module title (50 character limit)</FormLabel>
+=======
+                  <FormLabel>Tên Học Phần (Giới Hạn 50 Ký Tự)</FormLabel>
+>>>>>>> 8b13b57 (commit)
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
@@ -87,9 +113,13 @@ function CreatePage() {
                       {...field}
                     />
                   </FormControl>
+<<<<<<< HEAD
                   <FormDescription>
                     What will you teach in this module?
                   </FormDescription>
+=======
+                  <FormDescription>Mô Tả Học Phần</FormDescription>
+>>>>>>> 8b13b57 (commit)
                   <FormMessage />
                 </FormItem>
               )}
@@ -101,6 +131,7 @@ function CreatePage() {
               name="type"
               render={({ field }) => (
                 <FormItem>
+<<<<<<< HEAD
                   <FormLabel>Module Type</FormLabel>
                   <FormControl>
                     <select {...field} disabled={isSubmitting} className="w-full p-2 border rounded-md">
@@ -111,6 +142,20 @@ function CreatePage() {
                   <FormDescription>
                     Select the type of module.
                   </FormDescription>
+=======
+                  <FormLabel>Loại Học Phần</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      disabled={isSubmitting}
+                      className="w-full p-2 border rounded-md"
+                    >
+                      <option value="Slide">Bài Giảng</option>
+                      <option value="Exam">Bài Kiểm Tra</option>
+                    </select>
+                  </FormControl>
+                  <FormDescription>Loại Học Phần.</FormDescription>
+>>>>>>> 8b13b57 (commit)
                   <FormMessage />
                 </FormItem>
               )}
@@ -119,11 +164,19 @@ function CreatePage() {
             <div className="flex items-center gap-x-2">
               <Link href="/teacher/module">
                 <Button type="button" variant="ghost">
+<<<<<<< HEAD
                   Cancel
                 </Button>
               </Link>
               <Button type="submit" disabled={!isValid || isSubmitting}>
                 Continue
+=======
+                  Từ Chối
+                </Button>
+              </Link>
+              <Button type="submit" disabled={!isValid || isSubmitting}>
+                Tiếp Tục
+>>>>>>> 8b13b57 (commit)
               </Button>
             </div>
           </form>

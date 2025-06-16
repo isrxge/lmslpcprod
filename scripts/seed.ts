@@ -18,7 +18,11 @@ async function main() {
     //   ]
     // });
 
+<<<<<<< HEAD
     // console.log("Success");
+=======
+    console.log("Success");
+>>>>>>> 8b13b57 (commit)
   } catch (error) {
     console.log("Error seeding the database categories", error);
   } finally {

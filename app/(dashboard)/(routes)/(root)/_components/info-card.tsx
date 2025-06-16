@@ -26,7 +26,11 @@ export const InfoCard = ({
           {label}
         </p>
         <p className="text-gray-500 text-sm">
+<<<<<<< HEAD
           {numberOfItems} {numberOfItems === 1 ? "Course" : "Courses"}
+=======
+          {numberOfItems} {numberOfItems === 1 ? "Khóa Học" : "Nhiều Khóa Học"}
+>>>>>>> 8b13b57 (commit)
         </p>
       </div>
     </div>

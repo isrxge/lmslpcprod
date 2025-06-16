@@ -8,6 +8,10 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ModeToggle } from "@/components/ui/theme-button";
 import { Loader2 } from "lucide-react";
+<<<<<<< HEAD
+=======
+import { clerkClient } from "@clerk/nextjs";
+>>>>>>> 8b13b57 (commit)
 const Logo = dynamic(() => import("@/app/(auth)/_component/logo" as string), {
   ssr: false,
 });
@@ -25,6 +29,7 @@ export default function Page() {
   const router = useRouter();
   const [verificationChecking, setVerificationChecking] = useState(false);
   const { isSignedIn }: any = useAuth();
+<<<<<<< HEAD
   // if (isSignedIn) {
   //   if (searchParams.get("redirect_url") != undefined) {
   //     // window.location.href = searchParams.get("redirect_url") + "";
@@ -40,6 +45,10 @@ export default function Page() {
   if (isSignedIn) {
     if (searchParams.get("redirect_url") != undefined) {
       router.push("/sign-in");
+=======
+  if (isSignedIn) {
+    if (searchParams.get("redirect_url") != undefined) {
+>>>>>>> 8b13b57 (commit)
     } else {
       window.location.href = "/";
     }
@@ -48,7 +57,13 @@ export default function Page() {
       router.push("/sign-in");
     }
   }
+<<<<<<< HEAD
   
+=======
+  // useEffect(() => {
+  //   animatePageIn();
+  // }, []);
+>>>>>>> 8b13b57 (commit)
   const handleCodeChange = (e: any) => {
     const value = e.target.value;
     const formattedValue = value.replace(/\D/g, "").slice(0, 6);
@@ -64,10 +79,13 @@ export default function Page() {
       setError("Please enter a valid email address.");
       return;
     }
+<<<<<<< HEAD
     if (password == "") {
       setError("Please enter password.");
       return;
     }
+=======
+>>>>>>> 8b13b57 (commit)
     var ciphertext = CryptoJS.AES.encrypt(password, "1").toString();
     let user = await axios.post("/api/authLDAP", {
       emailAddress,
@@ -76,9 +94,24 @@ export default function Page() {
     });
 
     if (!user.data) {
+<<<<<<< HEAD
       setError("Wrong username/password.");
       return;
     }
+=======
+      setError("User not found.");
+      return;
+    }
+    const userCheck = await clerkClient.users.getUserList({
+      emailAddress: [emailAddress],
+    });
+    if (!userCheck) {
+      const userCreate = await clerkClient.users.createUser({
+        emailAddress: [emailAddress],
+      });
+    }
+
+>>>>>>> 8b13b57 (commit)
     try {
       const { supportedFirstFactors } = await signIn.create({
         identifier: emailAddress,
@@ -133,7 +166,11 @@ export default function Page() {
         // setVerificationChecking(false);
 
         if (searchParams.get("redirect_url") != undefined) {
+<<<<<<< HEAD
           window.location.href = searchParams.get("redirect_url") + "";
+=======
+          //window.location.href = searchParams.get("redirect_url") + "";
+>>>>>>> 8b13b57 (commit)
         } else {
           window.location.href = "/";
         }
@@ -177,7 +214,11 @@ export default function Page() {
         from-blue-800 via-indigo-900 to-gray-900
         animate-text"
       >
+<<<<<<< HEAD
         Lien Phat Learning System
+=======
+        Hệ Thống Đào Tạo Nội Bộ Liên Phát
+>>>>>>> 8b13b57 (commit)
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -195,7 +236,11 @@ export default function Page() {
         </div>
         <div>
           <label htmlFor="password" className="block mb-1">
+<<<<<<< HEAD
             Password
+=======
+            Mật Khẩu
+>>>>>>> 8b13b57 (commit)
           </label>
           <input
             onChange={(e) => setPassword(e.target.value)}
@@ -211,6 +256,7 @@ export default function Page() {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
         >
+<<<<<<< HEAD
           Sign In
         </button>
         <Link href={"/sign-up"}>
@@ -218,6 +264,15 @@ export default function Page() {
             Switch Sign Up
           </button>
         </Link>
+=======
+          Đăng Nhập
+        </button>
+        {/* <Link href={"/sign-up"}>
+          <button className="w-full bg-gray-300 mt-2 text-gray-800 py-2 rounded-md hover:bg-gray-400 transition duration-300">
+            Switch Sign Up
+          </button>
+        </Link> */}
+>>>>>>> 8b13b57 (commit)
       </form>
       {/* Xác minh mã nếu cần */}
       {/* Hiển thị phần xác minh mã nếu pendingVerification là true */}
@@ -246,10 +301,17 @@ export default function Page() {
               </button>
             </div>
             <h2 className="text-xl font-bold mb-4 text-center">
+<<<<<<< HEAD
               Email Verification
             </h2>
             <p className="mb-2 text-center text-gray-600">
               We sent a code to <strong>{emailAddress}</strong>
+=======
+              Xác Thực 2 Lớp
+            </h2>
+            <p className="mb-2 text-center text-gray-600">
+              Code Đã Được Gửi Về Email: <strong>{emailAddress}</strong>
+>>>>>>> 8b13b57 (commit)
             </p>
             <form className="flex flex-col space-y-4">
               <div>
@@ -269,7 +331,15 @@ export default function Page() {
                 className="bg-blue-500 justify-center text-white inline-flex py-2 rounded-md hover:bg-blue-600 transition duration-300"
               >
                 <span>Confirm</span>
+<<<<<<< HEAD
                 {verificationChecking ? <Loader2 className="animate-spin"/> : <></>}
+=======
+                {verificationChecking ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <></>
+                )}
+>>>>>>> 8b13b57 (commit)
               </button>
             </form>
           </div>

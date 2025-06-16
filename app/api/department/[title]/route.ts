@@ -33,6 +33,7 @@ export async function GET(
         },
       },
     });
+<<<<<<< HEAD
     // console.log(department)
     const coursesWithProgress: any = await Promise.all(
       department.CourseOnDepartment.map(async (course: any) => {
@@ -41,16 +42,32 @@ export async function GET(
 
         return {
           ...course,
+=======
+    const coursesWithProgress: any = await Promise.all(
+      department.CourseOnDepartment.map(async (course: any) => {
+        console.log(course)
+        const progressPercentage = await getProgress(userId, course.course.id);
+
+        return {
+          ...course,
+          progress: progressPercentage,
+>>>>>>> 8b13b57 (commit)
         };
       })
     );
     // console.log(coursesWithProgress);
     let newList = [];
     for (let i = 0; i < coursesWithProgress.length; i++) {
+<<<<<<< HEAD
       if(coursesWithProgress[i].course != null){
         newList.push(coursesWithProgress[i].course);
       }
       
+=======
+      coursesWithProgress[i].course["progress"] =
+        coursesWithProgress[i].progress;
+      newList.push(coursesWithProgress[i].course);
+>>>>>>> 8b13b57 (commit)
     }
     return NextResponse.json(newList);
   } catch (error) {

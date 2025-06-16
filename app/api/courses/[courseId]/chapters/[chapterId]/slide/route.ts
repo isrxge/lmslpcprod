@@ -13,6 +13,7 @@ export async function POST(
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+<<<<<<< HEAD
 
     // const ownCourse = await db.course.findUnique({
     //   where: {
@@ -25,6 +26,8 @@ export async function POST(
     //   return new NextResponse("Unauthorized", { status: 401 });
     // }
 
+=======
+>>>>>>> 8b13b57 (commit)
     const removeSlide = await db.slide.deleteMany({
       where: { moduleId: params.chapterId },
     });
@@ -41,6 +44,7 @@ export async function POST(
       })),
     });
 
+<<<<<<< HEAD
     // for (let i = 0; i < contents.length; i++) {
     //   const createSlide = await db.slide.create({
     //     data: {
@@ -55,6 +59,8 @@ export async function POST(
     //     },
     //   });
     // }
+=======
+>>>>>>> 8b13b57 (commit)
     await db.course.update({
       where: {
         id: params.courseId,

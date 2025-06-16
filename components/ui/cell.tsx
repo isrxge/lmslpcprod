@@ -112,7 +112,11 @@ export const Cell = ({ row }: any) => {
               .map(
                 (item: { permission: { title: any } }) => item.permission.title
               )
+<<<<<<< HEAD
               .indexOf("Edit user permission") == -1 ? (
+=======
+              .indexOf("User management permission") == -1 ? (
+>>>>>>> 8b13b57 (commit)
               <></>
             ) : (
               <Link href={`/teacher/users/${id}`}>
@@ -177,7 +181,11 @@ export const Cell = ({ row }: any) => {
               <></>
             )}
 
+<<<<<<< HEAD
             {/* <DropdownMenuItem
+=======
+            <DropdownMenuItem
+>>>>>>> 8b13b57 (commit)
               onClick={() =>
                 onChangeAlertMessage(
                   "inActive",
@@ -187,7 +195,11 @@ export const Cell = ({ row }: any) => {
             >
               <BadgeX className="h-4 w-4 mr-2" />
               Disable
+<<<<<<< HEAD
             </DropdownMenuItem> */}
+=======
+            </DropdownMenuItem>
+>>>>>>> 8b13b57 (commit)
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialog

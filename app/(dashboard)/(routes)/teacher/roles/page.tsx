@@ -21,6 +21,7 @@ const RolesPage = async () => {
     },
   });
   if (
+<<<<<<< HEAD
     // checkUser
     //   .map((item: { permission: { title: any } }) => item.permission.title)
     //   .indexOf("Edit role permission") == -1 &&
@@ -30,6 +31,14 @@ const RolesPage = async () => {
       checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
       .indexOf("View role permission") == -1
+=======
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Edit role permission") == -1 &&
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Create role permission") == -1
+>>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }
@@ -45,14 +54,22 @@ const RolesPage = async () => {
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
+<<<<<<< HEAD
             .indexOf("Create role permission") != -1
+=======
+            .indexOf("Create program permission") != -1
+>>>>>>> 8b13b57 (commit)
         }
         canEdit={
           checkUser
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
+<<<<<<< HEAD
             .indexOf("Edit role permission") != -1
+=======
+            .indexOf("Edit program permission") != -1
+>>>>>>> 8b13b57 (commit)
         }
       />
     </div>

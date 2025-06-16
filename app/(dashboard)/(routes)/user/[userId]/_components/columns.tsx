@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // "use client";
 
 // import { Course } from "@prisma/client";
@@ -165,11 +166,23 @@ import { Course } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
  
+=======
+"use client";
+
+import { Course } from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+
+>>>>>>> 8b13b57 (commit)
 import { Button } from "@/components/ui/button";
 import { CourseTitleCellPersonal } from "@/components/ui/course-title-cell-personal";
 import { HTMLProps } from "react";
 import React from "react";
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
 export const columns: ColumnDef<Course>[] = [
   {
     id: "select",
@@ -207,6 +220,29 @@ export const columns: ColumnDef<Course>[] = [
     cell: CourseTitleCellPersonal,
   },
   {
+<<<<<<< HEAD
+=======
+    accessorKey: "progress",
+    header: ({ column }) => {
+      return (
+        <span className="flex items-center">
+          <span className="mr-2">Progress</span>
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+      const { ClassSessionRecord }: any = row.original;
+
+      return (
+        <div className="flex items-center">
+          <div>{ClassSessionRecord[0].progress}</div>
+        </div>
+      );
+    },
+  },
+
+  {
+>>>>>>> 8b13b57 (commit)
     accessorKey: "status",
     header: ({ column }) => {
       return (
@@ -217,7 +253,11 @@ export const columns: ColumnDef<Course>[] = [
     },
     cell: ({ row }) => {
       const { ClassSessionRecord }: any = row.original;
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
       return (
         <div className="flex items-center">
           <div>
@@ -250,8 +290,13 @@ export const columns: ColumnDef<Course>[] = [
       );
     },
     cell: ({ row }) => {
+<<<<<<< HEAD
       const { modules, ClassSessionRecord }: any = row.original;
       // console.log(ClassSessionRecord, "Row");
+=======
+      const { modules }: any = row.original;
+
+>>>>>>> 8b13b57 (commit)
       return (
         <div className="flex items-center">
           <ul>
@@ -260,6 +305,7 @@ export const columns: ColumnDef<Course>[] = [
                 const courseModule = item.module; // Truy cập vào module từ bảng ModuleInCourse
                 return (
                   <li key={module.id}>
+<<<<<<< HEAD
                     {courseModule.title}{" "}
                     {courseModule.UserProgress &&
                     courseModule.UserProgress.length > 0
@@ -270,6 +316,12 @@ export const columns: ColumnDef<Course>[] = [
                         })`
                       : //  in ${courseModule.UserProgress[0]?.attempt} attempts`
                         ""}
+=======
+                    {courseModule.title}:{" "}
+                    {courseModule.UserProgress && courseModule.UserProgress.length > 0
+                      ? `${courseModule.UserProgress[0]?.status} (${courseModule.UserProgress[0]?.score}%) in ${courseModule.UserProgress[0]?.attempt} attempts`
+                      : "No Result"}
+>>>>>>> 8b13b57 (commit)
                   </li>
                 );
               })
@@ -288,13 +340,21 @@ function IndeterminateCheckbox({
   ...rest
 }: { indeterminate?: boolean } & HTMLProps<HTMLInputElement>) {
   const ref = React.useRef<HTMLInputElement>(null!);
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   React.useEffect(() => {
     if (typeof indeterminate === "boolean") {
       ref.current.indeterminate = !rest.checked && indeterminate;
     }
   }, [ref, indeterminate]);
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   return (
     <input
       type="checkbox"
@@ -304,5 +364,8 @@ function IndeterminateCheckbox({
     />
   );
 }
+<<<<<<< HEAD
  
  
+=======
+>>>>>>> 8b13b57 (commit)

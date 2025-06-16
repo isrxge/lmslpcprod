@@ -33,7 +33,11 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "username",
+<<<<<<< HEAD
     header: () => <div>Name</div>,
+=======
+    header: () => <div>Họ Và Tên</div>,
+>>>>>>> 8b13b57 (commit)
     cell: ({ row }) => {
       const { username }: any = row.original;
       return (
@@ -47,7 +51,11 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "department",
     header: ({ column }) => (
       <span className="flex items-center cursor-pointer">
+<<<<<<< HEAD
         <span className="mr-2">Department</span>
+=======
+        <span className="mr-2">Phòng Ban</span>
+>>>>>>> 8b13b57 (commit)
       </span>
     ),
     cell: ({ row }) => {
@@ -63,7 +71,11 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: "star",
     header: ({ column }) => (
       <span className="flex items-center cursor-pointer">
+<<<<<<< HEAD
         <span className="mr-2">Star</span>
+=======
+        <span className="mr-2">Điểm</span>
+>>>>>>> 8b13b57 (commit)
       </span>
     ),
   },

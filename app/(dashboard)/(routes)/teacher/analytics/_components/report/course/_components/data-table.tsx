@@ -13,8 +13,12 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { PlusCircle, FileDown, ChevronDown } from "lucide-react";
+<<<<<<< HEAD
 // import * as XLSX from "xlsx";
 import * as XLSX from "xlsx-js-style";
+=======
+import * as XLSX from "xlsx";
+>>>>>>> 8b13b57 (commit)
 import {
   Table,
   TableBody,
@@ -43,7 +47,10 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+<<<<<<< HEAD
 import Exam from "@/app/(dashboard)/(routes)/teacher/module/[moduleId]/_components/module-exam-form";
+=======
+>>>>>>> 8b13b57 (commit)
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -65,7 +72,10 @@ export function DataTable<TData, TValue>({
   >();
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState({});
+<<<<<<< HEAD
   const [canViewAll, setCanViewAll] = React.useState<boolean>(false);
+=======
+>>>>>>> 8b13b57 (commit)
   const table = useReactTable({
     data: courseList,
     columns,
@@ -88,6 +98,7 @@ export function DataTable<TData, TValue>({
     },
   });
 
+<<<<<<< HEAD
   // 1. Gọi API /api/course => { course, canViewAll }
   React.useEffect(() => {
     async function fetchCourses() {
@@ -103,6 +114,8 @@ export function DataTable<TData, TValue>({
     fetchCourses();
   }, []);
 
+=======
+>>>>>>> 8b13b57 (commit)
   React.useEffect(() => {
     async function getInstructors() {
       let instructorList = await axios.get(`/api/user/instructor`);
@@ -185,6 +198,7 @@ export function DataTable<TData, TValue>({
     }
 
     filteredList.forEach((item: any) => {
+<<<<<<< HEAD
       // console.log("ITEM", item);
       const moduleList = item.modules
         .map(
@@ -221,10 +235,28 @@ export function DataTable<TData, TValue>({
       // ).join(" \n");
       const exam = item.ClassSessionRecord.map(
         (session: any) => `${session.user.username} : ${session.score}% ${session.status}`
+=======
+      console.log("ITEM", item);
+      const moduleList = item.modules.map(
+        (moduleInCourse: any) => `${moduleInCourse.module.title} : ${moduleInCourse.module.type}`
+      ).join(" \n");
+      const moduleListResult = item.modules.map(
+        (moduleInCourse: any) =>
+          `${moduleInCourse.module.title} :  ${moduleInCourse.module.UserProgress.map(
+            (item: any) =>
+              `\n-${item.user.username} : ${item.status}${
+                item?.score != null ? `(${item?.score}%)` : ""
+              }`
+          )}`
+      ).join(" \n");
+      const attendees = item.ClassSessionRecord.map(
+        (session: any) => `${session.user.username} : ${session.status}`
+>>>>>>> 8b13b57 (commit)
       ).join(" \n");
       const departments = item?.CourseOnDepartment.map(
         (item: any) => item?.Department?.title
       ).join(" \n");
+<<<<<<< HEAD
       const startDate = item.startDate
         ? new Date(item.startDate).toLocaleDateString("en-GB", {
             year: "numeric",
@@ -253,10 +285,23 @@ export function DataTable<TData, TValue>({
         // "Module list result": moduleListResult,
         // Attendees: attendees,
         "Exam Results": exam,
+=======
+
+      exportList.push({
+        Title: item.title || "",
+        Department: departments,
+        Credit: item.credit || "",
+        Instructor:
+          (item.courseInstructor && item.courseInstructor.username) || "",
+        "Module list": moduleList,
+        "Module list result": moduleListResult,
+        Attendees: attendees,
+>>>>>>> 8b13b57 (commit)
       });
     });
 
     const worksheet = XLSX.utils.json_to_sheet(exportList);
+<<<<<<< HEAD
     /* --- ÁP DỤNG FONT ARIAL 12 & BOLD CHO DÒNG TIÊU ÐỀ --- */
   const range = XLSX.utils.decode_range(worksheet["!ref"]!); // {s:{r,c}, e:{r,c}}
   for (let R = range.s.r; R <= range.e.r; ++R) {
@@ -284,10 +329,13 @@ export function DataTable<TData, TValue>({
       }
     }
   }
+=======
+>>>>>>> 8b13b57 (commit)
 
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
     worksheet["!cols"] = [
+<<<<<<< HEAD
     { wch: 30 }, // Title
     { wch: 15 }, // Department
     { wch: 10 },  // Point
@@ -298,6 +346,14 @@ export function DataTable<TData, TValue>({
     { wch: 50 }, // Module list result
     // { wch: 50 }, // Attendees
     { wch: 50 }, // Exam
+=======
+      { wch: 10 },
+      { wch: 10 },
+      { wch: 10 },
+      { wch: 50 },
+      { wch: 50 },
+      { wch: 50 },
+>>>>>>> 8b13b57 (commit)
     ];
 
     const currentDate = new Date();
@@ -321,11 +377,15 @@ export function DataTable<TData, TValue>({
       dateSuffix = new Date().toISOString().split("T")[0];
     }
 
+<<<<<<< HEAD
     // XLSX.writeFile(workbook, `${filter}_Course_${dateSuffix}.xlsx`);
     // Ghi file – nhớ thêm { cellStyles:true }
     XLSX.writeFile(workbook, `${filter}_Course_${dateSuffix}.xlsx`, {
       cellStyles: true,
     });
+=======
+    XLSX.writeFile(workbook, `${filter}_Course_${dateSuffix}.xlsx`);
+>>>>>>> 8b13b57 (commit)
   }
 
   return (
@@ -339,7 +399,11 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
+<<<<<<< HEAD
         {/* <select
+=======
+        <select
+>>>>>>> 8b13b57 (commit)
           name="status"
           id="filterByStatus"
           onChange={(event) =>
@@ -349,7 +413,11 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
         >
+<<<<<<< HEAD
           <option value="">All Instructors</option>
+=======
+          <option value="">Toàn Bộ Người Hướng Dẫn</option>
+>>>>>>> 8b13b57 (commit)
           {instructors.map((item: any) => (
             <option
               key={item.id}
@@ -359,6 +427,7 @@ export function DataTable<TData, TValue>({
               {item.username}
             </option>
           ))}
+<<<<<<< HEAD
         </select> */}
         {canViewAll && (
           <select
@@ -379,6 +448,9 @@ export function DataTable<TData, TValue>({
             ))}
           </select>
         )}
+=======
+        </select>
+>>>>>>> 8b13b57 (commit)
         <DatePickerWithRange
           date={dateRange}
           setDate={setDateRange}
@@ -389,7 +461,11 @@ export function DataTable<TData, TValue>({
             <DropdownMenuTrigger asChild>
               <Button>
                 <FileDown className="h-4 w-4 mr-2" />
+<<<<<<< HEAD
                 Select report <ChevronDown />
+=======
+                Chọn Báo Cáo <ChevronDown />
+>>>>>>> 8b13b57 (commit)
               </Button>
             </DropdownMenuTrigger>
             {courseList.length == 0 ? (
@@ -398,36 +474,61 @@ export function DataTable<TData, TValue>({
               <DropdownMenuContent>
                 {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("All")}>
+<<<<<<< HEAD
                     Report (All)
+=======
+                    Báo Cáo (Toàn Bộ)
+>>>>>>> 8b13b57 (commit)
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem
                     onClick={() => getSheetData("Selected Rows")}
                   >
+<<<<<<< HEAD
                     Report (Selected Rows)
                   </DropdownMenuItem>
                 )}
                 {/* {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Week")}>
                     Report (This Week)
+=======
+                    Báo Cáo (Các Dòng Đã Chọn)
+                  </DropdownMenuItem>
+                )}
+                {table.getSelectedRowModel().rows.length == 0 ? (
+                  <DropdownMenuItem onClick={() => getSheetData("This Week")}>
+                    Báo Cáo (Trong Tuần)
+>>>>>>> 8b13b57 (commit)
                   </DropdownMenuItem>
                 ) : (
                   <></>
                 )}
                 {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Month")}>
+<<<<<<< HEAD
                     Report (This Month)
+=======
+                    Báo Cáo (Trong Tháng)
+>>>>>>> 8b13b57 (commit)
                   </DropdownMenuItem>
                 ) : (
                   <></>
                 )}
                 {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Year")}>
+<<<<<<< HEAD
                     Report (This Year)
                   </DropdownMenuItem>
                 ) : (
                   <></>
                 )} */}
+=======
+                    Báo Cáo (Trong Năm)
+                  </DropdownMenuItem>
+                ) : (
+                  <></>
+                )}
+>>>>>>> 8b13b57 (commit)
               </DropdownMenuContent>
             )}
           </DropdownMenu>
@@ -476,7 +577,11 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
+<<<<<<< HEAD
                   No results.
+=======
+                  Không Có Kết Quả.
+>>>>>>> 8b13b57 (commit)
                 </TableCell>
               </TableRow>
             )}
@@ -490,7 +595,11 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
+<<<<<<< HEAD
           Previous
+=======
+          Trước
+>>>>>>> 8b13b57 (commit)
         </Button>
         <Button
           variant="outline"
@@ -498,7 +607,11 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
+<<<<<<< HEAD
           Next
+=======
+          Tiếp
+>>>>>>> 8b13b57 (commit)
         </Button>
       </div>
     </div>
@@ -517,7 +630,11 @@ function DatePickerWithRange({
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
+<<<<<<< HEAD
         {/* <PopoverTrigger asChild>
+=======
+        <PopoverTrigger asChild>
+>>>>>>> 8b13b57 (commit)
           <Button
             id="date"
             variant={"outline"}
@@ -537,10 +654,17 @@ function DatePickerWithRange({
                 format(date.from, "LLL dd, y")
               )
             ) : (
+<<<<<<< HEAD
               <span>Check course created between</span>
             )}
           </Button>
         </PopoverTrigger> */}
+=======
+              <span>Kiểm Tra Khóa Học Trong Khoản</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+>>>>>>> 8b13b57 (commit)
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus

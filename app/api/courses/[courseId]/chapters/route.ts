@@ -32,7 +32,11 @@ export async function POST(
 
       if (existingModule) {
         // Nếu module đã tồn tại, bỏ qua và không thêm module này
+<<<<<<< HEAD
         // console.log(`Module with title "${chapterModule.title}" already exists in the course.`);
+=======
+        console.log(`Module with title "${chapterModule.title}" already exists in the course.`);
+>>>>>>> 8b13b57 (commit)
         continue;  // Bỏ qua việc tạo module mới nếu nó đã tồn tại
       }
 
@@ -46,15 +50,23 @@ export async function POST(
         },
       });
 
+<<<<<<< HEAD
       // const newPosition = lastChapter ? lastChapter.position + 1 : 1;
       const newPosition = lastChapter
   ? (lastChapter.position ?? 0) + 1
   : 1;
+=======
+      const newPosition = lastChapter ? lastChapter.position + 1 : 1;
+>>>>>>> 8b13b57 (commit)
 
       const chapter = await db.module.create({
         data: {
           title: chapterModule.title,
+<<<<<<< HEAD
           // courseId: params.courseId,
+=======
+         
+>>>>>>> 8b13b57 (commit)
           position: newPosition,
           type: chapterModule.type, // Kiểu module: "Slide" hoặc "Exam"
           userId,
@@ -95,9 +107,13 @@ export async function GET(
     }
 
     const chapters = await db.module.findMany({
+<<<<<<< HEAD
       where: {
         // courseId: params.courseId,
       },
+=======
+      
+>>>>>>> 8b13b57 (commit)
       orderBy: {
         position: "asc", // Sorting by position if necessary
       },
@@ -110,6 +126,7 @@ export async function GET(
   }
 }
 
+<<<<<<< HEAD
 // import { auth } from "@clerk/nextjs";
 // import { NextResponse } from "next/server";
 // import { db } from "@/lib/db";
@@ -385,3 +402,5 @@ export async function GET(
 //     return new NextResponse("Internal Error", { status: 500 });
 //   }
 // }
+=======
+>>>>>>> 8b13b57 (commit)

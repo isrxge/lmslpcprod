@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { auth } from "@clerk/nextjs";
 // import { redirect } from "next/navigation";
 
@@ -296,6 +297,13 @@ import { redirect } from "next/navigation";
  
 import { db } from "@/lib/db";
  
+=======
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+
+import { db } from "@/lib/db";
+
+>>>>>>> 8b13b57 (commit)
 import { MyActivity } from "@/components/my-activity";
 import { Recommend } from "@/components/recommend";
 import { Bookmark } from "@/components/bookmark";
@@ -303,18 +311,30 @@ import { SearchInput } from "@/components/search-input";
 import { getProgress } from "@/actions/get-progress";
 import { CompletedCourse } from "@/components/completed-course";
 import { AlertInExam } from "@/components/ui/alert-in-exam";
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
 export default async function Dashboard({
   params,
 }: {
   params: { email: string; task: string };
 }) {
   const { sessionClaims }: any = auth();
+<<<<<<< HEAD
  
   if (!sessionClaims?.userId) {
     if (params.email != undefined && params.task != undefined) {
       return redirect(`/sign-in/?email=${params.email}&task=${params.task}`);
     }
+=======
+
+  if (!sessionClaims?.userId) {
+    // if (params.email != undefined && params.task != undefined) {
+    //   return redirect(`/sign-in/?email=${params.email}&task=${params.task}`);
+    // }
+>>>>>>> 8b13b57 (commit)
     return redirect("/sign-in");
   }
   let userInfo: any = await db.user.findUnique({
@@ -339,11 +359,19 @@ export default async function Dashboard({
       imageUrl: sessionClaims.userImage || "",
     },
   });
+<<<<<<< HEAD
  
   let myActivity: any = await db.classSessionRecord.findMany({
     where: {
       userId: sessionClaims.userId,
       status: "studying",
+=======
+
+  let myActivity: any = await db.classSessionRecord.findMany({
+    where: {
+      userId: sessionClaims.userId,
+      status: { not: "finished" },
+>>>>>>> 8b13b57 (commit)
       course: {
         isPublished: true
       }
@@ -367,7 +395,11 @@ export default async function Dashboard({
       },
     },
   });
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   let recommendCourses: any = await db.department.findUnique({
     where: {
       id: userInfo.departmentId + "",
@@ -440,7 +472,11 @@ export default async function Dashboard({
       },
     },
   });
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   for (let course of allCourses) {
     if (course.endDate && new Date(course.endDate) < new Date()) {
       // Cập nhật khóa học thành không công khai nếu endDate đã qua
@@ -454,9 +490,15 @@ export default async function Dashboard({
       });
     }
   }
+<<<<<<< HEAD
  
  
  
+=======
+
+  
+
+>>>>>>> 8b13b57 (commit)
   let courses = recommendCourses?.CourseOnDepartment || [];
   for (let i = 0; i < allCourses.length; i++) {
     let newItem = {
@@ -464,7 +506,11 @@ export default async function Dashboard({
     };
     courses.push(newItem);
   }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   let bookmark: any = await db.course.findMany({
     where: {
       isPublished: true,
@@ -484,6 +530,7 @@ export default async function Dashboard({
       ClassSessionRecord: true,
     },
   });
+<<<<<<< HEAD
  
   let completedCourse: any = await db.classSessionRecord.findMany({
     where: {
@@ -491,6 +538,13 @@ export default async function Dashboard({
       status: {
         not:"studying"
       },
+=======
+
+  let completedCourse: any = await db.classSessionRecord.findMany({
+    where: {
+      userId: sessionClaims.userId,
+      status: "finished",
+>>>>>>> 8b13b57 (commit)
     },
     include: {
       course: {
@@ -506,63 +560,99 @@ export default async function Dashboard({
       },
     },
   });
+<<<<<<< HEAD
  
+=======
+  
+>>>>>>> 8b13b57 (commit)
   const coursesWithProgress: any = await Promise.all(
     bookmark.map(async (course: { id: any }) => {
       const progressPercentage = await getProgress(
         sessionClaims.userId,
         course.id
       );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
       return {
         ...course,
         progress: progressPercentage,
       };
     })
   );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   const coursesWithProgress2: any = await Promise.all(
     myActivity.map(async (course: { course: any }) => {
       const progressPercentage = await getProgress(
         sessionClaims.userId,
         course?.course?.id
       );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
       return {
         ...course,
         progress: progressPercentage,
       };
     })
   );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   const coursesWithProgress3: any = await Promise.all(
     courses.map(async (course: any) => {
       const progressPercentage = await getProgress(
         sessionClaims.userId,
         course.course.id
       );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
       return {
         ...course,
         progress: progressPercentage,
       };
     })
   );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   const coursesWithProgress4: any = await Promise.all(
     completedCourse.map(async (course: { course: any }) => {
       const progressPercentage = await getProgress(
         sessionClaims.userId,
         course?.course?.id
       );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
       return {
         ...course,
         progress: progressPercentage,
       };
     })
   );
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   return userInfo.userExamReport[0]?.isInExam ? (
     <AlertInExam
       courseId={userInfo.userExamReport[0]?.courseId}
@@ -577,11 +667,19 @@ export default async function Dashboard({
         {/* <SlideProgram items={courses} /> */}
         {/* <Categories items={categories} /> */}
         <MyActivity items={coursesWithProgress2} />
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
         <Bookmark items={coursesWithProgress} />
         <CompletedCourse items={coursesWithProgress4} />
         {/* <Recommend items={coursesWithProgress3} /> */}
       </div>
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8b13b57 (commit)

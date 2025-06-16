@@ -12,7 +12,10 @@ const CoursesPage = async () => {
   if (!userId) {
     return redirect("/");
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b13b57 (commit)
   const checkUser = await db.userPermission.findMany({
     where: {
       userId: userId,
@@ -21,7 +24,10 @@ const CoursesPage = async () => {
       permission: true,
     },
   });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b13b57 (commit)
   const userDepartment: any = await db.user.findUnique({
     where: {
       id: userId,
@@ -30,6 +36,7 @@ const CoursesPage = async () => {
       Department: true,
     },
   });
+<<<<<<< HEAD
 
   if (
     // checkUser
@@ -191,6 +198,38 @@ const CoursesPage = async () => {
         },
       ],
     },
+=======
+  if (
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Edit course permission") == -1 &&
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Create course permission") == -1
+  ) {
+    return redirect("/");
+  }
+  let courses;
+  if (
+    userDepartment.title != "BOD" &&
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Manage all course permission") == -1
+  ) {
+    courses = await db.course.findMany({
+      where: {
+        CourseOnDepartment: {
+          some: {departmentId: userDepartment?.Department?.id,}
+        },
+        // OR: [
+        //   {
+        //     userId: userId,
+        //     courseInstructedBy: userId,
+        //     updatedBy: userId,
+        //   },
+        // ],
+      },
+>>>>>>> 8b13b57 (commit)
       orderBy: {
         startDate: "desc",
       },
@@ -198,15 +237,24 @@ const CoursesPage = async () => {
         user: true,
         updatedUser: true,
         courseInstructor: true,
+<<<<<<< HEAD
         modules: {},
         CourseOnDepartment: {
           include: {
             Department: true, // Include department information
+=======
+        modules: {
+        },
+        CourseOnDepartment: {
+          include: {
+            Department: true, // Bao gồm thông tin phòng ban
+>>>>>>> 8b13b57 (commit)
           },
         },
       },
     });
   } else {
+<<<<<<< HEAD
     // If the user doesn't have the necessary permissions, show their department's courses
     courses = await db.course.findMany({
       where: {
@@ -217,6 +265,19 @@ const CoursesPage = async () => {
         // },
         userId
       },
+=======
+    courses = await db.course.findMany({
+      // where: {
+      //   userId,
+      // },
+      // where: {
+      //   CourseOnDepartment: {
+      //     some: {
+      //       departmentId: userDepartment?.Department?.id, // Lọc khóa học theo phòng ban người dùng
+      //     },
+      //   },
+      // },
+>>>>>>> 8b13b57 (commit)
       orderBy: {
         startDate: "desc",
       },
@@ -224,10 +285,18 @@ const CoursesPage = async () => {
         user: true,
         updatedUser: true,
         courseInstructor: true,
+<<<<<<< HEAD
         modules: {},
         CourseOnDepartment: {
           include: {
             Department: true, // Include department information
+=======
+        modules: {
+        },
+        CourseOnDepartment: {
+          include: {
+            Department: true, // Bao gồm thông tin phòng ban
+>>>>>>> 8b13b57 (commit)
           },
         },
       },

@@ -27,7 +27,11 @@ const RoleIdPage = async ({ params }: { params: { roleId: string } }) => {
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
+<<<<<<< HEAD
       .indexOf("Edit role permission") == -1
+=======
+      .indexOf("Manage role permission") == -1
+>>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }

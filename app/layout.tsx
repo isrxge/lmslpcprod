@@ -32,6 +32,7 @@ if (typeof window !== "undefined") {
         : 0;
     window.localStorage.setItem("checkTab", numberOfTabs.toString());
   }
+<<<<<<< HEAD
   /* ---------- 🎨 BANNER LMS đầy màu sắc ---------- */
   console.log(
     "%c LMS – Learning Management System ",
@@ -43,6 +44,8 @@ if (typeof window !== "undefined") {
   const styled = subtitle.split("").map(ch => `%c${ch}`).join("");
   const styles = subtitle.split("").map((_, i) => `color:${colors[i % colors.length]};font-size:14px;`);
   console.log(styled, ...styles);
+=======
+>>>>>>> 8b13b57 (commit)
 }
 
 export default function RootLayout({

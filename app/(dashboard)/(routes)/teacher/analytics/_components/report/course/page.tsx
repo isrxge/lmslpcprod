@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // "use client";
 
 // import { useQuery } from "react-query";
@@ -154,6 +155,8 @@
 
 // export default ReportPageCourse;
 
+=======
+>>>>>>> 8b13b57 (commit)
 "use client";
 
 import { useQuery } from "react-query";
@@ -161,16 +164,24 @@ import { useQuery } from "react-query";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 import axios from "axios";
+<<<<<<< HEAD
 import { auth, useAuth } from "@clerk/nextjs";
 
 const ReportPageCourse = () => {
   const { isLoaded, isSignedIn, userId, sessionId, getToken } = useAuth();
+=======
+
+const ReportPageCourse = () => {
+>>>>>>> 8b13b57 (commit)
   const fetchAllCourses = async () => {
     const { data } = await axios.get(`/api/courses`);
 
     return data;
   };
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8b13b57 (commit)
 
   const { data, error, isLoading } = useQuery("allCourse", fetchAllCourses, {
     refetchOnWindowFocus: false,

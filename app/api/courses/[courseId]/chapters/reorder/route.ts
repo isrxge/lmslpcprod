@@ -17,10 +17,15 @@ export async function PUT(
     const { list } = await req.json();
 
     for (let item of list) {
+<<<<<<< HEAD
       // console.log("itemssss", item);
 
       await db.moduleInCourse.update({
         where: {moduleId_courseId:{moduleId: item.id, courseId: params.courseId}  },
+=======
+      await db.moduleInCourse.update({
+        where: { id: item.id },
+>>>>>>> 8b13b57 (commit)
         data: { position: item.position },
       });
     }
@@ -39,6 +44,7 @@ export async function PUT(
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+<<<<<<< HEAD
 export async function POST(
   req: Request,
   { params }: { params: { courseId: string } }
@@ -71,3 +77,5 @@ export async function POST(
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+=======
+>>>>>>> 8b13b57 (commit)

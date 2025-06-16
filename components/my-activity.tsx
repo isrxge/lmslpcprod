@@ -30,11 +30,18 @@ export const MyActivity = ({ items }: MyActivityProps) => {
         My Activity
       </h2>
       <p className="mb-4 italic">
+<<<<<<< HEAD
         {/* Start studying now:{" "}
         <Link href="/search" className="text-blue-700 hover:underline">
           Browse courses
         </Link> */}
         No activity
+=======
+        Start studying now:{" "}
+        <Link href="/search" className="text-blue-700 hover:underline">
+          Browse courses
+        </Link>
+>>>>>>> 8b13b57 (commit)
       </p>
     </>
   ) : (
@@ -50,6 +57,10 @@ export const MyActivity = ({ items }: MyActivityProps) => {
       >
         <CarouselContent>
           {items.map((item) => (
+<<<<<<< HEAD
+=======
+            console.log("Itmdas",item.progress),
+>>>>>>> 8b13b57 (commit)
             <CarouselItem
               key={item?.course.id}
               className="md:basis-1/3 lg:basis-1/4"

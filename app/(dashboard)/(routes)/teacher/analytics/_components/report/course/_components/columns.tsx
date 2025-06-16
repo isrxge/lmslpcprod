@@ -47,11 +47,16 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Name of Course</span>
+=======
+          <span className="mr-2">Tên Khóa Học</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },
   },
+<<<<<<< HEAD
   // {
   //   accessorKey: "user",
   //   header: ({ column }) => {
@@ -87,12 +92,19 @@ export const columns: ColumnDef<Course>[] = [
   //     return <div>{updatedUser?.username} </div>;
   //   },
   // },
+=======
+
+>>>>>>> 8b13b57 (commit)
   {
     accessorKey: "courseInstructedBy",
     header: ({ column }) => {
       return (
         <span className="flex items-center cursor-pointer">
+<<<<<<< HEAD
           <span className="mr-2">Instructor</span>
+=======
+          <span className="mr-2">Người Hướng Dẫn</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },
@@ -105,7 +117,11 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Instructor</span>
+=======
+          <span className="mr-2">Người Hướng Dẫn</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },
@@ -123,7 +139,11 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Created On</span>
+=======
+          <span className="mr-2">Tạo Vào</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },
@@ -146,13 +166,27 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
+<<<<<<< HEAD
     accessorKey: "endDate",
+=======
+    accessorKey: "ClassSessionRecord",
+    header: ({ column }) => (
+      <span className="flex items-center cursor-pointer">
+        <span className="mr-2">Người Học</span>
+      </span>
+    ),
+    cell: AttendeesCell,
+  },
+  {
+    accessorKey: "Module",
+>>>>>>> 8b13b57 (commit)
     header: ({ column }) => {
       return (
         <span
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">End Date</span>
         </span>
       );
@@ -196,6 +230,14 @@ export const columns: ColumnDef<Course>[] = [
   //   },
   //   cell: ExamsCell,
   // },
+=======
+          <span className="mr-2">Bài Kiểm Tra</span>
+        </span>
+      );
+    },
+    cell: ExamsCell,
+  },
+>>>>>>> 8b13b57 (commit)
   // {
   //   accessorKey: "Module",
   //   header: ({ column }) => {
@@ -237,7 +279,11 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+<<<<<<< HEAD
           <span className="mr-2">Course for</span>
+=======
+          <span className="mr-2">Khóa Học Dành Cho</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },

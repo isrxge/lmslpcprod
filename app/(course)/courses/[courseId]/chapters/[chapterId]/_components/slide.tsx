@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // "use client";
 // import DocViewer, {
 //   MSDocRenderer,
@@ -432,6 +433,8 @@
 // };
 // export default Slide;
 
+=======
+>>>>>>> 8b13b57 (commit)
 "use client";
 import DocViewer, {
   MSDocRenderer,
@@ -465,7 +468,12 @@ const CustomFileRenderer = ({ mainState: { currentDocument } }: any) => {
       type={`application/pdf`}
     >
       <p>
+<<<<<<< HEAD
         Unable to display PDF file. <a href={viewerUrl}>Download</a> instead.
+=======
+        Không Thể Trình Chiếu File PDF. Vui Lòng Tải{" "}
+        <a href={viewerUrl}>File</a>.
+>>>>>>> 8b13b57 (commit)
       </p>
     </object>
   );
@@ -514,6 +522,7 @@ const Slide = ({
     return supportedFileTypes.includes(extension!) ? extension : "default";
   };
 
+<<<<<<< HEAD
   // const onClickNextSlide = async () => {
   //   if (hasCompleted == "finished") {
   //     setCurrentSlide(currentSlide + 1);
@@ -539,6 +548,8 @@ const Slide = ({
   //   router.refresh();
   // };
 
+=======
+>>>>>>> 8b13b57 (commit)
   const onClickNextSlide = async () => {
     setCurrentSlide(currentSlide + 1);
     setDoc(slide[currentSlide].fileUrl);
@@ -550,6 +561,7 @@ const Slide = ({
     router.push(`/courses/${courseId}/chapters/${preChapter}`);
   };
 
+<<<<<<< HEAD
   // const onClick = async () => {
   //   if (hasCompleted == "finished") {
   //     if (nextChapterId != null) {
@@ -649,6 +661,8 @@ const Slide = ({
   //   }
   // };
 
+=======
+>>>>>>> 8b13b57 (commit)
   const onClick = async () => {
     let moduleId = chapter.id;
     if (nextChapterId != null) {
@@ -686,7 +700,11 @@ const Slide = ({
   };
 
   return slide.length < 1 ? (
+<<<<<<< HEAD
     <>This module is updating.</>
+=======
+    <>Học Phần Này Đang Được Điều Chỉnh.</>
+>>>>>>> 8b13b57 (commit)
   ) : (
     <AnimatePresence mode="wait">
       <motion.div
@@ -698,8 +716,13 @@ const Slide = ({
         <AlertDialog open={onFinish && hasCompleted != "finished"}>
           <AlertDialogContent className="AlertDialogContent">
             <AlertDialogTitle className="AlertDialogTitle">
+<<<<<<< HEAD
               Congratulation on finishing this Course, Would you like to find
               another course?
+=======
+              Chúc Mừng Bạn Đã Hoàn Thành Khóa Học, Bạn Có Muốn Tìm Kiếm Khóa
+              Khác?
+>>>>>>> 8b13b57 (commit)
               <Image
                 src="/congratulation.jpg"
                 alt="blog"
@@ -717,11 +740,19 @@ const Slide = ({
               }}
             >
               <AlertDialogCancel onClick={() => setOnFinish(false)}>
+<<<<<<< HEAD
                 Stay
               </AlertDialogCancel>
               <AlertDialogAction asChild>
                 <button className="Button red" onClick={() => accept()}>
                   Leave
+=======
+                Ở Lại
+              </AlertDialogCancel>
+              <AlertDialogAction asChild>
+                <button className="Button red" onClick={() => accept()}>
+                  Rời Đi
+>>>>>>> 8b13b57 (commit)
                 </button>
               </AlertDialogAction>
             </div>
@@ -733,7 +764,11 @@ const Slide = ({
             <div className="ml-4 mt-4">
               <video width="1080" height="720" controls autoPlay>
                 <source src={slide[currentSlide].videoUrl} type="video/mp4" />
+<<<<<<< HEAD
                 Your browser does not support the video tag.
+=======
+                Trình Duyệt Của Bạn Không Hỗ Trợ Loại Video Này.
+>>>>>>> 8b13b57 (commit)
               </video>
               <div>{slide[currentSlide].description}</div>
             </div>
@@ -761,6 +796,7 @@ const Slide = ({
             />
           ) : (
             // <>
+<<<<<<< HEAD
               // {isLoading && (
               //   <div>
               //     {" "}
@@ -781,6 +817,28 @@ const Slide = ({
                 // frameBorder="0"
                 // onLoad={handleIframeLoad}
               />
+=======
+            // {isLoading && (
+            //   <div>
+            //     {" "}
+            //     <div className="w-6 h-6 border-4 border-t-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>{" "}
+            //     Loading ...
+            //   </div>
+            // )}
+            <iframe
+              key={slide[currentSlide].fileUrl}
+              src={slide[currentSlide].fileUrl}
+              // style={{ width: 1080, height: 650 }}
+              // src={`https://docs.google.com/viewer?url=${encodeURIComponent(
+              //   slide[currentSlide].fileUrl
+              // )}&embedded=true`}
+              style={{ width: "100%", height: 650 }}
+              // loading="lazy"
+              // loading="lazy"
+              // frameBorder="0"
+              // onLoad={handleIframeLoad}
+            />
+>>>>>>> 8b13b57 (commit)
             // </>
             // <DocViewer
             //   key={slide[currentSlide].fileUrl}
@@ -815,7 +873,11 @@ const Slide = ({
                 className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded mt-4 ml-4"
                 onClick={() => setCurrentSlide(currentSlide - 1)}
               >
+<<<<<<< HEAD
                 Previous
+=======
+                Quay Về
+>>>>>>> 8b13b57 (commit)
               </button>
             )}
 
@@ -826,7 +888,11 @@ const Slide = ({
                     onClick={() => onClick()}
                     className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-4 ml-4"
                   >
+<<<<<<< HEAD
                     Next module
+=======
+                    Học Phần Tiếp Theo
+>>>>>>> 8b13b57 (commit)
                   </button>
                 </div>
               ) : (
@@ -836,18 +902,32 @@ const Slide = ({
                       onClick={() => onClickPre()}
                       className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded mt-4 ml-4"
                     >
+<<<<<<< HEAD
                       Previsous Module
                     </button>
                   )}
 
                   {/* <button
+=======
+                      Học Phần Trước
+                    </button>
+                  )}
+
+                  <button
+>>>>>>> 8b13b57 (commit)
                     onClick={() => onClick()}
                     className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded mt-4 ml-4"
                   >
                     {hasCompleted != "finished"
+<<<<<<< HEAD
                       ? "Finish Course"
                       : "Return to Home"}
                   </button> */}
+=======
+                      ? "Hoàn Thành Khóa Học"
+                      : "Về Trang Chủ"}
+                  </button>
+>>>>>>> 8b13b57 (commit)
                 </div>
               )
             ) : (
@@ -855,7 +935,11 @@ const Slide = ({
                 onClick={() => onClickNextSlide()}
                 className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-4 ml-4"
               >
+<<<<<<< HEAD
                 Next slide
+=======
+                Học Phần Tiếp Theo
+>>>>>>> 8b13b57 (commit)
               </button>
             )}
           </div>

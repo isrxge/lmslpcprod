@@ -10,6 +10,7 @@ export async function POST(req: Request) {
     let result: boolean = false;
 
     var client = new LdapClient({ url: "ldap://10.20.1.11:389" });
+<<<<<<< HEAD
     // await client.bind(emailAddress, originalpassword);
     // result = true;
     try {
@@ -37,6 +38,28 @@ export async function POST(req: Request) {
     
   } catch (error) {
     console.log("[PROGRAMS]", error);
+=======
+    await client.bind(emailAddress, originalpassword);
+    
+    result = true;
+    try {
+      // `(&(mail=${emailAddress})(userPassword=${originalpassword}))`
+      const options = {
+        filter: `(&(mail=${emailAddress}))`,
+        scope: "sub",
+        attributes: ["dn", "sn", "cn", "mail", "userPassword"],
+      };
+
+      const entries = await client.search("DC=lp,DC=local", options);
+      
+      result = entries[0].mail == emailAddress ? true : false;
+    } catch (e) {
+
+    }
+    return NextResponse.json(result);
+  } catch (error) {
+    console.log("[LDAP AUTHENTICATE]", error);
+>>>>>>> 8b13b57 (commit)
     return NextResponse.json(false);
   }
 }

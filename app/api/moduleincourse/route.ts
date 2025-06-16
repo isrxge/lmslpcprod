@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+<<<<<<< HEAD
 // export async function POST(req: Request) {
 //   try {
 //     const { userId } = auth();
@@ -46,6 +47,52 @@ import { db } from "@/lib/db";
 //     return new NextResponse("Internal Error", { status: 500 });
 //   }
 // }
+=======
+export async function POST(req: Request) {
+  try {
+    const { userId } = auth();
+    const { modules, courseId }: { modules: { moduleId: string }[]; courseId: string } =
+      await req.json();
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    // Tạo một mảng để lưu các mối quan hệ module và khóa học
+    const createdModulesInCourse = [];
+
+    for (const { moduleId } of modules) {
+      // Kiểm tra xem mối quan hệ moduleId và courseId đã tồn tại trong ModuleInCourse chưa
+      const existingModuleInCourse = await db.moduleInCourse.findUnique({
+        where: {
+          moduleId_courseId: {
+            moduleId,
+            courseId,
+          },
+        },
+      });
+
+      if (!existingModuleInCourse) {
+        // Nếu chưa có, tạo mới mối quan hệ giữa module và khóa học
+        const newModuleInCourse = await db.moduleInCourse.create({
+          data: {
+            courseId,
+            moduleId,
+            position: 1, // Đặt vị trí mặc định là 1, có thể thay đổi sau
+          },
+        });
+        createdModulesInCourse.push(newModuleInCourse);
+      }
+    }
+
+    // Trả về các mối quan hệ module và khóa học đã được tạo
+    return NextResponse.json(createdModulesInCourse);
+  } catch (error) {
+    console.log("[MODULE_IN_COURSE_POST]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+>>>>>>> 8b13b57 (commit)
 
 // export async function GET(req: Request) {
 //   try {
@@ -95,6 +142,7 @@ import { db } from "@/lib/db";
 // }
 
 // GET - Lấy danh sách module đã liên kết với khóa học
+<<<<<<< HEAD
 
 export async function POST(req: Request) {
   try {
@@ -176,6 +224,8 @@ export async function POST(req: Request) {
 }
  
 
+=======
+>>>>>>> 8b13b57 (commit)
 export async function GET(req: Request) {
   try {
     const { userId } = auth(); // Lấy userId từ thông tin xác thực
@@ -257,7 +307,10 @@ export async function PATCH(
 
 export async function DELETE(req: Request) {
   try {
+<<<<<<< HEAD
     
+=======
+>>>>>>> 8b13b57 (commit)
     const { userId } = auth();
     const { moduleId, courseId }: { moduleId: string; courseId: string } = await req.json();
 

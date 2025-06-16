@@ -4,15 +4,21 @@ import { Pencil, X } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
+<<<<<<< HEAD
 import toast from "react-hot-toast";  
 
+=======
+>>>>>>> 8b13b57 (commit)
 const UserInformation = ({ user }: any) => {
   const router = useRouter();
   const [isRoleEditing, setIsRoleEditing] = useState(false);
   const [isDepartmentEditing, setIsDepartmentEditing] = useState(false);
   const [isUsernameEditing, setIsUsernameEditing] = useState(false);
   const [isStatusEditing, setIsStatusEditing] = useState(false);
+<<<<<<< HEAD
   const [isTypeUserEditing, setIsTypeUserEditing] = useState(false);
+=======
+>>>>>>> 8b13b57 (commit)
 
   const handleRoleEditClick = () => {
     setIsRoleEditing(!isRoleEditing);
@@ -22,10 +28,13 @@ const UserInformation = ({ user }: any) => {
     setIsStatusEditing(!isStatusEditing);
   };
 
+<<<<<<< HEAD
   const handleTypeUserEditClick = () => {
     setIsTypeUserEditing(!isTypeUserEditing);
   };
 
+=======
+>>>>>>> 8b13b57 (commit)
   const handleDepartmentEditClick = () => {
     setIsDepartmentEditing(!isDepartmentEditing);
   };
@@ -40,6 +49,7 @@ const UserInformation = ({ user }: any) => {
     setIsDepartmentEditing(false);
     setIsUsernameEditing(false);
     setIsStatusEditing(false);
+<<<<<<< HEAD
     setIsTypeUserEditing(false);
     let values = {
       department: e.target.department.value,
@@ -61,6 +71,17 @@ try {
 
       toast.error(`Save failed: ${message}`, { id: toastId });
     }
+=======
+    let values = {
+      department: e.target.department.value,
+
+      username: e.target.username.value,
+      status: e.target.status.value,
+    };
+
+    await axios.patch(`/api/user/${user?.id}`, values);
+    router.refresh();
+>>>>>>> 8b13b57 (commit)
   };
   return (
     <form
@@ -70,7 +91,11 @@ try {
       {/* Left Column */}
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
+<<<<<<< HEAD
           ID
+=======
+          ID:
+>>>>>>> 8b13b57 (commit)
         </label>
         <input
           type="text"
@@ -82,7 +107,11 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
+<<<<<<< HEAD
           Full Name
+=======
+          Username:
+>>>>>>> 8b13b57 (commit)
         </label>
         <div className="relative">
           <input
@@ -95,7 +124,11 @@ try {
               isUsernameEditing ? "border-blue-500" : ""
             }`}
           />
+<<<<<<< HEAD
           {/* <div
+=======
+          <div
+>>>>>>> 8b13b57 (commit)
             className="absolute right-2 top-2 cursor-pointer"
             onClick={handleUsernameEditClick}
           >
@@ -104,14 +137,22 @@ try {
             ) : (
               <Pencil className="text-blue-500 w-5 h-5" />
             )}
+<<<<<<< HEAD
           </div> */}
+=======
+          </div>
+>>>>>>> 8b13b57 (commit)
         </div>
       </div>
 
       {/* Right Column */}
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
+<<<<<<< HEAD
           Email
+=======
+          Email:
+>>>>>>> 8b13b57 (commit)
         </label>
         <input
           type="text"
@@ -123,7 +164,11 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
+<<<<<<< HEAD
           Department
+=======
+          Department:
+>>>>>>> 8b13b57 (commit)
         </label>
         <div className="relative">
           <input
@@ -162,7 +207,11 @@ try {
       </div>
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
+<<<<<<< HEAD
           Status
+=======
+          Status:
+>>>>>>> 8b13b57 (commit)
         </label>
         <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
           <select
@@ -190,6 +239,7 @@ try {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Type
@@ -220,11 +270,16 @@ try {
           </div>
         </div>
       </div>
+=======
+>>>>>>> 8b13b57 (commit)
       <div className="col-span-2 text-right">
         {isDepartmentEditing ||
         isRoleEditing ||
         isStatusEditing ||
+<<<<<<< HEAD
         isTypeUserEditing ||
+=======
+>>>>>>> 8b13b57 (commit)
         isUsernameEditing ? (
           <button
             type="submit"

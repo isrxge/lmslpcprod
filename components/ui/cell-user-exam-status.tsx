@@ -66,7 +66,11 @@ export const CellUserExamStatus = ({ row }: any) => {
             {userExamReport[0].course.title}
           </div>
         </AlertDialogTrigger>
+<<<<<<< HEAD
         {/* <AlertDialogContent className="AlertDialogContent">
+=======
+        <AlertDialogContent className="AlertDialogContent">
+>>>>>>> 8b13b57 (commit)
           <AlertDialogTitle className="AlertDialogTitle">
             Reset user exam?
           </AlertDialogTitle>
@@ -98,7 +102,11 @@ export const CellUserExamStatus = ({ row }: any) => {
               Confirm
             </button>
           </AlertDialogAction>
+<<<<<<< HEAD
         </AlertDialogContent> */}
+=======
+        </AlertDialogContent>
+>>>>>>> 8b13b57 (commit)
       </AlertDialog>
     );
   }

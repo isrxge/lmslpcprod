@@ -21,6 +21,7 @@ const PermissionsPage = async () => {
     },
   });
   if (
+<<<<<<< HEAD
     // checkUser
     //   .map((item: { permission: { title: any } }) => item.permission.title)
     //   .indexOf("Edit permission permission") == -1 &&
@@ -30,6 +31,14 @@ const PermissionsPage = async () => {
       checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
       .indexOf("View permission permission") == -1
+=======
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Edit permission permission") == -1 &&
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("Create permission permission") == -1
+>>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }

@@ -51,9 +51,15 @@ function CreatePage() {
     try {
       const response = await axios.post("/api/role", values);
       router.push(`/teacher/roles/${response.data.id}`);
+<<<<<<< HEAD
       toast.success("Role created");
     } catch {
       toast.error("Something went wrong");
+=======
+      toast.success("Vai Trò Đã Được Tạo");
+    } catch {
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -61,11 +67,19 @@ function CreatePage() {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-60">
       <div>
         <>
+<<<<<<< HEAD
           <h1 className="text-2xl">Name your role</h1>
           <p className="text-sm text-slate-600">
             What would you like to name your Role? Don&apos;t worry, you can
             change this later.
           </p>
+=======
+          <h1 className="text-2xl">Đặt Tên Vai Trò</h1>
+          {/* <p className="text-sm text-slate-600">
+            What would you like to name your Role? Don&apos;t worry, you can
+            change this later.
+          </p> */}
+>>>>>>> 8b13b57 (commit)
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmitProgram)}
@@ -84,7 +98,11 @@ function CreatePage() {
                         {...field}
                       />
                     </FormControl>
+<<<<<<< HEAD
                     <FormDescription>Role name?</FormDescription>
+=======
+                    <FormDescription>Tên Role?</FormDescription>
+>>>>>>> 8b13b57 (commit)
                     <FormMessage />
                   </FormItem>
                 )}
@@ -93,11 +111,19 @@ function CreatePage() {
               <div className="flex items-center gap-x-2">
                 <Link href="/teacher/programs">
                   <Button type="button" variant="ghost">
+<<<<<<< HEAD
                     Cancel
                   </Button>
                 </Link>
                 <Button type="submit" disabled={!isValid || isSubmitting}>
                   Continue
+=======
+                    Từ Chối
+                  </Button>
+                </Link>
+                <Button type="submit" disabled={!isValid || isSubmitting}>
+                  Tiếp Tục
+>>>>>>> 8b13b57 (commit)
                 </Button>
               </div>
             </form>

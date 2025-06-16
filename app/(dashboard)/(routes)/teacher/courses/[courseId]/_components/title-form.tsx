@@ -24,11 +24,15 @@ interface TitleFormProps {
     title: string;
   };
   courseId: string;
+<<<<<<< HEAD
   readOnly?: boolean
+=======
+>>>>>>> 8b13b57 (commit)
 }
 
 const formSchema = z.object({
   title: z.string().min(1, {
+<<<<<<< HEAD
     message: "Title is required",
   }),
 });
@@ -37,6 +41,16 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
+=======
+    message: "Tên Khóa Học Là Bắt Buộc",
+  }),
+});
+
+export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleEdit = () => setIsEditing((current) => !current);
+>>>>>>> 8b13b57 (commit)
 
   const router = useRouter();
 
@@ -50,11 +64,19 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
+<<<<<<< HEAD
       toast.success("Course updated");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+=======
+      toast.success("Khóa Học Đã Được Cập Nhật");
+      toggleEdit();
+      router.refresh();
+    } catch {
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -62,6 +84,7 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
+<<<<<<< HEAD
           Course title (50 character limit)
           <Asterisk className="size-4" color="red" />
         </div>
@@ -78,6 +101,22 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
           )}
         </Button>
         )}
+=======
+          Tên Khóa Học (Giới Hạn 50 Ký Tự)
+          <Asterisk className="size-4" color="red" />
+        </div>
+
+        <Button onClick={toggleEdit} variant="ghost">
+          {isEditing ? (
+            <>Từ Chối</>
+          ) : (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Chỉnh Sửa
+            </>
+          )}
+        </Button>
+>>>>>>> 8b13b57 (commit)
       </div>
       {!isEditing && (
         <p className="text-sm mt-2 dark:text-slate-50">{initialData.title}</p>
@@ -108,7 +147,11 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
+<<<<<<< HEAD
                 Save
+=======
+                Lưu
+>>>>>>> 8b13b57 (commit)
               </Button>
             </div>
           </form>

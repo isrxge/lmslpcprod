@@ -9,6 +9,7 @@ export async function POST(req: Request) {
     const { courseName, username, emailAddress } = await req.json();
 
     // Thiết lập nội dung email
+<<<<<<< HEAD
     // const emailContent = {
     //   from: "webmaster@lp.com.vn",
     //   to: emailAddress, // Gửi tới người dùng
@@ -33,6 +34,17 @@ export async function POST(req: Request) {
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">If you have any questions or require assistance, please feel free to reach out.</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Best regards,</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Learning Management System Administration</p>
+=======
+    const emailContent = {
+      from: "webmaster@lp.com.vn",
+      to: emailAddress, // Gửi tới người dùng
+      subject: `You have been assigned to the course: ${courseName}`,
+      text: `Hello ${username},\n\nYou have been successfully assigned to the course: ${courseName}.`,
+      html: `
+        <p>Hello ${username},</p>
+        <p>You have been successfully assigned to the course: <strong>${courseName}</strong>.</p>
+        <p>If you have any questions, feel free to reach out.</p>
+>>>>>>> 8b13b57 (commit)
       `,
     };
 

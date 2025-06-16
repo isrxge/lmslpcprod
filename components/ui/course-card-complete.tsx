@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // "use client";
 // import Image from "next/image";
 // import Link from "next/link";
@@ -149,13 +150,23 @@ import {
   Eye,
   X,
 } from "lucide-react";
+=======
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { BookOpen, BookOpenCheck, BookOpenText, Bookmark, Eye, X } from "lucide-react";
+>>>>>>> 8b13b57 (commit)
 import React, { useState, useEffect } from "react";
 import { IconBadge } from "@/components/icon-badge";
 import { CourseProgress } from "@/components/course-progress";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
 interface CourseCardCompleteProps {
   id: string;
   title: string;
@@ -166,10 +177,16 @@ interface CourseCardCompleteProps {
   chapters: any;
   isLocked: boolean;
   description: string;
+<<<<<<< HEAD
   endDate?: string;
   status?: boolean;
 }
  
+=======
+  endDate?: string
+}
+
+>>>>>>> 8b13b57 (commit)
 export const CourseCardComplete = ({
   id,
   title,
@@ -180,11 +197,18 @@ export const CourseCardComplete = ({
   chapters,
   isLocked,
   description,
+<<<<<<< HEAD
   endDate,
   status,
 }: CourseCardCompleteProps) => {
   const router = useRouter();
  
+=======
+  endDate
+}: CourseCardCompleteProps) => {
+  const router = useRouter();
+
+>>>>>>> 8b13b57 (commit)
   const [isUpdating, setIsUpdating] = useState(false);
   const { userId }: any = useAuth();
   const toggleUpdating = () => {
@@ -200,6 +224,7 @@ export const CourseCardComplete = ({
     toggleUpdating();
     router.refresh();
   };
+<<<<<<< HEAD
  
   const [isClient, setIsClient] = useState(false); // To detect if it's client-side
   const [formattedEndDate, setFormattedEndDate] = useState<string | null>(null);
@@ -218,6 +243,22 @@ export const CourseCardComplete = ({
           isLocked ? "pointer-events-none" : ""
         }`}
       >
+=======
+
+  const [isClient, setIsClient] = useState(false);  // To detect if it's client-side
+  const [formattedEndDate, setFormattedEndDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    setIsClient(true);  // Set the flag after component mounts
+    if (endDate) {
+      setFormattedEndDate(new Date(endDate).toLocaleDateString());  // Format the endDate
+    }
+  }, [endDate]);
+
+  return (
+    <div className="group relative">
+      <div className={`group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full relative ${isLocked ? 'pointer-events-none' : ''}`}>
+>>>>>>> 8b13b57 (commit)
         <div className="relative w-full aspect-video rounded-md overflow-hidden">
           <Image
             fill
@@ -235,18 +276,31 @@ export const CourseCardComplete = ({
               <IconBadge size="sm" icon={BookOpenCheck} />
               <span>
                 {/* {chaptersLength} {chaptersLength === 1 ? "Chapter" : "Chapters"} */}
+<<<<<<< HEAD
                 Has {status ? "completed" : "failed"}
+=======
+                Has completed
+>>>>>>> 8b13b57 (commit)
               </span>
             </div>
           </div>
           <div className="w-full h-0.5 bg-gray-300 rounded-md mt-1"></div>
           {isClient && (
+<<<<<<< HEAD
             <p className="font-small mt-4 text-sky-700 text-xs">
               End course at 18:00: {formattedEndDate || "N/A"}
             </p>
           )}
         </div>
  
+=======
+          <p className="font-small mt-4 text-sky-700 text-xs">
+            End course: {formattedEndDate || "N/A"}
+          </p>
+          )}
+        </div>
+        
+>>>>>>> 8b13b57 (commit)
         {/* Lớp phủ khi khóa học đã hoàn thành */}
         {/* {isLocked && (
           <div className="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
@@ -267,7 +321,11 @@ export const CourseCardComplete = ({
               </button>
             </Link>
           )}
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
           {bookmark?.filter(
             (item) => item.courseId == id && item.userId == userId
           ).length > 0 ? (
@@ -289,4 +347,8 @@ export const CourseCardComplete = ({
       </div>
     </div>
   );
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 8b13b57 (commit)

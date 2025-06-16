@@ -17,7 +17,10 @@ export async function DELETE(
     const moduleData = await db.module.findUnique({
       where: {
         id: params.moduleId,
+<<<<<<< HEAD
         // courseId: params.courseId,
+=======
+>>>>>>> 8b13b57 (commit)
       },
     });
 
@@ -31,6 +34,7 @@ export async function DELETE(
       },
     });
 
+<<<<<<< HEAD
     // const publishedChaptersInCourse = await db.module.findMany({
     //   where: {
     //     // courseId: params.courseId,
@@ -57,6 +61,9 @@ export async function DELETE(
     //     updatedBy: userId,
     //   },
     // });
+=======
+    
+>>>>>>> 8b13b57 (commit)
     return NextResponse.json(deletedModule);
   } catch (error) {
     console.log("[CHAPTER_ID_DELETE]", error);
@@ -79,13 +86,17 @@ export async function PATCH(
     const chapter = await db.module.update({
       where: {
         id: params.moduleId,
+<<<<<<< HEAD
         // courseId: params.courseId,
+=======
+>>>>>>> 8b13b57 (commit)
       },
       data: {
         title,
         ...values,
       },
     });
+<<<<<<< HEAD
     // await db.course.update({
     //   where: {
     //     id: params.courseId,
@@ -95,6 +106,9 @@ export async function PATCH(
     //     updatedBy: userId,
     //   },
     // });
+=======
+   
+>>>>>>> 8b13b57 (commit)
     return NextResponse.json(chapter);
   } catch (error) {
     console.log("[COURSES_CHAPTER_ID]", error);
@@ -107,7 +121,11 @@ export async function GET(
 ) {
   try {
     const { userId } = auth();
+<<<<<<< HEAD
     const { courseId, moduleId } = params;
+=======
+    const { moduleId } = params;
+>>>>>>> 8b13b57 (commit)
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });

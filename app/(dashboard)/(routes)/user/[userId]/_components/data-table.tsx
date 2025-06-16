@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // "use client";
 
 // import * as React from "react";
@@ -403,6 +404,10 @@
 
 "use client";
  
+=======
+"use client";
+
+>>>>>>> 8b13b57 (commit)
 import * as React from "react";
 import {
   ColumnDef,
@@ -437,14 +442,22 @@ import {
 import { cn } from "@nextui-org/react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   canPrintReport: boolean;
   user: any;
 }
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -460,7 +473,11 @@ export function DataTable<TData, TValue>({
   >();
   const [datePickerDisabled, setDatePickerDisabled] = React.useState(false); // State to manage date picker disable
   const [courseList, setCourseList] = React.useState(data);
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
   const table = useReactTable({
     data: courseList,
     columns,
@@ -481,6 +498,7 @@ export function DataTable<TData, TValue>({
     const diff = d.getDate() - day + (day == 0 ? -6 : 1);
     return new Date(d.setDate(diff));
   }
+<<<<<<< HEAD
  
   async function getSheetData(filter: string) {
     const workbook = XLSX.utils.book_new();
@@ -488,6 +506,15 @@ export function DataTable<TData, TValue>({
  
     let filteredList: any = [];
  
+=======
+
+  async function getSheetData(filter: string) {
+    const workbook = XLSX.utils.book_new();
+    const exportList: any = [];
+
+    let filteredList: any = [];
+
+>>>>>>> 8b13b57 (commit)
     switch (filter) {
       case "All":
         filteredList = [...courseList];
@@ -529,6 +556,7 @@ export function DataTable<TData, TValue>({
       default:
         break;
     }
+<<<<<<< HEAD
  
     filteredList.forEach((item: any) => {
       // console.log(item)
@@ -547,6 +575,25 @@ export function DataTable<TData, TValue>({
       exportList.push({
         Title: item.title || "",
  
+=======
+
+    filteredList.forEach((item: any) => {
+      let testResult = item.Module.map(
+        (item: any) =>
+          item.title +
+          " : " +
+          item.UserProgress[0].score +
+          "%/" +
+          item.UserProgress[0].status +
+          "/" +
+          item.UserProgress[0].attempt +
+          " attempt"
+      );
+
+      exportList.push({
+        Title: item.title || "",
+
+>>>>>>> 8b13b57 (commit)
         Credit: item.credit || "",
         Status:
           item.ClassSessionRecord[0].status +
@@ -562,6 +609,7 @@ export function DataTable<TData, TValue>({
         "Test Result": testResult.join("\n"),
       });
     });
+<<<<<<< HEAD
  
     const worksheet = XLSX.utils.json_to_sheet(exportList);
  
@@ -572,6 +620,18 @@ export function DataTable<TData, TValue>({
     const currentDate = new Date();
     let dateSuffix = "";
  
+=======
+
+    const worksheet = XLSX.utils.json_to_sheet(exportList);
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    worksheet["!cols"] = [{ wch: 20 }, { wch: 20 }, { wch: 30 }, { wch: 50 }];
+
+    const currentDate = new Date();
+    let dateSuffix = "";
+
+>>>>>>> 8b13b57 (commit)
     if (filter === "This Week") {
       const mondayDate = getMonday(new Date());
       dateSuffix = `${mondayDate.toISOString().split("T")[0]}-${
@@ -589,10 +649,17 @@ export function DataTable<TData, TValue>({
     } else {
       dateSuffix = new Date().toISOString().split("T")[0];
     }
+<<<<<<< HEAD
  
     XLSX.writeFile(workbook, `${filter}_${user.username}_${dateSuffix}.xlsx`);
   }
  
+=======
+
+    XLSX.writeFile(workbook, `${filter}_${user.username}_${dateSuffix}.xlsx`);
+  }
+
+>>>>>>> 8b13b57 (commit)
   React.useEffect(() => {
     if (dateRange?.from && dateRange?.to) {
       let tempUserList = [...data].filter((item: any) => {
@@ -601,7 +668,11 @@ export function DataTable<TData, TValue>({
         let dateTo: any = new Date(dateRange.to.toISOString());
         return dateFrom <= date && date <= dateTo;
       });
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8b13b57 (commit)
       setCourseList(tempUserList);
       // table.getColumn("startDate")?.setFilterValue(dateRange.from);
       // table.getColumn("endDate")?.setFilterValue(dateRange.to);
@@ -662,7 +733,11 @@ export function DataTable<TData, TValue>({
             <></>
           )}
         </div>
+<<<<<<< HEAD
         {/* {canPrintReport ? (
+=======
+        {canPrintReport ? (
+>>>>>>> 8b13b57 (commit)
           table.getSelectedRowModel().rows.length > 1 ? (
             <Button onClick={() => getSheetData("Selected Rows")}>
               <FileDown className="h-4 w-4 mr-2" />
@@ -676,7 +751,11 @@ export function DataTable<TData, TValue>({
           )
         ) : (
           <></>
+<<<<<<< HEAD
         )} */}
+=======
+        )}
+>>>>>>> 8b13b57 (commit)
       </div>
       <div className="rounded-md border">
         <Table>
@@ -802,4 +881,8 @@ function DatePickerWithRange({
       </Popover>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8b13b57 (commit)

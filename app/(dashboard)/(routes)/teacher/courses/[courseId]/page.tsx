@@ -2,7 +2,10 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Target } from "lucide-react";
+<<<<<<< HEAD
 import { useRouter } from "next/navigation";
+=======
+>>>>>>> 8b13b57 (commit)
 
 import {
   CircleDollarSign,
@@ -62,9 +65,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
         include: {
           module: {},
         },
+<<<<<<< HEAD
         orderBy: {
           position: "desc",
         },
+=======
+>>>>>>> 8b13b57 (commit)
       },
       ClassSessionRecord: { include: { user: true } },
       CourseOnDepartment: {
@@ -94,6 +100,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       User: true,
     },
   });
+<<<<<<< HEAD
   //advance permission
   const checkUserPermissions = checkUser.map(
     (item: { permission: { title: any } }) => item.permission.title
@@ -119,6 +126,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   //   (dept:any) => dept.id === userDepartment?.Department?.id
   // );
 
+=======
+
+  const filteredDepartment = department.filter(
+    (dept: any) => dept.id === userDepartment?.Department?.id
+  );
+
+>>>>>>> 8b13b57 (commit)
   for (let i = 0; i < filteredDepartment.length; i++) {
     filteredDepartment[i]["isEnrolled"] = false;
     for (let j = 0; j < filteredDepartment[i]?.User.length; j++) {
@@ -139,7 +153,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       }
     }
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b13b57 (commit)
   // for (let i = 0; i < department.length; i++) {
   //   // if (
   //   //   course.CourseOnDepartment.map((item: any) => item.departmentId).indexOf(
@@ -191,6 +208,10 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
 
   const completionText = `(${completedFields}/${totalFields})`;
 
+<<<<<<< HEAD
+=======
+  const isComplete = requiredFields.every(Boolean);
+>>>>>>> 8b13b57 (commit)
   const users: any = await db.user.findMany({
     where: {
       userPermission: {
@@ -213,6 +234,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     }
   }
 
+<<<<<<< HEAD
   if (course.type != "Self Study") {
     requiredFields.push(
       course.modules.some(
@@ -242,6 +264,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
         !course.isPublished && (
           <Banner label="This course is unpublished. It will not be visible to the staff." />
         )
+=======
+  return (
+    <>
+      {!course.isPublished && (
+        <Banner label="Khóa Học Này Chưa Được Phát Hành. Khóa Học Này Sẽ Không Hiển Thị Với Các Nhân Viên Được Cấp Quyền Truy Cập Khóa Học." />
+>>>>>>> 8b13b57 (commit)
       )}
       <div className="p-6">
         <div className="flex items-center justify-between">
@@ -253,27 +281,40 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to course
             </Link>
+<<<<<<< HEAD
             <h1 className="text-2xl font-medium">Course setup</h1>
             {/* <span className="text-sm text-slate-700">
               Complete all fields {completionText}
             </span> */}
+=======
+            <h1 className="text-2xl font-medium">
+              Điều Chỉnh Thông Tin Khóa Học
+            </h1>
+            <span className="text-sm text-slate-700">
+              Hoàn Tất Các Trường {completionText}
+            </span>
+>>>>>>> 8b13b57 (commit)
           </div>
           <Actions
             title={course.title}
             disabled={!isComplete}
             courseId={params.courseId}
             isPublished={course.isPublished}
+<<<<<<< HEAD
             endDate={course.endDate}
             creatorId={course.userId}
             status={course.status}
             canDeleteAny={hasEditAdvancedPermission}
             canCloseAny={hasEditAdvancedPermission}
+=======
+>>>>>>> 8b13b57 (commit)
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
+<<<<<<< HEAD
               <h2 className="text-xl">Customize your course</h2>
             </div>
             <div className="space-y-6 mt-4">
@@ -282,26 +323,44 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <CreditForm initialData={course} courseId={course.id} />
               <DescriptionForm initialData={course} courseId={course.id} readOnly={isClosed}/>
               <ImageForm initialData={course} courseId={course.id} readOnly={isClosed}/>
+=======
+              <h2 className="text-xl">Điều Chỉnh Khóa Học</h2>
+            </div>
+            <div className="space-y-6 mt-4">
+              <TitleForm initialData={course} courseId={course.id} />
+              <TypeForm initialData={course} courseId={course.id} />
+              <CreditForm initialData={course} courseId={course.id} />
+              <DescriptionForm initialData={course} courseId={course.id} />
+              <ImageForm initialData={course} courseId={course.id} />
+>>>>>>> 8b13b57 (commit)
             </div>
           </div>
           <div className="space-y-6">
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
+<<<<<<< HEAD
                 <h2 className="text-xl">Course chapters</h2>
+=======
+                <h2 className="text-xl">Các Học Phần Của Khóa Học</h2>
+>>>>>>> 8b13b57 (commit)
               </div>
               <div className="mt-4">
                 <ChaptersForm
                   initialData={course}
                   courseType={course.type}
                   courseId={course.id}
+<<<<<<< HEAD
                   readOnly={isClosed} 
+=======
+>>>>>>> 8b13b57 (commit)
                 />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Target} />
+<<<<<<< HEAD
                 <h2 className="text-xl">Deadline</h2>
               </div>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -312,6 +371,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                   initialData={course}
                   courseId={course.id}
                   readOnly={isClosed} 
+=======
+                <h2 className="text-xl">Hạn Chót</h2>
+              </div>
+              <div className="mt-4">
+                <EndDateForm
+                  initialData={course}
+                  courseId={course.id}
+>>>>>>> 8b13b57 (commit)
                   // deadline={endDate}
                 />
               </div>
@@ -320,7 +387,11 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={UserPlus} />
                 <h2 className="text-xl">
+<<<<<<< HEAD
                   Assign staff & instructor for this course
+=======
+                  Cập Nhật Người Học Và Người Hướng Dẫn Cho Khóa Học
+>>>>>>> 8b13b57 (commit)
                 </h2>
               </div>
               <div className="mt-4">
@@ -328,13 +399,19 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                   initialData={course}
                   courseId={course.id}
                   department={filteredDepartment}
+<<<<<<< HEAD
                   readOnly={isClosed}
+=======
+>>>>>>> 8b13b57 (commit)
                 />
                 <InstructorAssignForm
                   initialData={course}
                   courseId={course.id}
                   Instructor={users}
+<<<<<<< HEAD
                   readOnly={isClosed}
+=======
+>>>>>>> 8b13b57 (commit)
                 />
               </div>
             </div>

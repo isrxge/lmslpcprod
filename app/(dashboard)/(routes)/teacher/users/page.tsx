@@ -29,6 +29,7 @@ const UsersPage = async ({
     },
   });
   if (
+<<<<<<< HEAD
     // checkUser
     //   .map((item: { permission: { title: any } }) => item.permission.title)
     //   .indexOf("User approval permission") == -1 &&
@@ -38,6 +39,14 @@ const UsersPage = async ({
       checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
       .indexOf("View user permission") == -1
+=======
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("User approval permission") == -1 &&
+    checkUser
+      .map((item: { permission: { title: any } }) => item.permission.title)
+      .indexOf("User management permission") == -1
+>>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }
@@ -61,7 +70,11 @@ const UsersPage = async ({
             .map(
               (item: { permission: { title: any } }) => item.permission.title
             )
+<<<<<<< HEAD
             .indexOf("Edit user permission") != -1
+=======
+            .indexOf("User management permission") != -1
+>>>>>>> 8b13b57 (commit)
         }
       />
     </div>

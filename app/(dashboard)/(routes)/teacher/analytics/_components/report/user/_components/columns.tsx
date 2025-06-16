@@ -13,7 +13,10 @@ import {
   HTMLProps,
 } from "react";
 import React from "react";
+<<<<<<< HEAD
 import { CourseAttendeeCell } from "@/components/ui/user-record-cell";
+=======
+>>>>>>> 8b13b57 (commit)
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -43,7 +46,11 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "username",
     header: () => {
+<<<<<<< HEAD
       return <div>Name</div>;
+=======
+      return <div>Tên</div>;
+>>>>>>> 8b13b57 (commit)
     },
     cell: ({ row }) => {
       const { username }: any = row.original;
@@ -71,7 +78,11 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center cursor-pointer">
+<<<<<<< HEAD
           <span className="mr-2">Department</span>
+=======
+          <span className="mr-2">Phòng Bàn</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },
@@ -134,13 +145,17 @@ export const columns: ColumnDef<User>[] = [
   //     );
   //   },
   // },
+<<<<<<< HEAD
 
   // Code cũ 13/5
+=======
+>>>>>>> 8b13b57 (commit)
   {
     accessorKey: "ClassSessionRecord",
     header: ({ column }) => {
       return (
         <span className="flex items-center cursor-pointer">
+<<<<<<< HEAD
           <span className="mr-2">User course record</span>
         </span>
       );
@@ -257,6 +272,119 @@ export const columns: ColumnDef<User>[] = [
     //   );
     // },
     cell: CourseAttendeeCell,
+=======
+          <span className="mr-2">Tiến Trình Học Của User </span>
+        </span>
+      );
+    },
+    cell: ({ row }) => {
+      const { id, ClassSessionRecord }: any = row.original;
+
+      return (
+        <div className="flex items-center">
+          <div>
+            {ClassSessionRecord.map((item: any) => {
+              console.log("item 2", item);
+              return (
+                <div key={item.id}>
+                  <Accordion key="1">
+                    <AccordionItem
+                      startContent={
+                        <div>
+                          {item.course.title}:{" "}
+                          {item.status === "finished" ? (
+                            <span className="text-green-500 font-medium">
+                              Hoàn Thành
+                            </span>
+                          ) : item.progress === "0%" ? (
+                            <span className="text-red-500 font-medium">
+                              Chưa Hoàn Thành
+                            </span>
+                          ) : item.status === "studying" ? (
+                            <span className="text-yellow-500 font-medium">
+                              Đang Học (
+                              {parseFloat(item.progress + "").toFixed(0)}%)
+                            </span>
+                          ) : (
+                            <>
+                              {item.progress} (<span>{item.status}</span>)
+                            </>
+                          )}
+                        </div>
+                      }
+                    >
+                      - Tất Cả Kết Quả Kiểm Tra:
+                      {item.course.modules
+                        .filter((item: any) => item.module.type == "Exam")
+                        .map((item: any) => {
+                          console.log("Tjpe", item);
+                          return (
+                            <>
+                              {item.module.UserProgress?.filter(
+                                (item: any) => item.userId == id
+                              ).length < 1 ? (
+                                <div key={item.module.id}>
+                                  {" "}
+                                  • {item.module.title}
+                                  {": "}Không Có Kết Quả
+                                </div>
+                              ) : (
+                                <div key={item.module.id}>
+                                  {item.module.UserProgress?.filter(
+                                    (item: any) => item.userId == id
+                                  ).map((item: any) => {
+                                    return (
+                                      <div key={item.module.id}>
+                                        • {item.module.title}
+                                        {": "}
+                                        <span
+                                          className={`${
+                                            item.status == "finished"
+                                              ? "text-green-500 font-medium"
+                                              : item.status == "studying"
+                                              ? "text-yellow-500 font-medium"
+                                              : ""
+                                          }`}
+                                        >
+                                          {item.status === "finished"
+                                            ? `Đậu (${item.score}%)`
+                                            : `Trượt (${item.score}%)`}
+                                        </span>{" "}
+                                        Vào Lúc{" "}
+                                        {new Date(
+                                          item.endDate
+                                        ).toLocaleTimeString([], {
+                                          hour: "2-digit",
+                                          minute: "2-digit",
+                                        })}{" "}
+                                        {new Date(
+                                          item.endDate
+                                        ).toLocaleDateString("vi-VN", {
+                                          day: "2-digit",
+                                          month: "2-digit",
+                                          year: "numeric",
+                                        })}{" "}
+                                        {item.attempt > 1 && (
+                                          <span>({item.attempt - 1} 🐓)</span>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </>
+                          );
+                        })}
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    },
+>>>>>>> 8b13b57 (commit)
   },
 ];
 function IndeterminateCheckbox({

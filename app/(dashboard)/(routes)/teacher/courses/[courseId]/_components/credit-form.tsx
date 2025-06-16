@@ -4,7 +4,11 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+<<<<<<< HEAD
 // import { Asterisk, Pencil } from "lucide-react";
+=======
+import { Asterisk, Pencil } from "lucide-react";
+>>>>>>> 8b13b57 (commit)
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -61,11 +65,18 @@ export const CreditForm = ({ initialData, courseId }: CreaditFormProps) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
+<<<<<<< HEAD
           Points 
           {/* <Asterisk className="size-4" color="red" /> */}
         </div>
 
         {/* <Button onClick={toggleEdit} variant="ghost">
+=======
+          Credit <Asterisk className="size-4" color="red" />
+        </div>
+
+        <Button onClick={toggleEdit} variant="ghost">
+>>>>>>> 8b13b57 (commit)
           {isEditing ? (
             <>Cancel</>
           ) : (
@@ -74,7 +85,11 @@ export const CreditForm = ({ initialData, courseId }: CreaditFormProps) => {
               Edit Credit
             </>
           )}
+<<<<<<< HEAD
         </Button> */}
+=======
+        </Button>
+>>>>>>> 8b13b57 (commit)
       </div>
       {!isEditing && (
         <p className="text-sm mt-2 dark:text-slate-50">{initialData.credit}</p>

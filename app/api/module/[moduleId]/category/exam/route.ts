@@ -93,6 +93,7 @@ export async function GET(
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+<<<<<<< HEAD
 
     // // 1) Kiểm tra xem user có trong khoá này không (nếu cần)
     // //    (Tuỳ logic, bạn có thể dùng classSessionRecord, userProgress,...)
@@ -125,6 +126,8 @@ export async function GET(
     //   });
     // }
 
+=======
+>>>>>>> 8b13b57 (commit)
     const questionsList: any = await db.module.findUnique({
       where: {
         id: params.moduleId,
@@ -147,6 +150,7 @@ export async function GET(
         },
       },
     });
+<<<<<<< HEAD
 
     // Thêm đoạn này: Xoá trường `isCorrect` trong tất cả answer
     for (const cat of questionsList.Category) {
@@ -160,6 +164,8 @@ export async function GET(
       }
     }
 
+=======
+>>>>>>> 8b13b57 (commit)
     for (let i = 0; i < questionsList.Category.length; i++) {
       questionsList.Category[i]["question"] = questionsList.Category[i].Exam;
     }
@@ -170,6 +176,7 @@ export async function GET(
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+<<<<<<< HEAD
 
 
 
@@ -286,3 +293,5 @@ export async function GET(
 //     return new NextResponse("Internal Error", { status: 500 });
 //   }
 // }
+=======
+>>>>>>> 8b13b57 (commit)

@@ -44,6 +44,10 @@ export const Bookmark = ({ items }: BookmarkProps) => {
       >
         <CarouselContent>
           {items.map((item) => (
+<<<<<<< HEAD
+=======
+            console.log("teststs", item),
+>>>>>>> 8b13b57 (commit)
             <CarouselItem key={item.id} className="md:basis-1/3 lg:basis-1/4">
               <CourseCard
                 key={item.id}
@@ -53,7 +57,11 @@ export const Bookmark = ({ items }: BookmarkProps) => {
                   item.ClassSessionRecord.map(
                     (item: { userId: any }) => item.userId
                   ).indexOf(userId) == -1
+<<<<<<< HEAD
                     ? "/courselock.jpg"
+=======
+                    ? "/istockphoto-936681148-612x612.jpg"
+>>>>>>> 8b13b57 (commit)
                     : item.imageUrl!
                 }
                 isLocked={

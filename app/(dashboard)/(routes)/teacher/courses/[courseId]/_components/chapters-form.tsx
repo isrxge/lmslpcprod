@@ -13,13 +13,19 @@ import { Module, Course, ModuleInCourse } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChaptersList } from "./chapters-list";
+<<<<<<< HEAD
 import { Reorder } from "framer-motion";
+=======
+>>>>>>> 8b13b57 (commit)
 
 interface ChaptersFormProps {
   initialData: any;
   courseId: string;
   courseType: string;
+<<<<<<< HEAD
   readOnly?: boolean;
+=======
+>>>>>>> 8b13b57 (commit)
 }
 
 const formSchema = z.object({
@@ -30,9 +36,14 @@ export const ChaptersForm = ({
   initialData,
   courseId,
   courseType,
+<<<<<<< HEAD
   readOnly = false
 }: ChaptersFormProps) => {
   // console.log("initialData:", initialData);
+=======
+}: ChaptersFormProps) => {
+  console.log("initialData:", initialData);
+>>>>>>> 8b13b57 (commit)
   // console.log("ModuleInCourse data:", initialData.modulesInCourse.map((m) => m.module));
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -40,6 +51,7 @@ export const ChaptersForm = ({
   const [searchKeyword, setSearchKeyword] = useState(""); // Thanh tìm kiếm
   const [modules, setModules] = useState<Module[]>([]);
   const [loadingModules, setLoadingModules] = useState(false);
+<<<<<<< HEAD
   const [moduleInCourse, setModuleInCourse] = useState<Module[]>(
     initialData.modules || []
   );
@@ -56,6 +68,13 @@ export const ChaptersForm = ({
   ); // Lưu trữ các module đã chọn
   // console.log(selectedModules);
   const toggleCreating = () => { !readOnly && setIsCreating((current) => !current);
+=======
+  const [selectedModules, setSelectedModules] = useState<Module[]>([]); // Lưu trữ các module đã chọn
+  const [moduleInCourse, setModuleInCourse] = useState<ModuleInCourse[]>([]);
+
+  const toggleCreating = () => {
+    setIsCreating((current) => !current);
+>>>>>>> 8b13b57 (commit)
   };
 
   const router = useRouter();
@@ -94,12 +113,17 @@ export const ChaptersForm = ({
 
   const onSubmit = async () => {
     if (selectedModules.length === 0) {
+<<<<<<< HEAD
       toast.error("Please select at least one module");
+=======
+      toast.error("Vui Lòng Chọn Ít Nhất Một Học Phần");
+>>>>>>> 8b13b57 (commit)
       return;
     }
 
     try {
       // Gửi các module đã chọn và courseId tới backend
+<<<<<<< HEAD
       // await axios.post(`/api/moduleincourse`, {
       //   modules: selectedModules.map((module) => ({
       //     moduleId: module.id,
@@ -141,6 +165,21 @@ export const ChaptersForm = ({
     } catch (error) {
       console.error("Error submitting modules:", error);
       toast.error("Something went wrong");
+=======
+      await axios.post(`/api/moduleincourse`, {
+        modules: selectedModules.map((module) => ({
+          moduleId: module.id,
+        })),
+        courseId: courseId, // Đảm bảo bạn gửi đúng courseId
+      });
+
+      toast.success("Học Phần Đã Được Thêm Vào Khóa Học");
+      toggleCreating();
+      setSelectedModules([]);
+      router.refresh();
+    } catch (error) {
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -151,11 +190,18 @@ export const ChaptersForm = ({
       await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
         list: updateData,
       });
+<<<<<<< HEAD
       toast.success("Chapters reordered");
       // window.location.reload();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+=======
+      toast.success("Học Phần Đã Được Sắp Xếp Lại");
+      router.refresh();
+    } catch {
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại");
+>>>>>>> 8b13b57 (commit)
     } finally {
       setIsUpdating(false);
     }
@@ -175,6 +221,7 @@ export const ChaptersForm = ({
   //   }
   // };
 
+<<<<<<< HEAD
   //code 23/4
   const handleModuleSelect = (module: any) => {
     if (module.type === "Slide") {
@@ -191,11 +238,23 @@ export const ChaptersForm = ({
           module["positionmodule"] = selectedModules.length;
 
           // console.log("Số lượng sau khi thêm:", selectedModules.length);
+=======
+  const handleModuleSelect = (module: Module) => {
+    if (module.type === "Slide") {
+      // Nếu là Slide, cho phép chọn nhiều module
+      setSelectedModules((prev) => {
+        if (prev.some((m) => m.id === module.id)) {
+          // Bỏ chọn module và gọi API xóa
+          removeModuleFromCourse(module.id);
+          return prev.filter((m) => m.id !== module.id);
+        } else {
+>>>>>>> 8b13b57 (commit)
           return [...prev, module];
         }
       });
     } else if (module.type === "Exam") {
       // Nếu là Exam, chỉ cho phép chọn một module
+<<<<<<< HEAD
       // setSelectedModules([module]);
       // removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
       setSelectedModules((prev: any) => {
@@ -264,6 +323,13 @@ export const ChaptersForm = ({
   //   }
   // };
 
+=======
+      setSelectedModules([module]);
+      removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
+    }
+  };
+
+>>>>>>> 8b13b57 (commit)
   // Hàm gọi API xóa module khỏi ModuleInCourse
   const removeModuleFromCourse = async (moduleId: string) => {
     try {
@@ -273,6 +339,7 @@ export const ChaptersForm = ({
           courseId, // Đảm bảo rằng bạn gửi đúng courseId
         },
       });
+<<<<<<< HEAD
       // setSelectedModules([]);
       toast.success("Module removed from course");
       // window.location.reload();
@@ -280,6 +347,11 @@ export const ChaptersForm = ({
     } catch (error) {
       console.error("Error removing module:", error);
       // toast.success("Unselect this module");
+=======
+      toast.success("Học Phần Đã Được Xóa Khỏi Khóa Học");
+    } catch (error) {
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -300,8 +372,12 @@ export const ChaptersForm = ({
         });
         setModules(response.data);
       } catch (error) {
+<<<<<<< HEAD
         console.error("Error fetching ModuleInCourse:", error);
         toast.error("Failed to load modules");
+=======
+        toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại");
+>>>>>>> 8b13b57 (commit)
       } finally {
         setLoadingModules(false);
       }
@@ -343,6 +419,7 @@ export const ChaptersForm = ({
       )}
       <div className="font-medium flex items-center justify-between text-black dark:text-slate-50">
         <div className="flex items-center">
+<<<<<<< HEAD
           Course chapters <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
@@ -357,6 +434,21 @@ export const ChaptersForm = ({
           )}
         </Button>
         )}
+=======
+          Danh Sách Học Phần Của Khóa Học{" "}
+          <Asterisk className="size-4" color="red" />
+        </div>
+        <Button onClick={toggleCreating} variant="ghost">
+          {isCreating ? (
+            <>Từ Chối</>
+          ) : (
+            <>
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Tìm Học Phần
+            </>
+          )}
+        </Button>
+>>>>>>> 8b13b57 (commit)
       </div>
 
       {isCreating && (
@@ -369,16 +461,26 @@ export const ChaptersForm = ({
               className="mr-4 p-2 border rounded-md"
               disabled={courseType === "Self Study"}
             >
+<<<<<<< HEAD
               <option value="Slide">Slide</option>
               {courseType !== "Self Study" && (
                 <option value="Exam">Exam</option>
+=======
+              <option value="Slide">Học Phần</option>
+              {courseType !== "Self Study" && (
+                <option value="Exam">Bài Kiểm Tra</option>
+>>>>>>> 8b13b57 (commit)
               )}
             </select>
 
             {/* Thanh tìm kiếm */}
             <input
               type="text"
+<<<<<<< HEAD
               placeholder="Search modules"
+=======
+              placeholder="Học Phần"
+>>>>>>> 8b13b57 (commit)
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               className="border p-2 rounded-md w-full"
@@ -387,7 +489,11 @@ export const ChaptersForm = ({
 
           {isCreating && !loadingModules && modules.length > 0 && (
             <div className="mt-4">
+<<<<<<< HEAD
               <h5>Available Modules</h5>
+=======
+              <h5>Các Học Phần Có Sẵn</h5>
+>>>>>>> 8b13b57 (commit)
               <div className="overflow-y-auto max-h-72">
                 <ul>
                   {modules.map((module: any) => (
@@ -415,7 +521,11 @@ export const ChaptersForm = ({
           {/* Chuyển nút submit xuống dưới cùng */}
           <div className="mt-4">
             <Button disabled={isSubmitting} onClick={onSubmit}>
+<<<<<<< HEAD
               Submit
+=======
+              Nộp
+>>>>>>> 8b13b57 (commit)
             </Button>
           </div>
         </div>
@@ -429,18 +539,26 @@ export const ChaptersForm = ({
           )}
         >
           {!initialData.modules.length && "No chapters"}
+<<<<<<< HEAD
           <ChaptersList
             items={selectedModules}
             onReorder={onReorder}
             courseId={courseId}
             readOnly={readOnly}
        />
+=======
+          <ChaptersList items={initialData.modules} onReorder={onReorder} />
+>>>>>>> 8b13b57 (commit)
         </div>
       )}
 
       {!isCreating && (
         <p className="text-xs text-muted-foreground mt-4">
+<<<<<<< HEAD
           Drag and drop to reorder the chapters
+=======
+          Kéo Và Thả Để Sắp Xếp Lại Học Phần
+>>>>>>> 8b13b57 (commit)
         </p>
       )}
     </div>

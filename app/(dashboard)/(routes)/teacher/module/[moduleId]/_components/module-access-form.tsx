@@ -48,11 +48,19 @@ export const ChapterAccessForm = ({
         `/api/courses/${courseId}/chapters/${chapterId}`,
         values
       );
+<<<<<<< HEAD
       toast.success("Chapter updated");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+=======
+      toast.success("Học Phần Đã Được Cập Nhật");
+      toggleEdit();
+      router.refresh();
+    } catch {
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -62,15 +70,24 @@ export const ChapterAccessForm = ({
         Chapter access
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
+<<<<<<< HEAD
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
               Edit access
+=======
+            <>Từ Chối</>
+          ) : (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Chỉnh Sửa
+>>>>>>> 8b13b57 (commit)
             </>
           )}
         </Button>
       </div>
+<<<<<<< HEAD
       {/* {!isEditing && (
         <p className={cn(
           "text-sm mt-2",
@@ -119,6 +136,8 @@ export const ChapterAccessForm = ({
           </form>
         </Form>
       )} */}
+=======
+>>>>>>> 8b13b57 (commit)
     </div>
   );
 };

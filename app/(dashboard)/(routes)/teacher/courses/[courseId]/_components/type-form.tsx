@@ -8,7 +8,11 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+<<<<<<< HEAD
 // import { Asterisk } from "lucide-react";
+=======
+import { Asterisk } from "lucide-react";
+>>>>>>> 8b13b57 (commit)
 import {
   Form,
   FormControl,
@@ -48,11 +52,19 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
+<<<<<<< HEAD
       toast.success("Course type updated");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
+=======
+      toast.success("Khóa Học Đã Được Cập Nhật");
+      toggleEdit();
+      router.refresh();
+    } catch {
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
+>>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -60,6 +72,7 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
+<<<<<<< HEAD
           Course type
           {/* <Asterisk className="size-4" color="red" /> */}
         </div>
@@ -74,6 +87,22 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
             </>
           )}
         </Button> */}
+=======
+          Loại Khóa Học
+          <Asterisk className="size-4" color="red" />
+        </div>
+
+        <Button onClick={toggleEdit} variant="ghost">
+          {isEditing ? (
+            <>Từ Chối</>
+          ) : (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Chỉnh Sửa
+            </>
+          )}
+        </Button>
+>>>>>>> 8b13b57 (commit)
       </div>
       {!isEditing && (
         <p className="text-sm mt-2 dark:text-slate-50">{initialData.type}</p>
@@ -96,9 +125,21 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
                       disabled={isSubmitting}
                       className="dark:text-slate-50"
                     >
+<<<<<<< HEAD
                       <option value="Mandatory">Mandatory</option>
                       <option value="Probation">Probation</option>
                       <option value="Self Study">Self Study</option>
+=======
+                      <option value="Mandatory">
+                        Bắt Buộc (Dành Cho NV Chính Thức)
+                      </option>
+                      <option value="Probation">
+                        Thử Việc (Dành Cho NV Thử Việc)
+                      </option>
+                      <option value="Self Study">
+                        Tự Học (Các Khóa Học Tham Khảo Không Kiểm Tra)
+                      </option>
+>>>>>>> 8b13b57 (commit)
                     </select>
                   </FormControl>
                   <FormMessage />
@@ -107,7 +148,11 @@ export const TypeForm = ({ initialData, courseId }: TypeFormProps) => {
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
+<<<<<<< HEAD
                 Save
+=======
+                Lưu
+>>>>>>> 8b13b57 (commit)
               </Button>
             </div>
           </form>

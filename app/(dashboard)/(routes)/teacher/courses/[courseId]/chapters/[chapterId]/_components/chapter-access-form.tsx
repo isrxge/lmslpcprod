@@ -48,7 +48,11 @@ export const ChapterAccessForm = ({
         `/api/courses/${courseId}/chapters/${chapterId}`,
         values
       );
+<<<<<<< HEAD
       toast.success("Chapter updated");
+=======
+      toast.success("Học Phần Đã Được Cập Nhật.");
+>>>>>>> 8b13b57 (commit)
       toggleEdit();
       router.refresh();
     } catch {
@@ -62,11 +66,19 @@ export const ChapterAccessForm = ({
         Chapter access
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
+<<<<<<< HEAD
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
               Edit access
+=======
+            <>Từ Chối</>
+          ) : (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Chỉnh Sửa
+>>>>>>> 8b13b57 (commit)
             </>
           )}
         </Button>

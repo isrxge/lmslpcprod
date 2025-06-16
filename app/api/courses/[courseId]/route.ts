@@ -17,12 +17,22 @@ export async function DELETE(
     const course = await db.course.findUnique({
       where: {
         id: params.courseId,
+<<<<<<< HEAD
         // userId: userId,
+=======
+        userId: userId,
+>>>>>>> 8b13b57 (commit)
       },
     });
 
     if (!course) {
+<<<<<<< HEAD
       return new NextResponse("Course not found", { status: 404 });
+=======
+      return new NextResponse(
+        "Course not found or you don't have permission to delete this course"
+      );
+>>>>>>> 8b13b57 (commit)
     }
 
     const deletedCourse = await db.course.delete({

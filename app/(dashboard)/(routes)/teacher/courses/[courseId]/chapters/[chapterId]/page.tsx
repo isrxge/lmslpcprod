@@ -45,7 +45,11 @@ const ChapterIdPage = async ({
   const chapter = await db.module.findUnique({
     where: {
       id: params.chapterId,
+<<<<<<< HEAD
     //   courseId: params.courseId,
+=======
+      //   courseId: params.courseId,
+>>>>>>> 8b13b57 (commit)
     },
     include: {
       Slide: true,
@@ -111,7 +115,11 @@ const ChapterIdPage = async ({
       {!chapter.isPublished && (
         <Banner
           variant="warning"
+<<<<<<< HEAD
           label="This chapter is unpublished. It will not be visible in the course"
+=======
+          label="Học Phần Này Chưa Được Phát Hành. Các Khóa Học Sẽ Không Thể Thấy Học Phần Này"
+>>>>>>> 8b13b57 (commit)
         />
       )}
 
@@ -123,6 +131,7 @@ const ChapterIdPage = async ({
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
+<<<<<<< HEAD
               Back to resources setup
             </Link>
             <div className="flex items-center justify-between w-full">
@@ -130,6 +139,15 @@ const ChapterIdPage = async ({
                 <h1 className="text-2xl font-medium">Chapter Creation</h1>
                 <span className="text-sm text-slate-700">
                   Complete all fields {completionText}
+=======
+              Quay Trở Lại Quản Lý Học Phần
+            </Link>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex flex-col gap-y-2">
+                <h1 className="text-2xl font-medium">Tạo Học Phần</h1>
+                <span className="text-sm text-slate-700">
+                  Điền Đầy Đủ Thông Tin Sau {completionText}
+>>>>>>> 8b13b57 (commit)
                 </span>
               </div>
               <ChapterActions
@@ -149,7 +167,11 @@ const ChapterIdPage = async ({
               <div>
                 <div className="flex items-center gap-x-2">
                   <IconBadge icon={LayoutDashboard} />
+<<<<<<< HEAD
                   <h2 className="text-xl">Customize your chapter</h2>
+=======
+                  <h2 className="text-xl">Điều Chỉnh Học Phần</h2>
+>>>>>>> 8b13b57 (commit)
                 </div>
                 <ChapterTitleForm
                   initialData={chapter}
@@ -166,7 +188,11 @@ const ChapterIdPage = async ({
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={BookOpen} />
+<<<<<<< HEAD
                 <h2 className="text-xl">Customize your content</h2>
+=======
+                <h2 className="text-xl">Điều Chỉnh Nội Dung</h2>
+>>>>>>> 8b13b57 (commit)
               </div>
               <ContentForm
                 courseId={params.courseId}

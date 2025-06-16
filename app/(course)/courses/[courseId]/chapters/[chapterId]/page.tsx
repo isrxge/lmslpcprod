@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { auth } from "@clerk/nextjs";
 // import { redirect } from "next/navigation";
 // import { getChapter } from "@/actions/get-chapter";
@@ -130,6 +131,8 @@
 
 // export default ChapterIdPage;
 
+=======
+>>>>>>> 8b13b57 (commit)
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { getChapter } from "@/actions/get-chapter";
@@ -146,6 +149,7 @@ const ChapterIdPage = async ({
   params: { courseId: string; chapterId: string };
 }) => {
   const { userId } = auth();
+<<<<<<< HEAD
  
   if (!userId) {
     return redirect("/");
@@ -177,6 +181,12 @@ const ChapterIdPage = async ({
     // return <CourseDescription course={course} />;
   }
  
+=======
+
+  if (!userId) {
+    return redirect("/");
+  }
+>>>>>>> 8b13b57 (commit)
   let userInfo: any = await db.user.findUnique({
     where: { id: userId },
     include: {
@@ -195,6 +205,7 @@ const ChapterIdPage = async ({
     moduleId: params.chapterId,
     courseId: params.courseId,
   });
+<<<<<<< HEAD
  
   if (!chapter || !course) {
     return redirect("/");
@@ -225,6 +236,15 @@ const ChapterIdPage = async ({
   if (ifInSameCourseAndCompleted) {
     return redirect("/");
   }
+=======
+
+  if (!chapter || !course) {
+    return redirect("/");
+  }
+let chapter1 = chapter.module
+  console.log("COURASSSS ", chapter.module);
+
+>>>>>>> 8b13b57 (commit)
   return chapter.module.type == "Exam" ? (
     <>
       <Exam
@@ -232,6 +252,7 @@ const ChapterIdPage = async ({
         nextChapterId={nextChapter}
         courseId={params.courseId}
         course={course}
+<<<<<<< HEAD
         isFailed={ifInDiffCourseAndFailed}
         isSameCourseAndFailed={ifInSameCourseAndFailed}
         dateRemain={addDaysToDate(examDate, dateGap)}
@@ -240,6 +261,10 @@ const ChapterIdPage = async ({
           (ifInSameCourseAndFailed ||
             ifInSameCourseAndCompleted ||
             (!ifInSameCourseAndFailed && !ifFailedAndDateGapBellowPolicy))
+=======
+        isCompleted={
+          userProgress?.status != undefined ? userProgress?.status : "studying"
+>>>>>>> 8b13b57 (commit)
         }
       />
     </>
@@ -254,9 +279,15 @@ const ChapterIdPage = async ({
   ) : (
     <div className="pl-6 pt-3">
       {userProgress?.status == "finished" && (
+<<<<<<< HEAD
         <Banner variant="success" label="You already completed this Module." />
       )}
  
+=======
+        <Banner variant="success" label="Bạn Đã Hoàn Tất Khóa Học." />
+      )}
+
+>>>>>>> 8b13b57 (commit)
       <div className="flex flex-col pb-20 overflow-x-hidden">
         <div>
           <Slide
@@ -266,12 +297,27 @@ const ChapterIdPage = async ({
             preChapter={preChapter}
             courseId={params.courseId}
             course={course}
+<<<<<<< HEAD
             isCompleted={
               ifInSameCourseAndFailed ||
               ifInSameCourseAndCompleted ||
               (!ifInSameCourseAndFailed && !ifFailedAndDateGapBellowPolicy)
             }
           ></Slide>
+=======
+            isCompleted={userProgress?.status}
+          ></Slide>
+          {/* Extra resources:{" "}
+          <ul className="list-decimal">
+            {chapter.Resource.map((item: any) => (
+              <li key={item.attachment}>
+                <Link key={item.attachment} href={item.attachment} className="text-blue-600 hover:underline">
+                  {item.attachment.split("/").pop() as string}
+                </Link>
+              </li>
+            ))}
+          </ul> */}
+>>>>>>> 8b13b57 (commit)
         </div>
         <div>
           <div>
@@ -282,7 +328,12 @@ const ChapterIdPage = async ({
     </div>
   );
 };
+<<<<<<< HEAD
  
 export default ChapterIdPage;
  
  
+=======
+
+export default ChapterIdPage;
+>>>>>>> 8b13b57 (commit)

@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 
 interface ChaptersListProps {
   items: Module[];
+<<<<<<< HEAD
   courseId: string;
   onReorder: (updateData: { id: string; position: number }[]) => void;
   readOnly?: boolean;
@@ -21,6 +22,12 @@ interface ChaptersListProps {
 
 const deleteModule = async (moduleId: string, courseId: string) => {
   // console.log("Deleting module with ID:", moduleId, "from course ID:", courseId);
+=======
+  onReorder: (updateData: { id: string; position: number }[]) => void;
+}
+
+const deleteModule = async (moduleId: string, courseId: string) => {
+>>>>>>> 8b13b57 (commit)
   try {
     const response = await fetch("/api/moduleincourse", {
       method: "DELETE",
@@ -38,19 +45,32 @@ const deleteModule = async (moduleId: string, courseId: string) => {
     }
 
     const data = await response.json();
+<<<<<<< HEAD
     // console.log("Module removed:", data);
     return data;
   } catch (error) {
     console.error("Error deleting module:", error);
+=======
+
+    return data;
+  } catch (error) {
+>>>>>>> 8b13b57 (commit)
     return null;
   }
 };
 
+<<<<<<< HEAD
 export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
   const router = useRouter();
   // console.log("ChaptersList itemsđâsdsad:", courseId);
+=======
+export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [chapters, setChapters] = useState(items);
+  const router = useRouter();
+>>>>>>> 8b13b57 (commit)
 
   useEffect(() => {
     setIsMounted(true);
@@ -71,7 +91,12 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
   }, [items]);
 
   const onDragEnd = (result: DropResult) => {
+<<<<<<< HEAD
     if (readOnly  || !result.destination) return;
+=======
+    if (!result.destination) return;
+
+>>>>>>> 8b13b57 (commit)
     const items = Array.from(chapters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -91,10 +116,15 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
     onReorder(bulkUpdateData);
   };
 
+<<<<<<< HEAD
   const handleDelete = async (moduleId: string) => {
     if (readOnly) return;
     const result = await deleteModule(moduleId, courseId);
     // console.log("Result of deleteModulessss:", result);
+=======
+  const handleDelete = async (moduleId: string, courseId: string) => {
+    const result = await deleteModule(moduleId, courseId);
+>>>>>>> 8b13b57 (commit)
     if (result) {
       // Loại bỏ module khỏi danh sách trong state chapters ngay lập tức
       setChapters((prevChapters) => {
@@ -123,16 +153,26 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {chapters.map((chapter: any, index) => (
               <Draggable
+<<<<<<< HEAD
                 key={chapter.id}
                 draggableId={chapter.id}
                 index={index}
                 isDragDisabled={readOnly || chapter.type === "Exam"}
+=======
+                key={chapter.module.id}
+                draggableId={chapter.module.id}
+                index={index}
+>>>>>>> 8b13b57 (commit)
               >
                 {(provided) => (
                   <div
                     className={cn(
                       `flex items-center gap-x-2  border-slate-200 border rounded-md mb-4 text-sm`,
+<<<<<<< HEAD
                       chapter.isPublished && `bg-sky-100 border-sky-200 `
+=======
+                      chapter.module.isPublished && `bg-sky-100 border-sky-200 `
+>>>>>>> 8b13b57 (commit)
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
@@ -140,9 +180,14 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
                     <div
                       className={cn(
                         "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition dark:text-black",
+<<<<<<< HEAD
                         chapter.isPublished &&
                           `border-r-sky-200 hover:bg-sky-200 `, 
                           (readOnly || chapter.type === "Exam") && "opacity-50 cursor-not-allowed bg-blue-200"
+=======
+                        chapter.module.isPublished &&
+                          `border-r-sky-200 hover:bg-sky-200 `
+>>>>>>> 8b13b57 (commit)
                       )}
                       {...provided.dragHandleProps}
                     >
@@ -151,10 +196,17 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
                     <div
                       className={cn(
                         "dark:text-black",
+<<<<<<< HEAD
                         chapter.isPublished
                       )}
                     >
                       {chapter.title}
+=======
+                        chapter.module.isPublished
+                      )}
+                    >
+                      {chapter.module.title}
+>>>>>>> 8b13b57 (commit)
                     </div>
 
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
@@ -162,6 +214,7 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
                         className={cn(
                           "",
                           "bg-slate-500",
+<<<<<<< HEAD
                           chapter.isPublished && `dark:text-slate-50`
                         )}
                       >
@@ -171,12 +224,26 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
                       <button
                         onClick={() =>
                           handleDelete(chapter.id)
+=======
+                          chapter.module.isPublished && `dark:text-slate-50`
+                        )}
+                      >
+                        {chapter.module.isPublished ? "Published" : "Draft"}
+                      </Badge>
+
+                      <button
+                        onClick={() =>
+                          handleDelete(chapter.module.id, chapter.courseId)
+>>>>>>> 8b13b57 (commit)
                         }
                         className="text-red-500 hover:text-red-700"
                       >
                         <Trash className="h-5 w-5" />
                       </button>
+<<<<<<< HEAD
                       )}
+=======
+>>>>>>> 8b13b57 (commit)
                     </div>
                   </div>
                 )}

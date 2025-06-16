@@ -137,7 +137,11 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
+<<<<<<< HEAD
                   No results.
+=======
+                  Chưa Có Dữ Liệu.
+>>>>>>> 8b13b57 (commit)
                 </TableCell>
               </TableRow>
             )}
@@ -151,7 +155,11 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
+<<<<<<< HEAD
           Previous
+=======
+          Trước
+>>>>>>> 8b13b57 (commit)
         </Button>
         <Button
           variant="outline"
@@ -159,7 +167,11 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
+<<<<<<< HEAD
           Next
+=======
+          Tiếp Theo
+>>>>>>> 8b13b57 (commit)
         </Button>
       </div>
     </div>

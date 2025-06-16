@@ -31,7 +31,11 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "username",
     header: () => {
+<<<<<<< HEAD
       return <div>Name</div>;
+=======
+      return <div>Họ Và Tên</div>;
+>>>>>>> 8b13b57 (commit)
     },
     cell: ({ row }) => {
       const order = row.index + 1;
@@ -57,7 +61,11 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center">
+<<<<<<< HEAD
           <span className="mr-2">Department</span>
+=======
+          <span className="mr-2">Phòng Ban</span>
+>>>>>>> 8b13b57 (commit)
         </span>
       );
     },
@@ -65,7 +73,11 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "star",
     header: () => {
+<<<<<<< HEAD
       return <div>Star</div>;
+=======
+      return <div>Điểm</div>;
+>>>>>>> 8b13b57 (commit)
     },
     cell: ({ row }) => {
       const stars = row.original.star || 0;
@@ -74,6 +86,7 @@ export const columns: ColumnDef<User>[] = [
       return <div>{starString}</div>;
     },
   },
+<<<<<<< HEAD
   // {
   //   accessorKey: "price",
   //   header: ({ column }) => {
@@ -120,4 +133,6 @@ export const columns: ColumnDef<User>[] = [
   //     );
   //   },
   // },
+=======
+>>>>>>> 8b13b57 (commit)
 ];
