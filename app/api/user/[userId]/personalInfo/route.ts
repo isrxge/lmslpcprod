@@ -70,10 +70,7 @@ export async function GET(req: Request) {
             permission: true,
           },
         },
-<<<<<<< HEAD
         Department: true
-=======
->>>>>>> 8b13b57 (commit)
       },
     });
 

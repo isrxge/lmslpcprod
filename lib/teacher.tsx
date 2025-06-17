@@ -18,67 +18,45 @@ export const IsTeacher = ({ userId }: any) => {
     return <></>;
   }
   if (isLoading) {
-    return <></>; }
+    return <></>;
+  }
 
-<<<<<<< HEAD
-// // Kiểm tra nếu người dùng có cả 2 quyền: "Create course permission" và "Create course report"
-// const hasCreateCoursePermission =
-// data.userPermission.some(
-//   (item: { permission: { title: string } }) =>
-//     item.permission.title === "Create course permission"
-// );
+  // // Kiểm tra nếu người dùng có cả 2 quyền: "Create course permission" và "Create course report"
+  // const hasCreateCoursePermission =
+  // data.userPermission.some(
+  //   (item: { permission: { title: string } }) =>
+  //     item.permission.title === "Create course permission"
+  // );
 
-// const hasCreateCourseReport =
-// data.userPermission.some(
-//   (item: { permission: { title: string } }) =>
-//     item.permission.title === "Create course report"
-// );
+  // const hasCreateCourseReport =
+  // data.userPermission.some(
+  //   (item: { permission: { title: string } }) =>
+  //     item.permission.title === "Create course report"
+  // );
 
-// // Nếu người dùng không có đủ 2 quyền, không hiển thị nút
-// if (!hasCreateCoursePermission || !hasCreateCourseReport) {
-// return <></>;
-// }
+  // // Nếu người dùng không có đủ 2 quyền, không hiển thị nút
+  // if (!hasCreateCoursePermission || !hasCreateCourseReport) {
+  // return <></>;
+  // }
 
-// Kiểm tra nếu người dùng có quyền "Advance mode permission"
-const hasAdvanceModePermission = data.userPermission.some(
-  (item: { permission: { title: string } }) =>
-    item.permission.title === "Advance mode permission"
-);
+  // Kiểm tra nếu người dùng có quyền "Advance mode permission"
+  const hasAdvanceModePermission = data.userPermission.some(
+    (item: { permission: { title: string } }) =>
+      item.permission.title === "Advance mode permission"
+  );
 
-// Nếu người dùng không có quyền, không hiển thị nút
-if (!hasAdvanceModePermission) {
-  return <></>;
-}
+  // Nếu người dùng không có quyền, không hiển thị nút
+  if (!hasAdvanceModePermission) {
+    return <></>;
+  }
 
-return (
-<Link href="/teacher/courses">
-=======
-// Kiểm tra nếu người dùng có cả 2 quyền: "Create course permission" và "Create course report"
-const hasCreateCoursePermission =
-data.userPermission.some(
-  (item: { permission: { title: string } }) =>
-    item.permission.title === "Create course permission"
-);
-
-const hasCreateCourseReport =
-data.userPermission.some(
-  (item: { permission: { title: string } }) =>
-    item.permission.title === "Create course report"
-);
-
-// Nếu người dùng không có đủ 2 quyền, không hiển thị nút
-if (!hasCreateCoursePermission || !hasCreateCourseReport) {
-return <></>;
-}
-
-return (
-<Link href="/teacher/programs">
->>>>>>> 8b13b57 (commit)
-  <Button size="sm" variant="ghost">
-    Admin mode
-  </Button>
-</Link>
-);
+  return (
+    <Link href="/teacher/courses">
+      <Button size="sm" variant="ghost">
+        Chế Độ Người Quản Lý
+      </Button>
+    </Link>
+  );
 };
 //   } else {
 //     return data.userPermission.length <= 2 &&
@@ -101,4 +79,3 @@ return (
 //     );
 //   }
 // };
-

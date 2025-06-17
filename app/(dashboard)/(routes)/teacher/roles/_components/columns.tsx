@@ -38,6 +38,13 @@ export const columns: ColumnDef<{ id: string; title: string }>[] = [
   {
     id: "actions",
     accessorKey: "Action",
+    header: ({ column }) => {
+      return (
+        <span>
+          <span className="mr-2">Hành Động</span>
+        </span>
+      );
+    },
     cell: RoleActionCell,
   },
 ];

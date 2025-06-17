@@ -37,7 +37,12 @@ export const columns: ColumnDef<Slide>[] = [
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: "Loại Học Phần",
+    cell: ({ row }) => {
+      const type = row.getValue("type");
+
+      return <span>{type == "Slide" ? "Bài Giảng" : "Bài Kiểm Tra"}</span>;
+    },
   },
   {
     accessorKey: "isPublished",
@@ -62,10 +67,10 @@ export const columns: ColumnDef<Slide>[] = [
       );
     },
   },
-  {
-    accessorKey: "description",
-    header: "Description",
-  },
+  // {
+  //   accessorKey: "description",
+  //   header: "Mô Tả",
+  // },
   // {
   //   accessorKey: "department",
   //   header: "Department",
@@ -77,6 +82,13 @@ export const columns: ColumnDef<Slide>[] = [
   {
     id: "actions",
     accessorKey: "Action",
+    header: ({ column }) => {
+      return (
+        <span>
+          <span className="mr-2">Hành Động</span>
+        </span>
+      );
+    },
     cell: ModuleActionCell,
   },
 ];

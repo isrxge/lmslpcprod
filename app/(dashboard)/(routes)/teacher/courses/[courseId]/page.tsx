@@ -139,7 +139,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       }
     }
   }
-  
 
   if (!course) {
     return redirect("/");
@@ -196,7 +195,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   }
   const isComplete = requiredFields.every(Boolean);
   const isClosed = course.status === "closed";
-
+  const utcStartDate: any = new Date(course.startDate);
+  utcStartDate.setHours(utcStartDate.getHours() + 7);
+  const printDate = new Date(utcStartDate).toLocaleDateString("vi-VN");
   // console.log("Course modules ABCD:", course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam"));
   // console.log("requiredFields:", requiredFields);
   return (
@@ -207,7 +208,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       {isClosed ? (
         <Banner
           label="Khóa Học Này Đã Đóng. Mọi Hành Động Chỉnh Sửa Khóa Học Này Sẽ Không Được Thực Hiện."
-          variant="success" 
+          variant="success"
         />
       ) : (
         !course.isPublished && (
@@ -248,11 +249,23 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <h2 className="text-xl">Customize your course</h2>
             </div>
             <div className="space-y-6 mt-4">
-              <TitleForm initialData={course} courseId={course.id} readOnly={isClosed} />
+              <TitleForm
+                initialData={course}
+                courseId={course.id}
+                readOnly={isClosed}
+              />
               <TypeForm initialData={course} courseId={course.id} />
               <CreditForm initialData={course} courseId={course.id} />
-              <DescriptionForm initialData={course} courseId={course.id} readOnly={isClosed}/>
-              <ImageForm initialData={course} courseId={course.id} readOnly={isClosed}/>
+              <DescriptionForm
+                initialData={course}
+                courseId={course.id}
+                readOnly={isClosed}
+              />
+              <ImageForm
+                initialData={course}
+                courseId={course.id}
+                readOnly={isClosed}
+              />
             </div>
           </div>
           <div className="space-y-6">
@@ -266,23 +279,24 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                   initialData={course}
                   courseType={course.type}
                   courseId={course.id}
-                  readOnly={isClosed} 
+                  readOnly={isClosed}
                 />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Target} />
-                <h2 className="text-xl">Hạn Chót</h2>
+                <h2 className="text-xl">Thời Gian</h2>
               </div>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Note: Hạn Chót Khóa Học Là Vào 18:00 Ngày Hết Hạn.
               </p>
+              <div>Ngày Tạo Khóa Học: {printDate + ""}</div>
               <div>
                 <EndDateForm
                   initialData={course}
                   courseId={course.id}
-                  readOnly={isClosed} 
+                  readOnly={isClosed}
                   // deadline={endDate}
                 />
               </div>
@@ -309,7 +323,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 />
               </div>
             </div>
-           
           </div>
         </div>
       </div>

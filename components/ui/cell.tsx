@@ -118,7 +118,7 @@ export const Cell = ({ row }: any) => {
               <Link href={`/teacher/users/${id}`}>
                 <DropdownMenuItem>
                   <Pencil className="h-4 w-4 mr-2" />
-                  Edit
+                  Chỉnh Sửa
                 </DropdownMenuItem>
               </Link>
             )}
@@ -176,8 +176,6 @@ export const Cell = ({ row }: any) => {
             ) : (
               <></>
             )}
-
-           
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialog

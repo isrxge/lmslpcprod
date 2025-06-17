@@ -52,7 +52,7 @@ export const CellUserExamStatus = ({ row }: any) => {
   } else {
     return !userExamReport[0]?.isInExam ? (
       <div className="font-bold ml-2 rounded-lg">
-        This user is not taking any exam
+        Người Dùng Này Đang Không Trong Bài Kiểm Tra
       </div>
     ) : (
       <AlertDialog

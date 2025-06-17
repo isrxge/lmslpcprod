@@ -58,18 +58,31 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
-
+  function onTypeChange(type: any) {
+    console.log(type);
+    console.log(table.getAllColumns());
+    table.getColumn("type")?.setFilterValue(type);
+  }
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter modules..."
+          placeholder="Tìm Học Phần..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+        <select
+          name="status"
+          id="filterByStatus"
+          onChange={(event) => onTypeChange(event.target.value)}
+          className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
+        >
+          <option value="Slide">Bài Giảng</option>
+          <option value="Exam">Bài Kiểm Tra</option>
+        </select>
         {canCreate ? (
           <Link href="/teacher/create/module">
             <Button>

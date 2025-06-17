@@ -31,11 +31,7 @@ export async function GET(
 
     return NextResponse.json(userCourse);
   } catch (error) {
-<<<<<<< HEAD
     console.log("[PROGRAMS]", error);
-=======
-    console.log("[PROGRESS USER]", error);
->>>>>>> 8b13b57 (commit)
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

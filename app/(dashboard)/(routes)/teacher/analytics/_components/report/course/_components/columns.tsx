@@ -119,7 +119,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">End Date</span>
+          <span className="mr-2">Hạn Chót</span>
         </span>
       );
     },

@@ -27,7 +27,7 @@ import { useState } from "react";
 const guestRoutes = [
   {
     icon: Home,
-    label: "Home",
+    label: "Trang Chủ",
     href: "/",
   }
   // ,
@@ -39,7 +39,7 @@ const guestRoutes = [
   ,
   {
     icon: Star,
-    label: "Bright Star",
+    label: "Điểm",
     href: "/ranking",
   },
   // {
@@ -89,7 +89,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: List,
-          label: "Courses",
+          label: "Khóa Học",
           href: "/teacher/courses",
         },
       ]);
@@ -113,7 +113,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: BarChart,
-          label: "Analytics and Report",
+          label: "Phân Tích Và Báo Cáo",
           href: "/teacher/analytics",
         },
       ]);
@@ -134,7 +134,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: Waypoints,
-          label: "Roles",
+          label: "Vai Trò",
           href: "/teacher/roles",
         },
       ]);
@@ -155,7 +155,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: Cctv,
-          label: "Permissions",
+          label: "Quyền Hạn",
           href: "/teacher/permissions",
         },
       ]);
@@ -175,7 +175,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: UsersRound,
-          label: "Users",
+          label: "Người Dùng",
           href: "/teacher/users",
         },
       ]);
@@ -195,7 +195,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: Building,
-          label: "Departments",
+          label: "Phòng Ban",
           href: "/teacher/departments",
         },
       ]);
@@ -215,7 +215,7 @@ export const SidebarRoutes = ({ userId }: any) => {
         ...prevState,
         {
           icon: Package,
-          label: "Resources",
+          label: "Học Phần",
           href: "/teacher/module",
         },
       ]);
@@ -237,7 +237,7 @@ export const SidebarRoutes = ({ userId }: any) => {
     ) {
       guestRoutes.push({
         icon: UsersRound,
-        label: "Personal Information",
+        label: "Thông Tin Cá Nhân",
         href: `/user/${userId}`,
       });
     }

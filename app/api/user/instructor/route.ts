@@ -25,11 +25,7 @@ export async function GET(req: Request) {
     });
     return NextResponse.json(instructors);
   } catch (error) {
-<<<<<<< HEAD
     console.log("[PROGRAMS]", error);
-=======
-    console.log("[INSTRUCTOR]", error);
->>>>>>> 8b13b57 (commit)
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

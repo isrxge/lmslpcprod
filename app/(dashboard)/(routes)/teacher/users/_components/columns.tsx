@@ -7,6 +7,7 @@ import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
 import { Cell } from "@/components/ui/cell";
 import { CellUserExamStatus } from "@/components/ui/cell-user-exam-status";
+import { cn } from "@nextui-org/react";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -88,10 +89,33 @@ export const columns: ColumnDef<User>[] = [
         </span>
       );
     },
+    cell: ({ row }) => {
+      const status = row.getValue("status") || false;
+
+      return (
+        <div
+          className={cn(
+            "text-green-600",
+            status == "approved" && "text-blue-600"
+          )}
+        >
+          {status == "approved"
+            ? "Đã Chấp Thuận"
+            : "User Không Có Quyền Truy Cập Hệ Thông"}
+        </div>
+      );
+    },
   },
   {
     id: "actions",
     accessorKey: "Action",
+    header: ({ column }) => {
+      return (
+        <span>
+          <span className="mr-2">Hành Động</span>
+        </span>
+      );
+    },
     cell: Cell,
   },
   {

@@ -34,7 +34,7 @@ const ModulePage = async () => {
     // checkUser
     //   .map((item: { permission: { title: any } }) => item.permission.title)
     //   .indexOf("Create resource permission") == -1
-      checkUser
+    checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
       .indexOf("View resource permission") == -1
   ) {
@@ -51,7 +51,7 @@ const ModulePage = async () => {
       // },
     },
   });
-  
+
   return (
     <div className="p-6">
       <DataTable

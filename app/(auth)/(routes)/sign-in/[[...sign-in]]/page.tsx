@@ -16,7 +16,7 @@ const Logo = dynamic(() => import("@/app/(auth)/_component/logo" as string), {
 var CryptoJS = require("crypto-js");
 export default function Page() {
   const searchParams = useSearchParams();
-  
+
   const emailAddressAprrove = searchParams.get("email");
   const task = searchParams.get("task");
   const [error, setError] = useState("");
@@ -63,20 +63,35 @@ export default function Page() {
       // department,
     });
 
-    if (!user.data) {
+    if (user.data == null) {
       setError("Không Tìm Thấy Thông Tin.");
       return;
     }
-    const response = await clerkClient();
-    const userCheck = await response.users.getUserList({
-      emailAddress: emailAddress
+    console.log(user.data.dn.split(","));
+
+    const userCheck = await axios.post(`/api/getClerkUser`, {
+      emailAddress: emailAddress,
     });
-    if (!userCheck) {
-      const userCreate = await response.users.createUser({
-        emailAddress: [emailAddress],
-      });
-      
-      await axios.post(`/api/signup`, userCreate);
+
+    if (userCheck.data.length == 0) {
+      let userDepartment = user.data.dn.split(",")[1].split("=")[1];
+      if (userDepartment == "SCC" || userDepartment == "DSC") {
+        userDepartment = "TVTK";
+      } else if (userDepartment == "Leaders") {
+        userDepartment = "BOD";
+      } else if (userDepartment == "Sales") {
+        userDepartment = "BU";
+      }
+      let newUser: any = {
+        username: user.data.cn,
+        emailAddress: emailAddress,
+        department: userDepartment,
+      };
+      const userCreate = await axios.post(`/api/createClerkUser`, newUser);
+
+      newUser["createdUserId"] = userCreate.data.id;
+
+      await axios.post(`/api/signup`, newUser);
     }
 
     try {
@@ -269,7 +284,11 @@ export default function Page() {
                 className="bg-blue-500 justify-center text-white inline-flex py-2 rounded-md hover:bg-blue-600 transition duration-300"
               >
                 <span>Confirm</span>
-                {verificationChecking ? <Loader2 className="animate-spin"/> : <></>}
+                {verificationChecking ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <></>
+                )}
               </button>
             </form>
           </div>

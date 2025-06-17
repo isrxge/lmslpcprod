@@ -145,33 +145,33 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Status</span>
+          <span className="mr-2">Trạng Thái</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
     },
     cell: ({ row }: any) => {
-    // giá trị status trả về từ DB (ví dụ: "open" | "closed")
-    const rawStatus: string = row.original.status ?? "";
+      // giá trị status trả về từ DB (ví dụ: "open" | "closed")
+      const rawStatus: string = row.original.status ?? "";
 
-    // Chuẩn hoá tên hiển thị
-    const label =
-      rawStatus.toLowerCase() === "closed"
-        ? "Closed"
-        : rawStatus.toLowerCase() === "open"
-        ? "Open"
-        : rawStatus;
+      // Chuẩn hoá tên hiển thị
+      const label =
+        rawStatus.toLowerCase() === "closed"
+          ? "Đóng"
+          : rawStatus.toLowerCase() === "open"
+          ? "Mở"
+          : rawStatus;
 
-    // Chọn màu theo trạng thái
-    const badgeClass = cn(
-      "bg-slate-500",                  // mặc định xám (nếu tình cờ status khác)
-      rawStatus.toLowerCase() === "open" && "bg-green-600",
-      rawStatus.toLowerCase() === "closed" && "bg-red-600"
-    );
+      // Chọn màu theo trạng thái
+      const badgeClass = cn(
+        "bg-slate-500", // mặc định xám (nếu tình cờ status khác)
+        rawStatus.toLowerCase() === "open" && "bg-green-600",
+        rawStatus.toLowerCase() === "closed" && "bg-red-600"
+      );
 
-    return <Badge className={badgeClass}>{label}</Badge>;
+      return <Badge className={badgeClass}>{label}</Badge>;
+    },
   },
-},
   // {
   //   accessorKey: "status",
   //   header: ({ column }) => {
@@ -197,6 +197,13 @@ export const columns: ColumnDef<Course>[] = [
   {
     id: "actions",
     accessorKey: "Action",
+    header: ({ column }) => {
+      return (
+        <span>
+          <span className="mr-2">Hành Động</span>
+        </span>
+      );
+    },
     cell: CourseActionCell,
   },
 ];
@@ -215,7 +222,7 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
 
   // Handle the case where endDate might be null
   const formattedEndDate = endDate
-    ? new Date(endDate).toLocaleDateString()
+    ? new Date(endDate).toLocaleDateString("vi-VN")
     : "N/A";
 
   // Handle the case where endDate is null
@@ -232,7 +239,7 @@ const EndDateCell = ({ endDate }: { endDate: string | null }) => {
   // // Compare end date with the current date to determine if it's "Opening" or "Closed"
   // const isOpening = currentDate < endDateObj; // If current date is less than endDate, it's opening
   // const statusText = isOpening ? "Opening" : "Closed";
-  // const statusColor = isOpening ? "text-green-500" : "text-red-500"; 
+  // const statusColor = isOpening ? "text-green-500" : "text-red-500";
 
   // const isClosed = currentDate > endDateObj; // If current date is less than endDate, it's opening
   // const statusText = isClosed ? "Closed" : "Opening";

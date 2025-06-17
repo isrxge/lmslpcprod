@@ -152,7 +152,6 @@ export const columns: ColumnDef<User>[] = [
         <div className="flex items-center">
           <div>
             {ClassSessionRecord.map((item: any) => {
-              console.log("item 2", item);
               return (
                 <div key={item.id}>
                   <Accordion key="1">
@@ -175,7 +174,15 @@ export const columns: ColumnDef<User>[] = [
                             </span>
                           ) : (
                             <>
-                              {item.progress} (<span>{item.status}</span>)
+                              {item.progress} (
+                              <span>
+                                {item.status == "failed"
+                                  ? "Trượt"
+                                  : item.status == "finished"
+                                  ? "Đậu"
+                                  : "Chưa Có Kết Quả"}
+                              </span>
+                              )
                             </>
                           )}
                         </div>
@@ -185,7 +192,6 @@ export const columns: ColumnDef<User>[] = [
                       {item.course.modules
                         .filter((item: any) => item.module.type == "Exam")
                         .map((item: any) => {
-                         
                           return (
                             <>
                               {item.module.UserProgress?.filter(
