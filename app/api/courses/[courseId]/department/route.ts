@@ -95,7 +95,7 @@ export async function PATCH(
             port: 587, // port for secure SMTP
             auth: {
               user: "Webmaster@lp.com.vn",
-              pass: "Lpc@236238$",
+              pass: "yqpcfbbvhfrvfbwz",
             },
             tls: {
               ciphers: "SSLv3",
