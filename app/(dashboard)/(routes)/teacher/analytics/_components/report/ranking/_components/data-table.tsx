@@ -12,12 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-<<<<<<< HEAD
 import * as XLSX from "xlsx-js-style";
 // import * as XLSX from "xlsx";
-=======
-import * as XLSX from "xlsx";
->>>>>>> 8b13b57 (commit)
 import {
   Table,
   TableBody,
@@ -68,11 +64,7 @@ export function DataTable<TData, TValue>({
     DateRange | undefined
   >();
   const [datePickerDisabled, setDatePickerDisabled] = React.useState(false); // State to manage date picker disable
-<<<<<<< HEAD
   const [canViewAll, setCanViewAll] = React.useState<boolean>(false);
-=======
-
->>>>>>> 8b13b57 (commit)
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const table = useReactTable({
     data: userList,
@@ -98,7 +90,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-<<<<<<< HEAD
   // Gọi API lấy danh sách user & đồng thời check quyền
   React.useEffect(() => {
     async function fetchUsers() {
@@ -115,8 +106,6 @@ export function DataTable<TData, TValue>({
     fetchUsers();
   }, []);
 
-=======
->>>>>>> 8b13b57 (commit)
   React.useEffect(() => {
     async function getDepartments() {
       let departmentList = await axios.get(`/api/departments`);
@@ -161,11 +150,7 @@ export function DataTable<TData, TValue>({
           Name: user.username,
           Email: user.email,
           Department: user.Department.title,
-<<<<<<< HEAD
           Points: user.star,
-=======
-          Score: user.star,
->>>>>>> 8b13b57 (commit)
         };
       });
     };
@@ -231,7 +216,6 @@ export function DataTable<TData, TValue>({
 
     // Set column widths
     worksheet["!cols"] = [
-<<<<<<< HEAD
       { wch: 30 }, // Name column width
       { wch: 30 }, // Email column width
       { wch: 15 }, // Department column width
@@ -257,37 +241,13 @@ export function DataTable<TData, TValue>({
       };
     }
   }
-=======
-      { wch: 20 }, // Name column width
-      { wch: 30 }, // Email column width
-      { wch: 20 }, // Department column width
-      { wch: 10 }, // Score column width
-    ];
-
-    // Bold the header row
-    const range = XLSX.utils.decode_range(worksheet["!ref"] || "");
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cell_address = { c: C, r: range.s.r };
-      const cell_ref = XLSX.utils.encode_cell(cell_address);
-      if (worksheet[cell_ref]) {
-        worksheet[cell_ref].s = {
-          font: { bold: true },
-        };
-      }
-    }
->>>>>>> 8b13b57 (commit)
 
     const date = new Date();
     XLSX.writeFile(
       workbook,
-<<<<<<< HEAD
       `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`, {
         cellStyles: true,
       });
-=======
-      `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`
-    );
->>>>>>> 8b13b57 (commit)
   }
 
   function onDepartmentChange(departmentId: any) {
@@ -307,21 +267,13 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-<<<<<<< HEAD
         {/* <select
-=======
-        <select
->>>>>>> 8b13b57 (commit)
           name="status"
           id="filterByStatus"
           onChange={(event) => onDepartmentChange(event.target.value)}
           className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
         >
-<<<<<<< HEAD
           <option value="">All Department</option>
-=======
-          <option value="">Tất Cả Department</option>
->>>>>>> 8b13b57 (commit)
           {departments.map((item: any) => (
             <option
               key={item.id}
@@ -331,7 +283,6 @@ export function DataTable<TData, TValue>({
               {item.title}
             </option>
           ))}
-<<<<<<< HEAD
         </select> */}
         {canViewAll && (
   <select
@@ -340,7 +291,7 @@ export function DataTable<TData, TValue>({
     onChange={(event) => onDepartmentChange(event.target.value)}
     className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
   >
-    <option value="">All Departments</option>
+    <option value="">Tất Cả Các Phòng Ban</option>
     {departments.map((item: any) => (
       <option
         key={item.id}
@@ -353,10 +304,6 @@ export function DataTable<TData, TValue>({
   </select>
 )}
         {/* <div className="flex gap-2 items-center">
-=======
-        </select>
-        <div className="flex gap-2 items-center">
->>>>>>> 8b13b57 (commit)
           <DatePickerWithRange
             placeHolder={"Filter date range"}
             date={dateRangeEnd}
@@ -376,21 +323,13 @@ export function DataTable<TData, TValue>({
           ) : (
             <></>
           )}
-<<<<<<< HEAD
         </div> */}
-=======
-        </div>
->>>>>>> 8b13b57 (commit)
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button>
                 <FileDown className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-                Select report <ChevronDown />
-=======
                 Chọn Loại Báo Cáo <ChevronDown />
->>>>>>> 8b13b57 (commit)
               </Button>
             </DropdownMenuTrigger>
             {userList.length == 0 ? (
@@ -399,61 +338,36 @@ export function DataTable<TData, TValue>({
               <DropdownMenuContent>
                 {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("All")}>
-<<<<<<< HEAD
-                    Report (All)
-=======
                     Báo Cáo (Tất Cả)
->>>>>>> 8b13b57 (commit)
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem
                     onClick={() => getSheetData("Selected Rows")}
                   >
-<<<<<<< HEAD
-                    Report (Selected Rows)
+                    Báo Cáo (Các Dòng Đã Chọn)
                   </DropdownMenuItem>
                 )}
                 {/* {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("This Week")}>
-                    Report (This Week)
-=======
-                    Báo Cáo (Các Dòng Đã Chọn)
-                  </DropdownMenuItem>
-                )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
-                  <DropdownMenuItem onClick={() => getSheetData("This Week")}>
                     Báo Cáo (Tuần)
->>>>>>> 8b13b57 (commit)
-                  </DropdownMenuItem>
-                ) : (
-                  <></>
-                )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
-                  <DropdownMenuItem onClick={() => getSheetData("This Month")}>
-<<<<<<< HEAD
-                    Report (This Month)
-=======
-                    Báo Cáo (Tháng)
->>>>>>> 8b13b57 (commit)
-                  </DropdownMenuItem>
-                ) : (
-                  <></>
-                )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
-                  <DropdownMenuItem onClick={() => getSheetData("This Year")}>
-<<<<<<< HEAD
-                    Report (This Year)
                   </DropdownMenuItem>
                 ) : (
                   <></>
                 )} */}
-=======
-                    Báo Cáo (Ngày)
+                {/* {table.getSelectedRowModel().rows.length == 0 ? (
+                  <DropdownMenuItem onClick={() => getSheetData("This Month")}>
+                    Báo Cáo (Tháng)
+                  </DropdownMenuItem>
+                ) : (
+                  <></>
+                )} */}
+                {table.getSelectedRowModel().rows.length == 0 ? (
+                  <DropdownMenuItem onClick={() => getSheetData("This Year")}>
+                    Báo Cáo (Năm)
                   </DropdownMenuItem>
                 ) : (
                   <></>
                 )}
->>>>>>> 8b13b57 (commit)
               </DropdownMenuContent>
             )}
           </DropdownMenu>
@@ -503,11 +417,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-<<<<<<< HEAD
-                  No results.
-=======
                   Không Có Kết Quả.
->>>>>>> 8b13b57 (commit)
                 </TableCell>
               </TableRow>
             )}

@@ -39,23 +39,18 @@ export const NavbarRoutes = ({ userId }: any) => {
           )}
         </div>
         <div className="flex gap-x-2 ml-auto justify-center">
-          <div className="flex items-center">
-            {/* <Button size="sm" variant="ghost" asChild>
-              <MyCourse data={data} />
-            </Button> */}
-            {/* <div className="flex items-center ml-5 mr-3">
-              <Notification />
-            </div> */}
+          {/* <div className="flex items-center">
+           
             <div className="flex items-center ml-5 mr-3">
               <ModeToggle />
             </div>
-          </div>
+          </div> */}
 
           {isTeacherPage || isCoursePage ? (
             <Link href="/">
               <Button size="sm" variant="ghost">
                 <LogOut className="h-4 w-4 mr-2" />
-                Exit
+                Thoát
               </Button>
             </Link>
           ) : (

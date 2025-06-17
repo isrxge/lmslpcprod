@@ -6,11 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
-<<<<<<< HEAD
     "start": "node --require dd-trace/init ./node_modules/.bin/next start",
-=======
-    "start": "next start",
->>>>>>> 8b13b57 (commit)
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
@@ -47,14 +43,12 @@
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.5",
     "class-variance-authority": "^0.7.0",
+    "clerk": "^0.8.3",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
     "crypto-js": "^4.2.0",
     "date-fns": "^3.6.0",
-<<<<<<< HEAD
     "dd-trace": "^5.53.0",
-=======
->>>>>>> 8b13b57 (commit)
     "embla-carousel-autoplay": "^8.0.0",
     "embla-carousel-react": "^8.0.0",
     "eslint": "8.56.0",
@@ -69,10 +63,7 @@
     "lucide-react": "^0.303.0",
     "next": "14.0.4",
     "next-themes": "^0.2.1",
-<<<<<<< HEAD
     "node-cron": "^4.0.3",
-=======
->>>>>>> 8b13b57 (commit)
     "nodemailer": "^6.9.13",
     "nodemailer-smtp-transport": "^2.7.4",
     "postcss": "8.4.32",
@@ -97,10 +88,7 @@
     "typescript": "5.3.3",
     "uploadthing": "^6.1.1",
     "xlsx": "^0.18.5",
-<<<<<<< HEAD
     "xlsx-js-style": "^1.2.0",
-=======
->>>>>>> 8b13b57 (commit)
     "zod": "^3.22.4",
     "zustand": "^4.4.7"
   },

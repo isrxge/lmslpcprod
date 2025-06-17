@@ -17,7 +17,7 @@ interface AttachmentFormProps {
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
-    message: "Image is required",
+    message: "Hình Ảnh Là Bắt Buộc",
   }),
 });
 
@@ -43,17 +43,7 @@ export const AttacthmentForm = ({
     const file = e.target.files?.[0];
 
     let getToken = await axios.get("/api/getToken");
-    // if (
-    //   contents[objIndex].attachment != null &&
-    //   contents[objIndex].attachment != ""
-    // ) {
-    //   await axios.delete(contents[objIndex].attachment, {
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "X-Auth-Token": getToken.data["x-subject-token"],
-    //     },
-    //   });
-    // }
+    
 
     let getCourse: any = await axios.get(`/api/courses/${courseId}`);
     let getChapter: any = await axios.get(
@@ -95,7 +85,7 @@ export const AttacthmentForm = ({
         `/api/courses/${courseId}/chapters/${moduleId}/attachment`,
         contents
       );
-      toast.success("Attachment created");
+      toast.success("Tài Nguyên Đính Kèm Đã Được Tạo");
       let reloadData = await axios.get(
         `/api/courses/${courseId}/chapters/${moduleId}/attachment`
       );
@@ -103,14 +93,14 @@ export const AttacthmentForm = ({
       // toggleEdit();
       // router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
     }
   };
 
   return (
     <div className="mt-6 border rounded-md p-4 dark:text-white">
       <div className="font-medium flex items-center justify-between mb-4">
-        <div className="flex items-center">Chapter Extra Resources</div>
+        <div className="flex items-center">Tài Nguyên Đính Kèm</div>
       </div>
 
       <div className="space-y-4">
@@ -137,7 +127,7 @@ export const AttacthmentForm = ({
                   }
                   className="bg-red-500 text-white px-3 py-1 rounded-md ml-2"
                 >
-                  Remove
+                  Xóa
                 </button>
               </>
             ) : (
@@ -157,13 +147,13 @@ export const AttacthmentForm = ({
             disabled
             className="bg-blue-600 text-white px-4 py-2 rounded-md"
           >
-            Waiting...
+            Vui Lòng Chờ Trong Giây Lát...
           </button>
           <button
             disabled
             className="bg-gray-500 text-white px-4 py-2 rounded-md"
           >
-            Waiting...
+            Vui Lòng Chờ Trong Giây Lát...
           </button>
         </div>
       ) : (
@@ -172,13 +162,13 @@ export const AttacthmentForm = ({
             onClick={addResource}
             className="bg-blue-600 text-white px-4 py-2 rounded-md"
           >
-            Add Resource
+            Thêm Tài Nguyên
           </button>
           <button
             onClick={onSubmit}
             className="bg-green-600 text-white px-4 py-2 rounded-md"
           >
-            Submit
+            Nộp
           </button>
         </div>
       )}

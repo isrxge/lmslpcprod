@@ -41,17 +41,10 @@ export const CourseProgressButton = ({
         router.push(`/courses/${courseId}/chapters/${nextChapterId}`);
       }
 
-<<<<<<< HEAD
-      toast.success("Progress updated");
-      router.refresh();
-    } catch {
-      toast.error("Something went wrong");
-=======
       toast.success("Tiến Trình Đã Được Cập Nhật");
       router.refresh();
     } catch {
       toast.error("Lỗi Đã Xảy Ra, Vui Lòng Thử Lại Sau");
->>>>>>> 8b13b57 (commit)
     } finally {
       setIsLoading(false);
     }
@@ -67,11 +60,7 @@ export const CourseProgressButton = ({
       variant={isCompleted ? "outline" : "success"}
       className="w-full md:w-auto"
     >
-<<<<<<< HEAD
-      {isCompleted ? "Not completed" : "Mark as complete"}
-=======
       {isCompleted ? "Chưa Hoàn Thành" : "Đã Hoàn Thành"}
->>>>>>> 8b13b57 (commit)
       <Icon className="h-4 w-4 ml-2" />
     </Button>
   )

@@ -30,11 +30,7 @@ const PermissionIdPage = async ({
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-<<<<<<< HEAD
       .indexOf("Edit permission permission") == -1
-=======
-      .indexOf("Manage permission permission") == -1
->>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }
@@ -74,11 +70,11 @@ const PermissionIdPage = async ({
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to permission
+              Quay Về Quản Lý Quyền Hạn
             </Link>
-            <h1 className="text-2xl font-medium">Permission setup</h1>
+            <h1 className="text-2xl font-medium">Chỉnh Sửa Quyền Hạn</h1>
             <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
+              Hoàn Tất Các Trường {completionText}
             </span>
           </div>
         </div>
@@ -86,7 +82,7 @@ const PermissionIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your permission</h2>
+              <h2 className="text-xl">Chỉnh Sửa Quyền Hạn Của Bạn</h2>
             </div>
             <TitleForm initialData={permission} permissionId={permission.id} />
           </div>

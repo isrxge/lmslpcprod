@@ -4,11 +4,8 @@ import { Sidebar } from "./_components/sidebar";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { AlertInExam } from "@/components/ui/alert-in-exam";
-<<<<<<< HEAD
 import "@/lib/cron";   
 import { sendReminders } from "@/lib/send-reminder";
-=======
->>>>>>> 8b13b57 (commit)
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { userId }: any = auth();
@@ -33,10 +30,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
       ></AlertInExam>
     );
   }
-<<<<<<< HEAD
   await sendReminders();
-=======
->>>>>>> 8b13b57 (commit)
   return (
     <div className="h-full">
       <div className="h-[80px] md:pl-56 fixed inset-y-0 w-full z-50">

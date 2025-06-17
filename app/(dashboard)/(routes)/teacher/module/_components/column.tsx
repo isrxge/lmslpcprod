@@ -30,11 +30,7 @@ export const columns: ColumnDef<Slide>[] = [
         className="flex items-center cursor-pointer"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-<<<<<<< HEAD
-        <span className="mr-2">Title</span>
-=======
         <span className="mr-2">Tên Học Phần</span>
->>>>>>> 8b13b57 (commit)
         <ArrowUpDown className="h-4 w-4" />
       </span>
     ),
@@ -51,11 +47,7 @@ export const columns: ColumnDef<Slide>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Published</span>
-=======
           <span className="mr-2">Được Phát Hành</span>
->>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -65,11 +57,7 @@ export const columns: ColumnDef<Slide>[] = [
 
       return (
         <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
-<<<<<<< HEAD
-          {isPublished ? "Published" : "Draft"}
-=======
           {isPublished ? "Đã Phát Hành" : "Bản Nháp"}
->>>>>>> 8b13b57 (commit)
         </Badge>
       );
     },

@@ -70,21 +70,11 @@ const DepartmentIdPage = async ({
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-              Back to department
-            </Link>
-            <h1 className="text-2xl font-medium">Department setup</h1>
-            <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
-=======
               Quay Lại Trang Quản Lý Phòng Ban
             </Link>
-            <h1 className="text-2xl font-medium">
-              Điều Chỉnh Thông Tin Phòng Ban
-            </h1>
+            <h1 className="text-2xl font-medium">Điều Chỉnh Thông Tin Phòng Ban</h1>
             <span className="text-sm text-slate-700">
               Hoàn Tất Các Trường {completionText}
->>>>>>> 8b13b57 (commit)
             </span>
           </div>
         </div>
@@ -92,11 +82,7 @@ const DepartmentIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-<<<<<<< HEAD
-              <h2 className="text-xl">Customize your permission</h2>
-=======
               <h2 className="text-xl">Điều Chỉnh Phòng Ban</h2>
->>>>>>> 8b13b57 (commit)
             </div>
             <TitleForm initialData={department} departmentId={department.id} />
           </div>

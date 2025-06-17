@@ -39,7 +39,7 @@ export const ExamsCell = ({ row }: any) => {
         className="text-blue-500 underline hover:text-blue-700 focus:outline-none"
         onClick={() => setModalOpen(true)}
       >
-        Details ({totalExams})
+        Chi Tiết ({totalExams})
       </button>
       <Modal
         isOpen={isModalOpen}

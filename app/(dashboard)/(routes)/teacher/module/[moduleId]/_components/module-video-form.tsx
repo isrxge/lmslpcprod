@@ -54,7 +54,7 @@ export const ChapterVideoForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Chapter video
+        Video Của Học Phần
       </div>
 
       {isEditing && (

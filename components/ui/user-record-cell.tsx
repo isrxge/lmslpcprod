@@ -33,7 +33,7 @@ export const CourseAttendeeCell = ({ row }: any) => {
         className="text-blue-500 underline hover:text-blue-700 focus:outline-none"
         onClick={() => setModalOpen(true)}
       >
-        View Courses
+        Xem Khóa Học
       </button>
       <Modal
         isOpen={isModalOpen}

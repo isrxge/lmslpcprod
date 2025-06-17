@@ -36,11 +36,7 @@ export const columns: ColumnDef<Program>[] = [
   {
     accessorKey: "title",
     header: () => {
-<<<<<<< HEAD
-      return <div>Name</div>;
-=======
       return <div>Tên</div>;
->>>>>>> 8b13b57 (commit)
     },
   },
   {
@@ -51,11 +47,7 @@ export const columns: ColumnDef<Program>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Created date</span>
-=======
           <span className="mr-2">Ngày Tạo</span>
->>>>>>> 8b13b57 (commit)
         </span>
       );
     },
@@ -82,7 +74,7 @@ export const columns: ColumnDef<Program>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center cursor-pointer">
-          <span className="mr-2">Program courses</span>
+          <span className="mr-2">Các Khóa Học</span>
         </span>
       );
     },

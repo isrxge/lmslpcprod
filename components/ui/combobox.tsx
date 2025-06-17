@@ -49,7 +49,7 @@ export const Combobox = ({
       <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search option..." />
-          <CommandEmpty>No option found.</CommandEmpty>
+          <CommandEmpty>Không Có Lựa Chọn.</CommandEmpty>
           <CommandGroup>
             {options.map((option) => (
               <CommandItem

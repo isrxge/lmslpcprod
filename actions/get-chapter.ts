@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // import { db } from "@/lib/db";
 
 // interface GetChapterProps {
@@ -165,20 +164,12 @@
 
 import { db } from "@/lib/db";
  
-=======
-import { db } from "@/lib/db";
-
->>>>>>> 8b13b57 (commit)
 interface GetChapterProps {
   userId: string;
   courseId: string;
   moduleId: string;
 }
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 8b13b57 (commit)
 export const getChapter = async ({
   userId,
   moduleId,
@@ -208,13 +199,8 @@ export const getChapter = async ({
           include: {
             module: {
               include: {
-<<<<<<< HEAD
                 UserProgress: true,
               },
-=======
-                UserProgress: true
-              }
->>>>>>> 8b13b57 (commit)
               // select: {
               //   id: true,
               //   title: true,
@@ -225,7 +211,6 @@ export const getChapter = async ({
         },
       },
     });
-<<<<<<< HEAD
  
     // console.log("Course data: ", course); // Kiểm tra dữ liệu khóa học
  
@@ -237,20 +222,6 @@ export const getChapter = async ({
     // console.log("Module ID: ", moduleId); // Kiểm tra giá trị moduleId
     // console.log("Course ID: ", courseId); // Kiểm tra giá trị courseId
  
-=======
-
-    console.log("Course data: ", course);  // Kiểm tra dữ liệu khóa học
-
-    if (!course) {
-      throw new Error("Course not found");
-    }
-
-    // Kiểm tra xem moduleId có hợp lệ không
-    console.log("Module ID: ", moduleId);  // Kiểm tra giá trị moduleId
-    console.log("Course ID: ", courseId);  // Kiểm tra giá trị courseId
-
-
->>>>>>> 8b13b57 (commit)
     // Truy vấn moduleInCourse để lấy chapter (chương học)
     const chapter: any = await db.moduleInCourse.findUnique({
       where: {
@@ -258,16 +229,9 @@ export const getChapter = async ({
           moduleId: moduleId,
           courseId: courseId,
         },
-<<<<<<< HEAD
         module: {
           isPublished: true,
         },
-=======
-        module:{
-          isPublished: true
-        }
-
->>>>>>> 8b13b57 (commit)
       },
       include: {
         module: {
@@ -290,7 +254,6 @@ export const getChapter = async ({
               },
             },
             Resource: true,
-<<<<<<< HEAD
           },
         },
       },
@@ -324,42 +287,6 @@ export const getChapter = async ({
       .indexOf(moduleId);
     // console.log("Current chapter position: ", currentChapterPos); // Kiểm tra vị trí của chương hiện tại
  
-=======
-          }
-        }
-      },
-    });
-            // Slide: {
-            //   where: {
-            //     moduleId: moduleId,
-            //   },
-            //   orderBy: {
-            //     position: "asc",
-            //   },
-            // },
-            // Category: {
-            //   where: {
-            //     moduleId: moduleId,
-            //   },
-            //   include: {
-            //     Exam: true,
-            //   },
-            // },
-            // Resource: true,
-    console.log("Chapter data: ", chapter);  // Kiểm tra dữ liệu chương học (chapter)
-
-    if (!chapter) {
-      throw new Error("Chapter not found");
-    }
-
-    // Lấy chỉ số vị trí của chương hiện tại trong danh sách modules
-    const currentChapterPos = course.modules.map(
-      (item: { module: { id: string } }) => item.module.id
-    ).indexOf(moduleId);
-    console.log("Current chapter position: ", currentChapterPos);  // Kiểm tra vị trí của chương hiện tại
-
-
->>>>>>> 8b13b57 (commit)
     // Tính toán chương tiếp theo và chương trước đó
     const nextChapter = course.modules.map(
       (item: { module: { id: string } }) => item.module.id
@@ -367,7 +294,6 @@ export const getChapter = async ({
     const preChapter = course.modules.map(
       (item: { module: { id: string } }) => item.module.id
     )[currentChapterPos > 0 ? currentChapterPos - 1 : -1];
-<<<<<<< HEAD
  
     // Lấy thông tin về tiến độ của người dùng trong module
     const userProgress = await db.userExamRecord.findMany({
@@ -381,18 +307,6 @@ export const getChapter = async ({
       }
     });
    
-=======
-
-    // Lấy thông tin về tiến độ của người dùng trong module
-    const userProgress = await db.userProgress.findUnique({
-      where: {
-        moduleId_userId: {
-          userId,
-          moduleId,
-        },
-      },
-    });
->>>>>>> 8b13b57 (commit)
     return {
       chapter,
       course,
@@ -410,8 +324,4 @@ export const getChapter = async ({
       userProgress: null,
     };
   }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 8b13b57 (commit)

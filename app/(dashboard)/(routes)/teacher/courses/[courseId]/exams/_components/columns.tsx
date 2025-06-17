@@ -22,11 +22,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Title</span>
-=======
           <span className="mr-2">Tên Bài Kiểm Tra</span>
->>>>>>> 8b13b57 (commit)
           {/* <ArrowUpDown className="h-4 w-4" /> */}
         </span>
       );
@@ -40,11 +36,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Name</span>
-=======
           <span className="mr-2">Tên Bài Kiểm Tra</span>
->>>>>>> 8b13b57 (commit)
           {/* <ArrowUpDown className="h-4 w-4" /> */}
         </span>
       );
@@ -59,11 +51,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Score</span>
-=======
           <span className="mr-2">Điểm</span>
->>>>>>> 8b13b57 (commit)
           {/* <ArrowUpDown className="h-4 w-4" /> */}
         </span>
       );
@@ -78,11 +66,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Attempt</span>
-=======
           <span className="mr-2">Số Lần Thử</span>
->>>>>>> 8b13b57 (commit)
           {/* <ArrowUpDown className="h-4 w-4" /> */}
         </span>
       );
@@ -97,11 +81,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Last Attempt</span>
-=======
           <span className="mr-2">Lần Thử Cuối Cùng</span>
->>>>>>> 8b13b57 (commit)
           {/* <ArrowUpDown className="h-4 w-4" /> */}
         </span>
       );
@@ -116,11 +96,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Status</span>
-=======
           <span className="mr-2">Trạng Thái</span>
->>>>>>> 8b13b57 (commit)
           {/* <ArrowUpDown className="h-4 w-4" /> */}
         </span>
       );

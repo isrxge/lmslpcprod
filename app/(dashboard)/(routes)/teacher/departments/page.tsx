@@ -21,7 +21,6 @@ const PermissionsPage = async () => {
     },
   });
   if (
-<<<<<<< HEAD
     // checkUser
     //   .map((item: { permission: { title: any } }) => item.permission.title)
     //   .indexOf("Edit department permission") == -1 &&
@@ -57,22 +56,6 @@ const PermissionsPage = async () => {
       },
     });
   }
-=======
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit department permission") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create department permission") == -1
-  )  {
-    return redirect("/");
-  }
-  const departments = await db.department.findMany({
-    include: {
-      User: true,
-    },
-  });
->>>>>>> 8b13b57 (commit)
 
   return (
     <div className="p-6">

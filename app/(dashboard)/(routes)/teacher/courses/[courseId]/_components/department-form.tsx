@@ -4,11 +4,7 @@ import * as z from "zod";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-<<<<<<< HEAD
 import { Asterisk, Loader, Pencil } from "lucide-react";
-=======
-import { Loader, Pencil } from "lucide-react";
->>>>>>> 8b13b57 (commit)
 import {
   JSXElementConstructor,
   Key,
@@ -48,10 +44,7 @@ interface DepartmentFormProps {
   initialData: { Department: DepartmentProps[]; Course: any };
   courseId: string;
   department: DepartmentProps[];
-<<<<<<< HEAD
   readOnly?: boolean;
-=======
->>>>>>> 8b13b57 (commit)
 }
 const Department = z.object({
   id: z.string(),
@@ -59,27 +52,19 @@ const Department = z.object({
 });
 const formSchema = z.array(Department);
 
-<<<<<<< HEAD
 export const DepartmentForm = ({
   initialData,
   courseId,
   department,
   readOnly = false,
 }: any) => {
-=======
-export const DepartmentForm = ({ initialData, courseId, department }: any) => {
->>>>>>> 8b13b57 (commit)
   const [isEditing, setIsEditing] = useState(false);
   const [departmentList, setDepartmentList] = useState([...department]);
   const [assignList, setAssignList]: any = useState([]);
   const [triggerAlert, setTriggerAlert] = useState(false);
 
   const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
   const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
-=======
-  const toggleEdit = () => setIsEditing((current) => !current);
->>>>>>> 8b13b57 (commit)
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -88,25 +73,17 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
   });
   useEffect(() => {
     let newAssignList: any = [...assignList];
-<<<<<<< HEAD
     const filteredDepartments = department.filter(
       (dept: any) => dept.title !== "BOD" 
     );
     for (let i = 0; i < filteredDepartments.length; i++) {
       let users = filteredDepartments[i].User;
-=======
-    for (let i = 0; i < departmentList.length; i++) {
-      let users = departmentList[i].User;
->>>>>>> 8b13b57 (commit)
       for (let j = 0; j < users.length; j++) {
         newAssignList.push(users[j]);
       }
     }
     setAssignList(newAssignList);
-<<<<<<< HEAD
     setDepartmentList(filteredDepartments);
-=======
->>>>>>> 8b13b57 (commit)
   }, []);
   const onChangeDepartmentList = (index: any) => {
     // e.preventDefault();
@@ -126,12 +103,12 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
           ].isEnrolled = false;
         }
       } else {
-        alert("Cannot commit this action!!!");
+        alert("Không Thể Thực Hiện Hành Động Này!!!");
         return;
       }
     } else {
       if (newList[index].User.length == 0) {
-        alert("No user to assign!!!");
+        alert("Không Có User Trong Danh Sách Giao Phó!!!");
         return;
       }
       newList[index].isEnrolled = true;
@@ -168,11 +145,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
             .indexOf(newList[i].User[j].id)
         ].isEnrolled = false;
       } else {
-<<<<<<< HEAD
-        alert("Cannot commit this action!!!");
-=======
         alert("Không Thể Thực Hiện Hành Động Này!!!");
->>>>>>> 8b13b57 (commit)
         return;
       }
     } else {
@@ -222,29 +195,16 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
         }
       }
 
-<<<<<<< HEAD
-      toast.success("Course updated");
-=======
       toast.success("Khóa Học Đã Được Cập Nhật");
->>>>>>> 8b13b57 (commit)
       setLoading(false);
       setTriggerAlert(false);
       toggleEdit();
       router.refresh();
     } catch {
-<<<<<<< HEAD
-      toast.error("Something went wrong");
-      setLoading(false);
-    }
-  };
-
-  
-=======
       toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
       setLoading(false);
     }
   };
->>>>>>> 8b13b57 (commit)
   const onConfirm = () => {
     let canSubmit = false;
     for (let i = 0; i < assignList.length; i++) {
@@ -255,11 +215,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
     if (canSubmit) {
       setTriggerAlert(true);
     } else {
-<<<<<<< HEAD
-      alert("No new staffs assigned to this course!!!");
-=======
       alert("Chưa Có Nhân Viên Được Cấp Quyền Truy Cập Khóa Học!!!");
->>>>>>> 8b13b57 (commit)
       return;
     }
   };
@@ -277,17 +233,10 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
             Submit Staff Assignment
           </AlertDialogTitle>
           <AlertDialogDescription className="AlertDialogDescription">
-<<<<<<< HEAD
-            Are you sure you want to add these staff members to the course?
-            <span className="text-red-500 text-xs font-medium">
-              **Once submitted, the assignment cannot be undone as per our
-              policy. Already assigned staff will not be affected.**
-=======
             Bạn Có Muốn Cấp Quyền Truy Cập Khóa Học Cho Các Nhân Viên Sau?
             <span className="text-red-500 text-xs font-medium">
               **Vì Lý Do Chính Sách, Các Nhân Viên Sau Khi Đã Được Cấp Quyền
               Truy Cập Sẽ Không Được Thu Hồi.**
->>>>>>> 8b13b57 (commit)
             </span>
             <br />
             <br />
@@ -296,7 +245,6 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
                 .filter(
                   (item: any) => item.isEnrolled == true && item.canUndo == true
                 )
-<<<<<<< HEAD
                 .map(
                   (
                     item: { id: any; username: any; typeUser: string },
@@ -314,38 +262,19 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
             </div>
           </AlertDialogDescription>
 
-          <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => cancel()}>Từ Chối</AlertDialogCancel>
           <AlertDialogAction asChild>
             <button
               className="Button red"
               onClick={() => onSubmit()}
               disabled={loading}
             >
-              Confirm {loading ? <Loader className="animate-spin" /> : <></>}
-=======
-                .map((item: { id: any; username: any }, index: any) => {
-                  return (
-                    <div key={item.id}>
-                      {index + 1}. {item.username}
-                    </div>
-                  );
-                })}
-            </div>
-          </AlertDialogDescription>
-
-          <AlertDialogCancel onClick={() => cancel()}>
-            Từ Chối
-          </AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <button className="Button red" onClick={() => onSubmit()}>
               Xác Nhận {loading ? <Loader className="animate-spin" /> : <></>}
->>>>>>> 8b13b57 (commit)
             </button>
           </AlertDialogAction>
         </AlertDialogContent>
       </AlertDialog>
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-<<<<<<< HEAD
         <div className="flex items-center">
           Staff
           <Asterisk className="size-4" color="red" />
@@ -353,11 +282,11 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
         {!readOnly && (
           <Button onClick={toggleEdit} variant="ghost" disabled={readOnly}>
             {isEditing ? (
-              <>Cancel</>
+              <>Từ Chối</>
             ) : (
               <>
                 <Pencil className="h-4 w-4 mr-2" />
-                Edit
+                Chỉnh Sửa
               </>
             )}
           </Button>
@@ -389,20 +318,6 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
         </div>
       )}
 
-=======
-        Department
-        <Button onClick={toggleEdit} variant="ghost">
-          {isEditing ? (
-            <>Từ Chối</>
-          ) : (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Chỉnh Sửa
-            </>
-          )}
-        </Button>
-      </div>
->>>>>>> 8b13b57 (commit)
       {isEditing && (
         <Form {...form}>
           <form
@@ -438,14 +353,9 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
                         className="grid grid-cols-2 gap-2 w-full"
                       >
                         {item.User.length == 0
-<<<<<<< HEAD
-                          ? "NO USER"
-                          : item.User.map((item: any, j: any) => {
-                            const isProbationary = item.typeUser === "probation";
-=======
                           ? "Chưa Có Người Dùng"
                           : item.User.map((item: any, j: any) => {
->>>>>>> 8b13b57 (commit)
+                            const isProbationary = item.typeUser === "probation";
                               return (
                                 <div
                                   key={item.id}
@@ -461,11 +371,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
                                     checked={item.isEnrolled}
                                     defaultChecked={item.isEnrolled}
                                   />
-<<<<<<< HEAD
                                   <span>{item.username} {isProbationary && "(Thử việc)"}</span>
-=======
-                                  <span>{item.username}</span>
->>>>>>> 8b13b57 (commit)
                                 </div>
                               );
                             })}
@@ -477,13 +383,7 @@ export const DepartmentForm = ({ initialData, courseId, department }: any) => {
             })}
 
             <div className="flex items-center gap-x-2">
-<<<<<<< HEAD
-              <Button onClick={() => onConfirm()} disabled={loading}>
-                Save
-              </Button>
-=======
               <Button onClick={() => onConfirm()}>Lưu</Button>
->>>>>>> 8b13b57 (commit)
             </div>
           </form>
         </Form>

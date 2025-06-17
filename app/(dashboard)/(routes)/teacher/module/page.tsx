@@ -28,7 +28,6 @@ const ModulePage = async () => {
     },
   });
   if (
-<<<<<<< HEAD
     // checkUser
     //   .map((item: { permission: { title: any } }) => item.permission.title)
     //   .indexOf("Edit resource permission") == -1 &&
@@ -38,14 +37,6 @@ const ModulePage = async () => {
       checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
       .indexOf("View resource permission") == -1
-=======
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Edit resource permission") == -1 &&
-    checkUser
-      .map((item: { permission: { title: any } }) => item.permission.title)
-      .indexOf("Create resource permission") == -1
->>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }

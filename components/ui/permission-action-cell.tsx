@@ -39,15 +39,11 @@ export const PermissionActionCell = ({ row }: any) => {
   } else {
     return data.userPermission
       .map((item: { permission: { title: any } }) => item.permission.title)
-<<<<<<< HEAD
       .indexOf("Edit permission permission") != -1 ? (
-=======
-      .indexOf("Manage permission permission") != -1 ? (
->>>>>>> 8b13b57 (commit)
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-4 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Mở Mục Lục</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -55,7 +51,7 @@ export const PermissionActionCell = ({ row }: any) => {
           <Link href={`/teacher/permissions/${id}`}>
             <DropdownMenuItem>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh Sửa
             </DropdownMenuItem>
           </Link>
         </DropdownMenuContent>

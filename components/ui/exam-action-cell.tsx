@@ -36,15 +36,15 @@ export const ExamActionCell = ({ row }: any) => {
       .indexOf("Edit course permission") != -1 ? (
       <AlertDialog>
         <AlertDialogTrigger className="flex justify-center items-center">
-          <>Reset Exam </>
+          <>Chạy Lại Bài Kiểm Tra</>
         </AlertDialogTrigger>
 
         <AlertDialogContent className="AlertDialogContent">
           <AlertDialogTitle className="AlertDialogTitle">
-            Exam note
+            Lưu ý Bài Kiểm Tra
           </AlertDialogTitle>
           <AlertDialogDescription className="AlertDialogDescription">
-            You are about to reset this exam status for failed user.
+            Bạn Chuẩn Bị Chạy Lại Bài Kiểm Tra Cho Các Người Dùng Trượt.
           </AlertDialogDescription>
           <div
             style={{
@@ -53,13 +53,13 @@ export const ExamActionCell = ({ row }: any) => {
               justifyContent: "flex-end",
             }}
           >
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Từ Chối</AlertDialogCancel>
             <AlertDialogAction asChild>
               <button
                 className="Button red"
                 onClick={() => resetExamProgress()}
               >
-                Confirm
+                Xác Nhận
               </button>
             </AlertDialogAction>
           </div>

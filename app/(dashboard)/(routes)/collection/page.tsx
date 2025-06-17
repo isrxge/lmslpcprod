@@ -32,14 +32,8 @@ const UserCollection = async () => {
           width={250}
           height={250}
         />
-<<<<<<< HEAD
-        <p className="mb-4 text-4xl mt-6">Under maintenance 🛠</p>
-        Hang tight! Our website is currently getting a makeover to bring you an
-        even better experience. Please swing by again soon!
-=======
         <p className="mb-4 text-4xl mt-6">Đang Bảo Trì 🛠</p>
         Chức Năng Này Đang Được Bảo Trì
->>>>>>> 8b13b57 (commit)
         <div className="relative w-full h-90 flex items-center justify-center rounded overflow-hidden mt-4"></div>
         {/* <SignOutButton /> */}
       </div>

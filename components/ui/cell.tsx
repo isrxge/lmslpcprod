@@ -112,11 +112,7 @@ export const Cell = ({ row }: any) => {
               .map(
                 (item: { permission: { title: any } }) => item.permission.title
               )
-<<<<<<< HEAD
               .indexOf("Edit user permission") == -1 ? (
-=======
-              .indexOf("User management permission") == -1 ? (
->>>>>>> 8b13b57 (commit)
               <></>
             ) : (
               <Link href={`/teacher/users/${id}`}>
@@ -131,12 +127,12 @@ export const Cell = ({ row }: any) => {
                 onClick={() =>
                   onChangeAlertMessage(
                     "ban",
-                    `Are you sure you are going to ban ${username}?(user data will not be deleted and you can restore status later)`
+                    `Bạn Có Chắc Muốn Thu Hồi Quyền Truy Cập Vào Hệ Thống Của ${username}?(Dữ Liệu Liên Quan Đến User Này Sẽ Không Bị Xóa!!!)`
                   )
                 }
               >
                 <Ban className="h-4 w-4 mr-2" />
-                Ban
+                Cấm
               </DropdownMenuItem>
             ) : (
               <></>
@@ -151,12 +147,12 @@ export const Cell = ({ row }: any) => {
                 onClick={() =>
                   onChangeAlertMessage(
                     "approved",
-                    `Are you sure you are going to approve ${username}?`
+                    `Bạn Có Chắc Muốn Cấp Quyền Truy Cập Hệ Thống Cho ${username}?`
                   )
                 }
               >
                 <BadgeCheck className="h-4 w-4 mr-2" />
-                Approve
+                Chấp Thuận
               </DropdownMenuItem>
             ) : (
               <></>
@@ -170,36 +166,18 @@ export const Cell = ({ row }: any) => {
                 onClick={() =>
                   onChangeAlertMessage(
                     "approved",
-                    `Are you sure you are going to unban ${username}?`
+                    `Bạn Có Chắc Muốn Gở Lệnh Cấm ${username}?`
                   )
                 }
               >
                 <BadgeCheck className="h-4 w-4 mr-2" />
-                Unban
+                Gỡ Lệnh Cấm
               </DropdownMenuItem>
             ) : (
               <></>
             )}
 
-<<<<<<< HEAD
-            {/* <DropdownMenuItem
-=======
-            <DropdownMenuItem
->>>>>>> 8b13b57 (commit)
-              onClick={() =>
-                onChangeAlertMessage(
-                  "inActive",
-                  `Are you sure you are going to disable ${username}?(Once disabled, this user data will not be deleted but only root admin can restore user status)`
-                )
-              }
-            >
-              <BadgeX className="h-4 w-4 mr-2" />
-              Disable
-<<<<<<< HEAD
-            </DropdownMenuItem> */}
-=======
-            </DropdownMenuItem>
->>>>>>> 8b13b57 (commit)
+           
           </DropdownMenuContent>
         </DropdownMenu>
         <AlertDialog
@@ -217,14 +195,14 @@ export const Cell = ({ row }: any) => {
             </AlertDialogDescription>
 
             <AlertDialogCancel onClick={() => cancel()}>
-              Cancel
+              Từ Chối
             </AlertDialogCancel>
             <AlertDialogAction asChild>
               <button
                 className="Button red"
                 onClick={() => onChangeStatus(id, status)}
               >
-                Confirm {loading ? <Loader className="animate-spin" /> : <></>}
+                Xác Nhận {loading ? <Loader className="animate-spin" /> : <></>}
               </button>
             </AlertDialogAction>
           </AlertDialogContent>

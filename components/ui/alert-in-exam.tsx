@@ -25,13 +25,13 @@ export const AlertInExam = ({ courseId, moduleId }: any) => {
     <AlertDialog open={true}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Note</AlertDialogTitle>
+          <AlertDialogTitle>Lưu Ý</AlertDialogTitle>
           <AlertDialogDescription>
-            Sorry you are currently doing test!!!
+            Xin Lỗi Nhưng Bạn Đang Làm Kiểm Tra!!!
           </AlertDialogDescription>
           <AlertDialogAction asChild>
             <button className="Button red" onClick={() => backToTest()}>
-              Back to exam
+              Quay Lại Bài Kiểm Tra
             </button>
           </AlertDialogAction>
         </AlertDialogHeader>

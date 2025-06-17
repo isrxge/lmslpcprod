@@ -44,14 +44,10 @@ export const Modal: React.FC<ModalProps> = ({
                 {exam.title} ({exam.passedCount}/{exam.totalUsers})
               </h3>
               <div className="mb-2">
-<<<<<<< HEAD
-                <h4 className="font-medium">Pass:</h4>
-=======
-                <h4 className="font-medium">Passed:</h4>
->>>>>>> 8b13b57 (commit)
+                <h4 className="font-medium">Đậu:</h4>
                 <ul className="space-y-2">
                   {exam.passedUsers.length === 0 ? (
-                    <li className="italic text-gray-500">Nobody</li>
+                    <li className="italic text-gray-500">Không Có Kết Quả</li>
                   ) : (
                     exam.passedUsers.map((user, index) => (
                       <li key={index} className="flex items-center space-x-2">
@@ -63,10 +59,10 @@ export const Modal: React.FC<ModalProps> = ({
                 </ul>
               </div>
               <div>
-                <h4 className="font-medium">Studying:</h4>
+                <h4 className="font-medium">Đang Học:</h4>
                 <ul className="space-y-2">
                   {exam.studyingUsers.length === 0 ? (
-                    <li className="italic text-gray-500">Nobody</li>
+                    <li className="italic text-gray-500">Không Có Kết Quả</li>
                   ) : (
                     exam.studyingUsers.map((user, index) => (
                       <li key={index} className="flex items-center space-x-2">
@@ -90,7 +86,7 @@ export const Modal: React.FC<ModalProps> = ({
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
             onClick={onClose}
           >
-            Close
+            Đóng
           </button>
         </div>
       </div>

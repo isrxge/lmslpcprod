@@ -27,28 +27,21 @@ export const MyActivity = ({ items }: MyActivityProps) => {
     <>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <Clock3 className="mr-2" />
-        My Activity
+        Hoạt Động Của Tôi
       </h2>
       <p className="mb-4 italic">
-<<<<<<< HEAD
         {/* Start studying now:{" "}
         <Link href="/search" className="text-blue-700 hover:underline">
           Browse courses
         </Link> */}
-        No activity
-=======
-        Start studying now:{" "}
-        <Link href="/search" className="text-blue-700 hover:underline">
-          Browse courses
-        </Link>
->>>>>>> 8b13b57 (commit)
+        Không Có Kết Quả
       </p>
     </>
   ) : (
     <div>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <Clock3 className="mr-2" />
-        My Activity
+        Hoạt Động Của Tôi
       </h2>
       <Carousel
         opts={{
@@ -57,10 +50,6 @@ export const MyActivity = ({ items }: MyActivityProps) => {
       >
         <CarouselContent>
           {items.map((item) => (
-<<<<<<< HEAD
-=======
-            console.log("Itmdas",item.progress),
->>>>>>> 8b13b57 (commit)
             <CarouselItem
               key={item?.course.id}
               className="md:basis-1/3 lg:basis-1/4"

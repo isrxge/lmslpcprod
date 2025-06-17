@@ -67,28 +67,16 @@ export const ChapterTitleForm = ({
     <div className="mt-6 border dark:text-white rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         <div className="flex items-center">
-<<<<<<< HEAD
-          Chapter title <Asterisk className="size-4" color="red" />
-=======
           Tên Học Phần <Asterisk className="size-4" color="red" />
->>>>>>> 8b13b57 (commit)
         </div>
 
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-<<<<<<< HEAD
-            <>Cancel</>
-          ) : (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit title
-=======
             <>Từ Chối</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
               Chỉnh Sửa
->>>>>>> 8b13b57 (commit)
             </>
           )}
         </Button>
@@ -118,11 +106,7 @@ export const ChapterTitleForm = ({
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-<<<<<<< HEAD
-                Save
-=======
                 Lưu
->>>>>>> 8b13b57 (commit)
               </Button>
             </div>
           </form>

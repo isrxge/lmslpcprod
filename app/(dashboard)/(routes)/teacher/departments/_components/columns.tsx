@@ -25,11 +25,7 @@ export const columns: ColumnDef<{
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Title</span>
-=======
           <span className="mr-2">Tên Phòng Ban</span>
->>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -43,17 +39,12 @@ export const columns: ColumnDef<{
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-<<<<<<< HEAD
-          <span className="mr-2">Department members</span>
-=======
           <span className="mr-2">Danh Sách Thành Viên Phòng Ban</span>
->>>>>>> 8b13b57 (commit)
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
     },
     cell: DepartmentUserCell,
-<<<<<<< HEAD
   }
   // ,
   // {
@@ -61,7 +52,4 @@ export const columns: ColumnDef<{
   //     accessorKey: "Action",
   //     cell: DepartmentUserCell,
   //   },
-=======
-  },
->>>>>>> 8b13b57 (commit)
 ];

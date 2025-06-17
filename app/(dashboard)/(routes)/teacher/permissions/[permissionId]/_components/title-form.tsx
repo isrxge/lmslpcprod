@@ -28,7 +28,7 @@ interface TitleFormProps {
 
 const formSchema = z.object({
   title: z.string().min(1, {
-    message: "Title is required",
+    message: "Tên Quyền Hạn Là Bắt Buộc",
   }),
 });
 
@@ -49,11 +49,11 @@ export const TitleForm = ({ initialData, permissionId }: TitleFormProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/permission/${permissionId}`, values);
-      toast.success("Permission updated");
+      toast.success("Quyền Hạn Đã Được Cập Nhật");
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
     }
   };
 
@@ -61,16 +61,16 @@ export const TitleForm = ({ initialData, permissionId }: TitleFormProps) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Permission title <Asterisk className="size-4" color="red" />
+          Tên Quyền Hạn <Asterisk className="size-4" color="red" />
         </div>
 
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Từ Chối</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Chỉnh Sửa
             </>
           )}
         </Button>
@@ -101,7 +101,7 @@ export const TitleForm = ({ initialData, permissionId }: TitleFormProps) => {
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Lưu
               </Button>
             </div>
           </form>

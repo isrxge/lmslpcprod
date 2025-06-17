@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-<<<<<<< HEAD
 
   poweredByHeader: false,
 
-=======
->>>>>>> 8b13b57 (commit)
   images: {
     remotePatterns: [
       {

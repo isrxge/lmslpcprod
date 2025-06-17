@@ -75,25 +75,25 @@ export const PermissionForm = ({ initialData, roleId, permission }: any) => {
       await axios.patch(`/api/role/${roleId}/permission`, {
         permissionList,
       });
-      toast.success("Role updated");
+      toast.success("Vai Trò Đã Được Cập Nhật");
       // toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
     }
   };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-        <span>Permissions</span>
+        <span>Quyền Hạn</span>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Từ Chối</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh Sửa
             </>
           )}
         </Button>
@@ -126,7 +126,7 @@ export const PermissionForm = ({ initialData, roleId, permission }: any) => {
           })}
           <div className="flex items-center gap-x-2">
             <Button onClick={() => onSubmit()} type="button">
-              Save
+              Lưu
             </Button>
           </div>
         </>

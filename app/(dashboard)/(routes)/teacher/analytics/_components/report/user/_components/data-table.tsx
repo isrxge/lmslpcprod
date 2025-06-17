@@ -12,12 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-<<<<<<< HEAD
 // import * as XLSX from "xlsx";
 import * as XLSX from "xlsx-js-style";
-=======
-import * as XLSX from "xlsx";
->>>>>>> 8b13b57 (commit)
 import {
   Table,
   TableBody,
@@ -66,11 +62,7 @@ export function DataTable<TData, TValue>({
     DateRange | undefined
   >();
   const [datePickerDisabled, setDatePickerDisabled] = React.useState(false); // State to manage date picker disable
-<<<<<<< HEAD
   const [canViewAll, setCanViewAll] = React.useState<boolean>(false);
-=======
-
->>>>>>> 8b13b57 (commit)
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const table = useReactTable({
     data: userList,
@@ -95,7 +87,6 @@ export function DataTable<TData, TValue>({
     },
   });
 
-<<<<<<< HEAD
   // Gọi API lấy danh sách user & đồng thời check quyền
   React.useEffect(() => {
     async function fetchUsers() {
@@ -112,8 +103,6 @@ export function DataTable<TData, TValue>({
     fetchUsers();
   }, []);
 
-=======
->>>>>>> 8b13b57 (commit)
   React.useEffect(() => {
     async function getDepartments() {
       let departmentList = await axios.get(`/api/departments`);
@@ -150,7 +139,6 @@ export function DataTable<TData, TValue>({
     const workbook = XLSX.utils.book_new();
     let exportList = [];
 
-<<<<<<< HEAD
     // const processUserList = (list: any[]) => {
     //   return list.map((user) => {
     //     let completedCourses = "";
@@ -256,52 +244,6 @@ export function DataTable<TData, TValue>({
         };
       });
     
-=======
-    const processUserList = (list: any[]) => {
-      return list.map((user) => {
-        let completedCourses = "";
-        let ongoingCourses = "";
-
-        user.ClassSessionRecord.forEach((session: any) => {
-          if (session.status === "finished") {
-            const endDate = new Date(session.endDate)
-              .toISOString()
-              .split("T")[0];
-            const [year, month, day] = endDate.split("-");
-            const formattedDate = `${day}/${month}/${year}`;
-            completedCourses += `\n${session.course.title}: completed on ${formattedDate}\nChapter: `;
-            session.course.modules.forEach((modules: any) => {
-              for (let i = 0; i < modules.module.UserProgress.length; i++) {
-                let progress = modules.module.UserProgress[i];
-                if (user.id == modules.module.UserProgress[i].userId) {
-                  completedCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
-                }
-              }
-            });
-          } else {
-            ongoingCourses += `${session.course.title}\nStudying\n`;
-            session.course.modules.forEach((modules: any) => { console.log("dsad",modules)
-              for (let i = 0; i < modules.module.UserProgress.length; i++) {
-                let progress = modules.module.UserProgress[i];
-                if (user.id == modules.module.UserProgress[i].userId) {
-                  ongoingCourses += `\n${modules.module.title}: ${progress.status} (${progress.progress})\n`;
-                }
-              }
-            });
-          }
-        });
-
-        return {
-          Name: user.username,
-          Score: user.star,
-          Email: user.email,
-          Department: user.Department.title,
-          "Completed Courses": completedCourses,
-          "Uncompleted Courses": ongoingCourses,
-        };
-      });
-    };
->>>>>>> 8b13b57 (commit)
 
     switch (filter) {
       case "All":
@@ -360,30 +302,19 @@ export function DataTable<TData, TValue>({
     }
 
     const worksheet = XLSX.utils.json_to_sheet(exportList);
-<<<<<<< HEAD
     
-=======
->>>>>>> 8b13b57 (commit)
     XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
 
     // Set column widths
     worksheet["!cols"] = [
-<<<<<<< HEAD
       { wch: 30 }, // Name column width
       { wch: 10 }, // Score column width
       { wch: 30 }, // Email column width
       { wch: 15 }, // Department column width
-=======
-      { wch: 20 }, // Name column width
-      { wch: 10 }, // Score column width
-      { wch: 30 }, // Email column width
-      { wch: 20 }, // Department column width
->>>>>>> 8b13b57 (commit)
       { wch: 50 }, // Completed Courses column width
       { wch: 50 }, // Ongoing Courses column width
     ];
 
-<<<<<<< HEAD
     const range = XLSX.utils.decode_range(worksheet["!ref"]!);
   for (let R = range.s.r; R <= range.e.r; ++R) {
     for (let C = range.s.c; C <= range.e.c; ++C) {
@@ -405,42 +336,20 @@ export function DataTable<TData, TValue>({
       };
     }
   }
-=======
-    // Bold the header row
-    const range = XLSX.utils.decode_range(worksheet["!ref"] || "");
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-      const cell_address = { c: C, r: range.s.r };
-      const cell_ref = XLSX.utils.encode_cell(cell_address);
-      if (worksheet[cell_ref]) {
-        worksheet[cell_ref].s = {
-          font: { bold: true },
-        };
-      }
-    }
->>>>>>> 8b13b57 (commit)
 
     const date = new Date();
     XLSX.writeFile(
       workbook,
-<<<<<<< HEAD
       `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`, {
         cellStyles: true,
       });
     
-=======
-      `${filter}_Users_${date.toISOString().split("T")[0]}.xlsx`
-    );
->>>>>>> 8b13b57 (commit)
   }
 
   function onDepartmentChange(departmentId: any) {
     table.getColumn("departmentId")?.setFilterValue(departmentId);
   }
-<<<<<<< HEAD
   // console.log("userList value:", userList);
-=======
-  console.log("userList value:", userList);
->>>>>>> 8b13b57 (commit)
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
@@ -454,23 +363,14 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-<<<<<<< HEAD
         {/* <select
-=======
-        <select
->>>>>>> 8b13b57 (commit)
           name="status"
           id="filterByStatus"
           onChange={(event) => onDepartmentChange(event.target.value)}
           className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
         >
-<<<<<<< HEAD
            <option value="">All Departments</option>
          {departments.map((item: any) => (
-=======
-          <option value="">All Departments</option>
-          {departments.map((item: any) => (
->>>>>>> 8b13b57 (commit)
             <option
               key={item.id}
               value={item.id}
@@ -479,7 +379,6 @@ export function DataTable<TData, TValue>({
               {item.title}
             </option>
           ))}
-<<<<<<< HEAD
         </select> */}
         {canViewAll && (
   <select
@@ -488,7 +387,7 @@ export function DataTable<TData, TValue>({
     onChange={(event) => onDepartmentChange(event.target.value)}
     className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
   >
-    <option value="">All Departments</option>
+    <option value="">Tất Cả Phòng Ban</option>
     {departments.map((item: any) => (
       <option
         key={item.id}
@@ -500,41 +399,12 @@ export function DataTable<TData, TValue>({
     ))}
   </select>
 )}
-        {/* <div className="flex gap-2 items-center">
-=======
-        </select>
-        <div className="flex gap-2 items-center">
->>>>>>> 8b13b57 (commit)
-          <DatePickerWithRange
-            placeHolder={"Filter by date for complete course"}
-            date={dateRangeEnd}
-            setDate={setDateRangeEnd}
-            className="max-w-sm"
-            disabled={datePickerDisabled} // Pass the disabled state to the date picker
-          />
-          {dateRangeEnd != undefined ? (
-            <button
-              onClick={() => {
-                setDateRangeEnd(undefined);
-                setDatePickerDisabled(false); // Enable date picker on cancel
-              }}
-            >
-              X
-            </button>
-          ) : (
-            <></>
-          )}
-<<<<<<< HEAD
-        </div> */}
-=======
-        </div>
->>>>>>> 8b13b57 (commit)
         <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button>
                 <FileDown className="h-4 w-4 mr-2" />
-                Select report <ChevronDown />
+                Chọn Loại Báo Cáo <ChevronDown />
               </Button>
             </DropdownMenuTrigger>
             {userList.length == 0 ? (
@@ -543,44 +413,16 @@ export function DataTable<TData, TValue>({
               <DropdownMenuContent>
                 {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("All")}>
-                    Report (All)
+                    Báo Cáo (Tất Cả)
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem
                     onClick={() => getSheetData("Selected Rows")}
                   >
-                    Report (Selected Rows)
+                    Báo Cáo (Các Dữ Liệu Được Chọn)
                   </DropdownMenuItem>
                 )}
-<<<<<<< HEAD
-                {/* {table.getSelectedRowModel().rows.length == 0 ? (
-=======
-                {table.getSelectedRowModel().rows.length == 0 ? (
->>>>>>> 8b13b57 (commit)
-                  <DropdownMenuItem onClick={() => getSheetData("This Week")}>
-                    Report (This Week)
-                  </DropdownMenuItem>
-                ) : (
-                  <></>
-                )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
-                  <DropdownMenuItem onClick={() => getSheetData("This Month")}>
-                    Report (This Month)
-                  </DropdownMenuItem>
-                ) : (
-                  <></>
-                )}
-                {table.getSelectedRowModel().rows.length == 0 ? (
-                  <DropdownMenuItem onClick={() => getSheetData("This Year")}>
-                    Report (This Year)
-                  </DropdownMenuItem>
-                ) : (
-                  <></>
-<<<<<<< HEAD
-                )} */}
-=======
-                )}
->>>>>>> 8b13b57 (commit)
+               
               </DropdownMenuContent>
             )}
           </DropdownMenu>

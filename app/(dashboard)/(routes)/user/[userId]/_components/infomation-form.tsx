@@ -31,11 +31,7 @@ const UserInformation = ({ user }: any) => {
       className=" text-black  grid grid-cols-2 gap-4 p-4 rounded-md border bg-gradient-to-r from-gray-800 to-blue-600 shadow-md"
     >
       {/* Left Column */}
-<<<<<<< HEAD
       {/* <div className="">
-=======
-      <div className="">
->>>>>>> 8b13b57 (commit)
         <label className="block text-white text-sm font-bold mb-2">ID</label>
         <input
           type="text"
@@ -43,19 +39,11 @@ const UserInformation = ({ user }: any) => {
           readOnly
           className="w-full bg-gray-100 border border-gray-300 rounded-md p-2 pointer-events-none"
         />
-<<<<<<< HEAD
       </div> */}
  
       <div>
         <label className="block text-white text-sm font-bold mb-2">
-          Full Name
-=======
-      </div>
- 
-      <div>
-        <label className="block text-white text-sm font-bold mb-2">
-          Username
->>>>>>> 8b13b57 (commit)
+          Họ Và Tên
         </label>
         <input
           type="text"
@@ -78,7 +66,7 @@ const UserInformation = ({ user }: any) => {
  
       <div>
         <label className="block text-white text-sm font-bold mb-2">
-          Department
+          Phòng Ban
         </label>
         <div className="relative">
           <input
@@ -105,7 +93,7 @@ const UserInformation = ({ user }: any) => {
       </div>
  
       <div>
-        <label className="block text-white text-sm font-bold mb-2">Star</label>
+        <label className="block text-white text-sm font-bold mb-2">Điểm</label>
         <input
           type="text"
           value={user?.star}

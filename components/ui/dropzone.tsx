@@ -90,9 +90,9 @@ const Dropzone = ({ className }: any) => {
         <div className="flex flex-col items-center justify-center gap-4">
           <ArrowUpTrayIcon className="h-5 w-5 fill-current" />
           {isDragActive ? (
-            <p>Drop the files here ...</p>
+            <p>Thả Files Vào Đây ...</p>
           ) : (
-            <p>Drag & drop files here, or click to select files</p>
+            <p>Kéo Và Thả File Vào Đây Hoặc Bấm Vào Để Chọn File</p>
           )}
         </div>
       </div>
@@ -100,7 +100,7 @@ const Dropzone = ({ className }: any) => {
       {/* Preview */}
       <section className="mt-10">
         <div className="flex gap-4">
-          <h2 className="title text-3xl font-semibold">Preview</h2>
+          <h2 className="title text-3xl font-semibold">Xem Trước</h2>
         </div>
 
         {/* Accepted files */}

@@ -33,11 +33,7 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
   if (
     checkUser
       .map((item: { permission: { title: any } }) => item.permission.title)
-<<<<<<< HEAD
       .indexOf("View user permission") == -1
-=======
-      .indexOf("User management permission") == -1
->>>>>>> 8b13b57 (commit)
   ) {
     return redirect("/");
   }
@@ -80,12 +76,12 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
           className="flex items-center text-sm hover:opacity-75 transition mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to users list
+          Quay Trở Lại Quản Lý Người Dùng
         </Link>
         <div className="text-center mb-4">
           <Avatar imageUrl={user?.imageUrl} />
           <p className="mt-2 text-lg font-semibold">
-            Information about {user?.username}
+            Thông Tin Về {user?.username}
           </p>
         </div>
 

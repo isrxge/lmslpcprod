@@ -1,10 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { ReportTabs } from "./_components/report-tabs";
-<<<<<<< HEAD
 import { db } from "@/lib/db";
-=======
->>>>>>> 8b13b57 (commit)
 
 // import Image from "next/image";
 // import { getAnalytics } from "@/actions/get-analytics";
@@ -18,7 +15,6 @@ const AnalyticsPage = async () => {
   if (!userId) {
     return redirect("/");
   }
-<<<<<<< HEAD
   const checkUser = await db.userPermission.findMany({
     where: {
       userId: userId,
@@ -40,8 +36,6 @@ const AnalyticsPage = async () => {
   ) {
     return redirect("/");
   }
-=======
->>>>>>> 8b13b57 (commit)
 
   // const {
   //   data,

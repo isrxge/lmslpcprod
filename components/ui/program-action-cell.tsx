@@ -45,7 +45,7 @@ export const ProgramActionCell = ({ row }: any) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-4 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">Mở Mục Lục</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -53,7 +53,7 @@ export const ProgramActionCell = ({ row }: any) => {
           <Link href={`/teacher/programs/${id}`}>
             <DropdownMenuItem>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh Sửa
             </DropdownMenuItem>
           </Link>
         </DropdownMenuContent>

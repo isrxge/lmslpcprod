@@ -21,7 +21,7 @@ export const ProgramCourseCell = ({ row }: any) => {
         className="text-blue-500 underline"
         onClick={() => setModalOpen(true)}
       >
-        Detail ({courseWithProgram.length})
+        Chi Tiết ({courseWithProgram.length})
       </button>
       <Modal
         isOpen={isModalOpen}

@@ -137,11 +137,11 @@ export const PermissionForm = ({
       await axios.patch(`/api/user/${userId}/permission`, {
         permissionList,
       });
-      toast.success("Role updated");
+      toast.success("Vai Trò/Quyền Hạn Đã Được Cập Nhật");
       // toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
     }
   };
   useEffect(() => {
@@ -166,14 +166,14 @@ export const PermissionForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-        <h2 className="text-lg">Permissions</h2>
+        <h2 className="text-lg">Quyền Hạn</h2>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Từ Chối</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh Sửa
             </>
           )}
         </Button>
@@ -181,7 +181,7 @@ export const PermissionForm = ({
       {isEditing && (
         <div className="dark:text-zinc-50 mt-4">
           <h3 className="text-md font-semibold">
-            Set permissions based on role
+            Điều Chỉnh Quyền Hạn Dựa Theo Vai Trò
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
             {roleList.map((item: any, i: any) => {
@@ -203,7 +203,7 @@ export const PermissionForm = ({
             })}
           </div>
           <h3 className="text-md font-semibold mt-6">
-            Or customize permissions
+            Hoặc Chọn Quyền Hạn
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
             {permission.map((item: any, i: any) => {
@@ -232,7 +232,7 @@ export const PermissionForm = ({
           </div>
           <div className="flex items-center gap-x-2 mt-4">
             <Button onClick={onSubmit} type="button" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save"}
+              {isSubmitting ? "Đang Lưu..." : "Lưu"}
             </Button>
           </div>
         </div>

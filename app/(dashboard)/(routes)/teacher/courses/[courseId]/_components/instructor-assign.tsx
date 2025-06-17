@@ -5,11 +5,7 @@ import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Asterisk, Pencil, TrendingUp } from "lucide-react";
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
-=======
-import { useState } from "react";
->>>>>>> 8b13b57 (commit)
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -21,10 +17,7 @@ interface InstructorFormProps {
   initialData: { Instructor: any[] };
   courseId: string;
   Instructor: any[];
-<<<<<<< HEAD
   readOnly?: boolean;
-=======
->>>>>>> 8b13b57 (commit)
 }
 const Instructor = z.object({
   id: z.string(),
@@ -36,7 +29,6 @@ export const InstructorAssignForm = ({
   initialData,
   courseId,
   Instructor,
-<<<<<<< HEAD
   readOnly = false
 }: InstructorFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -44,13 +36,6 @@ export const InstructorAssignForm = ({
   const [assignedInstructor, setAssignedInstructor] = useState<any>(null);
 
   const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
-=======
-}: InstructorFormProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [instructorList, setInstructorList] = useState(Instructor);
-
-  const toggleEdit = () => setIsEditing((current) => !current);
->>>>>>> 8b13b57 (commit)
 
   const router = useRouter();
 
@@ -58,28 +43,12 @@ export const InstructorAssignForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialData.Instructor,
   });
-<<<<<<< HEAD
 
   useEffect(() => {
     // Check if any instructor is assigned and update the state
     const assigned = instructorList.find((instructor: any) => instructor.isAssign);
     setAssignedInstructor(assigned || null);
   }, [instructorList]);
-
-  // const onChangeInstructorList = async (i: any) => {
-  //   let newList = [...instructorList];
-  //   for (let i = 0; i < newList.length; i++) {
-  //     newList[i].isAssign = false;
-  //   }
-  //   newList[i].isAssign = true;
-  //   // if (newList[i].isAssign) {
-  //   //   newList[i].isAssign = false;
-  //   // } else {
-  //   //   newList[i].isAssign = true;
-  //   // }
-  //   setInstructorList(newList);
-  // };
-  // // const { isSubmitting, isValid } = form.formState;
 
   const onChangeInstructorList = async (i: any) => {
     let newList = [...instructorList];
@@ -88,41 +57,17 @@ export const InstructorAssignForm = ({
     newList[i].isAssign = true;
     setInstructorList(newList);
   };
-=======
-  const onChangeInstructorList = async (i: any) => {
-    let newList = [...instructorList];
-    for (let i = 0; i < newList.length; i++) {
-      newList[i].isAssign = false;
-    }
-    newList[i].isAssign = true;
-    // if (newList[i].isAssign) {
-    //   newList[i].isAssign = false;
-    // } else {
-    //   newList[i].isAssign = true;
-    // }
-    setInstructorList(newList);
-  };
-  // const { isSubmitting, isValid } = form.formState;
->>>>>>> 8b13b57 (commit)
 
   const onSubmit = async () => {
     try {
       await axios.patch(`/api/courses/${courseId}/assign`, {
         instructorList,
       });
-<<<<<<< HEAD
-      toast.success("Instructor Assigned");
-      toggleEdit();
-      router.refresh();
-    } catch {
-      toast.error("Something went wrong");
-=======
       toast.success("Đã Cập Nhật Người Hướng Dẫn");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
->>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -130,18 +75,17 @@ export const InstructorAssignForm = ({
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-<<<<<<< HEAD
-          Instructor
+          Người Hướng Dẫn
           <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Từ Chối</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh Sửa
             </>
           )}
         </Button>
@@ -153,28 +97,11 @@ export const InstructorAssignForm = ({
           {assignedInstructor ? (
             <div>{assignedInstructor.username} ({assignedInstructor.Department.title})</div>
           ) : (
-            <div className="italic text-slate-500">No instructor assigned.</div>
+            <div className="italic text-slate-500">Chưa Có Người Hướng Dẫn.</div>
           )}
         </div>
       )}
 
-=======
-          Người Hướng Dẫn
-          {/* <Asterisk className="size-4" color="red" /> */}
-        </div>
-
-        <Button onClick={toggleEdit} variant="ghost">
-          {isEditing ? (
-            <>Từ Chối</>
-          ) : (
-            <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Chỉnh Sửa
-            </>
-          )}
-        </Button>
-      </div>
->>>>>>> 8b13b57 (commit)
       {isEditing && (
         <Form {...form}>
           <form
@@ -204,11 +131,7 @@ export const InstructorAssignForm = ({
 
             <div className="flex items-center gap-x-2">
               <Button type="submit" onClick={() => onSubmit()}>
-<<<<<<< HEAD
-                Save
-=======
                 Lưu
->>>>>>> 8b13b57 (commit)
               </Button>
             </div>
           </form>

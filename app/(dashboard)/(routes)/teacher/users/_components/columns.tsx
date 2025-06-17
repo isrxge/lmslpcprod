@@ -12,7 +12,7 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "username",
     header: () => {
-      return <div>Name</div>;
+      return <div>Tên User</div>;
     },
     cell: ({ row }) => {
       const { username, imageUrl }: any = row.original;
@@ -54,7 +54,7 @@ export const columns: ColumnDef<User>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Department</span>
+          <span className="mr-2">Phòng Ban</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -69,7 +69,7 @@ export const columns: ColumnDef<User>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Star</span>
+          <span className="mr-2">Điểm</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -83,7 +83,7 @@ export const columns: ColumnDef<User>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Status</span>
+          <span className="mr-2">Trạng Thái</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -100,7 +100,7 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center cursor-pointer">
-          <span className="mr-2">Is user taking an exam?</span>
+          <span className="mr-2">Người Dùng Có Đang Làm Kiểm Tra?</span>
         </span>
       );
     },

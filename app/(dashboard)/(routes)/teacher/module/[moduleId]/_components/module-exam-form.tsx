@@ -15,10 +15,7 @@ import toast from "react-hot-toast";
 import * as XLSX from "xlsx";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-<<<<<<< HEAD
 import { title } from "process";
-=======
->>>>>>> 8b13b57 (commit)
 const Link = dynamic(() => import("next/link"), {
   ssr: false,
 });
@@ -28,7 +25,6 @@ export default function Exam({ chapter }: any) {
   const [timeLimit, setTimeLimit]: any = useState(60);
   const [passPercentage, setPassPercentage] = useState(80);
   const [retakeTime, setRetakeTime] = useState(1);
-<<<<<<< HEAD
   const [examFile, setExamFile] = useState<File | null>(null);
   const [examFileUrl, setExamFileUrl] = useState<string>("");
 
@@ -47,15 +43,6 @@ export default function Exam({ chapter }: any) {
  if (mRes.data.examFilePath) {
      setExamFileUrl(mRes.data.examFilePath);   // <-- gán URL để hiển thị nút
    }
-=======
-  useEffect(() => {
-    async function loadQuestion() {
-      let questionList = await axios.get(
-        `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam`
-      );
-
-      setQuizList(questionList.data.Category);
->>>>>>> 8b13b57 (commit)
       setPassPercentage(chapter.scoreLimit == null ? 80 : chapter.scoreLimit);
       setRetakeTime(chapter.maxAttempt == null ? 1 : chapter.maxAttempt);
 
@@ -83,11 +70,7 @@ export default function Exam({ chapter }: any) {
   function numOfAppearanceOnChange(number: number, index: number) {
     const newQuizsList = [...quizList];
     if (isNaN(number)) {
-<<<<<<< HEAD
       alert("The number of appeared questions must be number.");
-=======
-      // alert("The number of appeared questions must be number.");
->>>>>>> 8b13b57 (commit)
       newQuizsList[index].numOfAppearance = parseInt(
         newQuizsList[index].question.length
       );
@@ -95,15 +78,9 @@ export default function Exam({ chapter }: any) {
       return;
     }
     if (newQuizsList[index].question.length < number) {
-<<<<<<< HEAD
       alert(
         "The number of appeared questions cannot exceeded the number of questions in the category."
       );
-=======
-      // alert(
-      //   "The number of appeared questions cannot exceeded the number of questions in the category."
-      // );
->>>>>>> 8b13b57 (commit)
       newQuizsList[index].numOfAppearance = parseInt(
         newQuizsList[index].question.length
       );
@@ -185,11 +162,7 @@ export default function Exam({ chapter }: any) {
       parseInt(e.target.value) > 5 ||
       isNaN(parseInt(e.target.value))
     ) {
-<<<<<<< HEAD
-      alert("Invalid score");
-=======
       alert("Điểm Không Hợp Lệ");
->>>>>>> 8b13b57 (commit)
     }
     newQuizsList[index].score = e.target.value;
     setQuizList([...newQuizsList]);
@@ -233,13 +206,9 @@ export default function Exam({ chapter }: any) {
           .indexOf(true);
 
         if (checkExistAnswer !== -1) {
-<<<<<<< HEAD
-          alert("Sorry, only one correct answer for single choice question");
-=======
           alert(
             "Xin Lỗi, Bạn Chỉ Được Chọn 1 Câu Trả Lời Đúng Đối Với Loại Câu Hỏi Single Choice"
           );
->>>>>>> 8b13b57 (commit)
           return;
         }
       }
@@ -253,38 +222,23 @@ export default function Exam({ chapter }: any) {
   const router = useRouter();
   async function submit() {
     if (quizList.length === 0) {
-<<<<<<< HEAD
-      alert("Please add some questions");
-    } else {
-      if (timeLimit == 0) {
-        alert("Please set time for this exam");
-=======
       alert("Vui Lòng Thêm Câu Hỏi");
     } else {
       if (timeLimit == 0) {
         alert("Vui Lòng Thêm Thời Lượng Bài Kiểm Tra");
->>>>>>> 8b13b57 (commit)
         return;
       }
       const newQuizsList = [...quizList];
       for (let i = 0; i < newQuizsList.length; i++) {
         if (newQuizsList[i].question.length < 1) {
-<<<<<<< HEAD
-          alert("Sorry, each category must have at least one question");
-=======
           alert("Xin Lỗi, Mỗi Danh Mục Phải Có Một Câu Hỏi");
->>>>>>> 8b13b57 (commit)
           return;
         } else {
           for (let j = 0; j < newQuizsList[i].question.length; j++) {
             if (newQuizsList[i].question[j].answer.length < 2) {
-<<<<<<< HEAD
-              alert("Sorry, each question must have at least two answer");
-=======
               alert(
                 "Xin Lỗi, Mỗi Câu Hỏi Multi Choice Phải Có Ít Nhất Hai Câu Trả Lời Đúng"
               );
->>>>>>> 8b13b57 (commit)
               return;
             }
           }
@@ -297,11 +251,7 @@ export default function Exam({ chapter }: any) {
       );
       for (let i = 0; i < checkAnswersList.length; i++) {
         if (checkAnswersList[i].indexOf(-1) !== -1) {
-<<<<<<< HEAD
-          alert("Sorry, all questions must have at least one correct answer");
-=======
           alert("Xin Lỗi, Mỗi Câu Hỏi Phải Có Ít Nhất Một Câu Trả Lời Đúng");
->>>>>>> 8b13b57 (commit)
           return;
         }
       }
@@ -314,11 +264,7 @@ export default function Exam({ chapter }: any) {
             ].answer.filter((item: any) => item.isCorrect == true);
             if (checkAnswersListType.length > 1) {
               alert(
-<<<<<<< HEAD
-                "Sorry, there can only be one correct answer in single choice question"
-=======
                 "Xin Lỗi, Mỗi Câu Hỏi Single Choice Chỉ Có Thể Có Duy Nhất Một Câu Trả Lời Đúng"
->>>>>>> 8b13b57 (commit)
               );
               return;
             }
@@ -330,15 +276,10 @@ export default function Exam({ chapter }: any) {
       let values = {
         title: textTitle,
       };
-<<<<<<< HEAD
       const moduleId = chapter.id;
       await axios.patch(
         // `/api/courses/${chapter?.courseId}/chapters/${chapter?.id}`,
         `/api/module/${moduleId}`,
-=======
-      await axios.patch(
-        `/api/courses/${chapter?.courseId}/chapters/${chapter?.id}`,
->>>>>>> 8b13b57 (commit)
         values
       );
     }
@@ -347,7 +288,6 @@ export default function Exam({ chapter }: any) {
       scoreLimit: passPercentage,
       maxAttempt: parseInt(retakeTime + ""),
     };
-<<<<<<< HEAD
     const moduleId = chapter.id;
     await axios.patch(
       // `/api/courses/${chapter?.courseId}/chapters/${chapter?.id}`,
@@ -373,7 +313,7 @@ export default function Exam({ chapter }: any) {
       setExamFileUrl(data.url); // lưu URL để hiển thị nút tải
     }
 
-    toast.success("Exam updated");
+    toast.success("Bài Kiểm Tra Đã Được Cập Nhật");
     router.push(
       // `/teacher/courses/${chapter?.courseId}/chapters/${chapter?.id}`
       `/teacher/module/${moduleId}`
@@ -382,23 +322,6 @@ export default function Exam({ chapter }: any) {
     let questionList = await axios.get(
       // `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam`
       `/api/module/${moduleId}/category/exam`
-=======
-    await axios.patch(
-      `/api/courses/${chapter?.courseId}/chapters/${chapter?.id}`,
-      values
-    );
-    await axios.post(
-      `/api/courses/${chapter?.courseId}/chapters/${chapter?.id}/category/exam`,
-      quizList
-    );
-    toast.success("Bài Kiểm Tra Đã Được Cập Nhật");
-    router.push(
-      `/teacher/courses/${chapter?.courseId}/chapters/${chapter?.id}`
-    );
-    router.refresh();
-    let questionList = await axios.get(
-      `/api/courses/${chapter.courseId}/chapters/${chapter.id}/category/exam`
->>>>>>> 8b13b57 (commit)
     );
 
     setQuizList(questionList.data.Category);
@@ -452,19 +375,12 @@ export default function Exam({ chapter }: any) {
       };
       // setFileName(file.name);
     } else {
-<<<<<<< HEAD
-      alert("Invalid file format");
-=======
       alert("File Không Hợp Lệ");
->>>>>>> 8b13b57 (commit)
     }
   };
   const handleFileFull = (e: { target: any }) => {
     const file = e.target.files[0];
-<<<<<<< HEAD
     setExamFile(file);
-=======
->>>>>>> 8b13b57 (commit)
     let newQuizList: any = [];
 
     if (!file) return;
@@ -514,11 +430,7 @@ export default function Exam({ chapter }: any) {
       };
       // setFileName(file.name);
     } else {
-<<<<<<< HEAD
-      alert("Invalid file format");
-=======
       alert("File Không Hợp Lệ");
->>>>>>> 8b13b57 (commit)
     }
   };
   const customSplit = (array: string) => {
@@ -543,17 +455,10 @@ export default function Exam({ chapter }: any) {
       <div className="w-full p-8 " suppressHydrationWarning={true}>
         <div className="pb-3">
           <label className="block text-3xl font-bold mb-2 text-center">
-<<<<<<< HEAD
-            Create Exam
-          </label>
-
-          <label className="block text-lg mt-2">Click</label>
-=======
             Tạo Bài Kiểm Tra
           </label>
 
           <label className="block text-lg mt-2">Nhấn</label>
->>>>>>> 8b13b57 (commit)
           <Link
             suppressHydrationWarning={true}
             download="Exam_Format_Category"
@@ -562,17 +467,9 @@ export default function Exam({ chapter }: any) {
             className="text-blue-600 hover:underline cursor-pointer"
             contextMenu="Here"
           >
-<<<<<<< HEAD
-            here
-          </Link>
-          <label className="block text-lg mt-2">
-            to download the category format.
-          </label>
-=======
             Vào Đây
           </Link>
           <label className="block text-lg mt-2">Để Tải Format Danh Mục.</label>
->>>>>>> 8b13b57 (commit)
         </div>
         <div className="flex flex-row w-full">
           <div className="grow-0 mr-2 w-1/3">
@@ -580,22 +477,14 @@ export default function Exam({ chapter }: any) {
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="textTitle"
             >
-<<<<<<< HEAD
-              Enter exam title
-=======
               Điền Tên Bài Kiểm Tra
->>>>>>> 8b13b57 (commit)
             </label>
             <input
               type="text"
               id="textTitle"
               name="text_title"
               className="w-full px-4 py-2 border rounded focus:outline-none border-black"
-<<<<<<< HEAD
-              placeholder="Exam title"
-=======
               placeholder="Tên Bài Kiểm Tra"
->>>>>>> 8b13b57 (commit)
               value={textTitle}
               onChange={(e) => setTextTitle(e.target.value)}
             />
@@ -606,11 +495,7 @@ export default function Exam({ chapter }: any) {
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="passPercentage"
             >
-<<<<<<< HEAD
-              % to pass
-=======
               % Để Đậu
->>>>>>> 8b13b57 (commit)
             </label>
             <select
               className="px-4 py-2 border rounded focus:outline-none border-black "
@@ -628,11 +513,7 @@ export default function Exam({ chapter }: any) {
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="examTime"
             >
-<<<<<<< HEAD
-              Enter exam time
-=======
               Nhập Thời Lượng Kiểm Tra
->>>>>>> 8b13b57 (commit)
             </label>
 
             <input
@@ -644,45 +525,9 @@ export default function Exam({ chapter }: any) {
               value={timeLimit}
               onChange={(e: any) => setTimeLimit(e.target.value)}
             />
-<<<<<<< HEAD
-            <span className="px-4">minutes</span>
-          </div>
-          <div className="grow-0 mr-2">
-=======
             <span className="px-4">Phút</span>
           </div>
-          {/* <div className="grow-0 mr-2">
->>>>>>> 8b13b57 (commit)
-            <label
-              className="block text-sm font-medium text-gray-700 mb-1"
-              htmlFor="retakeTime"
-            >
-              Enter exam attempt
-            </label>
-            <select
-              name="attempt"
-              id="retakeTime"
-              value={retakeTime}
-              onChange={(e: any) => setRetakeTime(e.target.value)}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-<<<<<<< HEAD
-              {/* <option value="5">5</option> */}
-            </select>
-          </div>
-        </div>
-        <span>
-          <strong>Option 1:</strong>
-        </span>
-        <label className="block text-lg mb-2">Import exam here</label>
-        <div className="flex items-center w-full">
-          <label className="w-64 flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md cursor-pointer">
-            <Upload className="h-4 w-4 mr-2" />
-            <span>Choose File category</span>
-=======
-            </select>
-          </div> */}
+          
         </div>
         <span>
           <strong>Lựa Chọn 1:</strong>
@@ -692,7 +537,6 @@ export default function Exam({ chapter }: any) {
           <label className="w-64 flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md cursor-pointer">
             <Upload className="h-4 w-4 mr-2" />
             <span>Chọn File Danh Mục</span>
->>>>>>> 8b13b57 (commit)
             <input
               className="hidden"
               type="file"
@@ -705,16 +549,6 @@ export default function Exam({ chapter }: any) {
             />
           </label>
           <span className="ml-4 text-gray-500">
-<<<<<<< HEAD
-            (Accepted formats: .xlsx, .xls)
-          </span>
-        </div>
-        <span>
-          <strong>Option 2:</strong>
-        </span>
-        <label className="block text-lg mb-2">
-          You can create a category here
-=======
             (Format Cho Phép: .xlsx, .xls)
           </span>
         </div>
@@ -723,7 +557,6 @@ export default function Exam({ chapter }: any) {
         </span>
         <label className="block text-lg mb-2">
           Danh Mục Có Thể Được Tạo Ở Đây
->>>>>>> 8b13b57 (commit)
         </label>
         <div className="flex">
           <button
@@ -731,8 +564,7 @@ export default function Exam({ chapter }: any) {
             onClick={() => addCategory()}
           >
             <PlusCircle className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-            Category
+            Danh Mục
           </button>
           {examFileUrl && (
             <a
@@ -740,24 +572,15 @@ export default function Exam({ chapter }: any) {
               download
               className="bg-green-600 text-white px-4 py-2 rounded ml-2 inline-flex items-center"
             >
-              Download Exam File
+              Tải File Câu Hỏi
             </a>
           )}
-=======
-            Danh Mục
-          </button>
-
->>>>>>> 8b13b57 (commit)
           <button
             className="bg-black text-white px-4 py-2 rounded flex items-center ml-2"
             onClick={() => submit()}
           >
             <Save className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-            Save
-=======
             Lưu
->>>>>>> 8b13b57 (commit)
           </button>
         </div>
         {quizList.map((category: any, index: any) => {
@@ -766,11 +589,7 @@ export default function Exam({ chapter }: any) {
               key={category.id}
               className="my-4 p-4 border rounded  shadow-md relative"
             >
-<<<<<<< HEAD
-              <label className="block text-lg mt-2">Click</label>
-=======
               <label className="block text-lg mt-2">Nhấn</label>
->>>>>>> 8b13b57 (commit)
               <Link
                 suppressHydrationWarning={true}
                 download="Exam_Format_Question"
@@ -778,17 +597,10 @@ export default function Exam({ chapter }: any) {
                 target="_blank"
                 className="text-blue-600 hover:underline cursor-pointer"
               >
-<<<<<<< HEAD
-                here
-              </Link>
-              <label className="block text-lg mt-2">
-                to download the question format.
-=======
                 Vào Đây
               </Link>
               <label className="block text-lg mt-2">
                 Để Tải Format Câu Hỏi.
->>>>>>> 8b13b57 (commit)
               </label>
               <button
                 className="bg-gray-600 text-white p-2 rounded-full absolute top-2 right-2"
@@ -801,11 +613,7 @@ export default function Exam({ chapter }: any) {
                 name={category.id + " name"}
                 value={category.title}
                 className="w-full p-2 border rounded focus:outline-none border-black"
-<<<<<<< HEAD
-                placeholder="Category title"
-=======
                 placeholder="Tên Danh Mục"
->>>>>>> 8b13b57 (commit)
                 onChange={(e: any) => categoryOnChangeText(e, index)}
               />
               <input
@@ -813,11 +621,7 @@ export default function Exam({ chapter }: any) {
                 id="numOfAppearance"
                 name="text_numOfAppearance"
                 className="w-full px-4 py-2 border rounded focus:outline-none border-black"
-<<<<<<< HEAD
-                placeholder="How many questions of this category will appear in the test ?"
-=======
                 placeholder="Có Bao Nhiêu Câu Hỏi Trong Danh Mục Này ?"
->>>>>>> 8b13b57 (commit)
                 value={category.numOfAppearance}
                 onChange={(e) =>
                   numOfAppearanceOnChange(parseInt(e.target.value), index)
@@ -825,15 +629,6 @@ export default function Exam({ chapter }: any) {
               />
 
               <span>
-<<<<<<< HEAD
-                <strong>Option 1:</strong>
-              </span>
-              <label className="block text-lg mb-2">Import question here</label>
-              <div className="flex items-center w-full">
-                <label className="w-64 flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md cursor-pointer">
-                  <Upload className="h-4 w-4 mr-2" />
-                  <span>Choose File</span>
-=======
                 <strong>Lựa Chọn 1:</strong>
               </span>
               <label className="block text-lg mb-2">Nhập Câu Hỏi Tại Đây</label>
@@ -841,7 +636,6 @@ export default function Exam({ chapter }: any) {
                 <label className="w-64 flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md cursor-pointer">
                   <Upload className="h-4 w-4 mr-2" />
                   <span>Chọn File</span>
->>>>>>> 8b13b57 (commit)
                   <input
                     className="hidden"
                     type="file"
@@ -852,33 +646,21 @@ export default function Exam({ chapter }: any) {
                   />
                 </label>
                 <span className="ml-4 text-gray-500">
-<<<<<<< HEAD
-                  (Accepted formats: .xlsx, .xls)
-=======
                   (Format Cho Phép: .xlsx, .xls)
->>>>>>> 8b13b57 (commit)
                 </span>
               </div>
               <span>
                 <strong>Option 2:</strong>
               </span>
               <label className="block text-lg mb-2">
-<<<<<<< HEAD
-                You can create a question here
-=======
                 Câu Hỏi Có Thể Được Tạo Tại Đây
->>>>>>> 8b13b57 (commit)
               </label>
               <button
                 className="bg-black text-white px-4 py-2 rounded flex items-center"
                 onClick={() => addQuiz(index)}
               >
                 <PlusCircle className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-                Question
-=======
                 Câu Hỏi
->>>>>>> 8b13b57 (commit)
               </button>
               {category.question.map((quiz: any, jindex: any) => {
                 return (
@@ -900,11 +682,7 @@ export default function Exam({ chapter }: any) {
                           className="block text-sm font-medium text-gray-700 mb-1"
                           htmlFor="textTitle"
                         >
-<<<<<<< HEAD
-                          Enter question
-=======
                           Nhập Câu Hỏi Tại Đây
->>>>>>> 8b13b57 (commit)
                         </label>
                         <textarea
                           name={quiz.id + " name"}
@@ -916,11 +694,7 @@ export default function Exam({ chapter }: any) {
                           }
                         />
                       </div>
-<<<<<<< HEAD
-                      Question score
-=======
                       Điểm Câu Hỏi
->>>>>>> 8b13b57 (commit)
                       <input
                         type="text"
                         value={quiz.score}
@@ -932,11 +706,7 @@ export default function Exam({ chapter }: any) {
                           className="block text-sm font-medium text-gray-700 mb-1"
                           htmlFor="textTitle"
                         >
-<<<<<<< HEAD
-                          Type
-=======
                           Loại Câu Hỏi
->>>>>>> 8b13b57 (commit)
                         </label>
                         <select
                           className="w-full p-2 border rounded focus:outline-none border-black"
@@ -956,11 +726,7 @@ export default function Exam({ chapter }: any) {
                           onChange={(e) => isCompulsory(e, index, jindex)}
                           className="mx-2 visually-hidden-checkbox h-6 w-6"
                         />
-<<<<<<< HEAD
-                        is compulsory in test?
-=======
                         Đây Có Phải Câu Hỏi Bắt Buộc ?
->>>>>>> 8b13b57 (commit)
                       </div>
                     </div>
 
@@ -1006,11 +772,7 @@ export default function Exam({ chapter }: any) {
                       onClick={() => addAnswer(index, jindex)}
                     >
                       <PlusCircle className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-                      Answer
-=======
                       Câu Trả Lời
->>>>>>> 8b13b57 (commit)
                     </button>
                   </div>
                 );

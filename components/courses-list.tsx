@@ -24,11 +24,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
               item?.ClassSessionRecord.map(
                 (item: { userId: any }) => item.userId
               ).indexOf(userId) == -1
-<<<<<<< HEAD
                 ? "/courselock.jpg"
-=======
-                ? "/istockphoto-936681148-612x612.jpg"
->>>>>>> 8b13b57 (commit)
                 : item.imageUrl!
             }
             chapters={item?.modules.module}
@@ -51,7 +47,7 @@ export const CoursesList = ({ items }: CoursesListProps) => {
       </div>
       {items.length === 0 && (
         <div className="text-center text-sm text-muted-foreground mt-10">
-          No courses found
+          Không Có Kết Quả
         </div>
       )}
     </div>

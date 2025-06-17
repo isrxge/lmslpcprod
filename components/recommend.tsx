@@ -29,15 +29,15 @@ export const Recommend = ({ items }: RecommendProps) => {
     <>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <Focus className="mr-2" />
-        Other Courses
+        Các Khóa Học Khác
       </h2>
-      <p className="mb-4 italic">No course</p>
+      <p className="mb-4 italic">Không Có Khóa Học</p>
     </>
   ) : (
     <div>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <Focus className="mr-2" />
-        Other Course
+        Các Khóa Học Khác
       </h2>
       <Carousel
         opts={{
@@ -58,11 +58,7 @@ export const Recommend = ({ items }: RecommendProps) => {
                   item.course.ClassSessionRecord.map(
                     (item: { userId: any }) => item.userId
                   ).indexOf(userId) == -1
-<<<<<<< HEAD
                     ? "/courselock.jpg"
-=======
-                    ? "/istockphoto-936681148-612x612.jpg"
->>>>>>> 8b13b57 (commit)
                     : item.course.imageUrl!
                 }
                 isLocked={

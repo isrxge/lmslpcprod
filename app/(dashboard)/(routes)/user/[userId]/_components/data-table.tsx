@@ -1,413 +1,7 @@
-<<<<<<< HEAD
-// "use client";
 
-// import * as React from "react";
-// import {
-//   ColumnDef,
-//   ColumnFiltersState,
-//   SortingState,
-//   flexRender,
-//   getCoreRowModel,
-//   getFilteredRowModel,
-//   getPaginationRowModel,
-//   getSortedRowModel,
-//   useReactTable,
-// } from "@tanstack/react-table";
-// import Link from "next/link";
-// import { CalendarIcon, FileDown, PlusCircle } from "lucide-react";
-// import * as XLSX from "xlsx";
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { DateRange } from "react-day-picker";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
-// import { cn } from "@nextui-org/react";
-// import { format } from "date-fns";
-// import { Calendar } from "@/components/ui/calendar";
-
-// interface DataTableProps<TData, TValue> {
-//   columns: ColumnDef<TData, TValue>[];
-//   data: TData[];
-//   canPrintReport: boolean;
-//   user: any;
-// }
-
-// export function DataTable<TData, TValue>({
-//   columns,
-//   data,
-//   canPrintReport,
-//   user,
-// }: DataTableProps<TData, TValue>) {
-//   const [sorting, setSorting] = React.useState<SortingState>([]);
-//   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-//     []
-//   );
-//   const [dateRange, setDateRange]: any = React.useState<
-//     DateRange | undefined
-//   >();
-//   const [datePickerDisabled, setDatePickerDisabled] = React.useState(false); // State to manage date picker disable
-//   const [courseList, setCourseList] = React.useState(data);
-
-//   const table = useReactTable({
-//     data: courseList,
-//     columns,
-//     getCoreRowModel: getCoreRowModel(),
-//     getPaginationRowModel: getPaginationRowModel(),
-//     onSortingChange: setSorting,
-//     getSortedRowModel: getSortedRowModel(),
-//     onColumnFiltersChange: setColumnFilters,
-//     getFilteredRowModel: getFilteredRowModel(),
-//     state: {
-//       sorting,
-//       columnFilters,
-//     },
-//   });
-//   function getMonday(d: any) {
-//     d = new Date(d);
-//     const day = d.getDay();
-//     const diff = d.getDate() - day + (day == 0 ? -6 : 1);
-//     return new Date(d.setDate(diff));
-//   }
-
-//   async function getSheetData(filter: string) {
-//     const workbook = XLSX.utils.book_new();
-//     const exportList: any = [];
-
-//     let filteredList: any = [];
-
-//     switch (filter) {
-//       case "All":
-//         filteredList = [...courseList];
-//         break;
-//       case "Selected Rows":
-//         filteredList = table
-//           .getSelectedRowModel()
-//           .rows.map((row) => row.original);
-//         break;
-//       case "This Week":
-//         filteredList = courseList.filter((item: any) => {
-//           const dateFrom = getMonday(new Date()).toISOString();
-//           const date = new Date(item.endDate).toISOString();
-//           return dateFrom <= date;
-//         });
-//         break;
-//       case "This Month":
-//         const currDate = new Date();
-//         const firstDay = new Date(
-//           currDate.getFullYear(),
-//           currDate.getMonth(),
-//           1
-//         );
-//         const dateFrom = new Date(firstDay).toISOString();
-//         filteredList = courseList.filter((item: any) => {
-//           const date = new Date(item.startDate).toISOString();
-//           return dateFrom <= date;
-//         });
-//         break;
-//       case "This Year":
-//         const currYear = new Date().getFullYear();
-//         const firstDayOfYear = new Date(currYear, 0, 1);
-//         const dateFromYear = new Date(firstDayOfYear).toISOString();
-//         filteredList = courseList.filter((item: any) => {
-//           const date = new Date(item.startDate).toISOString();
-//           return dateFromYear <= date;
-//         });
-//         break;
-//       default:
-//         break;
-//     }
-
-//     filteredList.forEach((item: any) => {
-//       console.log(item)
-//       let testResult = item.modules.map(
-//         (moduleItem: any) =>
-//           moduleItem.title +
-//           " : " +
-//           moduleItem.UserProgress[0].score +
-//           "%/" +
-//           moduleItem.UserProgress[0].status +
-//           "/" +
-//           moduleItem.UserProgress[0].attempt +
-//           " attempt"
-//       );
-
-//       exportList.push({
-//         Title: item.title || "",
-
-//         Credit: item.credit || "",
-//         Status:
-//           item.ClassSessionRecord[0].status +
-//           " " +
-//           new Date(item.ClassSessionRecord[0].endDate).toLocaleDateString(
-//             "vi-VN",
-//             {
-//               day: "2-digit",
-//               month: "2-digit",
-//               year: "numeric",
-//             }
-//           ),
-//         "Test Result": testResult.join("\n"),
-//       });
-//     });
-
-//     const worksheet = XLSX.utils.json_to_sheet(exportList);
-
-//     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
-//     worksheet["!cols"] = [{ wch: 20 }, { wch: 20 }, { wch: 30 }, { wch: 50 }];
-
-//     const currentDate = new Date();
-//     let dateSuffix = "";
-
-//     if (filter === "This Week") {
-//       const mondayDate = getMonday(new Date());
-//       dateSuffix = `${mondayDate.toISOString().split("T")[0]}-${
-//         currentDate.toISOString().split("T")[0]
-//       }`;
-//     } else if (filter === "This Month" || filter === "This Year") {
-//       const firstDayOfMonth = new Date(
-//         currentDate.getFullYear(),
-//         currentDate.getMonth(),
-//         1
-//       );
-//       dateSuffix = `${firstDayOfMonth.toISOString().split("T")[0]}-${
-//         currentDate.toISOString().split("T")[0]
-//       }`;
-//     } else {
-//       dateSuffix = new Date().toISOString().split("T")[0];
-//     }
-
-//     XLSX.writeFile(workbook, `${filter}_${user.username}_${dateSuffix}.xlsx`);
-//   }
-
-//   React.useEffect(() => {
-//     if (dateRange?.from && dateRange?.to) {
-//       let tempUserList = [...data].filter((item: any) => {
-//         let dateFrom: any = new Date(dateRange.from.toISOString());
-//         let date: any = new Date(new Date(item.startDate).toISOString());
-//         let dateTo: any = new Date(dateRange.to.toISOString());
-//         return dateFrom <= date && date <= dateTo;
-//       });
-
-//       setCourseList(tempUserList);
-//       // table.getColumn("startDate")?.setFilterValue(dateRange.from);
-//       // table.getColumn("endDate")?.setFilterValue(dateRange.to);
-//     } else {
-//       setCourseList(data);
-//     }
-//   }, [dateRange, table]);
-//   const onChangeStatus = (filter: any) => {
-//     if (filter == "All") {
-//       setCourseList(data);
-//     } else {
-//       let tempUserList = [...data].filter((item: any) => {
-//         return item.ClassSessionRecord.some((item: any) => {
-//           return item.status == filter;
-//         });
-//       });
-//       setCourseList(tempUserList);
-//     }
-//   };
-//   return (
-//     <div>
-//       <div className="flex items-center py-4 justify-between">
-//         <Input
-//           placeholder="Filter courses..."
-//           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-//           onChange={(event) =>
-//             table.getColumn("title")?.setFilterValue(event.target.value)
-//           }
-//           className="max-w-sm"
-//         />
-//         <select
-//           name="status"
-//           id="filterByStatus"
-//           onChange={(event) => onChangeStatus(event.target.value)}
-//           className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
-//         >
-//           <option value="All">All</option>
-//           <option value="finished">Finished</option>
-//           <option value="studying">Studying</option>
-//         </select>
-//         <div className="flex gap-2 items-center">
-//           <DatePickerWithRange
-//             date={dateRange}
-//             setDate={setDateRange}
-//             className="max-w-sm"
-//             disabled={datePickerDisabled} // Pass the disabled state to the date picker
-//           />
-//           {dateRange != undefined ? (
-//             <button
-//               onClick={() => {
-//                 setDateRange(undefined);
-//                 setDatePickerDisabled(false); // Enable date picker on cancel
-//               }}
-//             >
-//               X
-//             </button>
-//           ) : (
-//             <></>
-//           )}
-//         </div>
-//         {/* {canPrintReport ? (
-//           table.getSelectedRowModel().rows.length > 1 ? (
-//             <Button onClick={() => getSheetData("Selected Rows")}>
-//               <FileDown className="h-4 w-4 mr-2" />
-//               Export Selected Rows to Excel
-//             </Button>
-//           ) : (
-//             <Button onClick={() => getSheetData("All")}>
-//               <FileDown className="h-4 w-4 mr-2" />
-//               Export to Excel
-//             </Button>
-//           )
-//         ) : (
-//           <></>
-//         )} */}
-//       </div>
-//       <div className="rounded-md border">
-//         <Table>
-//           <TableHeader>
-//             {table.getHeaderGroups().map((headerGroup) => (
-//               <TableRow key={headerGroup.id}>
-//                 {headerGroup.headers.map((header) => {
-//                   return (
-//                     <TableHead key={header.id}>
-//                       {header.isPlaceholder
-//                         ? null
-//                         : flexRender(
-//                             header.column.columnDef.header,
-//                             header.getContext()
-//                           )}
-//                     </TableHead>
-//                   );
-//                 })}
-//               </TableRow>
-//             ))}
-//           </TableHeader>
-//           <TableBody>
-//             {table.getRowModel().rows?.length ? (
-//               table.getRowModel().rows.map((row) => (
-//                 <TableRow
-//                   key={row.id}
-//                   data-state={row.getIsSelected() && "selected"}
-//                 >
-//                   {row.getVisibleCells().map((cell) => (
-//                     <TableCell key={cell.id}>
-//                       {flexRender(
-//                         cell.column.columnDef.cell,
-//                         cell.getContext()
-//                       )}
-//                     </TableCell>
-//                   ))}
-//                 </TableRow>
-//               ))
-//             ) : (
-//               <TableRow>
-//                 <TableCell
-//                   colSpan={columns.length}
-//                   className="h-24 text-center"
-//                 >
-//                   No results.
-//                 </TableCell>
-//               </TableRow>
-//             )}
-//           </TableBody>
-//         </Table>
-//       </div>
-//       <div className="flex items-center justify-end space-x-2 py-4">
-//         <Button
-//           variant="outline"
-//           size="sm"
-//           onClick={() => table.previousPage()}
-//           disabled={!table.getCanPreviousPage()}
-//         >
-//           Previous
-//         </Button>
-//         <Button
-//           variant="outline"
-//           size="sm"
-//           onClick={() => table.nextPage()}
-//           disabled={!table.getCanNextPage()}
-//         >
-//           Next
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// }
-// function DatePickerWithRange({
-//   className,
-//   date,
-//   setDate,
-//   disabled,
-// }: {
-//   className?: string;
-//   date: DateRange | undefined;
-//   setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
-//   disabled?: boolean; // Accept disabled prop
-// }) {
-//   return (
-//     <div className={cn("grid gap-2", className)}>
-//       <Popover>
-//         <PopoverTrigger asChild>
-//           <Button
-//             id="date"
-//             variant={"outline"}
-//             className={cn(
-//               "w-[300px] justify-start text-left font-normal",
-//               !date && "text-muted-foreground",
-//               disabled && "opacity-50 cursor-not-allowed" // Apply styles when disabled
-//             )}
-//             disabled={disabled} // Disable button when disabled prop is true
-//           >
-//             <CalendarIcon className="mr-2 h-4 w-4" />
-//             {date?.from ? (
-//               date.to ? (
-//                 <>
-//                   {format(date.from, "LLL dd, y")} -{" "}
-//                   {format(date.to, "LLL dd, y")}
-//                 </>
-//               ) : (
-//                 format(date.from, "LLL dd, y")
-//               )
-//             ) : (
-//               <span>Check course created between</span>
-//             )}
-//           </Button>
-//         </PopoverTrigger>
-//         <PopoverContent className="w-auto p-0" align="start">
-//           <Calendar
-//             initialFocus
-//             mode="range"
-//             defaultMonth={date?.from}
-//             selected={date}
-//             onSelect={setDate}
-//             numberOfMonths={2}
-//           />
-//         </PopoverContent>
-//       </Popover>
-//     </div>
-//   );
-// }
 
 "use client";
  
-=======
-"use client";
-
->>>>>>> 8b13b57 (commit)
 import * as React from "react";
 import {
   ColumnDef,
@@ -442,22 +36,14 @@ import {
 import { cn } from "@nextui-org/react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 8b13b57 (commit)
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   canPrintReport: boolean;
   user: any;
 }
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 8b13b57 (commit)
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -473,11 +59,7 @@ export function DataTable<TData, TValue>({
   >();
   const [datePickerDisabled, setDatePickerDisabled] = React.useState(false); // State to manage date picker disable
   const [courseList, setCourseList] = React.useState(data);
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 8b13b57 (commit)
   const table = useReactTable({
     data: courseList,
     columns,
@@ -498,7 +80,6 @@ export function DataTable<TData, TValue>({
     const diff = d.getDate() - day + (day == 0 ? -6 : 1);
     return new Date(d.setDate(diff));
   }
-<<<<<<< HEAD
  
   async function getSheetData(filter: string) {
     const workbook = XLSX.utils.book_new();
@@ -506,15 +87,6 @@ export function DataTable<TData, TValue>({
  
     let filteredList: any = [];
  
-=======
-
-  async function getSheetData(filter: string) {
-    const workbook = XLSX.utils.book_new();
-    const exportList: any = [];
-
-    let filteredList: any = [];
-
->>>>>>> 8b13b57 (commit)
     switch (filter) {
       case "All":
         filteredList = [...courseList];
@@ -556,7 +128,6 @@ export function DataTable<TData, TValue>({
       default:
         break;
     }
-<<<<<<< HEAD
  
     filteredList.forEach((item: any) => {
       // console.log(item)
@@ -575,25 +146,6 @@ export function DataTable<TData, TValue>({
       exportList.push({
         Title: item.title || "",
  
-=======
-
-    filteredList.forEach((item: any) => {
-      let testResult = item.Module.map(
-        (item: any) =>
-          item.title +
-          " : " +
-          item.UserProgress[0].score +
-          "%/" +
-          item.UserProgress[0].status +
-          "/" +
-          item.UserProgress[0].attempt +
-          " attempt"
-      );
-
-      exportList.push({
-        Title: item.title || "",
-
->>>>>>> 8b13b57 (commit)
         Credit: item.credit || "",
         Status:
           item.ClassSessionRecord[0].status +
@@ -609,7 +161,6 @@ export function DataTable<TData, TValue>({
         "Test Result": testResult.join("\n"),
       });
     });
-<<<<<<< HEAD
  
     const worksheet = XLSX.utils.json_to_sheet(exportList);
  
@@ -620,18 +171,6 @@ export function DataTable<TData, TValue>({
     const currentDate = new Date();
     let dateSuffix = "";
  
-=======
-
-    const worksheet = XLSX.utils.json_to_sheet(exportList);
-
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
-    worksheet["!cols"] = [{ wch: 20 }, { wch: 20 }, { wch: 30 }, { wch: 50 }];
-
-    const currentDate = new Date();
-    let dateSuffix = "";
-
->>>>>>> 8b13b57 (commit)
     if (filter === "This Week") {
       const mondayDate = getMonday(new Date());
       dateSuffix = `${mondayDate.toISOString().split("T")[0]}-${
@@ -649,17 +188,10 @@ export function DataTable<TData, TValue>({
     } else {
       dateSuffix = new Date().toISOString().split("T")[0];
     }
-<<<<<<< HEAD
  
     XLSX.writeFile(workbook, `${filter}_${user.username}_${dateSuffix}.xlsx`);
   }
  
-=======
-
-    XLSX.writeFile(workbook, `${filter}_${user.username}_${dateSuffix}.xlsx`);
-  }
-
->>>>>>> 8b13b57 (commit)
   React.useEffect(() => {
     if (dateRange?.from && dateRange?.to) {
       let tempUserList = [...data].filter((item: any) => {
@@ -668,11 +200,7 @@ export function DataTable<TData, TValue>({
         let dateTo: any = new Date(dateRange.to.toISOString());
         return dateFrom <= date && date <= dateTo;
       });
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 8b13b57 (commit)
       setCourseList(tempUserList);
       // table.getColumn("startDate")?.setFilterValue(dateRange.from);
       // table.getColumn("endDate")?.setFilterValue(dateRange.to);
@@ -709,9 +237,9 @@ export function DataTable<TData, TValue>({
           onChange={(event) => onChangeStatus(event.target.value)}
           className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
         >
-          <option value="All">All</option>
-          <option value="finished">Finished</option>
-          <option value="studying">Studying</option>
+          <option value="All">Tất Cả</option>
+          <option value="finished">Đã Hoàn Thành</option>
+          <option value="studying">Đang Học</option>
         </select>
         <div className="flex gap-2 items-center">
           <DatePickerWithRange
@@ -733,29 +261,7 @@ export function DataTable<TData, TValue>({
             <></>
           )}
         </div>
-<<<<<<< HEAD
-        {/* {canPrintReport ? (
-=======
-        {canPrintReport ? (
->>>>>>> 8b13b57 (commit)
-          table.getSelectedRowModel().rows.length > 1 ? (
-            <Button onClick={() => getSheetData("Selected Rows")}>
-              <FileDown className="h-4 w-4 mr-2" />
-              Export Selected Rows to Excel
-            </Button>
-          ) : (
-            <Button onClick={() => getSheetData("All")}>
-              <FileDown className="h-4 w-4 mr-2" />
-              Export to Excel
-            </Button>
-          )
-        ) : (
-          <></>
-<<<<<<< HEAD
-        )} */}
-=======
-        )}
->>>>>>> 8b13b57 (commit)
+       
       </div>
       <div className="rounded-md border">
         <Table>
@@ -800,7 +306,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không Tìm Thấy Kết Quả.
                 </TableCell>
               </TableRow>
             )}
@@ -814,7 +320,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Trước
         </Button>
         <Button
           variant="outline"
@@ -822,7 +328,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Sau
         </Button>
       </div>
     </div>
@@ -864,7 +370,7 @@ function DatePickerWithRange({
                 format(date.from, "LLL dd, y")
               )
             ) : (
-              <span>Check course created between</span>
+              <span>Tìm Khóa Học Tạo Trong Khoản</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -881,8 +387,4 @@ function DatePickerWithRange({
       </Popover>
     </div>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8b13b57 (commit)

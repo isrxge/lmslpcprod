@@ -74,17 +74,10 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
       await axios.post(`/api/courses/${courseId}/chapters/${moduleId}/slide`, {
         contents,
       });
-<<<<<<< HEAD
-      toast.success("Content created");
-      router.refresh();
-    } catch {
-      toast.error("Something went wrong");
-=======
       toast.success("Nội Dung Học Phần Đã Được Tạo");
       router.refresh();
     } catch {
       toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
->>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -134,21 +127,13 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
     <div className="mt-6 border dark:text-white rounded-md p-4">
       <div className="font-medium flex items-center justify-between mb-4">
         <div className="flex items-center">
-<<<<<<< HEAD
-          Course Content <Asterisk className="size-4" color="red" />
-=======
           Nội Dung Học Phần <Asterisk className="size-4" color="red" />
->>>>>>> 8b13b57 (commit)
         </div>
         <button
           onClick={addContent}
           className="bg-black text-white px-4 py-2 rounded-md flex items-center"
         >
-<<<<<<< HEAD
-          <PlusCircle className="h-4 w-4 mr-2" /> Add Content
-=======
           <PlusCircle className="h-4 w-4 mr-2" /> Thêm Nội Dung
->>>>>>> 8b13b57 (commit)
         </button>
       </div>
 
@@ -186,11 +171,7 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
               >
                 <option value="video">Video</option>
                 <option value="file">File</option>
-<<<<<<< HEAD
-                <option value="text">Text</option>
-=======
                 <option value="text">Văn Bản</option>
->>>>>>> 8b13b57 (commit)
               </select>
               <button
                 onClick={() => removeContent(item.id)}
@@ -203,11 +184,7 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
             {item.contentType === "video" ? (
               <div className="mb-4">
                 <div className="font-medium mb-2">
-<<<<<<< HEAD
-                  {item.videoUrl ? "Update Video" : "Add a Video"}
-=======
                   {item.videoUrl ? "Cập Nhật Video" : "Thêm Video"}
->>>>>>> 8b13b57 (commit)
                 </div>
                 <div className="mb-2">
                   {item.videoUrl && !edit ? (
@@ -232,11 +209,7 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
                       onClick={() => setEdit(!edit)}
                       className="ml-2"
                     >
-<<<<<<< HEAD
-                      {edit ? "Cancel" : "Edit"}
-=======
                       {edit ? "Từ Chối" : "Chỉnh Sửa"}
->>>>>>> 8b13b57 (commit)
                     </button>
                   )}
                 </div>
@@ -246,11 +219,7 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
                     handleChange("description", e.target.value, item.id)
                   }
                   className="border p-2 rounded-md w-full"
-<<<<<<< HEAD
-                  placeholder="Description"
-=======
                   placeholder="Mô Tả"
->>>>>>> 8b13b57 (commit)
                 ></textarea>
               </div>
             ) : item.contentType === "text" ? (
@@ -283,21 +252,13 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
                     handleChange("description", e.target.value, item.id)
                   }
                   className="border p-2 rounded-md w-full mt-4"
-<<<<<<< HEAD
-                  placeholder="Description"
-=======
                   placeholder="Mô Tả"
->>>>>>> 8b13b57 (commit)
                 ></textarea>
               </div>
             ) : (
               <div className="mb-4">
                 <div className="font-medium mb-2">
-<<<<<<< HEAD
-                  {item.fileUrl ? "Update File" : "Add a File"}
-=======
                   {item.fileUrl ? "Cập Nhật File" : "Thêm File"}
->>>>>>> 8b13b57 (commit)
                 </div>
                 <div className="mb-2">
                   {item.fileUrl && !edit ? (
@@ -322,11 +283,7 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
                       onClick={() => setEdit(!edit)}
                       className="ml-2"
                     >
-<<<<<<< HEAD
-                      {edit ? "Cancel" : "Edit"}
-=======
                       {edit ? "Từ Chối" : "Cập Nhật"}
->>>>>>> 8b13b57 (commit)
                     </button>
                   )}
                 </div>
@@ -336,11 +293,7 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
                     handleChange("description", e.target.value, item.id)
                   }
                   className="border p-2 rounded-md w-full"
-<<<<<<< HEAD
-                  placeholder="Description"
-=======
                   placeholder="Mô Tả"
->>>>>>> 8b13b57 (commit)
                 ></textarea>
               </div>
             )}
@@ -354,22 +307,14 @@ export const ContentForm = ({ courseId, moduleId }: AttachmentFormProps) => {
               disabled
               className="bg-gray-500 text-white px-4 py-2 rounded-md"
             >
-<<<<<<< HEAD
-              Waiting...
-=======
               Vui Lòng Đợi Trong Giây Lát...
->>>>>>> 8b13b57 (commit)
             </button>
           ) : (
             <button
               onClick={onSubmit}
               className="bg-black text-white px-4 py-2 rounded-md"
             >
-<<<<<<< HEAD
-              Submit
-=======
               Nộp
->>>>>>> 8b13b57 (commit)
             </button>
           )}
         </div>

@@ -66,47 +66,7 @@ export const CellUserExamStatus = ({ row }: any) => {
             {userExamReport[0].course.title}
           </div>
         </AlertDialogTrigger>
-<<<<<<< HEAD
-        {/* <AlertDialogContent className="AlertDialogContent">
-=======
-        <AlertDialogContent className="AlertDialogContent">
->>>>>>> 8b13b57 (commit)
-          <AlertDialogTitle className="AlertDialogTitle">
-            Reset user exam?
-          </AlertDialogTitle>
-          <AlertDialogDescription className="AlertDialogDescription">
-            Are you sure you want to reset this user exam status?
-            <br />
-            Please following these steps before confirmination:
-            <br />
-            1. Checking if user having issue that require the exam to be reset.
-            <br />
-            2. Consult with exam supervisor.
-            <br />
-            3. If the reset is confirm, please fill the below form to record the
-            incident.
-            <br />
-            <div>
-              <label htmlFor="note">Note</label>
-              <textarea
-                id="note"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-              ></textarea>
-            </div>
-          </AlertDialogDescription>
-
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <button className="Button red" onClick={() => onChangeStatus(id)}>
-              Confirm
-            </button>
-          </AlertDialogAction>
-<<<<<<< HEAD
-        </AlertDialogContent> */}
-=======
-        </AlertDialogContent>
->>>>>>> 8b13b57 (commit)
+       
       </AlertDialog>
     );
   }

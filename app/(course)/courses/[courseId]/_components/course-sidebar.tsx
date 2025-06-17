@@ -30,11 +30,6 @@ export const CourseSidebar = async (
   }
 
   // Console log to check userProgress and module data
-<<<<<<< HEAD
-  // console.log("User ID:", userId);
-  // console.log("Course Data:", course);
-=======
->>>>>>> 8b13b57 (commit)
 
   return (
     <div className="h-full w-80 border-r flex flex-col overflow-y-auto bg-white dark:bg-slate-950 shadow-sm">
@@ -50,19 +45,11 @@ export const CourseSidebar = async (
             const userProgress = currentModule .userProgress; // Sửa lại từ UserProgress thành userProgress
 
             // Log user progress and module for each iteration
-<<<<<<< HEAD
             // console.log("Module:", module); // Log current module data
             // console.log("User Progress:", userProgress); // Log user progress data
 
             // Lấy trạng thái hoàn thành của module (nếu có)
             const isCompleted = userProgress?.[0]?.status ?? "studying";
-=======
-            console.log("Module:", module); // Log current module data
-            console.log("User Progress:", userProgress); // Log user progress data
-
-            // Lấy trạng thái hoàn thành của module (nếu có)
-            const isCompleted = userProgress?.[0]?.status ?? "Đang Học";
->>>>>>> 8b13b57 (commit)
 
             return (
               <CourseSidebarItem

@@ -33,29 +33,17 @@ export const ChapterActions = ({
         await axios.patch(
           `/api/courses/${courseId}/chapters/${chapterId}/unpublish`
         );
-<<<<<<< HEAD
-        toast.success("Chapter unpublished");
-=======
         toast.success("Học Phần Đã Bị Thu Hồi");
->>>>>>> 8b13b57 (commit)
       } else {
         await axios.patch(
           `/api/courses/${courseId}/chapters/${chapterId}/publish`
         );
-<<<<<<< HEAD
-        toast.success("Chapter published");
-=======
         toast.success("Học Phần Đã Được Phát Hành");
->>>>>>> 8b13b57 (commit)
       }
 
       router.refresh();
     } catch {
-<<<<<<< HEAD
-      toast.error("Something went wrong");
-=======
       toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
->>>>>>> 8b13b57 (commit)
     } finally {
       setIsLoading(false);
     }
@@ -84,11 +72,7 @@ export const ChapterActions = ({
         variant="outline"
         size="sm"
       >
-<<<<<<< HEAD
-        {isPublished ? "Unpublish" : "Publish"}
-=======
-        {isPublished ? "Ngưng Phát Hành" : "Phát Hành"}
->>>>>>> 8b13b57 (commit)
+        {isPublished ? "Thu Hồi" : "Phát Hành"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading}>

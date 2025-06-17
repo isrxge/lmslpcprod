@@ -27,10 +27,10 @@ export const ExamTitleCell = ({ row }: any) => {
       return (
         <div key={item.id} className="grid grid-cols-5 gap-1">
           <div>{item.user.username}</div>
-          <div>Score: {item.score}%</div>
-          <div>Attempt: {item.attempt}</div>
+          <div>Điểm: {item.score}%</div>
+          <div>Số Lần Thử: {item.attempt}</div>
           <div>
-            lastest attempt:{" "}
+            Lần Thử Mới Nhất:{" "}
             {new Date(item.endDate.toString()).toLocaleString()}
           </div>
           <div

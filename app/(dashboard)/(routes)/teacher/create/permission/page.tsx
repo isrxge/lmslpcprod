@@ -51,15 +51,9 @@ function CreatePage() {
     try {
       const response = await axios.post("/api/permission", values);
       router.push(`/teacher/permissions/${response.data.id}`);
-<<<<<<< HEAD
-      toast.success("Permission created");
-    } catch {
-      toast.error("Something went wrong");
-=======
       toast.success("Quyền Hạn Đã Được Tạo");
     } catch {
       toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
->>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -67,19 +61,11 @@ function CreatePage() {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-60">
       <div>
         <>
-<<<<<<< HEAD
-          <h1 className="text-2xl">Name your permission</h1>
-          <p className="text-sm text-slate-600">
-            What would you like to name your permission? Don&apos;t worry, you
-            can change this later.
-          </p>
-=======
           <h1 className="text-2xl">Tên Quyền Hạn</h1>
           {/* <p className="text-sm text-slate-600">
             What would you like to name your permission? Don&apos;t worry, you
             can change this later.
           </p> */}
->>>>>>> 8b13b57 (commit)
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmitProgram)}
@@ -90,11 +76,7 @@ function CreatePage() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-<<<<<<< HEAD
-                    <FormLabel>Permission title</FormLabel>
-=======
                     <FormLabel>Tên Quyền Hạn</FormLabel>
->>>>>>> 8b13b57 (commit)
                     <FormControl>
                       <Input
                         disabled={isSubmitting}
@@ -102,11 +84,7 @@ function CreatePage() {
                         {...field}
                       />
                     </FormControl>
-<<<<<<< HEAD
-                    <FormDescription>Permission name?</FormDescription>
-=======
                     <FormDescription>Tên Quyền Hạn</FormDescription>
->>>>>>> 8b13b57 (commit)
                     <FormMessage />
                   </FormItem>
                 )}
@@ -115,19 +93,11 @@ function CreatePage() {
               <div className="flex items-center gap-x-2">
                 <Link href="/teacher/permissions">
                   <Button type="button" variant="ghost">
-<<<<<<< HEAD
-                    Cancel
-                  </Button>
-                </Link>
-                <Button type="submit" disabled={!isValid || isSubmitting}>
-                  Continue
-=======
                     Từ Chối
                   </Button>
                 </Link>
                 <Button type="submit" disabled={!isValid || isSubmitting}>
                   Tiếp Tục
->>>>>>> 8b13b57 (commit)
                 </Button>
               </div>
             </form>

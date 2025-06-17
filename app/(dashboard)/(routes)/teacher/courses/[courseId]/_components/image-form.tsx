@@ -2,11 +2,7 @@
 
 import * as z from "zod";
 import axios from "axios";
-<<<<<<< HEAD
 import { Pencil, PlusCircle, ImageIcon } from "lucide-react";
-=======
-import { Pencil, PlusCircle, ImageIcon, Asterisk } from "lucide-react";
->>>>>>> 8b13b57 (commit)
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -19,10 +15,7 @@ import { FileUpload } from "@/components/file-upload";
 interface ImageFormProps {
   initialData: Course;
   courseId: string;
-<<<<<<< HEAD
   readOnly?: boolean;
-=======
->>>>>>> 8b13b57 (commit)
 }
 
 const formSchema = z.object({
@@ -31,20 +24,12 @@ const formSchema = z.object({
   }),
 });
 
-<<<<<<< HEAD
 export const ImageForm = ({ initialData, courseId, readOnly = false }: ImageFormProps) => {
-=======
-export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
->>>>>>> 8b13b57 (commit)
   const [isEditing, setIsEditing] = useState(false);
 
   const [selectedFile, setSelectedFile]: any = useState<File | null>(null);
 
-<<<<<<< HEAD
   const toggleEdit = () => !readOnly && setIsEditing((current) => !current);
-=======
-  const toggleEdit = () => setIsEditing((current) => !current);
->>>>>>> 8b13b57 (commit)
 
   const router = useRouter();
 
@@ -80,19 +65,11 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
           initialData.title as string
         }/image/${selectedFile.name as string}`,
       });
-<<<<<<< HEAD
-      toast.success("course updated");
-      toggleEdit();
-      router.refresh();
-    } catch {
-      toast.error("Something went wrong");
-=======
       toast.success("Khóa Học Đã Được Cập Nhật");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Đã Có Lỗi Xảy Ra, Vui Lòng Thử Lại Sau");
->>>>>>> 8b13b57 (commit)
     }
   };
 
@@ -107,15 +84,10 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-<<<<<<< HEAD
-          Course image 
+          Ảnh Đại Diện Khóa Học 
           {/* <Asterisk className="size-4" color="red" /> */}
         </div>
         {!readOnly && (
-=======
-          Course image <Asterisk className="size-4" color="red" />
-        </div>
->>>>>>> 8b13b57 (commit)
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
             <>Cancel</>
@@ -124,29 +96,18 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
               {!initialData.imageUrl ? (
                 <>
                   <PlusCircle className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-                  Add an image
-=======
                   Thêm Ảnh
->>>>>>> 8b13b57 (commit)
                 </>
               ) : (
                 <>
                   <Pencil className="h-4 w-4 mr-2" />
-<<<<<<< HEAD
-                  Edit image
-=======
                   Chỉnh Sửa Ảnh
->>>>>>> 8b13b57 (commit)
                 </>
               )}
             </>
           )}
         </Button>
-<<<<<<< HEAD
         )}
-=======
->>>>>>> 8b13b57 (commit)
       </div>
       {!isEditing && (
         <>
@@ -180,19 +141,11 @@ export const ImageForm = ({ initialData, courseId }: ImageFormProps) => {
               className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
               onClick={() => onSubmit()}
             >
-<<<<<<< HEAD
-              Submit
-            </button>
-          </div>
-          <div className="text-xs text-gray-500">
-            16:9 aspect ratio recommended
-=======
               Nộp
             </button>
           </div>
           <div className="text-xs text-gray-500">
             Vui Lòng Sử Dụng Ảnh Tỷ Lệ 16:9
->>>>>>> 8b13b57 (commit)
           </div>
         </div>
       )}

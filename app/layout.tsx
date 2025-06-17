@@ -32,20 +32,14 @@ if (typeof window !== "undefined") {
         : 0;
     window.localStorage.setItem("checkTab", numberOfTabs.toString());
   }
-<<<<<<< HEAD
   /* ---------- 🎨 BANNER LMS đầy màu sắc ---------- */
-  console.log(
-    "%c LMS – Learning Management System ",
-    "font-size:20px;font-weight:700;background:#0070f3;color:#fff;padding:4px 12px;border-radius:4px"
-  );
+  
 
   const subtitle = "Empower • Learn • Grow 🚀";
   const colors = ["#e6194b", "#ff8c00", "#ffe119", "#3cb44b", "#42d4f4", "#4363d8", "#911eb4", "#f032e6"];
   const styled = subtitle.split("").map(ch => `%c${ch}`).join("");
   const styles = subtitle.split("").map((_, i) => `color:${colors[i % colors.length]};font-size:14px;`);
   console.log(styled, ...styles);
-=======
->>>>>>> 8b13b57 (commit)
 }
 
 export default function RootLayout({
@@ -58,19 +52,19 @@ export default function RootLayout({
       {/* <AblyProvider client={client}> */}
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider
+          {/* <ThemeProvider
             attribute="class"
             defaultTheme={getFromStorage("theme") as string}
             enableSystem
             disableTransitionOnChange
             storageKey="theme"
-          >
+          > */}
             <QueryClientProvider client={queryClient}>
               <ConfettiProvider />
               <ToastProvider />
               {children}
             </QueryClientProvider>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
         </body>
       </html>
       {/* </AblyProvider> */}

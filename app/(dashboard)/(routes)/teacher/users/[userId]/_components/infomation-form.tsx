@@ -4,21 +4,15 @@ import { Pencil, X } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useQuery } from "react-query";
-<<<<<<< HEAD
 import toast from "react-hot-toast";  
 
-=======
->>>>>>> 8b13b57 (commit)
 const UserInformation = ({ user }: any) => {
   const router = useRouter();
   const [isRoleEditing, setIsRoleEditing] = useState(false);
   const [isDepartmentEditing, setIsDepartmentEditing] = useState(false);
   const [isUsernameEditing, setIsUsernameEditing] = useState(false);
   const [isStatusEditing, setIsStatusEditing] = useState(false);
-<<<<<<< HEAD
   const [isTypeUserEditing, setIsTypeUserEditing] = useState(false);
-=======
->>>>>>> 8b13b57 (commit)
 
   const handleRoleEditClick = () => {
     setIsRoleEditing(!isRoleEditing);
@@ -28,13 +22,10 @@ const UserInformation = ({ user }: any) => {
     setIsStatusEditing(!isStatusEditing);
   };
 
-<<<<<<< HEAD
   const handleTypeUserEditClick = () => {
     setIsTypeUserEditing(!isTypeUserEditing);
   };
 
-=======
->>>>>>> 8b13b57 (commit)
   const handleDepartmentEditClick = () => {
     setIsDepartmentEditing(!isDepartmentEditing);
   };
@@ -49,7 +40,6 @@ const UserInformation = ({ user }: any) => {
     setIsDepartmentEditing(false);
     setIsUsernameEditing(false);
     setIsStatusEditing(false);
-<<<<<<< HEAD
     setIsTypeUserEditing(false);
     let values = {
       department: e.target.department.value,
@@ -57,7 +47,7 @@ const UserInformation = ({ user }: any) => {
       username: e.target.username.value,
       status: e.target.status.value,
     };
-    const toastId = toast.loading("Saving changes…");
+    const toastId = toast.loading("Đang Lưu Thay Đổi…");
 try {
     await axios.patch(`/api/user/${user?.id}`, values);
     toast.success("Saved successfully 🎉", { id: toastId });
@@ -67,21 +57,10 @@ try {
       const message =
         err?.response?.data?.message ??
         err?.message ??
-        "Something went wrong, please try again";
+        "Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau";
 
-      toast.error(`Save failed: ${message}`, { id: toastId });
+      toast.error(`Lưu Trữ Không Thành Công: ${message}`, { id: toastId });
     }
-=======
-    let values = {
-      department: e.target.department.value,
-
-      username: e.target.username.value,
-      status: e.target.status.value,
-    };
-
-    await axios.patch(`/api/user/${user?.id}`, values);
-    router.refresh();
->>>>>>> 8b13b57 (commit)
   };
   return (
     <form
@@ -91,11 +70,7 @@ try {
       {/* Left Column */}
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-<<<<<<< HEAD
           ID
-=======
-          ID:
->>>>>>> 8b13b57 (commit)
         </label>
         <input
           type="text"
@@ -107,11 +82,7 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-<<<<<<< HEAD
-          Full Name
-=======
-          Username:
->>>>>>> 8b13b57 (commit)
+          Họ Và Tên
         </label>
         <div className="relative">
           <input
@@ -124,35 +95,14 @@ try {
               isUsernameEditing ? "border-blue-500" : ""
             }`}
           />
-<<<<<<< HEAD
-          {/* <div
-=======
-          <div
->>>>>>> 8b13b57 (commit)
-            className="absolute right-2 top-2 cursor-pointer"
-            onClick={handleUsernameEditClick}
-          >
-            {isUsernameEditing ? (
-              <X className="text-blue-500 w-5 h-5" />
-            ) : (
-              <Pencil className="text-blue-500 w-5 h-5" />
-            )}
-<<<<<<< HEAD
-          </div> */}
-=======
-          </div>
->>>>>>> 8b13b57 (commit)
+          
         </div>
       </div>
 
       {/* Right Column */}
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-<<<<<<< HEAD
           Email
-=======
-          Email:
->>>>>>> 8b13b57 (commit)
         </label>
         <input
           type="text"
@@ -164,11 +114,7 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-<<<<<<< HEAD
-          Department
-=======
-          Department:
->>>>>>> 8b13b57 (commit)
+          Phòng Ban
         </label>
         <div className="relative">
           <input
@@ -196,7 +142,7 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Star
+          Điểm
         </label>
         <input
           type="text"
@@ -207,11 +153,7 @@ try {
       </div>
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-<<<<<<< HEAD
-          Status
-=======
-          Status:
->>>>>>> 8b13b57 (commit)
+          Trạng Thái
         </label>
         <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
           <select
@@ -223,8 +165,8 @@ try {
               isStatusEditing ? "border-blue-500" : ""
             }`}
           >
-            <option value="approved">Approved</option>
-            <option value="pending">Pending</option>
+            <option value="approved">Đã Được Xác Thực</option>
+            <option value="pending">Đang Trong Hàng Chờ</option>
           </select>
 
           <div
@@ -239,10 +181,9 @@ try {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Type
+          Loại User
         </label>
         <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
           <select
@@ -254,8 +195,8 @@ try {
               isTypeUserEditing ? "border-blue-500" : ""
             }`}
           >
-            <option value="official">Official</option>
-            <option value="probation">Probation</option>
+            <option value="official">Chính Thức</option>
+            <option value="probation">Thử Việc</option>
           </select>
 
           <div
@@ -270,22 +211,17 @@ try {
           </div>
         </div>
       </div>
-=======
->>>>>>> 8b13b57 (commit)
       <div className="col-span-2 text-right">
         {isDepartmentEditing ||
         isRoleEditing ||
         isStatusEditing ||
-<<<<<<< HEAD
         isTypeUserEditing ||
-=======
->>>>>>> 8b13b57 (commit)
         isUsernameEditing ? (
           <button
             type="submit"
             className="bg-gradient-to-r from-black to-gray-800 text-white py-2 px-4 rounded-md"
           >
-            Submit
+            Nộp
           </button>
         ) : (
           <></>

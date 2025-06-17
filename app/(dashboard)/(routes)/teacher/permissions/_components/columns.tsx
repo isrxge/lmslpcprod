@@ -33,7 +33,7 @@ export const columns: ColumnDef<{
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Title</span>
+          <span className="mr-2">Tên Quyền Hạn</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -47,7 +47,7 @@ export const columns: ColumnDef<{
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Status</span>
+          <span className="mr-2">Trạng Thái</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -62,7 +62,7 @@ export const columns: ColumnDef<{
             status === "active" && "bg-sky-700"
           )}
         >
-          {status == "active" ? "Active" : "Inactive"}
+          {status == "active" ? "Đang Hoạt Động" : "Đang Không Hoạt Động"}
         </Badge>
       );
     },

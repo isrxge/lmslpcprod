@@ -37,7 +37,7 @@ export const DepartmentUserCell = ({ row }: any) => {
         className="text-blue-500 underline"
         onClick={() => setModalOpen(true)}
       >
-        Detail ({User.length})
+        Chi Tiết ({User.length})
       </button>
       <Modal
         isOpen={isModalOpen}
