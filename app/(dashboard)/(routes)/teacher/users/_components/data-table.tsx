@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PlusCircle } from "lucide-react";
+import axios from "axios";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -56,7 +58,10 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
-
+  async function updateUserList() {
+    let userList = await axios.get("/api/getLDAP");
+    console.log(userList);
+  }
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
@@ -70,12 +75,11 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        {/* <Link href="/teacher/createProgram">
-          <Button>
-            <PlusCircle className="h-4 w-4 mr-2" />
-            New program
-          </Button>
-        </Link> */}
+
+        {/* <Button onClick={() => updateUserList()}>
+          <PlusCircle className="h-4 w-4 mr-2" />
+          Cập Nhật NV Từ Active Directory
+        </Button> */}
       </div>
       <div className="rounded-md border">
         <Table>
