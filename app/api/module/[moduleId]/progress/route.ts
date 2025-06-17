@@ -11,10 +11,7 @@ export async function PUT(
     const { userId }: any = auth();
     const { progress, status, endDate, score, retakeTime } = await req.json();
 
-<<<<<<< HEAD
     const year = new Date();
-=======
->>>>>>> 8b13b57 (commit)
     const date = new Date();
     const userProgress = await db.userProgress.upsert({
       where: {

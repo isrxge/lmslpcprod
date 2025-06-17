@@ -14,28 +14,11 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-<<<<<<< HEAD
-    // const ownCourse = await db.course.findUnique({
-    //   where: {
-    //     id: params.courseId,
-    //     userId,
-    //   },
-    // });
-
-    // if (!ownCourse) {
-    //   return new NextResponse("Unauthorized", { status: 401 });
-    // }
-=======
->>>>>>> 8b13b57 (commit)
 
     const chapter = await db.module.findUnique({
       where: {
         id: params.chapterId,
-<<<<<<< HEAD
         // courseId: params.courseId,
-=======
-        
->>>>>>> 8b13b57 (commit)
       },
     });
 
@@ -66,10 +49,7 @@ export async function PATCH(
     const publishedChapter = await db.module.update({
       where: {
         id: params.chapterId,
-<<<<<<< HEAD
         // courseId: params.courseId,
-=======
->>>>>>> 8b13b57 (commit)
       },
       data: {
         isPublished: true,

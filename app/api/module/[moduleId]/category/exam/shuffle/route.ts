@@ -13,7 +13,6 @@ export async function GET(
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-<<<<<<< HEAD
 
     // 1) Kiểm tra userExamReport để xem user đã set isInExam = true chưa
     const examReport = await db.userExamReport.findFirst({
@@ -45,9 +44,6 @@ export async function GET(
     }
 
     // console.log("Module ID:", params.moduleId);
-=======
-    console.log("Module ID:", params.moduleId);
->>>>>>> 8b13b57 (commit)
     const questionsList: any = await db.module.findUnique({
       where: {
         id: params.moduleId,
@@ -59,7 +55,6 @@ export async function GET(
               include: {
                 Exam: {
                   include: {
-<<<<<<< HEAD
                     //answer: true,
                     answer: {
                       select: {
@@ -69,9 +64,6 @@ export async function GET(
                         // hoặc không khai báo => mặc định là false
                       },
                     },
-=======
-                    answer: true,
->>>>>>> 8b13b57 (commit)
                   },
                 },
               },
@@ -88,13 +80,8 @@ export async function GET(
       
     });
 
-<<<<<<< HEAD
     // console.log("Questions List:", questionsList);  // Log toàn bộ questionsList
     // console.log("Categories:", questionsList.Categories);  // Log phần Category từ questionsList
-=======
-    console.log("Questions List:", questionsList);  // Log toàn bộ questionsList
-    console.log("Categories:", questionsList.Categories);  // Log phần Category từ questionsList
->>>>>>> 8b13b57 (commit)
     
     let questionUnShuffleList: any = [];
     let examMaxScore = 0;
