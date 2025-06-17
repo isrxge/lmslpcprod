@@ -225,7 +225,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Quay Lại Trang Quản Lý Khóa Học
             </Link>
-            <h1 className="text-2xl font-medium">Course setup</h1>
+            <h1 className="text-2xl font-medium">Điều Chỉnh Khóa Học</h1>
             {/* <span className="text-sm text-slate-700">
               Complete all fields {completionText}
             </span> */}
@@ -246,7 +246,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your course</h2>
+              <h2 className="text-xl">Điều Chỉnh Khóa Học</h2>
             </div>
             <div className="space-y-6 mt-4">
               <TitleForm

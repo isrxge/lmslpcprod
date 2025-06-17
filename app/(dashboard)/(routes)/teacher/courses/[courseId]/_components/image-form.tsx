@@ -20,7 +20,7 @@ interface ImageFormProps {
 
 const formSchema = z.object({
   imageUrl: z.string().min(1, {
-    message: "Image is required",
+    message: "Hình Ảnh Khóa Học Là Bắt Buộc",
   }),
 });
 
@@ -90,7 +90,7 @@ export const ImageForm = ({ initialData, courseId, readOnly = false }: ImageForm
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Từ Chối</>
           ) : (
             <>
               {!initialData.imageUrl ? (

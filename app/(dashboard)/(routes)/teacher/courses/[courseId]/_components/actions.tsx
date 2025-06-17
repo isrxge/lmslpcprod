@@ -16,7 +16,7 @@ interface ActionsProps {
   isPublished: boolean;
   status: string;
   title: string;
-  endDate?: string | null;  // ISO string hoặc null
+  endDate?: string | null; // ISO string hoặc null
   creatorId: string;
   canDeleteAny: boolean;
   canCloseAny?: boolean;
@@ -44,55 +44,27 @@ export const Actions = ({
   const showDelete = isOwner || canDeleteAny;
   const isClosed = courseStatus === "closed";
 
-
-  // Tính xem course đã hết hạn chưa
-  // const isExpired = endDate
-  //   ? new Date(endDate) <= new Date()
-  //   : false;
-
-  // Auto-unpublish ngay khi mount nếu hết hạn và vẫn đang published
-  // useEffect(() => {
-  //   if (isExpired && isPublished) {
-  //     axios
-  //       .patch(`/api/courses/${courseId}/unpublish`)
-  //       .then(() => {
-  //         toast.success(`Course automatically unpublished (deadline passed)`);
-  //         router.refresh();
-  //       })
-  //       .catch(() => {
-  //         toast.error("Failed to auto-unpublish");
-  //       });
-  //   }
-  // }, [isExpired, isPublished, courseId, router]);
-
   const onClick = async () => {
-    if (isClosed) {                                  
+    if (isClosed) {
       toast.error("Khóa Học Đã Đóng Hoàn Toàn, Không Thể Phát Hành.");
       return;
     }
-    // Ngăn publish nếu đã hết hạn
-    // if (isExpired) {
-    //   toast.error(
-    //     "Cannot publish: the course deadline has passed. It remains unpublished."
-    //   );
-    //   return;
-    // }
 
     try {
       setIsLoading(true);
 
       if (isPublished) {
         await axios.patch(`/api/courses/${courseId}/unpublish`);
-        toast.success("Course unpublished");
+        toast.success("Khóa Học Đã Được Thu Hồi");
       } else {
         await axios.patch(`/api/courses/${courseId}/publish`);
-        toast.success("Course published");
+        toast.success("Khóa Học Đã Được Phát Hành");
         confetti.onOpen();
       }
 
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
     } finally {
       setIsLoading(false);
     }
@@ -104,10 +76,10 @@ export const Actions = ({
     try {
       setIsLoading(true);
       await axios.patch(`/api/courses/${courseId}/close`);
-      toast.success("Course closed");
+      toast.success("Khóa Học Đã Được Đóng");
       router.refresh();
     } catch {
-      toast.error("Failed to close course");
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
     } finally {
       setIsLoading(false);
     }
@@ -117,10 +89,10 @@ export const Actions = ({
     try {
       setIsLoading(true);
       await axios.delete(`/api/courses/${courseId}`);
-      toast.success("Course deleted");
+      toast.success("Khóa Học Đã Được Xóa");
       router.push(`/teacher/courses`);
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã Xảy Ra Lỗi, Vui Lòng Thử Lại Sau");
     } finally {
       setIsLoading(false);
     }
@@ -134,40 +106,29 @@ export const Actions = ({
         variant="outline"
         size="sm"
       >
-        {isPublished ? "Unpublish" : "Publish"}
+        {isPublished ? "Thu Hồi" : "Phát Hành"}
       </Button>
       {showClose && (
-  <ConfirmModal
-    title="Close course"
-    description="Are you sure you want to close this course? Students will no longer be able to continue."
-    onConfirm={onCloseCourse}
-    confirmLabel="Close"
-  >
-    <Button
-      size="sm"
-      variant="destructive"
-      disabled={isLoading || isClosed}
-    >
-      Close
-    </Button>
-  </ConfirmModal>
-)}
-      {/* <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={isLoading}>
-            <Trash className="h-4 w-4" />
-        </Button>
-      </ConfirmModal> */}
-      {/* {showDelete && (
-        <ConfirmModal onConfirm={onDelete}>
-          <Button size="sm" disabled={isLoading || isClosed}>
-            <Trash className="h-4 w-4" />
+        <ConfirmModal
+          title="Đóng Khóa Học"
+          description="Bạn Có Chắc Muốn Đóng Khóa Học Này? Các Học Viên Sẽ Không Thể Truy Cập Tài Nguyên Khóa Học."
+          onConfirm={onCloseCourse}
+          confirmLabel="Close"
+        >
+          <Button
+            size="sm"
+            variant="destructive"
+            disabled={isLoading || isClosed}
+          >
+            Close
           </Button>
         </ConfirmModal>
-      )} */}
+      )}
+
       {showDelete && (
         <ConfirmModal
-          title="Delete course"
-          description="This action cannot be undone."
+          title="Xóa Khóa Học"
+          description="Hành Động Này Sẽ không Thể Quay Lại."
           onConfirm={onDelete}
         >
           <Button size="sm" disabled={isLoading || isClosed}>
