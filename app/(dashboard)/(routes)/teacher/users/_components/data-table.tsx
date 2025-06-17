@@ -76,10 +76,10 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
 
-        {/* <Button onClick={() => updateUserList()}>
+        <Button onClick={() => updateUserList()}>
           <PlusCircle className="h-4 w-4 mr-2" />
           Cập Nhật NV Từ Active Directory
-        </Button> */}
+        </Button>
       </div>
       <div className="rounded-md border">
         <Table>
