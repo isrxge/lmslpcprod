@@ -97,7 +97,7 @@ export const CourseCardComplete = ({
               <IconBadge size="sm" icon={BookOpenCheck} />
               <span>
                 {/* {chaptersLength} {chaptersLength === 1 ? "Chapter" : "Chapters"} */}
-                Has {status ? "Hoàn Thành" : "Trượt"}
+                Đã {status ? "Hoàn Thành" : "Trượt"}
               </span>
             </div>
           </div>
