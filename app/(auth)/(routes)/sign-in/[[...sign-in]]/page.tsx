@@ -67,7 +67,6 @@ export default function Page() {
       setError("Không Tìm Thấy Thông Tin.");
       return;
     }
-    console.log(user.data.dn.split(","));
 
     const userCheck = await axios.post(`/api/getClerkUser`, {
       emailAddress: emailAddress,

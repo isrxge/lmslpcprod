@@ -91,10 +91,10 @@ export async function PATCH(
     const courseId = params.courseId;
 
     /* 1️⃣  Đóng khóa (status = closed, unpublish) */
-    const closedCourse = await db.course.update({
+    const closedCourse: any = await db.course.update({
       where: { id: courseId },
       data: { status: "closed", isPublished: false },
-      include: { courseInstructor: true },
+      include: { courseInstructor: true, updatedUser: true, user: true },
     });
     /* 2️⃣  Đánh dấu mọi session còn “studying” thành “failed”, score = 0 */
     const isSelfStudy = closedCourse.type === "Self Study";
@@ -130,6 +130,16 @@ export async function PATCH(
 
       await sendInstructorReport(
         closedCourse.courseInstructor.email,
+        closedCourse.title,
+        rowsHtml
+      );
+      await sendInstructorReport(
+        closedCourse.updatedUser.email,
+        closedCourse.title,
+        rowsHtml
+      );
+      await sendInstructorReport(
+        closedCourse.user.email,
         closedCourse.title,
         rowsHtml
       );

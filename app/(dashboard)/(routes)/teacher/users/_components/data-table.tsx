@@ -60,7 +60,33 @@ export function DataTable<TData, TValue>({
   });
   async function updateUserList() {
     let userList = await axios.get("/api/getLDAP");
-    console.log(userList);
+
+    for (let i = 0; i < userList.data.length; i++) {
+      const userCheck = await axios.post(`/api/getClerkUser`, {
+        emailAddress: userList.data[i].mail,
+      });
+
+      if (userCheck.data.length == 0) {
+        let userDepartment = userList.data[i].dn.split(",")[1].split("=")[1];
+        if (userDepartment == "SCC" || userDepartment == "DSC") {
+          userDepartment = "TVTK";
+        } else if (userDepartment == "Leaders") {
+          userDepartment = "BOD";
+        } else if (userDepartment == "Sales") {
+          userDepartment = "BU";
+        }
+        let newUser: any = {
+          username: userList.data[i].cn,
+          emailAddress: userList.data[i].mail,
+          department: userDepartment,
+        };
+        const userCreate = await axios.post(`/api/createClerkUser`, newUser);
+
+        newUser["createdUserId"] = userCreate.data.id;
+
+        await axios.post(`/api/signup`, newUser);
+      }
+    }
   }
   return (
     <div>
@@ -76,7 +102,10 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
 
-        <Button onClick={() => updateUserList()}>
+        <Button
+          title="Lưu Ý, Chức Năng Đang Trong Giai Đoạn Thử Nghiệm!!!"
+          onClick={() => updateUserList()}
+        >
           <PlusCircle className="h-4 w-4 mr-2" />
           Cập Nhật NV Từ Active Directory
         </Button>

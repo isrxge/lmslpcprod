@@ -1,41 +1,46 @@
 import { NextResponse } from "next/server";
 var LdapClient = require("ldapjs-client");
-var CryptoJS = require("crypto-js");
-var ActiveDirectory = require("activedirectory");
 export async function GET(req: Request) {
   try {
-    let result: any = null;
-    var ad = new ActiveDirectory({
-      url: "ldap://10.20.1.11:389",
-      baseDN: "DC=lp, DC=local",
-      username: "trainconnect@lp.local",
-      password: "Js46~p9@X3$Gu!",
-      attributes: {
-        user: ["mail"],
-        //  group: [ 'anotherCustomAttribute', 'objectCategory' ]
-      },
-    });
+    let result: boolean = false;
 
+    var client = new LdapClient({ url: "ldap://10.20.1.11:389" });
     try {
-      ad.findUsers(function (err: any, users: string | any[]) {
-        if (err) {
-          console.log("ERROR: " + JSON.stringify(err));
-          return null;
-        }
+      await client.bind("trainconnect@lp.local", "Js46~p9@X3$Gu!");
+    } catch (e) {}
+    try {
+      const options = {
+        filter: `(mail=*)`,
+        scope: "sub",
+        attributes: ["dn", "sn", "cn", "mail"],
+      };
 
-        if (!users || users.length == 0) console.log("No users found.");
-        else {
-          console.log("findUsers: " + JSON.stringify(users));
-          return users;
-        }
-      });
-    } catch (e) {
-      console.log("Bind failed");
-    } finally {
-      return NextResponse.json(result);
-    }
+      const entries = await client.search(
+        "OU=HCM Staffs,DC=lp,DC=local",
+        options
+      );
+
+      result = entries
+        .filter(
+          (item: { mail: string }) => item.mail !== "lpc.partner@lp.com.vn"
+        )
+        .filter((item: { mail: string }) => item.mail !== "info@lp.com.vn")
+        .filter((item: { mail: string }) => item.mail !== "support@lp.com.vn")
+        .filter((item: { mail: string }) => item.mail !== "webmaster@lp.com.vn")
+        .filter(
+          (item: { mail: string }) => item.mail !== "managedsupport@lp.com.vn"
+        )
+        .filter(
+          (item: { mail: string }) => item.mail !== "lpc_services@lp.com.vn"
+        )
+        .filter(
+          (item: { mail: string }) =>
+            item.mail !== "lpc_cloud_services@lp.com.vn"
+        );
+    } catch (e) {}
+    return NextResponse.json(result);
   } catch (error) {
-    console.log("[AD GET USER]", error);
+    console.log("AD Error:", error);
     return NextResponse.json(false);
   }
 }

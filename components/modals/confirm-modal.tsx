@@ -41,7 +41,7 @@ export const ConfirmModal = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Xác Nhận Thực Hiện Hành Động ?</AlertDialogTitle>
           <AlertDialogDescription>
-          ành Động Này Sẽ Không Thể Thu Hồi.
+          Hành Động Này Sẽ Không Thể Thu Hồi.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
