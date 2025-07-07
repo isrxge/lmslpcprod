@@ -70,11 +70,11 @@ const PermissionIdPage = async ({
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to permission
+              Quay lại
             </Link>
-            <h1 className="text-2xl font-medium">Permission setup</h1>
+            <h1 className="text-2xl font-medium">Thiết lập quyền hạn</h1>
             <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
+              Hoàn thành tất cả các trường {completionText}
             </span>
           </div>
         </div>
@@ -82,7 +82,7 @@ const PermissionIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your permission</h2>
+              <h2 className="text-xl">Tùy chỉnh quyền hạn</h2>
             </div>
             <TitleForm initialData={permission} permissionId={permission.id} />
           </div>

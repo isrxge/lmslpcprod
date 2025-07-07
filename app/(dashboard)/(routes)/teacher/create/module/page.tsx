@@ -63,10 +63,9 @@ function CreatePage() {
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-40">
       <div>
-        <h1 className="text-2xl">Name your module</h1>
+        <h1 className="text-2xl">Đặt tên cho học phần của bạn</h1>
         <p className="text-sm text-slate-600">
-          What would you like to name your module? Don&apos;t worry, you can
-          change this later.
+          Bạn muốn đặt tên gì cho học phần này? Đừng lo, bạn có thể thay đổi tên sau.
         </p>
         <Form {...form}>
           <form
@@ -78,7 +77,7 @@ function CreatePage() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Module title (50 character limit)</FormLabel>
+                  <FormLabel>Tiêu đề học phần (tối đa 50 ký tự)</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
@@ -88,7 +87,7 @@ function CreatePage() {
                     />
                   </FormControl>
                   <FormDescription>
-                    What will you teach in this module?
+                    Quy trình nào sẽ được thêm vào học phần này?
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -101,15 +100,15 @@ function CreatePage() {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Module Type</FormLabel>
+                  <FormLabel>Loại học phần</FormLabel>
                   <FormControl>
                     <select {...field} disabled={isSubmitting} className="w-full p-2 border rounded-md">
-                      <option value="Slide">Slide</option>
-                      <option value="Exam">Exam</option>
+                      <option value="Slide">Bài giảng</option>
+                      <option value="Exam">Bài kiểm tra</option>
                     </select>
                   </FormControl>
                   <FormDescription>
-                    Select the type of module.
+                    Chọn loại học phần.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -119,11 +118,11 @@ function CreatePage() {
             <div className="flex items-center gap-x-2">
               <Link href="/teacher/module">
                 <Button type="button" variant="ghost">
-                  Cancel
+                  Hủy
                 </Button>
               </Link>
               <Button type="submit" disabled={!isValid || isSubmitting}>
-                Continue
+                Tiếp tục
               </Button>
             </div>
           </form>

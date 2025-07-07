@@ -51,7 +51,7 @@ export const CourseActionCell = ({ row }: any) => {
           <Link href={`/teacher/courses/${id}`}>
             <DropdownMenuItem>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh sửa
             </DropdownMenuItem>
           </Link>
           {/* <Link href={`/teacher/courses/${id}/exams`}>

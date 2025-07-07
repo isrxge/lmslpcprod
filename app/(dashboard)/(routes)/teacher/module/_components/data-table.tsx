@@ -41,7 +41,10 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [ {
+          id: "type",
+          value: "Slide", // Default filter value
+        }]
   );
 
   const table = useReactTable({
@@ -53,28 +56,51 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    initialState:{
+      columnFilters: [
+        {
+          id: "type",
+          value: "Slide", // Default filter value
+        },
+      ],
+    },
     state: {
       sorting,
       columnFilters,
     },
   });
+  function onTypeChange(type: any) {
+    console.log(type);
+    console.log(table.getAllColumns());
+    table.getColumn("type")?.setFilterValue(type);
+  }
 
   return (
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter modules..."
+          placeholder="Tìm học phần..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+        <select
+          name="status"
+          id="filterByStatus"
+          onChange={(event) => onTypeChange(event.target.value)}
+          defaultValue={"Slide"}
+          className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
+        >
+          <option value="Slide">Bài Giảng</option>
+          <option value="Exam">Bài Kiểm Tra</option>
+        </select>
         {canCreate ? (
           <Link href="/teacher/create/module">
             <Button>
               <PlusCircle className="h-4 w-4 mr-2" />
-              New module
+              Thêm học phần
             </Button>
           </Link>
         ) : (
@@ -124,7 +150,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không có kết quả.
                 </TableCell>
               </TableRow>
             )}
@@ -138,7 +164,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Trước
         </Button>
         <Button
           variant="outline"
@@ -146,7 +172,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Sau
         </Button>
       </div>
     </div>

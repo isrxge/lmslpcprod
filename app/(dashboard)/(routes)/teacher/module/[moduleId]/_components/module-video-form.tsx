@@ -43,11 +43,11 @@ export const ChapterVideoForm = ({
         }
       );
       // await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
-      toast.success("Chapter updated");
+      toast.success("Học phần đã được cập nhật");
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 

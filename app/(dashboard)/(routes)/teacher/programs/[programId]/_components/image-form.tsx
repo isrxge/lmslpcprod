@@ -66,7 +66,7 @@ export const ImageForm = ({ initialData, programId }: ImageFormProps) => {
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

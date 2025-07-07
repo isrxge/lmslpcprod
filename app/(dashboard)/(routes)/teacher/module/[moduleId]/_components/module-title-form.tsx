@@ -67,16 +67,16 @@ export const ModuleTitleForm = ({
     <div className="mt-6 border dark:text-white rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         <div className="flex items-center">
-          Module title <Asterisk className="size-4" color="red" />
+          Tên bài giảng <Asterisk className="size-4" color="red" />
         </div>
 
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -106,7 +106,7 @@ export const ModuleTitleForm = ({
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Lưu
               </Button>
             </div>
           </form>

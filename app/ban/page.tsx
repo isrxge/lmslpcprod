@@ -26,17 +26,16 @@ const Ban = async () => {
       </div>
       <div className="p-6 flex items-center justify-center">
         <div className="text-center">
-          <p className="mb-4 text-4xl mt-24">Warning !!!</p>
+          <p className="mb-4 text-4xl mt-24">Cảnh báo !!!</p>
           {/* <p className="mb-4">
             Your organization requires admin approval before you can access to
             LPC Learning System.
           </p> */}
           <p className="mb-4">
-            You have been banned from the LMS due to inappropriate actions.
+            Bạn đã bị cấm truy cập hệ thống LMS do hành vi không phù hợp.
           </p>
           <p className="mb-5">
-            Please reach out to your department manager or administrator for
-            further details.
+            Vui lòng liên hệ với quản lý bộ phận hoặc quản trị viên của bạn để biết thêm chi tiết.
           </p>
           {/* <p>
             Please contact your

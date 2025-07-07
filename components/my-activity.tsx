@@ -27,21 +27,21 @@ export const MyActivity = ({ items }: MyActivityProps) => {
     <>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <Clock3 className="mr-2" />
-        My Activity
+        Hoạt động của tôi
       </h2>
       <p className="mb-4 italic">
         {/* Start studying now:{" "}
         <Link href="/search" className="text-blue-700 hover:underline">
           Browse courses
         </Link> */}
-        No activity
+        Không có hoạt động nào được ghi nhận.
       </p>
     </>
   ) : (
     <div>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <Clock3 className="mr-2" />
-        My Activity
+        Hoạt động của tôi
       </h2>
       <Carousel
         opts={{

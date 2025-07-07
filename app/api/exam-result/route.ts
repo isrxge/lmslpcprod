@@ -66,22 +66,22 @@ export async function POST(req: Request) {
       })
     );
     /* -------------------- 2. Nội dung mail -------------------- */
-    const subject = `[LMS] Exam result – ${courseTitle}`;
+    const subject = `[LMS] Kết quả thi – ${courseTitle}`;
     const status  = passed ? "Passed" : "Failed";
     const examDate = new Date(date).toLocaleString();
 
     const text = `
 Dear ${fullname},
 
-You have just completed the exam "${moduleTitle || courseTitle}" in course "${courseTitle}".
+Bạn vừa hoàn thành bài thi "${moduleTitle || courseTitle}" trong khóa học "${courseTitle}".
 
-Result:
-• Score  : ${score}%
-• Status : ${status}
-• Attempt: ${attempt}
-• Date   : ${examDate}
+Kết quả của bạn như sau:
+• Điểm: ${score}%
+• Kết quả: ${status}
+• Số lần: ${attempt}
+• Ngày: ${examDate}
 
-${passed ? "Congratulations!" : "Better luck next time."}
+${passed ? "Chúc mừng bạn!" : "Chúc bạn may mắn lần sau."}
 
 Regards,
 Learning Management System Administration
@@ -99,7 +99,7 @@ Learning Management System Administration
 </table>
 
 <p style="font-family:'Times New Roman',serif;font-size:12pt;">
-  ${passed ? "Congratulations on your achievement! 🎉" : "Don't give up."}
+  ${passed ? "Chúc mừng bạn đã đạt được thành tựu! 🎉" : "Đừng bỏ cuộc!."}
 </p>
 
 <p style="font-family:'Times New Roman',serif;font-size:12pt;">Best regards,<br/>Learning Management System Administration</p>

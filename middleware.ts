@@ -12,6 +12,8 @@ export default authMiddleware({
     "/api/signup",
     "/api/departments",
     "/api/department",
+    "/api/getClerkUser",
+    "/api/createClerkUser",
     // "https://rest.ably.io/**",
   ],
   // debug: true,

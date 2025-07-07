@@ -133,17 +133,17 @@ export const EndDateForm = ({ initialData, courseId, readOnly = false }: EndDate
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          End Date
+          Ngày kết thúc
           <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit End Date
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -155,7 +155,7 @@ export const EndDateForm = ({ initialData, courseId, readOnly = false }: EndDate
       {isNotifyEnabled && notifyDate && (
               <div className="mt-4 text-sm text-gray-600">
                 <p>
-                  You have set a reminder for <strong>{notifyDate} days</strong> before the course end date.
+                  Bạn đã đặt lời nhắc trước <strong>{notifyDate} ngày</strong> so với ngày kết thúc khóa học.
                 </p>
               </div>
             )}
@@ -192,21 +192,21 @@ export const EndDateForm = ({ initialData, courseId, readOnly = false }: EndDate
                 onChange={() => setIsNotifyEnabled(!isNotifyEnabled)}
                 className="h-4 w-4"
               />
-              <label className="text-sm">Enable Reminder Notification</label>
+              <label className="text-sm">Bật thông báo nhắc nhở</label>
             </div>
 
             {isNotifyEnabled && (
               <div>
-                <label className="block text-sm font-medium text-gray-700">Reminder Date (in days)</label>
+                <label className="block text-sm font-medium text-gray-700">Số ngày nhắc trước</label>
                 <select
                   value={notifyDate || ''}
                   onChange={(e) => setNotifyDate(Number(e.target.value))}
                   className="w-full p-2 border rounded-md text-sm"
                 >
-                  <option value="">Select a reminder date</option>
+                  <option value="">Chọn ngày nhắc nhở</option>
                   {[1, 2, 3, 4, 5].map((days) => (
                     <option key={days} value={days}>
-                      {days} days before
+                      Trước {days} ngày
                     </option>
                   ))}
                 </select>
@@ -217,10 +217,10 @@ export const EndDateForm = ({ initialData, courseId, readOnly = false }: EndDate
 
             <div className="flex items-center gap-x-2">
               <Button disabled={!isSaveButtonEnabled  || isSubmitting} type="submit">
-                Save
+                Lưu
               </Button>
               <Button type="button" variant="outline" onClick={handleCancel}>
-                Cancel
+                Hủy
               </Button>
             </div>
           </form>

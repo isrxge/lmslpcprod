@@ -51,7 +51,7 @@ export const RoleActionCell = ({ row }: any) => {
           <Link href={`/teacher/roles/${id}`}>
             <DropdownMenuItem>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh sửa
             </DropdownMenuItem>
           </Link>
         </DropdownMenuContent>

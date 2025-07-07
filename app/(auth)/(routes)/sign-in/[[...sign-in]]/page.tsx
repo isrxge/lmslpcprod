@@ -61,11 +61,11 @@ export default function Page() {
       return;
     }
     if (!emailAddress.includes("@lp.com.vn")) {
-      setError("Please enter a valid email address.");
+      setError("Vui lòng nhập địa chỉ email hợp lệ.");
       return;
     }
     if (password == "") {
-      setError("Please enter password.");
+      setError("Vui lòng điền mật khẩu.");
       return;
     }
     var ciphertext = CryptoJS.AES.encrypt(password, "1").toString();
@@ -76,9 +76,39 @@ export default function Page() {
     });
 
     if (!user.data) {
-      setError("Wrong username/password.");
+      setError("Sai tên đăng nhập hoặc mật khẩu.");
       return;
     }
+    // if (user.data == null) {
+    //   setError("Không tìm thấy thông tin.");
+    //   return;
+    // }
+
+    const userCheck = await axios.post(`/api/getClerkUser`, {
+      emailAddress: emailAddress,
+    });
+
+    if (userCheck.data.length == 0) {
+      let userDepartment = user.data.dn.split(",")[1].split("=")[1];
+      if (userDepartment == "SCC" || userDepartment == "DSC") {
+        userDepartment = "TVTK";
+      } else if (userDepartment == "Leaders") {
+        userDepartment = "BOD";
+      } else if (userDepartment == "Sales") {
+        userDepartment = "BU";
+      }
+      let newUser: any = {
+        username: user.data.cn,
+        emailAddress: emailAddress,
+        department: userDepartment,
+      };
+      const userCreate = await axios.post(`/api/createClerkUser`, newUser);
+
+      newUser["createdUserId"] = userCreate.data.id;
+
+      await axios.post(`/api/signup`, newUser);
+    }
+
     try {
       const { supportedFirstFactors } = await signIn.create({
         identifier: emailAddress,
@@ -162,11 +192,11 @@ export default function Page() {
         id="banner-4"
         className="min-h-screen bg-neutral-950 z-10 fixed top-0 left-3/4 w-1/4"
       /> */}
-      <div className="relative">
+      {/* <div className="relative">
         <div className="absolute mt-1 top-0 right-0">
           <ModeToggle />
         </div>
-      </div>
+      </div> */}
       <div className="mb-4 flex justify-center">
         <Logo />
       </div>
@@ -177,7 +207,7 @@ export default function Page() {
         from-blue-800 via-indigo-900 to-gray-900
         animate-text"
       >
-        Lien Phat Learning System
+        HỆ THỐNG ĐÀO TẠO NỘI BỘ<br />LIÊN PHÁT
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -195,7 +225,7 @@ export default function Page() {
         </div>
         <div>
           <label htmlFor="password" className="block mb-1">
-            Password
+            Mật khẩu
           </label>
           <input
             onChange={(e) => setPassword(e.target.value)}
@@ -211,13 +241,13 @@ export default function Page() {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
         >
-          Sign In
+          Đăng nhập
         </button>
-        <Link href={"/sign-up"}>
+        {/* <Link href={"/sign-up"}>
           <button className="w-full bg-gray-300 mt-2 text-gray-800 py-2 rounded-md hover:bg-gray-400 transition duration-300">
             Switch Sign Up
           </button>
-        </Link>
+        </Link> */}
       </form>
       {/* Xác minh mã nếu cần */}
       {/* Hiển thị phần xác minh mã nếu pendingVerification là true */}
@@ -246,10 +276,10 @@ export default function Page() {
               </button>
             </div>
             <h2 className="text-xl font-bold mb-4 text-center">
-              Email Verification
+              Xác thực 2 bước
             </h2>
             <p className="mb-2 text-center text-gray-600">
-              We sent a code to <strong>{emailAddress}</strong>
+              Chúng tôi đã gửi mã đến email <strong>{emailAddress}</strong>
             </p>
             <form className="flex flex-col space-y-4">
               <div>
@@ -268,7 +298,7 @@ export default function Page() {
                 onClick={onPressVerify}
                 className="bg-blue-500 justify-center text-white inline-flex py-2 rounded-md hover:bg-blue-600 transition duration-300"
               >
-                <span>Confirm</span>
+                <span>Xác nhận</span>
                 {verificationChecking ? <Loader2 className="animate-spin"/> : <></>}
               </button>
             </form>

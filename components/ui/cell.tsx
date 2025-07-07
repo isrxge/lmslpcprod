@@ -118,7 +118,7 @@ export const Cell = ({ row }: any) => {
               <Link href={`/teacher/users/${id}`}>
                 <DropdownMenuItem>
                   <Pencil className="h-4 w-4 mr-2" />
-                  Edit
+                  Chỉnh sửa
                 </DropdownMenuItem>
               </Link>
             )}
@@ -126,13 +126,14 @@ export const Cell = ({ row }: any) => {
               <DropdownMenuItem
                 onClick={() =>
                   onChangeAlertMessage(
-                    "ban",
-                    `Are you sure you are going to ban ${username}?(user data will not be deleted and you can restore status later)`
+                    "Xác nhận khóa tài khoản",
+                    `Bạn có chắc chắn muốn khóa tài khoản của ${username}?
+(Dữ liệu người dùng sẽ không bị xóa và bạn có thể khôi phục trạng thái sau này)`
                   )
                 }
               >
                 <Ban className="h-4 w-4 mr-2" />
-                Ban
+                Khóa tài khoản
               </DropdownMenuItem>
             ) : (
               <></>
@@ -152,7 +153,7 @@ export const Cell = ({ row }: any) => {
                 }
               >
                 <BadgeCheck className="h-4 w-4 mr-2" />
-                Approve
+                Phê duyệt
               </DropdownMenuItem>
             ) : (
               <></>

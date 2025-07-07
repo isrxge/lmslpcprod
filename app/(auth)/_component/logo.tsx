@@ -8,7 +8,8 @@ const Logo = () => {
       height={200}
       width={200}
       alt="logo"
-      src={theme == "dark" ? "/LPC_Logo_black.png" : "/LPC_Logo_white.png"}
+      // src={theme == "dark" ? "/LPC_Logo_black.png" : "/LPC_Logo_white.png"}
+      src="/LPC_Logo_white.png"
     />
   );
 };

@@ -165,25 +165,25 @@ export const Modal: React.FC<ModalProps> = ({
               className={`px-4 py-2 rounded ${filter === "all" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("all")}
             >
-              All ({allCount})
+              Tất cả ({allCount})
             </button>
             <button
               className={`px-4 py-2 rounded ${filter === "finished" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("finished")}
             >
-              Finished ({finishedCount})
+              Đã đạt ({finishedCount})
             </button>
             <button
               className={`px-4 py-2 rounded ${filter === "studying" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("studying")}
             >
-              Studying ({studyingCount})
+              Đang học ({studyingCount})
             </button>
             <button
               className={`px-4 py-2 rounded ${filter === "failed" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("failed")}
             >
-              Failed ({failedCount})
+              Không đạt ({failedCount})
             </button>
           </div>
 

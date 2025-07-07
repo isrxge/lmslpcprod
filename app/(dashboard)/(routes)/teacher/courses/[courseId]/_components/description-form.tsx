@@ -45,15 +45,15 @@ export const DescriptionForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-        <div className="flex items-center">Course Description</div>
+        <div className="flex items-center">Mô tả khóa học</div>
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit description
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -114,13 +114,13 @@ export const DescriptionForm = ({
               onClick={toggleEdit}
               className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded-md"
             >
-              Cancel
+              Hủy
             </button>
             <button
               onClick={onSubmit}
               className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
             >
-              Submit
+              Lưu
             </button>
           </div>
         </>

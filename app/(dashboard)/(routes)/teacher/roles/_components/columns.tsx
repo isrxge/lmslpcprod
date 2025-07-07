@@ -28,7 +28,7 @@ export const columns: ColumnDef<{ id: string; title: string }>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Title</span>
+          <span className="mr-2">Tiêu đề</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -37,7 +37,7 @@ export const columns: ColumnDef<{ id: string; title: string }>[] = [
 
   {
     id: "actions",
-    accessorKey: "Action",
+    accessorKey: "Hành động",
     cell: RoleActionCell,
   },
 ];

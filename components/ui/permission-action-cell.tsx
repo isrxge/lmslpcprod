@@ -51,7 +51,7 @@ export const PermissionActionCell = ({ row }: any) => {
           <Link href={`/teacher/permissions/${id}`}>
             <DropdownMenuItem>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh sửa
             </DropdownMenuItem>
           </Link>
         </DropdownMenuContent>

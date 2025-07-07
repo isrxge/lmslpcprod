@@ -9,9 +9,9 @@ export const ReportTabs = () => {
   return (
     <Tabs defaultValue="users" aria-label="Options">
       <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="users">Users</TabsTrigger>
-        <TabsTrigger value="courses">Courses</TabsTrigger>
-        <TabsTrigger value="ranking">Ranking</TabsTrigger>
+        <TabsTrigger value="users">Người dùng</TabsTrigger>
+        <TabsTrigger value="courses">Khóa học</TabsTrigger>
+        <TabsTrigger value="ranking">Bảng xếp hạng</TabsTrigger>
         {/* <TabsTrigger value="programs">Programs</TabsTrigger> */}
       </TabsList>
       <TabsContent value="users">
@@ -23,9 +23,9 @@ export const ReportTabs = () => {
       <TabsContent value="ranking">
         <RankingReportPage></RankingReportPage>
       </TabsContent>
-      <TabsContent value="programs">
+      {/* <TabsContent value="programs">
         <ReportPageProgram></ReportPageProgram>
-      </TabsContent>
+      </TabsContent> */}
     </Tabs>
   );
 };

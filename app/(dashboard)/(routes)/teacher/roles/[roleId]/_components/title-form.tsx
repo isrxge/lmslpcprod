@@ -53,7 +53,7 @@ export const TitleForm = ({ initialData, roleId }: TitleFormProps) => {
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 
@@ -61,16 +61,16 @@ export const TitleForm = ({ initialData, roleId }: TitleFormProps) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Role title <Asterisk className="size-4" color="red" />
+          Tiêu đề vai trò <Asterisk className="size-4" color="red" />
         </div>
 
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -101,7 +101,7 @@ export const TitleForm = ({ initialData, roleId }: TitleFormProps) => {
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Lưu
               </Button>
             </div>
           </form>

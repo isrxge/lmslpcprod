@@ -61,10 +61,9 @@ function CreatePage() {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-60">
       <div>
         <>
-          <h1 className="text-2xl">Name your department</h1>
+          <h1 className="text-2xl">Đặt tên cho phòng ban của bạn</h1>
           <p className="text-sm text-slate-600">
-            What would you like to name your department? Don&apos;t worry, you
-            can change this later.
+            Bạn muốn đặt tên gì cho phòng ban của mình? Đừng lo, bạn có thể thay đổi tên này sau.
           </p>
           <Form {...form}>
             <form
@@ -76,7 +75,7 @@ function CreatePage() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Department title</FormLabel>
+                    <FormLabel>Tên phòng ban</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isSubmitting}
@@ -84,7 +83,7 @@ function CreatePage() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>Department name?</FormDescription>
+                    <FormDescription>Phòng ban nào sẽ được thêm vào hệ thống?</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -93,11 +92,11 @@ function CreatePage() {
               <div className="flex items-center gap-x-2">
                 <Link href="/teacher/departments">
                   <Button type="button" variant="ghost">
-                    Cancel
+                    Hủy
                   </Button>
                 </Link>
                 <Button type="submit" disabled={!isValid || isSubmitting}>
-                  Continue
+                  Tiếp tục
                 </Button>
               </div>
             </form>

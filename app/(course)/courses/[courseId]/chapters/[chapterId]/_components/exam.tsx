@@ -1555,7 +1555,7 @@ const Exam = ({
         return false;
       });
       if (unanswered.length > 0) {
-        toast.error("Please answer all questions before submitting.");
+        toast.error("Vui lòng trả lời tất cả các câu hỏi trước khi gửi.");
         return;
       }
 
@@ -1626,28 +1626,26 @@ const Exam = ({
       {/* Giao diện chờ/bắt đầu exam */}
       <div className="max-w-6xl mx-auto p-6 mt-5">
         <div className="bg-white shadow-lg rounded-lg p-6 dark:bg-slate-600">
-          <h2 className="text-2xl font-bold mb-4">Welcome to the Exam</h2>
+          <h2 className="text-2xl font-bold mb-4">Chào mừng bạn đến với bài thi</h2>
           <p className="text-lg mb-4">
-            Before you begin, please take a moment to review the following
-            information about the exam.
+            Trước khi bắt đầu, vui lòng dành chút thời gian để xem qua các thông tin sau về bài thi.
           </p>
           <ul className="list-disc pl-5 mb-4">
             <li className="mb-2">
-              This exam consists of multiple-choice questions.
+              Bài thi này bao gồm các câu hỏi trắc nghiệm.
             </li>
 
             <li className="mb-2">
-              You will have{" "}
-              <span className="text-red-600">{chapter.timeLimit} minutes</span>{" "}
-              to complete the exam.
+              Bạn sẽ có{" "}
+              <span className="text-red-600">{chapter.timeLimit} phút</span>{" "}
+              để hoàn thành bài thi.
             </li>
             <li className="mb-2">
-              You need at least{" "}
-              <span className="text-red-600">{chapter.scoreLimit}%</span> to
-              pass the exam.
+              Bạn cần đạt ít nhất{" "}
+              <span className="text-red-600">{chapter.scoreLimit}%</span> để vượt qua bài thi.
             </li>
             <li className="mb-2">
-              Make sure you are in a quiet environment to avoid distractions.
+              Hãy đảm bảo bạn đang ở trong môi trường yên tĩnh để tránh bị phân tâm.
             </li>
           </ul>
 
@@ -1663,7 +1661,7 @@ const Exam = ({
                   } text-white p-6 rounded-t-lg`}
                 >
                   <h2 className="text-2xl font-semibold">
-                    Your score is{" "}
+                    Điểm của bạn là{" "}
                     <span className="text-4xl font-bold">{finalScore}</span>
                   </h2>
                 </div>
@@ -1672,9 +1670,9 @@ const Exam = ({
                   <p className="text-lg mb-4">
                     {finalScore >= chapter.scoreLimit && isPassed
                       ? nextChapterId !== null
-                        ? "Congratulations on completing the exam!"
-                        : "You have successfully completed the exam."
-                      : "Sorry, you have failed. Better luck next time!"}
+                        ? "Chúc mừng bạn đã hoàn thành bài thi!"
+                        : "Bạn đã hoàn thành bài thi thành công."
+                      : "Rất tiếc, bạn đã trượt. Chúc bạn may mắn lần sau!"}
                   </p>
 
                   {finalScore >= chapter.scoreLimit && isPassed ? (
@@ -1704,14 +1702,14 @@ const Exam = ({
               <div className="flex justify-between p-6">
                 {isCompleted && isFailed ? (
                   <span className="text-red-500 font-semibold">
-                    You can retake on {scheduledDate}.
+                    Bạn có thể làm lại vào ngày {scheduledDate}.
                   </span>
                 ) : (
                   <></>
                 )}
                 {isCompleted && !isFailed ? (
                   <span className="text-red-500 font-semibold">
-                    You cannot retake. {isFailed}
+                    Bạn không thể làm lại bài thi. {isFailed}
                   </span>
                 ) : (
                   // <AlertDialogTrigger className="flex justify-center items-center">
@@ -1724,7 +1722,7 @@ const Exam = ({
                     onClick={() => setOnFinish(false)}
                     className="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md"
                   >
-                    Close
+                    Đóng
                   </AlertDialogCancel>
                 ) : null}
 
@@ -1733,7 +1731,7 @@ const Exam = ({
                     className="px-4 py-2 bg-green-600 text-white rounded-lg shadow-md"
                     onClick={() => onLeaving()}
                   >
-                    Leave
+                    Rời đi
                   </button>
                 </AlertDialogAction>
               </div>
@@ -1741,7 +1739,7 @@ const Exam = ({
           </AlertDialog>
 
           <div className="mt-6">
-            <p className="text-lg mb-4">Include:</p>
+            <p className="text-lg mb-4">Bao gồm:</p>
             <ul className="list-disc pl-5">
               {chapter.Category.map((item: any) => {
                 return (
@@ -1768,15 +1766,15 @@ const Exam = ({
           <AlertDialog>
             <div className="font-bold ml-2 rounded-lg">
               {isGeneratingExam ? (
-                <div>Please wait while we generate your exam...</div>
+                <div>Đang tạo bài thi, vui lòng đợi...</div>
               ) : !isCompleted || (isCompleted && !isFailed && !isSameCourseAndFailed) ? (
                 <AlertDialogTrigger className="flex justify-center items-center">
-                  <>👉Take an exam</>
+                  <>👉Làm bài thi</>
                 </AlertDialogTrigger>
               ) : isCompleted && isFailed ? null : null}
               {isCompleted && isFailed ? (
                 <span className="text-red-500">
-                  You can retake on {scheduledDate}.
+                  Bạn có thể làm lại vào ngày {scheduledDate}.
                 </span>
               ) : !isCompleted ? (
                 // <AlertDialogTrigger className="flex justify-center items-center">
@@ -1791,22 +1789,22 @@ const Exam = ({
             </div>
             <AlertDialogContent className="AlertDialogContent">
               <AlertDialogTitle className="AlertDialogTitle">
-                Exam note
+                Lưu ý bài thi
               </AlertDialogTitle>
               <AlertDialogDescription className="AlertDialogDescription">
                 {!finishedExam && isCompleted ? (
-                  <>Do you want to do the exam?</>
+                  <>Bạn có muốn làm bài thi không?</>
                 ) : (
-                  <>Do you want to retake this exam?</>
+                  <>Bạn có muốn làm lại bài thi này không?</>
                 )}
               </AlertDialogDescription>
               <div
                 style={{ display: "flex", gap: 25, justifyContent: "flex-end" }}
               >
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Hủy</AlertDialogCancel>
                 <AlertDialogAction asChild>
                   <button className="Button red" onClick={() => accept()}>
-                    Yes
+                    Có
                   </button>
                 </AlertDialogAction>
               </div>
@@ -1817,21 +1815,21 @@ const Exam = ({
       {/* Score hiển thị */}
       <div className="max-w-6xl mx-auto p-6">
         <div className="bg-white shadow-lg rounded-lg p-6 dark:bg-slate-600">
-          <h2 className="text-2xl font-bold mb-6">Exam Score</h2>
+          <h2 className="text-2xl font-bold mb-6">Kết quả bài thi</h2>
           <div className="mb-6">
             <DoughnutChart score={finalScore} maxScore={examMaxScore} />
           </div>
           {isCompleted && isFailed ? (
             <div>
-              <p className="text-lg mb-2">Your current score. Keep going!</p>
+              <p className="text-lg mb-2">Điểm số hiện tại của bạn. Đừng bỏ cuộc!</p>
             </div>
           ) : !isCompleted ? (
             <div>
-              <p className="text-lg mb-2">You have not take the test!</p>
+              <p className="text-lg mb-2">Bạn chưa làm bài thi!</p>
             </div>
           ) : (
             <div>
-              <p className="text-lg mb-2">You finished the exam.</p>
+              <p className="text-lg mb-2">Bạn đã hoàn thành bài thi.</p>
             </div>
           )}
         </div>
@@ -1879,7 +1877,7 @@ const Exam = ({
             <div className="flex flex-col">
               <div className="flex flex-row items-center my-2.5">
                 <span>
-                  {currentQuestion + 1} of {questions.length} questions
+                  {currentQuestion + 1} trong {questions.length} câu hỏi
                 </span>
                 <div className="flex ml-auto rounded-full bg-blue-500 p-2 text-white">
                   <Timer />
@@ -1936,7 +1934,7 @@ const Exam = ({
                     currentQuestion === 0 ? "hidden" : ""
                   }`}
                 >
-                  Previous
+                  Trước
                 </button>
                 <button
                   onClick={handleNextClick}
@@ -1977,19 +1975,19 @@ const Exam = ({
           <div className="mt-4">
             <div className="flex items-center">
               <div className="w-6 h-6 rounded-full bg-gray-500 mr-2" />
-              <strong>: Not answered</strong>
+              <strong>: Chưa trả lời</strong>
             </div>
             <div className="flex items-center mt-2">
               <div className="w-6 h-6 rounded-full bg-green-600 mr-2" />
-              <strong>: Answered</strong>
+              <strong>: Đã trả lời</strong>
             </div>
             <div className="flex items-center mt-2">
               <div className="w-6 h-6 rounded-full bg-yellow-400 mr-2" />
-              <strong>: Bookmarks</strong>
+              <strong>: Đánh dấu</strong>
             </div>
             <div className="flex items-center mt-2">
               <div className="w-6 h-6 rounded-full bg-blue-600 mr-2" />
-              <strong>: Selected</strong>
+              <strong>: Đang chọn</strong>
             </div>
           </div>
         </div>

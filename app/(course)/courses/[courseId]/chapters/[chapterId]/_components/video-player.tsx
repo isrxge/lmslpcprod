@@ -50,7 +50,7 @@ export const VideoPlayer = ({
         }
       }
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 

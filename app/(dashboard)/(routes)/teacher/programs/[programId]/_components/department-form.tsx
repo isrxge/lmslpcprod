@@ -84,7 +84,7 @@ export const DepartmentForm = ({ initialData, programId, department }: any) => {
       // toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 

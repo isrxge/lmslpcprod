@@ -104,11 +104,11 @@ export const ChaptersList = ({ items, onReorder, courseId, readOnly = false }: C
         );
         return updatedChapters; // Cập nhật lại state
       });
-      toast.success("Module has been removed successfully!");
+      toast.success("Học phần đã được xóa thành công!");
       router.refresh();
     } else {
       // Hiển thị thông báo toast lỗi nếu xóa thất bại
-      toast.error("Failed to remove module!");
+      toast.error("Xóa học phần thất bại!");
     }
   };
 

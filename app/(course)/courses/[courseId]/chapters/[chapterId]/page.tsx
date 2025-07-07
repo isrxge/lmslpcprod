@@ -254,7 +254,7 @@ const ChapterIdPage = async ({
   ) : (
     <div className="pl-6 pt-3">
       {userProgress?.status == "finished" && (
-        <Banner variant="success" label="You already completed this Module." />
+        <Banner variant="success" label="Bạn đã hoàn thành học phần này." />
       )}
  
       <div className="flex flex-col pb-20 overflow-x-hidden">

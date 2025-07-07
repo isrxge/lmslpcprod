@@ -465,7 +465,7 @@ const CustomFileRenderer = ({ mainState: { currentDocument } }: any) => {
       type={`application/pdf`}
     >
       <p>
-        Unable to display PDF file. <a href={viewerUrl}>Download</a> instead.
+        Không thể hiển thị tệp PDF. <a href={viewerUrl}>Tải xuống</a> để mở.
       </p>
     </object>
   );
@@ -686,7 +686,7 @@ const Slide = ({
   };
 
   return slide.length < 1 ? (
-    <>This module is updating.</>
+    <>Bài giảng này đang được cập nhật</>
   ) : (
     <AnimatePresence mode="wait">
       <motion.div
@@ -698,8 +698,7 @@ const Slide = ({
         <AlertDialog open={onFinish && hasCompleted != "finished"}>
           <AlertDialogContent className="AlertDialogContent">
             <AlertDialogTitle className="AlertDialogTitle">
-              Congratulation on finishing this Course, Would you like to find
-              another course?
+              Chúc mừng bạn đã hoàn thành khóa học! Bạn có muốn tìm khóa học khác không?
               <Image
                 src="/congratulation.jpg"
                 alt="blog"
@@ -717,11 +716,11 @@ const Slide = ({
               }}
             >
               <AlertDialogCancel onClick={() => setOnFinish(false)}>
-                Stay
+                Ở lại
               </AlertDialogCancel>
               <AlertDialogAction asChild>
                 <button className="Button red" onClick={() => accept()}>
-                  Leave
+                  Rời đi
                 </button>
               </AlertDialogAction>
             </div>
@@ -733,7 +732,7 @@ const Slide = ({
             <div className="ml-4 mt-4">
               <video width="1080" height="720" controls autoPlay>
                 <source src={slide[currentSlide].videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
+                Trình duyệt của bạn không hỗ trợ phát video.
               </video>
               <div>{slide[currentSlide].description}</div>
             </div>
@@ -815,7 +814,7 @@ const Slide = ({
                 className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded mt-4 ml-4"
                 onClick={() => setCurrentSlide(currentSlide - 1)}
               >
-                Previous
+                Trước
               </button>
             )}
 
@@ -826,7 +825,7 @@ const Slide = ({
                     onClick={() => onClick()}
                     className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-4 ml-4"
                   >
-                    Next module
+                    Kế tiếp
                   </button>
                 </div>
               ) : (
@@ -836,7 +835,7 @@ const Slide = ({
                       onClick={() => onClickPre()}
                       className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded mt-4 ml-4"
                     >
-                      Previsous Module
+                      Trở lại
                     </button>
                   )}
 
@@ -855,7 +854,7 @@ const Slide = ({
                 onClick={() => onClickNextSlide()}
                 className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded mt-4 ml-4"
               >
-                Next slide
+                Bài giảng kế tiếp
               </button>
             )}
           </div>

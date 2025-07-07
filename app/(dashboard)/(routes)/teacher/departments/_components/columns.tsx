@@ -25,7 +25,7 @@ export const columns: ColumnDef<{
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Title</span>
+          <span className="mr-2">Tên phòng ban</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -39,7 +39,7 @@ export const columns: ColumnDef<{
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Department members</span>
+          <span className="mr-2">Thành viên</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );

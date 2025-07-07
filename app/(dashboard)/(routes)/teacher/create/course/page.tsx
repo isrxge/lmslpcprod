@@ -193,10 +193,9 @@ function CreatePage() {
   return (
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-40">
       <div>
-        <h1 className="text-2xl">Name your course</h1>
+        <h1 className="text-2xl">Đặt tên cho khóa học của bạn</h1>
         <p className="text-sm text-slate-600">
-          What would you like to name your course? Don&apos;t worry, you can
-          change this later.
+          Bạn muốn đặt tên khóa học là gì? Đừng lo, bạn có thể thay đổi sau.
         </p>
         <Form {...form}>
           <form
@@ -209,7 +208,7 @@ function CreatePage() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course title (50 character limit)</FormLabel>
+                  <FormLabel>Tiêu đề khóa học (50 character limit)</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
@@ -219,7 +218,7 @@ function CreatePage() {
                     />
                   </FormControl>
                   <FormDescription>
-                    What will you teach in this course?
+                    Quy trình nào sẽ được đào tạo trong khóa học này?
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -232,27 +231,26 @@ function CreatePage() {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Course Type</FormLabel>
+                  <FormLabel>Loại khóa học</FormLabel>
                   <FormControl>
                     <select
                       {...field}
                       disabled={isSubmitting}
                       className="border rounded-md p-1 w-full "
                     >
-                      <option value="Mandatory" title="One-time exam required">
-                        Mandatory
+                      <option value="Mandatory" title="Yêu cầu thi một lần duy nhất">
+                        Bắt buộc
                       </option>
                       <option value="Probation" title="One-time exam required">
-                        Probation
+                        Thử việc
                       </option>
-                      <option value="Self Study" title="No exam required">
-                        Self Study
+                      <option value="Self Study" title="Không yêu cầu bài thi">
+                        Tự học
                       </option>
                     </select>
                   </FormControl>
                   <FormDescription>
-                    Note: Once you choose a course type, you will not be able
-                    to change it.
+                    Lưu ý: Sau khi bạn chọn loại khóa học, bạn sẽ không thể thay đổi lại.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -262,11 +260,11 @@ function CreatePage() {
             <div className="flex items-center gap-x-2">
               <Link href="/teacher/courses">
                 <Button type="button" variant="ghost">
-                  Cancel
+                  Hủy
                 </Button>
               </Link>
               <Button type="submit" disabled={!isValid || isSubmitting}>
-                Continue
+                Tiếp tục
               </Button>
             </div>
           </form>

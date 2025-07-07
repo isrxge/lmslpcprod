@@ -52,7 +52,7 @@ if (!hasAdvanceModePermission) {
 return (
 <Link href="/teacher/courses">
   <Button size="sm" variant="ghost">
-    Admin mode
+    Chế độ quản trị
   </Button>
 </Link>
 );

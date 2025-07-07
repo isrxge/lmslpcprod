@@ -354,7 +354,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter users..."
+          placeholder="Tìm kiếm người dùng..."
           value={
             (table.getColumn("username")?.getFilterValue() as string) ?? ""
           }
@@ -387,7 +387,7 @@ export function DataTable<TData, TValue>({
     onChange={(event) => onDepartmentChange(event.target.value)}
     className="max-w-sm p-2 border rounded text-muted-foreground dark:bg-slate-950"
   >
-    <option value="">All Departments</option>
+    <option value="">Tất cả phòng ban</option>
     {departments.map((item: any) => (
       <option
         key={item.id}
@@ -425,7 +425,7 @@ export function DataTable<TData, TValue>({
             <DropdownMenuTrigger asChild>
               <Button>
                 <FileDown className="h-4 w-4 mr-2" />
-                Select report <ChevronDown />
+                Tải báo cáo <ChevronDown />
               </Button>
             </DropdownMenuTrigger>
             {userList.length == 0 ? (
@@ -434,13 +434,13 @@ export function DataTable<TData, TValue>({
               <DropdownMenuContent>
                 {table.getSelectedRowModel().rows.length == 0 ? (
                   <DropdownMenuItem onClick={() => getSheetData("All")}>
-                    Report (All)
+                    Tất cả
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem
                     onClick={() => getSheetData("Selected Rows")}
                   >
-                    Report (Selected Rows)
+                    Các mục đã chọn
                   </DropdownMenuItem>
                 )}
                 {/* {table.getSelectedRowModel().rows.length == 0 ? (
@@ -513,7 +513,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Không có kết quả.
                 </TableCell>
               </TableRow>
             )}
@@ -527,7 +527,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Trước
         </Button>
         <Button
           variant="outline"
@@ -535,7 +535,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Sau
         </Button>
       </div>
     </div>

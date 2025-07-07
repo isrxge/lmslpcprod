@@ -19,7 +19,7 @@ export const CourseEnrollButton = ({ courseId }: CourseEnrollButtonProps) => {
 
       window.location.assign(response.data.url);
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     } finally {
       setIsLoading(false);
     }

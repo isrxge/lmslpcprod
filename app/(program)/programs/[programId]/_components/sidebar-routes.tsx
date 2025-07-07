@@ -24,7 +24,7 @@ import { useState } from "react";
 const guestRoutes = [
   {
     icon: Home,
-    label: "Home",
+    label: "Trang chủ",
     href: "/",
   }
   // ,
@@ -36,7 +36,7 @@ const guestRoutes = [
   ,
   {
     icon: Star,
-    label: "Bright Star",
+    label: "Bảng xếp hạng",
     href: "/ranking",
   },
   {
@@ -186,7 +186,7 @@ export const SidebarRoutes = ({ userId }: any) => {
     ) {
       guestRoutes.push({
         icon: UsersRound,
-        label: "Personal Information",
+        label: "Thông tin cá nhân",
         href: `/users/${userId}`,
       });
     }

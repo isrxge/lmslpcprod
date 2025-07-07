@@ -76,12 +76,12 @@ const UserPage = async ({ params }: { params: { userId: string } }) => {
           className="flex items-center text-sm hover:opacity-75 transition mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to users list
+          Quay lại
         </Link>
         <div className="text-center mb-4">
           <Avatar imageUrl={user?.imageUrl} />
           <p className="mt-2 text-lg font-semibold">
-            Information about {user?.username}
+            Thông tin về {user?.username}
           </p>
         </div>
 

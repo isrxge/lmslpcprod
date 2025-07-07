@@ -46,16 +46,16 @@ export const NavbarRoutes = ({ userId }: any) => {
             {/* <div className="flex items-center ml-5 mr-3">
               <Notification />
             </div> */}
-            <div className="flex items-center ml-5 mr-3">
+            {/* <div className="flex items-center ml-5 mr-3">
               <ModeToggle />
-            </div>
+            </div> */}
           </div>
 
           {isTeacherPage || isCoursePage ? (
             <Link href="/">
               <Button size="sm" variant="ghost">
                 <LogOut className="h-4 w-4 mr-2" />
-                Exit
+                Thoát
               </Button>
             </Link>
           ) : (

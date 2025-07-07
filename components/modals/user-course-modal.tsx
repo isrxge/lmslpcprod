@@ -64,32 +64,32 @@ export const Modal: React.FC<ModalProps> = ({
               className={`px-4 py-2 rounded ${filter === "all" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("all")}
             >
-              All ({allCount})
+              Tất cả ({allCount})
             </button>
             <button
               className={`px-4 py-2 rounded ${filter === "finished" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("finished")}
             >
-              Finished ({finishedCount})
+              Đã đạt ({finishedCount})
             </button>
             <button
               className={`px-4 py-2 rounded ${filter === "studying" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("studying")}
             >
-              Studying ({studyingCount})
+              Đang học ({studyingCount})
             </button>
             <button
               className={`px-4 py-2 rounded ${filter === "failed" ? "bg-blue-500 text-white" : "bg-gray-100"}`}
               onClick={() => setFilter("failed")}
             >
-              Failed ({failedCount})
+              Không đạt ({failedCount})
             </button>
           </div>
 
           {/* Filtered Course List */}
           <ul className="space-y-2">
             {filteredCourses.length === 0 ? (
-              <li className="italic text-gray-500 dark:text-gray-400">No courses found</li>
+              <li className="italic text-gray-500 dark:text-gray-400">Không tìm thấy khóa học nào</li>
             ) : (
               filteredCourses.map((course, index) => (
                 <li key={index} className="flex items-center justify-between">
@@ -126,7 +126,7 @@ export const Modal: React.FC<ModalProps> = ({
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
             onClick={onClose}
           >
-            Close
+            Đóng
           </button>
         </div>
       </div>

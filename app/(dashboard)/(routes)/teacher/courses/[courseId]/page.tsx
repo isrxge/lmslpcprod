@@ -225,6 +225,8 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   }
   const isComplete = requiredFields.every(Boolean);
   const isClosed = course.status === "closed";
+  const printDate = new Date(course.startDate).toLocaleDateString("vi-VN");
+
 
   // console.log("Course modules ABCD:", course.modules.some((chapter: { module: any }) => chapter.module.type == "Exam"));
   // console.log("requiredFields:", requiredFields);
@@ -235,12 +237,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       )} */}
       {isClosed ? (
         <Banner
-          label="This course has been closed. All editing actions are disabled."
+          label="Khóa học này đã bị đóng. Tất cả các thao tác chỉnh sửa đều bị vô hiệu hóa."
           variant="success" 
         />
       ) : (
         !course.isPublished && (
-          <Banner label="This course is unpublished. It will not be visible to the staff." />
+          <Banner label="Khóa học này chưa được xuất bản. Nhân viên sẽ không nhìn thấy khóa học." />
         )
       )}
       <div className="p-6">
@@ -251,9 +253,9 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to course
+              Quay lại
             </Link>
-            <h1 className="text-2xl font-medium">Course setup</h1>
+            <h1 className="text-2xl font-medium">Thiết lập khóa học</h1>
             {/* <span className="text-sm text-slate-700">
               Complete all fields {completionText}
             </span> */}
@@ -274,7 +276,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your course</h2>
+              <h2 className="text-xl">Tùy chỉnh khóa học</h2>
             </div>
             <div className="space-y-6 mt-4">
               <TitleForm initialData={course} courseId={course.id} readOnly={isClosed} />
@@ -288,7 +290,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={ListChecks} />
-                <h2 className="text-xl">Course chapters</h2>
+                <h2 className="text-xl">Học phần khóa học</h2>
               </div>
               <div className="mt-4">
                 <ChaptersForm
@@ -302,11 +304,12 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             <div>
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={Target} />
-                <h2 className="text-xl">Deadline</h2>
+                <h2 className="text-xl">Thời gian</h2>
               </div>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Note: The course will end at 18:00 on the end date.
+                Lưu ý: Khóa học sẽ kết thúc lúc 18:00 vào ngày kết thúc.  
               </p>
+              <p>Ngày tạo khóa học: {printDate + ""}</p>
               <div>
                 <EndDateForm
                   initialData={course}
@@ -320,7 +323,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <div className="flex items-center gap-x-2">
                 <IconBadge icon={UserPlus} />
                 <h2 className="text-xl">
-                  Assign staff & instructor for this course
+                  Chỉ định nhân viên và người hướng dẫn
                 </h2>
               </div>
               <div className="mt-4">

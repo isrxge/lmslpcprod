@@ -27,15 +27,15 @@ export const Bookmark = ({ items }: BookmarkProps) => {
     <>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <BookmarkPlus className="mr-2" />
-        Bookmark
+        Đánh dấu
       </h2>
-      <p className="mb-4 italic">No bookmark</p>
+      <p className="mb-4 italic">Chưa có khóa học được đánh dấu.</p>
     </>
   ) : (
     <div>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <BookmarkPlus className="mr-2" />
-        Bookmark
+        Đánh dấu
       </h2>
       <Carousel
         opts={{

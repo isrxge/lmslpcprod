@@ -24,12 +24,12 @@ const sendInstructorReport = async (
   await transporter.sendMail({
     from: "webmaster@lp.com.vn",
     to: email,
-    subject: `[LMS] Final progress report – ${courseTitle}`,
+    subject: `[LMS] Báo cáo tiến độ cuối cùng – ${courseTitle}`,
     html: `
       <p style="font-family:'Times New Roman';font-size:12pt">
-        Dear instructor,<br/>
-        The course <strong>${courseTitle}</strong> has been closed.
-        Here is the final progress table of your staff.
+        Dear bạn,<br/>
+        Khóa học <strong>${courseTitle}</strong> đã được đóng.
+        Dưới đây là bảng tiến độ cuối cùng của nhân viên bạn phụ trách.
       </p>
       <table border="1" cellpadding="0" cellspacing="0"
              style="border-collapse:collapse;width:100%;
@@ -59,16 +59,15 @@ const sendStatusMail = async (
   transporter.sendMail({
     from: "webmaster@lp.com.vn",
     to: email,
-    subject: `[LMS] Course ${courseTitle} closed – Status: ${finalStatus}`,
+    subject: `[LMS] Khóa học ${courseTitle} đã đóng – Trạng thái: ${finalStatus}`,
     html: `
       <p style="font-family:'Times New Roman';font-size:12pt">
-        Dear staff,<br/>
-        The course <strong>${courseTitle}</strong> has been closed and your
-        final status is <strong>${finalStatus}</strong> (score&nbsp;${score}).<br/>
+        Dear bạn,<br/>
+        Khóa học <strong>${courseTitle}</strong> đã được đóng và trạng thái cuối cùng của bạn là <strong>${finalStatus}</strong> (điểm&nbsp;${score}).<br/>
         ${
           finalStatus === "failed"
-            ? "Please contact your instructor for further guidance."
-            : "Congratulations on completing the course!"
+            ? "Vui lòng liên hệ người hướng dẫn của bạn để được hỗ trợ thêm."
+            : "Chúc mừng bạn đã hoàn thành khóa học!"
         }
       </p>
       <p style="font-family:'Times New Roman';font-size:12pt">

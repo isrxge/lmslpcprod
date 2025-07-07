@@ -22,19 +22,46 @@ export async function PATCH(
         status: values.status,
       },
     });
+    // const mess = {
+    //   from: "Webmaster@lp.com.vn",
+    //   to: user.email,
+    //   cc: "",
+    //   subject: `you have been ${values.status} the system`,
+    //   text: `
+    //   you have been ${values.status} the system
+    //   `,
+    //   html: `
+    //     <p>you have been ${values.status} the system.</p>
+
+    //   `,
+    // };
     const mess = {
       from: "Webmaster@lp.com.vn",
       to: user.email,
       cc: "",
-      subject: `you have been ${values.status} the system`,
+      subject: `Tài khoản của bạn đã được ${values.status} trên hệ thống`,
       text: `
-      you have been ${values.status} the system
-      `,
+Dear bạn,
+
+Tài khoản của bạn đã được ${values.status} trên hệ thống.
+
+Nếu bạn có bất kỳ thắc mắc nào hoặc cần hỗ trợ thêm, vui lòng liên hệ với chúng tôi.
+
+Best regards,  
+Learning Management System Administration
+  `,
       html: `
-        <p>you have been ${values.status} the system.</p>
-        
-      `,
+    <p>Dear bạn,</p>
+
+    <p>Tài khoản của bạn đã được <strong>${values.status}</strong> trên hệ thống.</p>
+
+    <p>Nếu bạn có bất kỳ thắc mắc nào hoặc cần hỗ trợ thêm, vui lòng liên hệ với chúng tôi.</p>
+
+    <p>Best regards,<br/>
+    <strong>Learning Management System Administration</strong></p>
+  `,
     };
+
     let transporter = nodemailer.createTransport(
       smtpTransport({
         host: "smtp-mail.outlook.com",

@@ -55,12 +55,12 @@ const CourseDescriptionPage = async ({
         className="flex items-center text-sm hover:opacity-75 transition mb-6"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Go back
+        Quay lại
       </Link>
       <h1 className="text-4xl font-bold">{course.title}</h1>
 
       <div className="border border-blue-800 border-l-8 shadow-lg rounded-lg mt-8 mb-8">
-        <h5 className="text-2xl font-bold p-5">Overview</h5>
+        <h5 className="text-2xl font-bold p-5">Tổng quan</h5>
         <div
           className="px-5 py-3 mb-3"
           dangerouslySetInnerHTML={{ __html: course.description }}
@@ -68,7 +68,7 @@ const CourseDescriptionPage = async ({
       </div>
 
       <div className="border border-blue-800 border-l-8 shadow-lg rounded-lg mt-8 mb-8">
-        <h5 className="text-2xl font-bold p-5">Modules</h5>
+        <h5 className="text-2xl font-bold p-5">Học phần</h5>
         <ul className="list-disc ml-5 mr-5 mb-8">
           {course.modules.map((moduleInCourse: any) => (
             <li

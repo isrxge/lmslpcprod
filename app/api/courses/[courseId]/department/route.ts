@@ -181,9 +181,9 @@ export async function PATCH(
           from: "Webmaster@lp.com.vn",
           to: assignList[i].email,
           cc: "",
-          subject: `You have been assigned to course ${course.title}`,
-          text: `You have been assigned to course ${course.title}.`,
-          html: `<p>You have been assigned to course ${course.title}</p>`,
+          subject: `Bạn đã được phân công vào khóa học ${course.title}`,
+          text: `Bạn đã được phân công vào khóa học ${course.title}.`,
+          html: `<p>Bạn đã được phân công vào khóa học ${course.title}</p>`,
         };
 
         let transporter = nodemailer.createTransport(

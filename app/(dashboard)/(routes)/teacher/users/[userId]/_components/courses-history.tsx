@@ -33,13 +33,13 @@ const CourseHistory = ({ userId }: any) => {
         {/* Completed Courses Card */}
         <div className="bg-gradient-to-r from-blue-400 to-red-500 p-4 rounded-md border shadow-md flex-1">
           <h2 className="text-lg font-bold mb-4 text-white">
-            Completed Courses
+            Khóa học đã hoàn thành
           </h2>
           <div className="mb-4">
             <span className="text-4xl font-bold text-white">
               {completedCourses.length}
             </span>
-            <span className="ml-2 text-white">courses</span>
+            <span className="ml-2 text-white">khóa học</span>
           </div>
           <div>
             {completedCourses.map((course: any, index: any) => (
@@ -53,13 +53,13 @@ const CourseHistory = ({ userId }: any) => {
         {/* Uncompleted Courses Card */}
         <div className="bg-gradient-to-r from-green-400 to-blue-500 p-4 rounded-md border shadow-md flex-1">
           <h2 className="text-lg font-bold mb-4 text-white">
-            Uncompleted Courses
+            Khóa học đang thực hiện
           </h2>
           <div className="mb-4">
             <span className="text-4xl font-bold text-white">
               {uncompletedCourses.length}
             </span>
-            <span className="ml-2 text-white">courses</span>
+            <span className="ml-2 text-white">khóa học</span>
           </div>
           <div>
             {uncompletedCourses.map((course: any, index: any) => (
@@ -72,13 +72,13 @@ const CourseHistory = ({ userId }: any) => {
         
         <div className="bg-gradient-to-r from-red-400 to-purple-500 p-4 rounded-md border shadow-md flex-1">
           <h2 className="text-lg font-bold mb-4 text-white">
-            Failed Courses
+            Khóa học không đạt
           </h2>
           <div className="mb-4">
             <span className="text-4xl font-bold text-white">
               {failedCourses.length}
             </span>
-            <span className="ml-2 text-white">courses</span>
+            <span className="ml-2 text-white">khóa học</span>
           </div>
           <div>
             {failedCourses.map((course: any, index: any) => (

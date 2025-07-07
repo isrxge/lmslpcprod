@@ -451,10 +451,10 @@ export default function Exam({ chapter }: any) {
       <div className="w-full p-8 " suppressHydrationWarning={true}>
         <div className="pb-3">
           <label className="block text-3xl font-bold mb-2 text-center">
-            Create Exam
+            Tạo Bài Kiểm Tra
           </label>
 
-          <label className="block text-lg mt-2">Click</label>
+          <label className="block text-lg mt-2">Nhấn</label>
           <Link
             suppressHydrationWarning={true}
             download="Exam_Format_Category"
@@ -463,10 +463,10 @@ export default function Exam({ chapter }: any) {
             className="text-blue-600 hover:underline cursor-pointer"
             contextMenu="Here"
           >
-            here
+            vào đây
           </Link>
           <label className="block text-lg mt-2">
-            to download the category format.
+            để tải form mẫu tạo câu hỏi.
           </label>
         </div>
         <div className="flex flex-row w-full">
@@ -475,7 +475,7 @@ export default function Exam({ chapter }: any) {
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="textTitle"
             >
-              Enter exam title
+              Nhập tiêu đề bài kiểm tra
             </label>
             <input
               type="text"
@@ -493,7 +493,7 @@ export default function Exam({ chapter }: any) {
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="passPercentage"
             >
-              % to pass
+              % để đạt
             </label>
             <select
               className="px-4 py-2 border rounded focus:outline-none border-black "
@@ -511,7 +511,7 @@ export default function Exam({ chapter }: any) {
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="examTime"
             >
-              Enter exam time
+              Nhập thời gian thi
             </label>
 
             <input
@@ -523,14 +523,14 @@ export default function Exam({ chapter }: any) {
               value={timeLimit}
               onChange={(e: any) => setTimeLimit(e.target.value)}
             />
-            <span className="px-4">minutes</span>
+            <span className="px-4">phút</span>
           </div>
           <div className="grow-0 mr-2">
             <label
               className="block text-sm font-medium text-gray-700 mb-1"
               htmlFor="retakeTime"
             >
-              Enter exam attempt
+              Nhập số lần làm bài thi
             </label>
             <select
               name="attempt"
@@ -545,13 +545,13 @@ export default function Exam({ chapter }: any) {
           </div>
         </div>
         <span>
-          <strong>Option 1:</strong>
+          <strong>Trường hợp 1:</strong>
         </span>
-        <label className="block text-lg mb-2">Import exam here</label>
+        <label className="block text-lg mb-2">Thêm bài kiểm tra tại đây</label>
         <div className="flex items-center w-full">
           <label className="w-64 flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md cursor-pointer">
             <Upload className="h-4 w-4 mr-2" />
-            <span>Choose File category</span>
+            <span>Chọn tệp</span>
             <input
               className="hidden"
               type="file"
@@ -564,14 +564,14 @@ export default function Exam({ chapter }: any) {
             />
           </label>
           <span className="ml-4 text-gray-500">
-            (Accepted formats: .xlsx, .xls)
+            (Chỉ hỗ trợ định dạng: .xlsx, .xls)
           </span>
         </div>
         <span>
-          <strong>Option 2:</strong>
+          <strong>Trường hợp 2:</strong>
         </span>
         <label className="block text-lg mb-2">
-          You can create a category here
+          Bạn có thể tạo danh mục tại đây
         </label>
         <div className="flex">
           <button
@@ -579,7 +579,7 @@ export default function Exam({ chapter }: any) {
             onClick={() => addCategory()}
           >
             <PlusCircle className="h-4 w-4 mr-2" />
-            Category
+            Danh mục
           </button>
           {examFileUrl && (
             <a
@@ -587,7 +587,7 @@ export default function Exam({ chapter }: any) {
               download
               className="bg-green-600 text-white px-4 py-2 rounded ml-2 inline-flex items-center"
             >
-              Download Exam File
+              Tải xuống tệp bài thi
             </a>
           )}
           <button
@@ -595,7 +595,7 @@ export default function Exam({ chapter }: any) {
             onClick={() => submit()}
           >
             <Save className="h-4 w-4 mr-2" />
-            Save
+            Lưu
           </button>
         </div>
         {quizList.map((category: any, index: any) => {
@@ -604,7 +604,7 @@ export default function Exam({ chapter }: any) {
               key={category.id}
               className="my-4 p-4 border rounded  shadow-md relative"
             >
-              <label className="block text-lg mt-2">Click</label>
+              <label className="block text-lg mt-2">Nhấn</label>
               <Link
                 suppressHydrationWarning={true}
                 download="Exam_Format_Question"
@@ -612,10 +612,10 @@ export default function Exam({ chapter }: any) {
                 target="_blank"
                 className="text-blue-600 hover:underline cursor-pointer"
               >
-                here
+                vào đây
               </Link>
               <label className="block text-lg mt-2">
-                to download the question format.
+                để tải xuống form định dạng câu hỏi.
               </label>
               <button
                 className="bg-gray-600 text-white p-2 rounded-full absolute top-2 right-2"
@@ -644,13 +644,13 @@ export default function Exam({ chapter }: any) {
               />
 
               <span>
-                <strong>Option 1:</strong>
+                <strong>Trường hợp 1:</strong>
               </span>
-              <label className="block text-lg mb-2">Import question here</label>
+              <label className="block text-lg mb-2">Nhập câu hỏi tại đây</label>
               <div className="flex items-center w-full">
                 <label className="w-64 flex items-center justify-center bg-blue-600 text-white py-2 px-4 rounded-md cursor-pointer">
                   <Upload className="h-4 w-4 mr-2" />
-                  <span>Choose File</span>
+                  <span>Chọn tệp</span>
                   <input
                     className="hidden"
                     type="file"
@@ -661,21 +661,21 @@ export default function Exam({ chapter }: any) {
                   />
                 </label>
                 <span className="ml-4 text-gray-500">
-                  (Accepted formats: .xlsx, .xls)
+                  (Chỉ hỗ trợ định dạng: .xlsx, .xls)
                 </span>
               </div>
               <span>
-                <strong>Option 2:</strong>
+                <strong>Trường hợp 2:</strong>
               </span>
               <label className="block text-lg mb-2">
-                You can create a question here
+                Bạn có thể tạo câu hỏi tại đây
               </label>
               <button
                 className="bg-black text-white px-4 py-2 rounded flex items-center"
                 onClick={() => addQuiz(index)}
               >
                 <PlusCircle className="h-4 w-4 mr-2" />
-                Question
+                Câu hỏi
               </button>
               {category.question.map((quiz: any, jindex: any) => {
                 return (
@@ -697,7 +697,7 @@ export default function Exam({ chapter }: any) {
                           className="block text-sm font-medium text-gray-700 mb-1"
                           htmlFor="textTitle"
                         >
-                          Enter question
+                          Nhập đáp án
                         </label>
                         <textarea
                           name={quiz.id + " name"}
@@ -709,7 +709,7 @@ export default function Exam({ chapter }: any) {
                           }
                         />
                       </div>
-                      Question score
+                      Điểm
                       <input
                         type="text"
                         value={quiz.score}
@@ -721,7 +721,7 @@ export default function Exam({ chapter }: any) {
                           className="block text-sm font-medium text-gray-700 mb-1"
                           htmlFor="textTitle"
                         >
-                          Type
+                          Loại câu hỏi
                         </label>
                         <select
                           className="w-full p-2 border rounded focus:outline-none border-black"
@@ -731,8 +731,8 @@ export default function Exam({ chapter }: any) {
                           }
                           name={quiz.id + " type"}
                         >
-                          <option value="singleChoice">Single choice</option>
-                          <option value="multiChoice">Multiple choice</option>
+                          <option value="singleChoice">Một đáp án</option>
+                          <option value="multiChoice">Nhiều đáp án</option>
                         </select>
                         <input
                           type="checkbox"
@@ -741,7 +741,7 @@ export default function Exam({ chapter }: any) {
                           onChange={(e) => isCompulsory(e, index, jindex)}
                           className="mx-2 visually-hidden-checkbox h-6 w-6"
                         />
-                        is compulsory in test?
+                        Có bắt buộc không?
                       </div>
                     </div>
 
@@ -787,7 +787,7 @@ export default function Exam({ chapter }: any) {
                       onClick={() => addAnswer(index, jindex)}
                     >
                       <PlusCircle className="h-4 w-4 mr-2" />
-                      Answer
+                      Đáp án
                     </button>
                   </div>
                 );

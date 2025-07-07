@@ -137,11 +137,11 @@ export const PermissionForm = ({
       await axios.patch(`/api/user/${userId}/permission`, {
         permissionList,
       });
-      toast.success("Role updated");
+      toast.success("Quyền hạn đã được cập nhật");
       // toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
   useEffect(() => {
@@ -166,14 +166,14 @@ export const PermissionForm = ({
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
-        <h2 className="text-lg">Permissions</h2>
+        <h2 className="text-lg">Quyền hạn</h2>
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -181,7 +181,7 @@ export const PermissionForm = ({
       {isEditing && (
         <div className="dark:text-zinc-50 mt-4">
           <h3 className="text-md font-semibold">
-            Set permissions based on role
+            Thiết lập quyền dựa trên vai trò
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
             {roleList.map((item: any, i: any) => {
@@ -203,7 +203,7 @@ export const PermissionForm = ({
             })}
           </div>
           <h3 className="text-md font-semibold mt-6">
-            Or customize permissions
+            Hoặc tùy chỉnh quyền hạn
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
             {permission.map((item: any, i: any) => {
@@ -232,7 +232,7 @@ export const PermissionForm = ({
           </div>
           <div className="flex items-center gap-x-2 mt-4">
             <Button onClick={onSubmit} type="button" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save"}
+              {isSubmitting ? "Đang lưu..." : "Lưu"}
             </Button>
           </div>
         </div>

@@ -27,10 +27,10 @@ interface ConfirmModalProps {
 export const ConfirmModal = ({
   children,
   onConfirm,
-  title = "Are you sure?",
-  description = "This action cannot be undone.",
-  confirmLabel = "Continue",
-  cancelLabel = "Cancel",
+  title = "Xác nhận thực hiện hành động?",
+  description = "Hành động này sẽ không thể thu hồi.",
+  confirmLabel = "Tiếp tục",
+  cancelLabel = "Hủy",
 }: ConfirmModalProps) => {
   return (
     <AlertDialog>
@@ -39,15 +39,15 @@ export const ConfirmModal = ({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>Xác nhận hành động?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone.
+            Bạn sẽ không thể quay lại sau khi thực hiện.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Hủy</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>
-            Continue
+            Tiếp tục
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

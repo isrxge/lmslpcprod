@@ -61,10 +61,9 @@ function CreatePage() {
     <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 pt-60">
       <div>
         <>
-          <h1 className="text-2xl">Name your permission</h1>
+          <h1 className="text-2xl">Đặt tên quyền</h1>
           <p className="text-sm text-slate-600">
-            What would you like to name your permission? Don&apos;t worry, you
-            can change this later.
+            Bạn muốn đặt tên gì cho quyền truy cập này? Đừng lo, bạn có thể thay đổi sau.
           </p>
           <Form {...form}>
             <form
@@ -76,7 +75,7 @@ function CreatePage() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Permission title</FormLabel>
+                    <FormLabel>Tiêu đề quyền</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isSubmitting}
@@ -84,7 +83,7 @@ function CreatePage() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>Permission name?</FormDescription>
+                    <FormDescription>Quyền nào sẽ được thêm vào hệ thống?</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -93,11 +92,11 @@ function CreatePage() {
               <div className="flex items-center gap-x-2">
                 <Link href="/teacher/permissions">
                   <Button type="button" variant="ghost">
-                    Cancel
+                    Hủy
                   </Button>
                 </Link>
                 <Button type="submit" disabled={!isValid || isSubmitting}>
-                  Continue
+                  Tiếp
                 </Button>
               </div>
             </form>

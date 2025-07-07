@@ -131,7 +131,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Title</span>
+          <span className="mr-2">Tiêu đề</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -182,7 +182,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Instructed By</span>
+          <span className="mr-2">Người hướng dẫn</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -193,6 +193,24 @@ export const columns: ColumnDef<Course>[] = [
     },
   },
   {
+    accessorKey: "startDate", // Add endDate column
+    header: ({ column }) => {
+      return (
+        <span
+          className="flex items-center cursor-pointer"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <span className="mr-2">Ngày bắt đầu</span>
+          <ArrowUpDown className="h-4 w-4" />
+        </span>
+      );
+    },
+    cell: ({ row }: any) => {
+      const { startDate } = row.original;
+      return <EndDateCell endDate={startDate} />;
+    },
+  },
+  {
     accessorKey: "endDate", // Add endDate column
     header: ({ column }) => {
       return (
@@ -200,7 +218,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">End Date</span>
+          <span className="mr-2">Ngày kết thúc</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -218,7 +236,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Published</span>
+          <span className="mr-2">Tình trạng</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -240,7 +258,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Status</span>
+          <span className="mr-2">Trạng thái</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -291,7 +309,7 @@ export const columns: ColumnDef<Course>[] = [
   // },
   {
     id: "actions",
-    accessorKey: "Action",
+    accessorKey: "Hành động",
     cell: CourseActionCell,
   },
 ];

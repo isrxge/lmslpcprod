@@ -47,19 +47,19 @@ const UserInformation = ({ user }: any) => {
       username: e.target.username.value,
       status: e.target.status.value,
     };
-    const toastId = toast.loading("Saving changes…");
+    const toastId = toast.loading("Đang lưu thay đổi…");
 try {
     await axios.patch(`/api/user/${user?.id}`, values);
-    toast.success("Saved successfully 🎉", { id: toastId });
+    toast.success("Lưu thành công 🎉", { id: toastId });
     router.refresh();
   } catch (err: any) {
       // Attempt to grab a message from the response, fall back to generic
       const message =
         err?.response?.data?.message ??
         err?.message ??
-        "Something went wrong, please try again";
+        "Đã xảy ra lỗi, vui lòng thử lại";
 
-      toast.error(`Save failed: ${message}`, { id: toastId });
+      toast.error(`Lưu thất bại: ${message}`, { id: toastId });
     }
   };
   return (
@@ -82,7 +82,7 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Full Name
+          Họ và tên
         </label>
         <div className="relative">
           <input
@@ -123,7 +123,7 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Department
+          Phòng ban
         </label>
         <div className="relative">
           <input
@@ -151,7 +151,7 @@ try {
 
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Star
+          Điểm
         </label>
         <input
           type="text"
@@ -162,7 +162,7 @@ try {
       </div>
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Status
+          Trạng thái
         </label>
         <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
           <select
@@ -174,8 +174,8 @@ try {
               isStatusEditing ? "border-blue-500" : ""
             }`}
           >
-            <option value="approved">Approved</option>
-            <option value="pending">Pending</option>
+            <option value="approved">Đã xác thực</option>
+            <option value="pending">Chờ xác thực</option>
           </select>
 
           <div
@@ -192,7 +192,7 @@ try {
       </div>
       <div>
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Type
+          Loại nhân viên
         </label>
         <div className="relative bg-gray-100 border border-gray-300 rounded-md  text-black">
           <select
@@ -204,8 +204,8 @@ try {
               isTypeUserEditing ? "border-blue-500" : ""
             }`}
           >
-            <option value="official">Official</option>
-            <option value="probation">Probation</option>
+            <option value="official">Chính thức</option>
+            <option value="probation">Thử việc</option>
           </select>
 
           <div
@@ -230,7 +230,7 @@ try {
             type="submit"
             className="bg-gradient-to-r from-black to-gray-800 text-white py-2 px-4 rounded-md"
           >
-            Submit
+            Lưu
           </button>
         ) : (
           <></>

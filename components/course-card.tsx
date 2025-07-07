@@ -88,7 +88,7 @@ export const CourseCard = ({
           <div className="w-full h-0.5 bg-gray-300 rounded-md mt-1"></div>
           {isClient && (
           <p className="font-small mt-4 text-sky-700 text-xs">
-            End course at 18:00: {formattedEndDate || "N/A"}
+            Khóa học kết thúc lúc 18:00: {formattedEndDate || "N/A"}
           </p>
           )}
         </div>

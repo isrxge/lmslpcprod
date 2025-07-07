@@ -47,7 +47,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Name of Course</span>
+          <span className="mr-2">Tên khóa học</span>
         </span>
       );
     },
@@ -92,7 +92,7 @@ export const columns: ColumnDef<Course>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center cursor-pointer">
-          <span className="mr-2">Instructor</span>
+          <span className="mr-2">Người hướng dẫn</span>
         </span>
       );
     },
@@ -105,7 +105,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Instructor</span>
+          <span className="mr-2">Người hướng dẫn</span>
         </span>
       );
     },
@@ -123,7 +123,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Created On</span>
+          <span className="mr-2">Ngày bắt đầu</span>
         </span>
       );
     },
@@ -153,7 +153,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">End Date</span>
+          <span className="mr-2">Ngày kết thúc</span>
         </span>
       );
     },
@@ -177,7 +177,7 @@ export const columns: ColumnDef<Course>[] = [
     accessorKey: "ClassSessionRecord",
     header: ({ column }) => (
       <span className="flex items-center cursor-pointer">
-        <span className="mr-2">Attendees</span>
+        <span className="mr-2">Người tham dự</span>
       </span>
     ),
     cell: AttendeesCell,
@@ -237,7 +237,7 @@ export const columns: ColumnDef<Course>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Course for</span>
+          <span className="mr-2">Phòng ban</span>
         </span>
       );
     },

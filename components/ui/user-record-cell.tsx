@@ -33,12 +33,12 @@ export const CourseAttendeeCell = ({ row }: any) => {
         className="text-blue-500 underline hover:text-blue-700 focus:outline-none"
         onClick={() => setModalOpen(true)}
       >
-        View Courses
+        Danh sách khóa học
       </button>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title={`User's Courses for ${username}`}
+        title={`Khóa học của người dùng ${username}`}
         courses={allCourses}
       />
     </>

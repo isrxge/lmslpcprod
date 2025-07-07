@@ -62,18 +62,18 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Course title (50 character limit)
+          Tiêu đề khóa học (tối đa 50 ký tự)
           <Asterisk className="size-4" color="red" />
         </div>
 
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -108,7 +108,7 @@ export const TitleForm = ({ initialData, courseId, readOnly = false }: TitleForm
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Lưu
               </Button>
             </div>
           </form>

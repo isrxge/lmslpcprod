@@ -74,10 +74,10 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
       await axios.post(`/api/module/${moduleId}/slide`, {
         contents,
       });
-      toast.success("Content created");
+      toast.success("Nội dung đã được cập nhật");
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 
@@ -117,7 +117,7 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
 
       handleChange(field, uploadUrl, id);
     } catch {
-      toast.error("Failed to upload file");
+      toast.error("Tải tệp lên thất bại");
     } finally {
       setIsLoading(false);
     }
@@ -127,13 +127,13 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
     <div className="mt-6 border dark:text-white rounded-md p-4">
       <div className="font-medium flex items-center justify-between mb-4">
         <div className="flex items-center">
-          Module Content <Asterisk className="size-4" color="red" />
+          Nội dung bài giảng <Asterisk className="size-4" color="red" />
         </div>
         <button
           onClick={addContent}
           className="bg-black text-white px-4 py-2 rounded-md flex items-center"
         >
-          <PlusCircle className="h-4 w-4 mr-2" /> Add Content
+          <PlusCircle className="h-4 w-4 mr-2" /> Thêm nội dung
         </button>
       </div>
 
@@ -184,7 +184,7 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
             {item.contentType === "video" ? (
               <div className="mb-4">
                 <div className="font-medium mb-2">
-                  {item.videoUrl ? "Update Video" : "Add a Video"}
+                  {item.videoUrl ? "Cập nhật video" : "Thêm video"}
                 </div>
                 <div className="mb-2">
                   {item.videoUrl && !edit ? (
@@ -209,7 +209,7 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
                       onClick={() => setEdit(!edit)}
                       className="ml-2"
                     >
-                      {edit ? "Cancel" : "Edit"}
+                      {edit ? "Hủy" : "Chỉnh sửa"}
                     </button>
                   )}
                 </div>
@@ -219,7 +219,7 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
                     handleChange("description", e.target.value, item.id)
                   }
                   className="border p-2 rounded-md w-full"
-                  placeholder="Description"
+                  placeholder="Mô tả"
                 ></textarea>
               </div>
             ) : item.contentType === "text" ? (
@@ -252,13 +252,13 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
                     handleChange("description", e.target.value, item.id)
                   }
                   className="border p-2 rounded-md w-full mt-4"
-                  placeholder="Description"
+                  placeholder="Mô tả"
                 ></textarea>
               </div>
             ) : (
               <div className="mb-4">
                 <div className="font-medium mb-2">
-                  {item.fileUrl ? "Update File" : "Add a File"}
+                  {item.fileUrl ? "Cập nhật tệp" : "Thêm tệp"}
                 </div>
                 <div className="mb-2">
                   {item.fileUrl && !edit ? (
@@ -283,7 +283,7 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
                       onClick={() => setEdit(!edit)}
                       className="ml-2"
                     >
-                      {edit ? "Cancel" : "Edit"}
+                      {edit ? "Hủy" : "Chỉnh sửa"}
                     </button>
                   )}
                 </div>
@@ -293,7 +293,7 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
                     handleChange("description", e.target.value, item.id)
                   }
                   className="border p-2 rounded-md w-full"
-                  placeholder="Description"
+                  placeholder="Mô tả"
                 ></textarea>
               </div>
             )}
@@ -307,14 +307,14 @@ export const ContentForm = ({ moduleId }: AttachmentFormProps) => {
               disabled
               className="bg-gray-500 text-white px-4 py-2 rounded-md"
             >
-              Waiting...
+              Đang chờ...
             </button>
           ) : (
             <button
               onClick={onSubmit}
               className="bg-black text-white px-4 py-2 rounded-md"
             >
-              Submit
+              Lưu
             </button>
           )}
         </div>

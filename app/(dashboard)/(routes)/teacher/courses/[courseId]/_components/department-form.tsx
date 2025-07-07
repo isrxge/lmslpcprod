@@ -232,13 +232,13 @@ export const DepartmentForm = ({
       >
         <AlertDialogContent className="AlertDialogContent">
           <AlertDialogTitle className="AlertDialogTitle">
-            Submit Staff Assignment
+            Xác nhận chỉ định nhân viên
           </AlertDialogTitle>
           <AlertDialogDescription className="AlertDialogDescription">
-            Are you sure you want to add these staff members to the course?
+            Bạn có chắc chắn muốn thêm các nhân viên này vào khóa học không?
+            <br/>
             <span className="text-red-500 text-xs font-medium">
-              **Once submitted, the assignment cannot be undone as per our
-              policy. Already assigned staff will not be affected.**
+              **Việc phân công sẽ không thể hoàn tác sau khi gửi theo chính sách hệ thống. Những nhân viên đã được phân công từ trước sẽ không bị thay đổi.**
             </span>
             <br />
             <br />
@@ -264,31 +264,31 @@ export const DepartmentForm = ({
             </div>
           </AlertDialogDescription>
 
-          <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel onClick={() => cancel()}>Hủy</AlertDialogCancel>
           <AlertDialogAction asChild>
             <button
               className="Button red"
               onClick={() => onSubmit()}
               disabled={loading}
             >
-              Confirm {loading ? <Loader className="animate-spin" /> : <></>}
+              Xác nhận {loading ? <Loader className="animate-spin" /> : <></>}
             </button>
           </AlertDialogAction>
         </AlertDialogContent>
       </AlertDialog>
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Staff
+          Nhân viên
           <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
           <Button onClick={toggleEdit} variant="ghost" disabled={readOnly}>
             {isEditing ? (
-              <>Cancel</>
+              <>Hủy</>
             ) : (
               <>
                 <Pencil className="h-4 w-4 mr-2" />
-                Edit
+                Chỉnh sửa
               </>
             )}
           </Button>
@@ -298,7 +298,7 @@ export const DepartmentForm = ({
       {!isEditing && (
         <div className="mt-3 space-y-1 pl-1 dark:text-slate-50 text-sm">
           {assignList.filter((item: any) => item.isEnrolled).length === 0 ? (
-            <span className="italic text-slate-500">No staff assigned.</span>
+            <span className="italic text-slate-500">Chưa chỉ định nhân viên học.</span>
           ) : (
             assignList
               .filter((item: any) => item.isEnrolled)
@@ -386,7 +386,7 @@ export const DepartmentForm = ({
 
             <div className="flex items-center gap-x-2">
               <Button onClick={() => onConfirm()} disabled={loading}>
-                Save
+                Lưu
               </Button>
             </div>
           </form>

@@ -82,7 +82,7 @@ export const AttendeesCell = ({ row }: any) => {
         className="text-blue-500 underline hover:text-blue-700 focus:outline-none"
         onClick={() => setModalOpen(true)}
       >
-        Details
+        Chi tiết
       </button>
       <Modal
         isOpen={isModalOpen}

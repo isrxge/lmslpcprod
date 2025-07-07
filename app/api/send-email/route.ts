@@ -24,13 +24,13 @@ export async function POST(req: Request) {
     const emailContent = {
       from: "webmaster@lp.com.vn",
       to: emailAddress, // Gửi tới người dùng
-      subject: `[LMS] You've been assigned to the course: ${courseName}`,
-      text: `Dear ${username},\n\nYou have been successfully assigned to the course: ${courseName}.\n\nPlease access the learning system at your earliest convenience to review course materials and further instructions.\nIf you have any questions or require assistance, please feel free to reach out.\n\nBest regards,\nLearning Management System Administration`,
+      subject: `[LMS] Bạn đã được phân công vào khóa học: ${courseName}`,
+      text: `Dear ${username},\n\nBạn đã được phân công vào khóa học: ${courseName}.\n\nHãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học.\nNếu bạn có bất kỳ thắc mắc hay cần hỗ trợ, vui lòng liên hệ với chúng tôi.\n\nBest regards,\nLearning Management System Administration`,
       html: `
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Dear ${username},</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">You have been successfully assigned to the course: <strong>${courseName}</strong>.</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Please access the learning system at your earliest convenience to review course materials and further instructions.</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">If you have any questions or require assistance, please feel free to reach out.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Bạn đã được phân công vào khóa học: <strong>${courseName}</strong>.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Hãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Nếu bạn có bất kỳ thắc mắc hay cần hỗ trợ, vui lòng liên hệ với chúng tôi.</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Best regards,</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Learning Management System Administration</p>
       `,
@@ -58,6 +58,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error sending email:", error);
-    return NextResponse.json({ success: false, message: "Failed to send email" });
+    return NextResponse.json({
+      success: false,
+      message: "Failed to send email",
+    });
   }
 }

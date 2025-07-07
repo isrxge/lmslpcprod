@@ -31,7 +31,7 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "username",
     header: () => {
-      return <div>Name</div>;
+      return <div>Họ và tên</div>;
     },
     cell: ({ row }) => {
       const order = row.index + 1;
@@ -57,7 +57,7 @@ export const columns: ColumnDef<User>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center">
-          <span className="mr-2">Department</span>
+          <span className="mr-2">Phòng ban</span>
         </span>
       );
     },
@@ -65,7 +65,7 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "star",
     header: () => {
-      return <div>Star</div>;
+      return <div>Điểm</div>;
     },
     cell: ({ row }) => {
       const stars = row.original.star || 0;

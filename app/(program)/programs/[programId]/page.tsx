@@ -56,13 +56,13 @@ const ProgramIdPage = async ({ params }: { params: { programId: string } }) => {
           className="flex items-center text-sm hover:opacity-75 transition mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
+          Quay về trang chủ
         </Link>
         <h1 className="font-bold text-3xl text-blue-700 mb-4 text-center">
           {program.title}
         </h1>
         <p className="text-black dark:text-white mb-8">{program.description}</p>
-        No Course available.
+        Không có khóa học nào.
       </div>
     );
   }
@@ -87,7 +87,7 @@ const ProgramIdPage = async ({ params }: { params: { programId: string } }) => {
         className="flex items-center text-sm hover:opacity-75 transition mb-6"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Home
+        Quay về trang chủ
       </Link>
       <h1 className="font-bold text-3xl text-blue-700 mb-4 text-center">
         {program.title}

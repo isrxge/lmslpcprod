@@ -99,15 +99,15 @@ export const CompletedCourse = ({ items }: CompletedCourseProps) => {
     <>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <CheckCircle className="mr-2" />
-        Studied Course
+        Khóa học đã tham gia
       </h2>
-      <p className="mb-4 italic">No history</p>
+      <p className="mb-4 italic">	Chưa có khóa học nào được học.</p>
     </>
   ) : (
     <div>
       <h2 className="font-semibold text-2xl text-blue-700 mb-4 flex items-center">
         <CheckCircle className="mr-2" />
-        Studied Course
+        Khóa học đã tham gia
       </h2>
       <Carousel
         opts={{

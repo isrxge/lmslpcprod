@@ -90,17 +90,17 @@ export const InstructorAssignForm = ({
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Instructor
+          Người hướng dẫn
           <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit
+              Chỉnh sửa
             </>
           )}
         </Button>
@@ -112,7 +112,7 @@ export const InstructorAssignForm = ({
           {assignedInstructor ? (
             <div>{assignedInstructor.username} ({assignedInstructor.Department.title})</div>
           ) : (
-            <div className="italic text-slate-500">No instructor assigned.</div>
+            <div className="italic text-slate-500">Chưa chỉ định người hướng dẫn.</div>
           )}
         </div>
       )}
@@ -146,7 +146,7 @@ export const InstructorAssignForm = ({
 
             <div className="flex items-center gap-x-2">
               <Button type="submit" onClick={() => onSubmit()}>
-                Save
+                Lưu
               </Button>
             </div>
           </form>

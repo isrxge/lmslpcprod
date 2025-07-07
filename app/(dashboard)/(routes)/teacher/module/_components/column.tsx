@@ -30,14 +30,19 @@ export const columns: ColumnDef<Slide>[] = [
         className="flex items-center cursor-pointer"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        <span className="mr-2">Title</span>
+        <span className="mr-2">Tên học phần</span>
         <ArrowUpDown className="h-4 w-4" />
       </span>
     ),
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: "Loại",
+    cell: ({ row }) => {
+      const type = row.getValue("type");
+
+      return <span>{type == "Slide" ? "Bài giảng" : "Bài kiểm tra"}</span>;
+    },
   },
   {
     accessorKey: "isPublished",
@@ -47,7 +52,7 @@ export const columns: ColumnDef<Slide>[] = [
           className="flex items-center cursor-pointer"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <span className="mr-2">Published</span>
+          <span className="mr-2">Tình trạng</span>
           <ArrowUpDown className="h-4 w-4" />
         </span>
       );
@@ -62,10 +67,10 @@ export const columns: ColumnDef<Slide>[] = [
       );
     },
   },
-  {
-    accessorKey: "description",
-    header: "Description",
-  },
+  // {
+  //   accessorKey: "description",
+  //   header: "Description",
+  // },
   // {
   //   accessorKey: "department",
   //   header: "Department",
@@ -76,7 +81,7 @@ export const columns: ColumnDef<Slide>[] = [
   // },
   {
     id: "actions",
-    accessorKey: "Action",
+    accessorKey: "Hành động",
     cell: ModuleActionCell,
   },
 ];

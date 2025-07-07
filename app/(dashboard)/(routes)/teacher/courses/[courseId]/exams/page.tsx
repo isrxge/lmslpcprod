@@ -67,7 +67,7 @@ const CoursesPage = async ({ params }: { params: { courseId: string } }) => {
           className="flex items-center text-sm hover:opacity-75 transition mb-6"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to course
+          Quay lại
         </Link>
       </div>
       {course.title}

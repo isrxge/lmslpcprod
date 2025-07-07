@@ -98,7 +98,7 @@ const ProgramIdPage = async ({ params }: { params: { programId: string } }) => {
             </Link>
             <h1 className="text-2xl font-medium">Program setup</h1>
             <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
+              Hãy hoàn tất tất cả các mục {completionText}
             </span>
           </div>
           <Actions

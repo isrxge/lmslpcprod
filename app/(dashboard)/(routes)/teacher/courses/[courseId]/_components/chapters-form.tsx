@@ -94,7 +94,7 @@ export const ChaptersForm = ({
 
   const onSubmit = async () => {
     if (selectedModules.length === 0) {
-      toast.error("Please select at least one module");
+      toast.error("Vui lòng chọn ít nhất một học phần");
       return;
     }
 
@@ -133,14 +133,14 @@ export const ChaptersForm = ({
         courseId: courseId, // Đảm bảo bạn gửi đúng courseId
       });
 
-      toast.success("Modules added to course");
+      toast.success("Học phần đã được thêm vào khóa học");
       toggleCreating();
       //setSelectedModules([]);
       window.location.reload(); // Tải lại trang để cập nhật danh sách module
       router.refresh();
     } catch (error) {
       console.error("Error submitting modules:", error);
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 
@@ -151,11 +151,11 @@ export const ChaptersForm = ({
       await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
         list: updateData,
       });
-      toast.success("Chapters reordered");
+      toast.success("Thứ tự học phần đã được cập nhật");
       // window.location.reload();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     } finally {
       setIsUpdating(false);
     }
@@ -194,32 +194,63 @@ export const ChaptersForm = ({
           return [...prev, module];
         }
       });
-    } else if (module.type === "Exam") {
-      // Nếu là Exam, chỉ cho phép chọn một module
-      // setSelectedModules([module]);
-      // removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
-      setSelectedModules((prev: any) => {
-        // Có exam cũ không?
-        const alreadyHasExam = prev.findIndex(
-          (m: { type: string }) => m.type === "Exam"
-        );
-        // Tùy logic, bạn có thể xóa exam cũ ra khỏi danh sách
-        if (alreadyHasExam !== -1) {
-          if (prev.some((m: { id: any }) => m.id === module.id)) {
-            // Bỏ chọn module và gọi API xóa
-            removeModuleFromCourse(module.id);
-            return prev.filter((m: { id: any }) => m.id !== module.id);
-          } else {
-            alert("Bạn chỉ được chọn 1 bài thi trong khóa học này!");
-            return prev;
-          }
-        } else {
-          module["positionmodule"] = selectedModules.length;
-          // console.log("Số lượng sau khi thêm:", selectedModules.length);
-          return [...prev, module];
-        }
-      });
+    } 
+    //code cũ 4/7
+    // else if (module.type === "Exam") {
+    //   // Nếu là Exam, chỉ cho phép chọn một module
+    //   // setSelectedModules([module]);
+    //   // removeModuleFromCourse(module.id); // Xóa module cũ khỏi Course nếu có
+    //   setSelectedModules((prev: any) => {
+    //     // Có exam cũ không?
+    //     const alreadyHasExam = prev.findIndex(
+    //       (m: { type: string }) => m.type === "Exam"
+    //     );
+    //     // Tùy logic, bạn có thể xóa exam cũ ra khỏi danh sách
+    //     if (alreadyHasExam !== -1) {
+    //       if (prev.some((m: { id: any }) => m.id === module.id)) {
+    //         // Bỏ chọn module và gọi API xóa
+    //         removeModuleFromCourse(module.id);
+    //         return prev.filter((m: { id: any }) => m.id !== module.id);
+    //       } else {
+    //         alert("Bạn chỉ được chọn 1 bài thi trong khóa học này!");
+    //         return prev;
+    //       }
+    //     } else {
+    //       module["positionmodule"] = selectedModules.length;
+    //       // console.log("Số lượng sau khi thêm:", selectedModules.length);
+    //       return [...prev, module];
+    //     }
+    //   });
+    // }
+    // code mới 4/7
+    else if (module.type === "Exam") {
+  setSelectedModules((prev: any) => {
+    // Tìm vị trí Exam cũ (nếu có)
+    const oldExamIndex = prev.findIndex(
+      (m: { type: string }) => m.type === "Exam"
+    );
+
+    let newModules = [...prev];
+
+    // Nếu đã có bài thi cũ, thì xóa nó ra và gọi API
+    if (oldExamIndex !== -1) {
+      const oldExamId = newModules[oldExamIndex].id;
+      removeModuleFromCourse(oldExamId); // Gọi API xóa module cũ
+      newModules.splice(oldExamIndex, 1); // Xóa khỏi danh sách
     }
+
+    // Kiểm tra nếu module mới đã có trong danh sách (tránh thêm trùng)
+    const alreadySelected = newModules.some(
+      (m: { id: any }) => m.id === module.id
+    );
+    if (!alreadySelected) {
+      newModules.push(module);
+    }
+
+    return newModules;
+  });
+}
+
   };
 
   // const handleModuleSelect = (module: any) => {
@@ -274,7 +305,7 @@ export const ChaptersForm = ({
         },
       });
       // setSelectedModules([]);
-      toast.success("Module removed from course");
+      toast.success("Học phần đã được xóa khỏi khóa học");
       // window.location.reload();
       router.refresh();
     } catch (error) {
@@ -301,7 +332,7 @@ export const ChaptersForm = ({
         setModules(response.data);
       } catch (error) {
         console.error("Error fetching ModuleInCourse:", error);
-        toast.error("Failed to load modules");
+        toast.error("Không thể tải học phần");
       } finally {
         setLoadingModules(false);
       }
@@ -343,16 +374,16 @@ export const ChaptersForm = ({
       )}
       <div className="font-medium flex items-center justify-between text-black dark:text-slate-50">
         <div className="flex items-center">
-          Course chapters <Asterisk className="size-4" color="red" />
+          Học phần <Asterisk className="size-4" color="red" />
         </div>
         {!readOnly && (
         <Button onClick={toggleCreating} variant="ghost">
           {isCreating ? (
-            <>Cancel</>
+            <>Hủy</>
           ) : (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Find module
+              Tìm học phần
             </>
           )}
         </Button>
@@ -369,16 +400,16 @@ export const ChaptersForm = ({
               className="mr-4 p-2 border rounded-md"
               disabled={courseType === "Self Study"}
             >
-              <option value="Slide">Slide</option>
+              <option value="Slide">Bài giảng</option>
               {courseType !== "Self Study" && (
-                <option value="Exam">Exam</option>
+                <option value="Exam">Bài kiểm tra</option>
               )}
             </select>
 
             {/* Thanh tìm kiếm */}
             <input
               type="text"
-              placeholder="Search modules"
+              placeholder="Nhập từ khóa tìm kiếm..."
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               className="border p-2 rounded-md w-full"
@@ -387,7 +418,7 @@ export const ChaptersForm = ({
 
           {isCreating && !loadingModules && modules.length > 0 && (
             <div className="mt-4">
-              <h5>Available Modules</h5>
+              <h5>Học phần có sẵn</h5>
               <div className="overflow-y-auto max-h-72">
                 <ul>
                   {modules.map((module: any) => (
@@ -415,7 +446,7 @@ export const ChaptersForm = ({
           {/* Chuyển nút submit xuống dưới cùng */}
           <div className="mt-4">
             <Button disabled={isSubmitting} onClick={onSubmit}>
-              Submit
+              Lưu
             </Button>
           </div>
         </div>
@@ -428,7 +459,7 @@ export const ChaptersForm = ({
             !initialData.modules.length && "text-slate-500 italic"
           )}
         >
-          {!initialData.modules.length && "No chapters"}
+          {!initialData.modules.length && "Không có học phần nào."}
           <ChaptersList
             items={selectedModules}
             onReorder={onReorder}
@@ -440,7 +471,7 @@ export const ChaptersForm = ({
 
       {!isCreating && (
         <p className="text-xs text-muted-foreground mt-4">
-          Drag and drop to reorder the chapters
+          Kéo và thả để sắp xếp lại học phần
         </p>
       )}
     </div>

@@ -193,16 +193,16 @@ export const Actions = ({
 
       if (isPublished) {
         await axios.patch(`/api/courses/${courseId}/unpublish`);
-        toast.success("Course unpublished");
+        toast.success("Khóa học chưa được xuất bản");
       } else {
         await axios.patch(`/api/courses/${courseId}/publish`);
-        toast.success("Course published");
+        toast.success("Khóa học đã được xuất bản");
         confetti.onOpen();
       }
 
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     } finally {
       setIsLoading(false);
     }
@@ -248,8 +248,8 @@ export const Actions = ({
       </Button>
       {showClose && (
   <ConfirmModal
-    title="Close course"
-    description="Are you sure you want to close this course? Students will no longer be able to continue."
+    title="Xác nhận đóng khóa học"
+    description="Bạn có chắc chắn muốn đóng khóa học này không? Nhân viên sẽ không thể tiếp tục học sau khi khóa học bị đóng."
     onConfirm={onCloseCourse}
     confirmLabel="Close"
   >

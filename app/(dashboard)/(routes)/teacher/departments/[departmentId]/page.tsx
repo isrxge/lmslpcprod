@@ -70,11 +70,11 @@ const DepartmentIdPage = async ({
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to department
+              Quay lại
             </Link>
-            <h1 className="text-2xl font-medium">Department setup</h1>
+            <h1 className="text-2xl font-medium">Thiết lập phòng ban</h1>
             <span className="text-sm text-slate-700">
-              Complete all fields {completionText}
+              Hãy hoàn tất tất cả các mục {completionText}
             </span>
           </div>
         </div>
@@ -82,7 +82,7 @@ const DepartmentIdPage = async ({
           <div>
             <div className="flex items-center gap-x-2">
               <IconBadge icon={LayoutDashboard} />
-              <h2 className="text-xl">Customize your permission</h2>
+              <h2 className="text-xl">Tùy chỉnh phòng ban</h2>
             </div>
             <TitleForm initialData={department} departmentId={department.id} />
           </div>

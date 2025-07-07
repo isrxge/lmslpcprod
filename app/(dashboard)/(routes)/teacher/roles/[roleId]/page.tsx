@@ -82,11 +82,11 @@ const RoleIdPage = async ({ params }: { params: { roleId: string } }) => {
             className="flex items-center text-sm hover:opacity-75 transition mb-6"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to role
+            Quay lại
           </Link>
-          <h1 className="text-2xl font-medium">Role setup</h1>
+          <h1 className="text-2xl font-medium">Thiết lập vai trò</h1>
           <span className="text-sm text-slate-700">
-            Complete all fields {completionText}
+            Hãy hoàn tất tất cả các mục {completionText}
           </span>
         </div>
       </div>
@@ -94,7 +94,7 @@ const RoleIdPage = async ({ params }: { params: { roleId: string } }) => {
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={LayoutDashboard} />
-            <h2 className="text-xl">Customize your role</h2>
+            <h2 className="text-xl">Tùy chỉnh vai trò</h2>
           </div>
           <div className="mt-4">
             <TitleForm initialData={role} roleId={role.id} />
@@ -103,7 +103,7 @@ const RoleIdPage = async ({ params }: { params: { roleId: string } }) => {
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={ListChecks} />
-            <h2 className="text-xl">Role permissions</h2>
+            <h2 className="text-xl">Phân quyền vai trò</h2>
           </div>
           <div className="mt-4">
             <PermissionForm

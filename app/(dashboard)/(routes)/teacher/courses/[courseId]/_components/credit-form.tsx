@@ -61,7 +61,7 @@ export const CreditForm = ({ initialData, courseId }: CreaditFormProps) => {
     <div className="mt-6 border bg-slate-100 rounded-md p-4 text-black dark:bg-slate-950">
       <div className="font-medium flex items-center justify-between dark:text-slate-50">
         <div className="flex items-center">
-          Points 
+          Điểm 
           {/* <Asterisk className="size-4" color="red" /> */}
         </div>
 
@@ -107,7 +107,7 @@ export const CreditForm = ({ initialData, courseId }: CreaditFormProps) => {
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                Save
+                Lưu
               </Button>
             </div>
           </form>

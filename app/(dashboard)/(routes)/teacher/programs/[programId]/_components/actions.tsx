@@ -36,7 +36,7 @@ export const Actions = ({ disabled, programId, isPublished }: ActionsProps) => {
 
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     } finally {
       setIsLoading(false);
     }
@@ -52,7 +52,7 @@ export const Actions = ({ disabled, programId, isPublished }: ActionsProps) => {
       router.refresh();
       router.push(`/teacher/programs`);
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     } finally {
       setIsLoading(false);
     }
