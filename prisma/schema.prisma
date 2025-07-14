@@ -373,3 +373,13 @@ model userExamRecord {
   @@index([moduleId])
   @@index([courseId])
 }
+
+model notificationLog {
+  id         String   @id @default(uuid())
+  userId     String
+  courseId   String
+  type       String
+  sentDate   DateTime
+
+  @@unique([userId, courseId, type, sentDate])
+}
