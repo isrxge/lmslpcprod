@@ -31,8 +31,7 @@ export const PoliciesModal = ({
                 1. Quy định truy cập hệ thống
               </h2>
               <p>
-                Hệ thống đào tạo nội bộ chỉ cho phép truy cập trong mạng nội bộ
-                tại văn phòng công ty. Người dùng không thể truy cập từ bên ngoài (như tại nhà hoặc mạng công cộng – ví dụ: “Wi-Fi nhà riêng”).
+                Hệ thống đào tạo nội bộ chỉ cho phép truy cập trong mạng nội bộ tại văn phòng công ty. Người dùng không thể truy cập từ bên ngoài (như tại nhà hoặc mạng công cộng – ví dụ: “Wi-Fi nhà riêng”).
               </p>
             </section>
 
@@ -41,9 +40,7 @@ export const PoliciesModal = ({
                 2. Chính sách học tập
               </h2>
               <p>
-                Nhân viên cần hoàn thành đầy đủ nội dung học và tham gia các
-                hoạt động bắt buộc của khóa học. Việc không hoàn thành có thể
-                ảnh hưởng đến kết quả cuối cùng hoặc quyền được cấp chứng nhận.
+                Nhân viên cần hoàn thành đầy đủ nội dung học và tham gia các hoạt động bắt buộc của khóa học. Việc không hoàn thành có thể ảnh hưởng đến kết quả cuối cùng hoặc quyền được cấp chứng nhận.
               </p>
             </section>
 
@@ -53,19 +50,16 @@ export const PoliciesModal = ({
               </h2>
               <ul className="list-disc list-inside space-y-1">
                 <li>
-                  Bài thi tổ chức trực tuyến, chỉ thực hiện{" "}
-                  <strong>một lần duy nhất</strong>.
+                  Bài thi tổ chức trực tuyến, chỉ thực hiện{" "} <strong>một lần duy nhất</strong>.
                 </li>
                 <li>
                   Điểm đạt yêu cầu là từ <strong>80% trở lên</strong>.
                 </li>
                 <li>
-                  Thời gian làm bài thi sẽ được người tạo khóa học thiết lập cụ
-                  thể.
+                  Thời gian làm bài thi sẽ được người tạo khóa học thiết lập cụ thể.
                 </li>
                 <li>
-                  Phát hiện gian lận sẽ dẫn đến hủy kết quả và tạm ngưng quyền
-                  truy cập hệ thống.
+                  Phát hiện gian lận sẽ dẫn đến hủy kết quả và tạm ngưng quyền truy cập hệ thống.
                 </li>
               </ul>
             </section>
@@ -76,15 +70,10 @@ export const PoliciesModal = ({
               </h2>
               <ul className="list-disc list-inside space-y-1">
                 <li>
-                  <strong>Nhân viên thử việc:</strong> Nếu không đạt, phải chờ
-                  tối thiểu <strong>3 ngày</strong> để thi lại. Việc thi lại chỉ
-                  được thực hiện nếu người hướng dẫn tạo khóa học mới tương ứng.
+                  <strong>Nhân viên thử việc:</strong> Nếu không đạt, phải chờ tối thiểu <strong>3 ngày</strong> để thi lại. Việc thi lại chỉ được thực hiện nếu người hướng dẫn tạo khóa học mới tương ứng.
                 </li>
                 <li>
-                  <strong>Nhân viên chính thức:</strong> Nếu không đạt, thời
-                  gian chờ là <strong>7 ngày</strong>. Việc thi lại cũng phụ
-                  thuộc vào sự có mặt của khóa học mới do người hướng dẫn cung
-                  cấp.
+                  <strong>Nhân viên chính thức:</strong> Nếu không đạt, thời gian chờ là <strong>7 ngày</strong>. Việc thi lại cũng phụ thuộc vào sự có mặt của khóa học mới do người hướng dẫn cung cấp.
                 </li>
               </ul>
             </section>
