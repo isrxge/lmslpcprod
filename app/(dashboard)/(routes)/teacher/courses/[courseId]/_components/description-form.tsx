@@ -34,11 +34,11 @@ export const DescriptionForm = ({
         description: content,
       };
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated");
+      toast.success("Khóa học đã được cập nhật");
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 

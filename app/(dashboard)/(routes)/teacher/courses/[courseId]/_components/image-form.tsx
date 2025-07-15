@@ -65,11 +65,11 @@ export const ImageForm = ({ initialData, courseId, readOnly = false }: ImageForm
           initialData.title as string
         }/image/${selectedFile.name as string}`,
       });
-      toast.success("course updated");
+      toast.success("Khóa học đã được cập nhật");
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 

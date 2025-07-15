@@ -25,10 +25,10 @@ const sendReminderEmail = async (userEmail: string, courseTitle: string) => {
   const emailContent = {
     from: "webmaster@lp.com.vn",
     to: userEmail,
-    subject: `[LMS] Reminder: ${courseTitle} is about to end!`,
+    subject: `[LMS] Nhắc nhở: Khóa học ${courseTitle} sắp kết thúc!`,
     html: `
-      <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Dear staff,</p>
-      <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">This is a reminder that the course '<strong>${courseTitle}</strong>' is about to end. Please complete your course before the deadline.</p>
+      <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Dear anh/chị,</p>
+      <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Đây là email nhắc nhở rằng khóa học '<strong>${courseTitle}</strong>' sắp kết thúc. Vui lòng hoàn thành khóa học trước thời hạn.</p>
       <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Best regards,</p>
       <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Learning Management System Administration</p>
     `,
@@ -46,12 +46,12 @@ const sendInstructorReportEmail = async (
   await transporter.sendMail({
     from: "webmaster@lp.com.vn",
     to: email,
-    subject: `[LMS] Learners still in progress – ${title}`,
+    subject: `[LMS] Nhắc nhở: Danh sách nhân viên vẫn đang học – ${title}`,
     html: `
       <p style="font-family:'Times New Roman',serif;font-size:12pt;">
-        Dear instructor,<br/>
-        This daily snapshot lists ONLY the staff whose status is still “studying” in <strong>${title}</strong>.<br/>
-        Please review and encourage them to complete the course.
+        Dear anh/chị,<br/>
+        Đây là thống kê hiện tại, chỉ liệt kê những nhân viên vẫn đang trong trạng thái “đang học” của khóa <strong>${title}</strong> tính đến hôm nay.<br/>
+        Vui lòng xem xét và khuyến khích họ hoàn thành khóa học trước hạn.
       </p>
       ${html}
       <p style="font-family:'Times New Roman',serif;font-size:12pt;">Best regards,<br/>Learning Management System Administration</p>
@@ -150,7 +150,7 @@ const handleReminder = async () => {
 
         const reportHtml = `
           <table border="1" cellpadding="4" style="font-family:'Times New Roman',serif;font-size:12pt;border-collapse:collapse">
-            <thead><tr><th>Staff</th><th>Progress</th><th>Status</th></tr></thead>
+            <thead><tr><th>Nhân viên</th><th>Tiến độ</th><th>Trạng thái</th></tr></thead>
             <tbody>${reportRows}</tbody>
           </table>`;
 

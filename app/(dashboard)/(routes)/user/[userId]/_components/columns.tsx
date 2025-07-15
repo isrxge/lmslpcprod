@@ -200,7 +200,7 @@ export const columns: ColumnDef<Course>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center">
-          <span className="mr-2">Title</span>
+          <span className="mr-2">Tiêu đề</span>
         </span>
       );
     },
@@ -211,7 +211,7 @@ export const columns: ColumnDef<Course>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center">
-          <span className="mr-2">Status</span>
+          <span className="mr-2">Trạng thái</span>
         </span>
       );
     },
@@ -245,7 +245,7 @@ export const columns: ColumnDef<Course>[] = [
     header: ({ column }) => {
       return (
         <span className="flex items-center">
-          <span className="mr-2">Exam Result</span>
+          <span className="mr-2">Kết quả</span>
         </span>
       );
     },
@@ -265,7 +265,7 @@ export const columns: ColumnDef<Course>[] = [
                     courseModule.UserProgress.length > 0
                       ? `${ClassSessionRecord[0].status} (${
                           ClassSessionRecord[0].score == null
-                            ? "not taken exam yet"
+                            ? "Chưa thực hiện bài kiểm tra"
                             : ClassSessionRecord[0].score + "%"
                         })`
                       : //  in ${courseModule.UserProgress[0]?.attempt} attempts`
@@ -274,7 +274,7 @@ export const columns: ColumnDef<Course>[] = [
                 );
               })
             ) : (
-              <li>No Modules</li>
+              <li>Không có học phần nào</li>
             )}
           </ul>
         </div>

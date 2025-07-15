@@ -6,7 +6,8 @@ const smtpTransport = require("nodemailer-smtp-transport");
 
 export async function POST(req: Request) {
   try {
-    const { courseName, username, emailAddress } = await req.json();
+    const { courseName, username, emailAddress, courseId  } = await req.json();
+    const courseUrl = `http://lms.lp.local/courses/${courseId }`;
 
     // Thiết lập nội dung email
     // const emailContent = {
@@ -25,12 +26,15 @@ export async function POST(req: Request) {
       from: "webmaster@lp.com.vn",
       to: emailAddress, // Gửi tới người dùng
       subject: `[LMS] Bạn đã được phân công vào khóa học: ${courseName}`,
-      text: `Dear ${username},\n\nBạn đã được phân công vào khóa học: ${courseName}.\n\nHãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học.\nNếu bạn có bất kỳ thắc mắc hay cần hỗ trợ, vui lòng liên hệ với chúng tôi.\n\nBest regards,\nLearning Management System Administration`,
+      text: `Dear ${username},\n\nBạn đã được phân công vào khóa học: ${courseName}.\n\nHãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học tại đường dẫn:\n${courseUrl}\n\nMọi thắc mắc, bạn vui lòng trao đổi với người hướng dẫn hoặc bộ phận hỗ trợ.\n\nBest regards,\nLearning Management System Administration`,
       html: `
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Dear ${username},</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Bạn đã được phân công vào khóa học: <strong>${courseName}</strong>.</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Hãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học.</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Nếu bạn có bất kỳ thắc mắc hay cần hỗ trợ, vui lòng liên hệ với chúng tôi.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Hãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học tại liên kết sau:</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">
+          <a href="${courseUrl}" target="_blank" style="color: #1a73e8; text-decoration: underline;">Truy cập tại đây</a>
+        </p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Mọi thắc mắc, bạn vui lòng trao đổi với người hướng dẫn hoặc bộ phận hỗ trợ.</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Best regards,</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Learning Management System Administration</p>
       `,

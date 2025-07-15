@@ -191,17 +191,18 @@ export const DepartmentForm = ({
             courseName: initialData.title,
             username: user.username,
             emailAddress: user.email,
+            courseId,
           });
         }
       }
 
-      toast.success("Course updated");
+      toast.success("Khóa học đã được cập nhật");
       setLoading(false);
       setTriggerAlert(false);
       toggleEdit();
       router.refresh();
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
       setLoading(false);
     }
   };

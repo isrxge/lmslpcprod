@@ -58,9 +58,18 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   // Log course và module
   // console.log("Course Data: ", course); // Log toàn bộ dữ liệu khóa học
 
-  if (!course || !course.isPublished) {
+  // if (!course || !course.isPublished) {
+  //   return redirect("/");
+  // }
+
+    if (!course) {
     return redirect("/");
   }
+
+  if (!course.isPublished) {
+    return redirect("/course-not-available");
+  }
+
   if (
     course.ClassSessionRecord.map(
       (item: { userId: any }) => item.userId
