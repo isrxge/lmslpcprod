@@ -73,6 +73,8 @@ const handleReminder = async () => {
   const todayEnd = new Date(todayStr);
   todayEnd.setHours(23, 59, 59, 999);
 
+  console.log(`[Reminder] Script started at ${new Date().toISOString()}`);
+
   const courses = await db.course.findMany({
     where: {
       isPublished: true,
@@ -88,9 +90,13 @@ const handleReminder = async () => {
     },
   });
 
+  console.log(`[Reminder] Found ${courses.length} open courses`);
+
   for (const course of courses) {
     const reminderDateStr = calculateReminderDate(course.endDate, course.notifyDate || 0);
     const reminderDate = new Date(reminderDateStr);
+
+    console.log(`[Reminder] Course "${course.title}" has reminder date: ${reminderDateStr}`);
 
     if (new Date().toDateString() === reminderDate.toDateString()) {
       for (const record of course.ClassSessionRecord) {
@@ -114,6 +120,9 @@ const handleReminder = async () => {
                 sentDate: new Date(),
               },
             });
+          }
+          else {
+            console.log(`[Reminder] Already sent reminder to ${user.email} today, skipping`);
           }
         }
       }
@@ -149,6 +158,7 @@ const handleReminder = async () => {
         });
 
         if (!reportExisted) {
+          console.log(`[Reminder] Sending report to instructor ${course.courseInstructor.email} for course "${course.title}"`);
           await sendInstructorReportEmail(
             course.courseInstructor.email,
             course.title,
@@ -162,19 +172,28 @@ const handleReminder = async () => {
               sentDate: new Date(),
             },
           });
+        } else {
+          console.log(`[Reminder] Already sent instructor report today, skipping`);
         }
-      }
+      } else {
+      console.log(`[Reminder] Today is NOT the reminder day for course "${course.title}", skipping`);
+    }
     }
   }
+  console.log(`[Reminder] Finished processing at ${new Date().toISOString()}`);
 };
 
 // ✅ App Router requires named export
 export async function GET(req: NextRequest) {
   try {
-    await handleReminder();
+    console.log("[API] /api/send-reminder called");
+    await handleReminder(); // ✅ Chỉ chạy khi được gọi
     return NextResponse.json({ message: "Reminder process completed" });
   } catch (error) {
     console.error("Reminder error:", error);
-    return new NextResponse("Internal server error", { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error", error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
