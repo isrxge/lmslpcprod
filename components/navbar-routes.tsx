@@ -7,7 +7,8 @@ import Link from "next/link";
 import { useQuery } from "react-query";
 import { Button } from "@/components/ui/button";
 import { IsTeacher } from "@/lib/teacher";
-
+import { IsPolicies } from "@/lib/policies";
+import { IsReport } from "@/lib/report";
 import { SearchInput } from "./search-input";
 import { MyCourse } from "./my-course";
 // import { Notification } from "./notification";
@@ -24,6 +25,10 @@ export const NavbarRoutes = ({ userId }: any) => {
   };
   const { data, error } = useQuery("userCourses", fetchUserCourses);
 
+  const isHomePage =
+  pathname === "/" ||
+  pathname === "/ranking" ||
+  pathname.startsWith("/user/");
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isCoursePage = pathname?.includes("/courses");
   const isSearchPage = pathname === "/search";
@@ -50,7 +55,8 @@ export const NavbarRoutes = ({ userId }: any) => {
               <ModeToggle />
             </div> */}
           </div>
-
+          {isHomePage && <IsPolicies />}
+          {isHomePage && <IsReport />}
           {isTeacherPage || isCoursePage ? (
             <Link href="/">
               <Button size="sm" variant="ghost">
