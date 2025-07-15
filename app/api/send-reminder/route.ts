@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import exp from "constants";
 const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
 
@@ -190,6 +191,7 @@ const handleReminder = async () => {
   return logs;
 };
 
+export const dynamic = "force-dynamic"; // ✅ Force dynamic rendering for this route
 // ✅ App Router requires named export
 export async function GET(req: NextRequest) {
   try {
