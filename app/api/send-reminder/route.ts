@@ -68,12 +68,13 @@ const calculateReminderDate = (endDate: Date | null, notifyDate: number): string
 
 // 5. Main logic
 const handleReminder = async () => {
+  const logs: string[] = [];
   const todayStr = new Date().toISOString().split("T")[0];
   const todayStart = new Date(todayStr);
   const todayEnd = new Date(todayStr);
   todayEnd.setHours(23, 59, 59, 999);
 
-  console.log(`[Reminder] Script started at ${new Date().toISOString()}`);
+  logs.push(`[Reminder] Script started at ${new Date().toISOString()}`);
 
   const courses = await db.course.findMany({
     where: {
@@ -90,15 +91,18 @@ const handleReminder = async () => {
     },
   });
 
-  console.log(`[Reminder] Found ${courses.length} open courses`);
+  logs.push(`[Reminder] Found ${courses.length} open courses`);
 
   for (const course of courses) {
     const reminderDateStr = calculateReminderDate(course.endDate, course.notifyDate || 0);
     const reminderDate = new Date(reminderDateStr);
 
-    console.log(`[Reminder] Course "${course.title}" has reminder date: ${reminderDateStr}`);
+    if (new Date().toDateString() !== reminderDate.toDateString()) {
+      logs.push(`[Reminder] ⏩ Today is NOT reminder day for "${course.title}", skipping`);
+      continue;
+    }
 
-    if (new Date().toDateString() === reminderDate.toDateString()) {
+    // if (new Date().toDateString() === reminderDate.toDateString()) {
       for (const record of course.ClassSessionRecord) {
         const user = record.user;
         if (user?.email) {
@@ -120,9 +124,10 @@ const handleReminder = async () => {
                 sentDate: new Date(),
               },
             });
+            logs.push(`[Reminder] ✅ Sent reminder to ${user.email} for "${course.title}"`);
           }
           else {
-            console.log(`[Reminder] Already sent reminder to ${user.email} today, skipping`);
+            logs.push(`[Reminder] ⏩ Already reminded ${user.email}, skipping`);
           }
         }
       }
@@ -172,23 +177,27 @@ const handleReminder = async () => {
               sentDate: new Date(),
             },
           });
+          logs.push(`[Reminder] ✅ Sent instructor report to ${course.courseInstructor.email} for "${course.title}"`);
         } else {
-          console.log(`[Reminder] Already sent instructor report today, skipping`);
+          logs.push(`[Reminder] ⏩ Already sent instructor report to ${course.courseInstructor.email}, skipping`);
         }
-      } else {
-      console.log(`[Reminder] Today is NOT the reminder day for course "${course.title}", skipping`);
-    }
+    //   } else {
+    //   console.log(`[Reminder] Today is NOT the reminder day for course "${course.title}", skipping`);
+    // // }
     }
   }
-  console.log(`[Reminder] Finished processing at ${new Date().toISOString()}`);
+  logs.push(`[Reminder] ✅ Finished at ${new Date().toISOString()}`);
+  return logs;
 };
 
 // ✅ App Router requires named export
 export async function GET(req: NextRequest) {
   try {
     console.log("[API] /api/send-reminder called");
+    const logs = await handleReminder();
     await handleReminder(); // ✅ Chỉ chạy khi được gọi
-    return NextResponse.json({ message: "Reminder process completed" });
+    return NextResponse.json({ message: "Reminder process completed",
+      details: logs, });
   } catch (error) {
     console.error("Reminder error:", error);
     return NextResponse.json(
