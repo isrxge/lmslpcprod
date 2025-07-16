@@ -31,7 +31,7 @@ export const PoliciesModal = ({
                 1. Quy định truy cập hệ thống
               </h2>
               <p>
-                Hệ thống đào tạo nội bộ chỉ cho phép truy cập trong mạng nội bộ tại văn phòng công ty. Người dùng không thể truy cập từ bên ngoài (như tại nhà hoặc mạng công cộng – ví dụ: “Wi-Fi nhà riêng”).
+                Hệ thống đào tạo nội bộ chỉ cho phép truy cập trong mạng nội bộ tại văn phòng công ty. Người dùng không thể truy cập từ bên ngoài (như tại nhà hoặc mạng công cộng).
               </p>
             </section>
 
