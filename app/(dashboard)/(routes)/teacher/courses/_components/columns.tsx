@@ -245,7 +245,7 @@ export const columns: ColumnDef<Course>[] = [
       const isPublished = row.getValue("isPublished") || false;
       return (
         <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
-          {isPublished ? "Published" : "Draft"}
+          {isPublished ? "Đã xuất bản" : "Nháp"}
         </Badge>
       );
     },
@@ -270,9 +270,9 @@ export const columns: ColumnDef<Course>[] = [
     // Chuẩn hoá tên hiển thị
     const label =
       rawStatus.toLowerCase() === "closed"
-        ? "Closed"
+        ? "Đóng"
         : rawStatus.toLowerCase() === "open"
-        ? "Open"
+        ? "Mở"
         : rawStatus;
 
     // Chọn màu theo trạng thái

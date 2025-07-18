@@ -22,12 +22,13 @@ export async function POST(req: Request) {
     const emailContent = {
       from: "webmaster@lp.com.vn",
       to: emailAddress, // Gửi tới người dùng
-      subject: `[LMS] Your account has been approved and activated`, // Subject for approval notification
-      text: `Dear ${username},\n\nYour account has been successfully approved, and you now have access to the system. You can log in and start using the platform.\n\nIf you have any questions or require assistance, please feel free to reach out.\n\nBest regards,\nLearning Management System Administration`,
+      subject: `[LMS] Tài khoản của bạn đã được phê duyệt và kích hoạt`, // Subject for approval notification
+      text: `Dear ${username},\n\nTài khoản của bạn đã được phê duyệt thành công và hiện đã có quyền truy cập vào hệ thống. Bạn có thể đăng nhập và bắt đầu sử dụng nền tảng.\n\nNếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi.\n\n🔗 Truy cập hệ thống tại: http://lms.lp.local\n\nBest regards,\nLearning Management System Administration`,
       html: `
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Dear ${username},</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Your account has been successfully approved, and you now have access to the system. You can log in and start using the platform.</p>
-        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">If you have any questions or require assistance, please feel free to reach out.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Tài khoản của bạn đã được phê duyệt thành công và hiện đã có quyền truy cập vào hệ thống. Bạn có thể đăng nhập và bắt đầu sử dụng nền tảng.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi.</p>
+        <p style="font-family: 'Times New Roman', serif; font-size: 12pt;"><strong>🔗 Đường dẫn truy cập hệ thống:</strong> <a href="http://lms.lp.local">http://lms.lp.local</a></p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Best regards,</p>
         <p style="font-family: 'Times New Roman', serif; font-size: 12pt;">Learning Management System Administration</p>
       `,
@@ -36,12 +37,12 @@ export async function POST(req: Request) {
     // Cấu hình nodemailer
     const transporter = nodemailer.createTransport(
       smtpTransport({
-        host: "smtp-mail.outlook.com",
+        host: process.env.SMTP_HOST,
         secureConnection: false,
         port: 587,
         auth: {
-          user: "webmaster@lp.com.vn",
-          pass: "yqpcfbbvhfrvfbwz", // Use secure authentication credentials
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
         },
         tls: {
           ciphers: "SSLv3",

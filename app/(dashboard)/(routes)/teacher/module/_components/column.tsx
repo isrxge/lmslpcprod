@@ -62,7 +62,7 @@ export const columns: ColumnDef<Slide>[] = [
 
       return (
         <Badge className={cn("bg-slate-500", isPublished && "bg-sky-700")}>
-          {isPublished ? "Published" : "Draft"}
+          {isPublished ? "Đã xuất bản" : "Nháp"}
         </Badge>
       );
     },

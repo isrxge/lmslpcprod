@@ -28,16 +28,15 @@ const StepTwo = async () => {
       </div>
       <div className="p-6 flex items-center justify-center">
         <div className="text-center">
-          <p className="mb-4 text-4xl mt-24">Successful! 🎉🎉🎉</p>
+          <p className="mb-4 text-4xl mt-24">Thành công! 🎉🎉🎉</p>
           {/* <p className="mb-4">
             Your organization requires admin approval before you can access to
             LPC Learning System.
           </p> */}
           <p className="mb-4">
-            Thank you for your submission. Your request is currently under
-            review.
+            Cảm ơn bạn đã gửi yêu cầu. Yêu cầu của bạn hiện đang được xem xét.
           </p>
-          <p className="mb-10">Please come back later.</p>
+          <p className="mb-10">Vui lòng quay lại sau.</p>
           {/* <p>
             Please contact your
             <a

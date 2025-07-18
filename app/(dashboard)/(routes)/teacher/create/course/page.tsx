@@ -184,9 +184,9 @@ function CreatePage() {
         status: "open",
       });
       router.push(`/teacher/courses/${response.data.id}`);
-      toast.success("Course created");
+      toast.success("Khóa học đã được tạo");
     } catch {
-      toast.error("Something went wrong");
+      toast.error("Đã xảy ra lỗi");
     }
   };
 

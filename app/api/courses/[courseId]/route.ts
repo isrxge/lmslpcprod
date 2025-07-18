@@ -84,7 +84,25 @@ export async function GET(
       where: {
         id: courseId,
       },
-    });
+      include: {
+    modules: {
+      include: {
+        module: true,
+      },
+    },
+    CourseOnDepartment: {
+      include: {
+        Department: true,
+      },
+    },
+    ClassSessionRecord: {
+      include: {
+        user: true,
+      },
+    },
+    courseInstructor: true,
+  },
+});
 
     return NextResponse.json(course);
   } catch (error) {

@@ -65,12 +65,12 @@ export async function POST(req: Request) {
     };
     let transporter = nodemailer.createTransport(
       smtpTransport({
-        host: "smtp-mail.outlook.com",
+        host: process.env.SMTP_HOST,
         secureConnection: false, // TLS requires secureConnection to be false
         port: 587, // port for secure SMTP
         auth: {
-          user: "webmaster@lp.com.vn",
-          pass: "yqpcfbbvhfrvfbwz",
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
         },
         tls: {
           ciphers: "SSLv3",

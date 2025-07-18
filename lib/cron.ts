@@ -20,10 +20,10 @@ const smtpTransport = require("nodemailer-smtp-transport");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
-    host: "smtp-mail.outlook.com",
+    host: process.env.SMTP_HOST,
     port: 587,
     secureConnection: false,
-    auth: { user: "webmaster@lp.com.vn", pass: "yqpcfbbvhfrvfbwz" },
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS, },
     tls: { ciphers: "SSLv3" },
   })
 );
@@ -40,13 +40,13 @@ const sendStatusMail = async (
     subject: `[LMS] Course ${courseTitle} closed – Status: ${status}`,
     html: `
       <p style="font-family:'Times New Roman';font-size:12pt">
-        Dear staff,<br/>
-        The course <strong>${courseTitle}</strong> has been closed.<br/>
-        Your final status: <strong>${status}</strong> (score ${score}).<br/>
+        Dear anh/chị,<br/>
+        Khóa học <strong>${courseTitle}</strong> đã được đóng lại.<br/>
+        Trạng thái cuối cùng của anh/chị là: <strong>${status}</strong> (điểm ${score}).<br/>
         ${
           status === "failed"
-            ? "Please contact your instructor for further guidance."
-            : "Congratulations on completing the course!"
+            ? "Vui lòng liên hệ người hướng dẫn để biết thêm thông tin chi tiết."
+            : "Chúc mừng anh/chị đã hoàn thành khóa học!"
         }
       </p>
       <p style="font-family:'Times New Roman';font-size:12pt">
@@ -172,20 +172,20 @@ cron.schedule("0 18 * * *", async () => {
 
         const htmlBody = `
           <p style="font-family:'Times New Roman';font-size:12pt">
-            Dear instructor,<br/>
-            The course <strong>${
+            Dear anh/chị,<br/>
+            Khóa học <strong>${
               course.title
-            }</strong> has been automatically closed.
-            Below is the final progress of your staff.
+            }</strong> đã được hệ thống tự động đóng lại.
+            Dưới đây là báo cáo tiến độ cuối cùng của các nhân viên:
           </p>
           <table border="1" cellpadding="0" cellspacing="0"
                  style="border-collapse:collapse;width:100%;
                         font-family:'Times New Roman';font-size:12pt">
             <thead>
               <tr>
-                <th style="padding:8px 18px">Staff</th>
-                <th style="padding:8px 18px">Status</th>
-                <th style="padding:8px 18px">Score</th>
+                <th style="padding:8px 18px">Tên nhân viên</th>
+                <th style="padding:8px 18px">Kết quả</th>
+                <th style="padding:8px 18px">Điểm số</th>
               </tr>
             </thead>
             <tbody>${rows.replace(

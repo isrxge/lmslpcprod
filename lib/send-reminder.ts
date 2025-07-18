@@ -5,12 +5,12 @@
 
 // const transporter = nodemailer.createTransport(
 //   smtpTransport({
-//     host: "smtp-mail.outlook.com", // Địa chỉ SMTP của Outlook
+//     host: process.env.SMTP_HOST,
 //     secureConnection: false,
 //     port: 587,
 //     auth: {
-//       user: "webmaster@lp.com.vn", // Địa chỉ email của bạn
-//       pass: "yqpcfbbvhfrvfbwz", // Mật khẩu email của bạn
+//       user: process.env.SMTP_USER,
+//       pass: process.env.SMTP_PASS,
 //     },
 //     tls: {
 //       ciphers: "SSLv3", // Thiết lập cipher

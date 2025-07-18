@@ -62,7 +62,7 @@ export const columns: ColumnDef<{
             status === "active" && "bg-sky-700"
           )}
         >
-          {status == "active" ? "Active" : "Inactive"}
+          {status == "active" ? "Đang hoạt động" : "Không hoạt động"}
         </Badge>
       );
     },

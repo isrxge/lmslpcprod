@@ -55,12 +55,12 @@ export async function POST(req: Request) {
     /* -------------------- 1. Tạo transporter SMTP (Outlook) -------------------- */
     const transporter = nodemailer.createTransport(
       smtpTransport({
-        host: "smtp-mail.outlook.com",
+        host: process.env.SMTP_HOST,
         secureConnection: false,
         port: 587,
         auth: {
-          user: "webmaster@lp.com.vn", // ví dụ: "noreply@lpc.com.vn"
-          pass: "yqpcfbbvhfrvfbwz",
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
         },
         tls: { ciphers: "SSLv3" },
       })
@@ -89,17 +89,17 @@ Learning Management System Administration
 
     const html = `
 <p style="font-family:'Times New Roman',serif;font-size:12pt;">Dear ${fullname},</p>
-<p style="font-family:'Times New Roman',serif;font-size:12pt;">You have just completed the exam <strong>${moduleTitle || courseTitle}</strong> in course <strong>${courseTitle}</strong>.</p>
+<p style="font-family:'Times New Roman',serif;font-size:12pt;">Bạn vừa hoàn thành bài thi <strong>${moduleTitle || courseTitle}</strong> trong khóa học <strong>${courseTitle}</strong>.</p>
 
 <table style="font-family:'Times New Roman',serif;font-size:12pt;border-collapse:collapse;margin:8px 0;">
-  <tr><td><strong>Score&nbsp;</strong></td><td>${score}%</td></tr>
-  <tr><td><strong>Status&nbsp;</strong></td><td>${status}</td></tr>
-  <tr><td><strong>Attempt&nbsp;</strong></td><td>${attempt}</td></tr>
-  <tr><td><strong>Date&nbsp;</strong></td><td>${examDate}</td></tr>
+  <tr><td><strong>Điểm&nbsp;</strong></td><td>${score}%</td></tr>
+  <tr><td><strong>Kết quả&nbsp;</strong></td><td>${status}</td></tr>
+  <tr><td><strong>Số lần&nbsp;</strong></td><td>${attempt}</td></tr>
+  <tr><td><strong>Ngày&nbsp;</strong></td><td>${examDate}</td></tr>
 </table>
 
 <p style="font-family:'Times New Roman',serif;font-size:12pt;">
-  ${passed ? "Chúc mừng bạn đã đạt được thành tựu! 🎉" : "Đừng bỏ cuộc!."}
+  ${passed ? "Chúc mừng bạn!" : "Chúc bạn may mắn lần sau."}
 </p>
 
 <p style="font-family:'Times New Roman',serif;font-size:12pt;">Best regards,<br/>Learning Management System Administration</p>

@@ -7,12 +7,12 @@ const smtpTransport = require("nodemailer-smtp-transport");
 // 1. Setup transporter
 const transporter = nodemailer.createTransport(
   smtpTransport({
-    host: "smtp-mail.outlook.com",
+    host: process.env.SMTP_HOST,
     secureConnection: false,
     port: 587,
     auth: {
-      user: "webmaster@lp.com.vn",
-      pass: "yqpcfbbvhfrvfbwz",
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
     tls: {
       ciphers: "SSLv3",

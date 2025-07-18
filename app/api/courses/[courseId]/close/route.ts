@@ -7,10 +7,10 @@ const smtpTransport = require("nodemailer-smtp-transport");
 /* --------------- cấu hình SMTP --------------- */
 const transporter = nodemailer.createTransport(
   smtpTransport({
-    host: "smtp-mail.outlook.com",
+    host: process.env.SMTP_HOST,
     port: 587,
     secureConnection: false,
-    auth: { user: "webmaster@lp.com.vn", pass: "yqpcfbbvhfrvfbwz" },
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS, },
     tls: { ciphers: "SSLv3" },
   })
 );
@@ -24,21 +24,22 @@ const sendInstructorReport = async (
   await transporter.sendMail({
     from: "webmaster@lp.com.vn",
     to: email,
+    cc: "huong.nguyen@lp.com.vn",
     subject: `[LMS] Báo cáo tiến độ cuối cùng – ${courseTitle}`,
     html: `
       <p style="font-family:'Times New Roman';font-size:12pt">
-        Dear bạn,<br/>
+        Dear anh/chị,<br/>
         Khóa học <strong>${courseTitle}</strong> đã được đóng.
-        Dưới đây là bảng tiến độ cuối cùng của nhân viên bạn phụ trách.
+        Dưới đây là bảng tiến độ cuối cùng của nhân viên anh/chị phụ trách:
       </p>
       <table border="1" cellpadding="0" cellspacing="0"
              style="border-collapse:collapse;width:100%;
                     font-family:'Times New Roman';font-size:12pt">
         <thead>
           <tr>
-            <th style="padding:8px 18px">Staff</th>
-            <th style="padding:8px 18px">Status</th>
-            <th style="padding:8px 18px">Score</th>
+            <th style="padding:8px 18px">Nhân viên</th>
+            <th style="padding:8px 18px">Kết quả</th>
+            <th style="padding:8px 18px">Điểm</th>
           </tr>
         </thead>
         <tbody>${rowsHtml}</tbody>
@@ -62,12 +63,13 @@ const sendStatusMail = async (
     subject: `[LMS] Khóa học ${courseTitle} đã đóng – Trạng thái: ${finalStatus}`,
     html: `
       <p style="font-family:'Times New Roman';font-size:12pt">
-        Dear bạn,<br/>
-        Khóa học <strong>${courseTitle}</strong> đã được đóng và trạng thái cuối cùng của bạn là <strong>${finalStatus}</strong> (điểm&nbsp;${score}).<br/>
+        Dear anh/chị,<br/>
+        Khóa học <strong>${courseTitle}</strong> đã được đóng.<br/> 
+        Trạng thái cuối cùng của anh/chị: <strong>${finalStatus}</strong> (điểm: ${score}).<br/>
         ${
           finalStatus === "failed"
-            ? "Vui lòng liên hệ người hướng dẫn của bạn để được hỗ trợ thêm."
-            : "Chúc mừng bạn đã hoàn thành khóa học!"
+            ? "Vui lòng liên hệ người hướng dẫn để biết thêm chi tiết."
+            : "Chúc mừng anh/chị đã hoàn thành khóa học!"
         }
       </p>
       <p style="font-family:'Times New Roman';font-size:12pt">

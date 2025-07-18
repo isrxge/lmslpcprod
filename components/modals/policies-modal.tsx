@@ -98,10 +98,10 @@ export const PoliciesModal = ({
               <p>
                 Nếu có bất kỳ thắc mắc hoặc cần hỗ trợ, vui lòng gửi về địa chỉ:{" "}
                 <a
-                  href="mailto:khoa.nguyendang@lp.com.vn"
+                  href="mailto:prd@lp.com.vn"
                   className="text-blue-600 underline font-medium"
                 >
-                  khoa.nguyendang@lp.com.vn
+                  prd@lp.com.vn
                 </a>
               </p>
             </section>

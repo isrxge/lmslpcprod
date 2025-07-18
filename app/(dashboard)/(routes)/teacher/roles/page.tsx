@@ -33,7 +33,12 @@ const RolesPage = async () => {
   ) {
     return redirect("/");
   }
-  const roles = await db.role.findMany({});
+
+  const roles = await db.role.findMany({
+    where: {
+      status: "active",
+    },
+  });
 
   return (
     <div className="p-6">

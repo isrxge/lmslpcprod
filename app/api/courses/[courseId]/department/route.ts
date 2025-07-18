@@ -63,12 +63,12 @@ const smtpTransport = require("nodemailer-smtp-transport");
 
 //           let transporter = nodemailer.createTransport(
 //             smtpTransport({
-//               host: "smtp-mail.outlook.com",
+//               host: process.env.SMTP_HOST,
 //               secureConnection: false, // TLS requires secureConnection to be false
 //               port: 587, // port for secure SMTP
 //               auth: {
-//                 user: "Webmaster@lp.com.vn",
-//                 pass: "Lpc@236238$",
+//                 user: process.env.SMTP_USER,
+//                 pass: process.env.SMTP_PASS,
 //               },
 //               tls: {
 //                 ciphers: "SSLv3",
@@ -188,12 +188,12 @@ export async function PATCH(
 
         let transporter = nodemailer.createTransport(
           smtpTransport({
-            host: "smtp-mail.outlook.com",
+            host: process.env.SMTP_HOST,
             secureConnection: false, // TLS requires secureConnection to be false
             port: 587, // port for secure SMTP
             auth: {
-              user: "Webmaster@lp.com.vn",
-              pass: "Lpc@236238$",
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
             },
             tls: {
               ciphers: "SSLv3",
