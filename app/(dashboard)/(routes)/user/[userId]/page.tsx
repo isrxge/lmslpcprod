@@ -4,7 +4,7 @@
 // import { db } from "@/lib/db";
 // import Avatar from "./_components/avatar";
 // import Star from "./_components/star";
-// import UserInformation from "./_components/infomation-form";
+// import UserInformation from "./_components/information-form";
 // import CourseHistory from "./_components/courses-history";
 // import { DataTable } from "./_components/data-table";
 // import { columns } from "./_components/columns";
@@ -126,7 +126,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import Avatar from "./_components/avatar";
 import Star from "./_components/star";
-import UserInformation from "./_components/infomation-form";
+import UserInformation from "./_components/information-form";
 import CourseHistory from "./_components/courses-history";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
