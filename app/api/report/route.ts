@@ -31,9 +31,12 @@ export async function POST(req: Request) {
     });
 
     await transporter.sendMail({
-      from: "webmaster@lp.com.vn",
-      to: ["khoa.nguyendang@lp.com.vn", "phu.nguyen@lp.com.vn"],
-      cc: "an.nguyen@lp.com.vn",
+      from: process.env.SMTP_USER,
+      to: (process.env.PRD_MEMBER || "")
+        .split(",")
+        .map(addr => addr.trim())
+        .filter(Boolean),
+      cc: process.env.PRD_TEAM_LEAD,
       subject: `[LMS Feedback] User Report`,
       html: `
         <div style="font-family:'Times New Roman',serif;font-size:12pt;">

@@ -107,7 +107,7 @@ Learning Management System Administration
 
     /* -------------------- 3. Gửi mail -------------------- */
     await transporter.sendMail({
-      from: "webmaster@lp.com.vn",
+      from: process.env.SMTP_USER,
       to: address,
       subject,
       text,

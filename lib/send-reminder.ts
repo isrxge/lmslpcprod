@@ -24,7 +24,7 @@
 //   courseTitle: string
 // ): Promise<void> => {
 //   const emailContent = {
-//     from: "webmaster@lp.com.vn", // Địa chỉ email gửi
+//     from: process.env.SMTP_USER, // Địa chỉ email gửi
 //     to: userEmail, // Địa chỉ người nhận
 //     subject: `[LMS] Reminder: ${courseTitle} is about to end!`,
 //     text: `Dear staff,\n\nThis is a reminder that the course '${courseTitle}' is about to end. Please complete your course before the deadline.`,
@@ -162,7 +162,7 @@
 //   reportHtml: string
 // ): Promise<void> => {
 //   const emailContent = {
-//     from: "webmaster@lp.com.vn",
+//     from: process.env.SMTP_USER,
 //     to: instructorEmail,
 //     subject: `[LMS] Learners still in progress – ${courseTitle}`,
 //     text: `Progress report for "${courseTitle}". See HTML version in a mail client that supports it.`,

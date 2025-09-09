@@ -23,7 +23,7 @@ export async function PATCH(
       },
     });
     // const mess = {
-    //   from: "Webmaster@lp.com.vn",
+    //   from: process.env.SMTP_USER,
     //   to: user.email,
     //   cc: "",
     //   subject: `you have been ${values.status} the system`,
@@ -36,7 +36,7 @@ export async function PATCH(
     //   `,
     // };
     const mess = {
-      from: "Webmaster@lp.com.vn",
+      from: process.env.SMTP_USER,
       to: user.email,
       cc: "",
       subject: `Tài khoản của bạn đã được ${values.status} trên hệ thống`,

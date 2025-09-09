@@ -22,9 +22,9 @@ const sendInstructorReport = async (
   rowsHtml: string
 ) => {
   await transporter.sendMail({
-    from: "webmaster@lp.com.vn",
+    from: process.env.SMTP_USER,
     to: email,
-    cc: "huong.nguyen@lp.com.vn",
+    cc: process.env.AD_EMAIL,
     subject: `[LMS] Báo cáo tiến độ cuối cùng – ${courseTitle}`,
     html: `
       <p style="font-family:'Times New Roman';font-size:12pt">
@@ -58,7 +58,7 @@ const sendStatusMail = async (
   score: number
 ) =>
   transporter.sendMail({
-    from: "webmaster@lp.com.vn",
+    from: process.env.SMTP_USER,
     to: email,
     subject: `[LMS] Khóa học ${courseTitle} đã đóng – Trạng thái: ${finalStatus}`,
     html: `

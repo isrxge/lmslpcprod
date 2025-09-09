@@ -53,7 +53,7 @@ const smtpTransport = require("nodemailer-smtp-transport");
 //           continue;
 //         } else {
 //           const emailMessage = {
-//             from: "Webmaster@lp.com.vn",
+//             from: process.env.SMTP_USER,
 //             to: assignList[i].email,
 //             cc: "",
 //             subject: `You have been assigned to course ${course.title}`,
@@ -178,7 +178,7 @@ export async function PATCH(
 
         // Gửi email thông báo cho người dùng được phân công
         const emailMessage = {
-          from: "Webmaster@lp.com.vn",
+          from: process.env.SMTP_USER,
           to: assignList[i].email,
           cc: "",
           subject: `Bạn đã được phân công vào khóa học ${course.title}`,

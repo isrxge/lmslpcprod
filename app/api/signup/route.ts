@@ -41,8 +41,11 @@ export async function POST(req: Request) {
     });
 
     const mess = {
-      from: "Webmaster@lp.com.vn",
-      to: "phu.nguyen@lp.com.vn, khoa.nguyendang@lp.com.vn",
+      from: process.env.SMTP_USER,
+      to: (process.env.PRD_MEMBER || "")
+        .split(",")
+        .map(addr => addr.trim())
+        .filter(Boolean),
       cc: "",
       subject: `${emailAddress} has requested approval to access the system`,
       text: `

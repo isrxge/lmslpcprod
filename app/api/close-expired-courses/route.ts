@@ -25,7 +25,7 @@ const sendStatusMail = async (
   score: number
 ) =>
   transporter.sendMail({
-    from: "webmaster@lp.com.vn",
+    from: process.env.SMTP_USER,
     to: email,
     subject: `[LMS] Khóa học ${courseTitle} đã đóng – Trạng thái: ${status}`,
     html: `
@@ -48,9 +48,9 @@ const sendStatusMail = async (
 // 3. Gửi báo cáo cho giảng viên
 const sendFinalReport = async (to: string, courseTitle: string, body: string) =>
   transporter.sendMail({
-    from: "webmaster@lp.com.vn",
+    from: process.env.SMTP_USER,
     to,
-    cc: "huong.nguyen@lp.com.vn",
+    cc: process.env.AD_EMAIL,
     subject: `[LMS] Báo cáo tiến độ cuối cùng – ${courseTitle}`,
     html: body,
   });

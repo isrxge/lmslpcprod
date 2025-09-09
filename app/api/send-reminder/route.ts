@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport(
 // 2. Send reminder email
 const sendReminderEmail = async (userEmail: string, courseTitle: string) => {
   const emailContent = {
-    from: "webmaster@lp.com.vn",
+    from: process.env.SMTP_USER,
     to: userEmail,
     subject: `[LMS] Nhắc nhở: Khóa học ${courseTitle} sắp kết thúc!`,
     html: `
@@ -44,7 +44,7 @@ const sendInstructorReportEmail = async (
   html: string
 ) => {
   await transporter.sendMail({
-    from: "webmaster@lp.com.vn",
+    from: process.env.SMTP_USER,
     to: email,
     subject: `[LMS] Nhắc nhở: Danh sách nhân viên vẫn đang học – ${title}`,
     html: `

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     // Thiết lập nội dung email
     // const emailContent = {
-    //   from: "webmaster@lp.com.vn",
+    //   from: process.env.SMTP_USER,
     //   to: emailAddress, // Gửi tới người dùng
     //   subject: `You have been assigned to the course: ${courseName}`,
     //   text: `Hello ${username},\n\nYou have been successfully assigned to the course: ${courseName}.`,
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     // };
 
     const emailContent = {
-      from: "webmaster@lp.com.vn",
+      from: process.env.SMTP_USER,
       to: emailAddress, // Gửi tới người dùng
       subject: `[LMS] Bạn đã được phân công vào khóa học: ${courseName}`,
       text: `Dear ${username},\n\nBạn đã được phân công vào khóa học: ${courseName}.\n\nHãy truy cập hệ thống học tập để bắt đầu xem tài liệu và hướng dẫn của khóa học tại đường dẫn:\n${courseUrl}\n\nMọi thắc mắc, bạn vui lòng trao đổi với người hướng dẫn hoặc bộ phận hỗ trợ.\n\nBest regards,\nLearning Management System Administration`,

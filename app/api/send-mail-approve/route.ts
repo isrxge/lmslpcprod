@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
     // Thiết lập nội dung email
     // const emailContent = {
-    //   from: "webmaster@lp.com.vn",
+    //   from: process.env.SMTP_USER,
     //   to: emailAddress, // Gửi tới người dùng
     //   subject: `LMS: Your account has been approved`, // Subject for approval notification
     //   text: `Hello ${username},\n\nYour account has been successfully approved, and you now have access to the system. You can log in and start using the platform.`,
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     // };
 
     const emailContent = {
-      from: "webmaster@lp.com.vn",
+      from: process.env.SMTP_USER,
       to: emailAddress, // Gửi tới người dùng
       subject: `[LMS] Tài khoản của bạn đã được phê duyệt và kích hoạt`, // Subject for approval notification
       text: `Dear ${username},\n\nTài khoản của bạn đã được phê duyệt thành công và hiện đã có quyền truy cập vào hệ thống. Bạn có thể đăng nhập và bắt đầu sử dụng nền tảng.\n\nNếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi.\n\n🔗 Truy cập hệ thống tại: http://lms.lp.local\n\nBest regards,\nLearning Management System Administration`,
