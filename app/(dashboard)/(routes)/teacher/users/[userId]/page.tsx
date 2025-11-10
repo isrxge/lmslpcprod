@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { db } from "@/lib/db";
 import Avatar from "./_components/avatar";
 import Star from "./_components/star";
-import UserInformation from "./_components/infomation-form";
+import UserInformation from "./_components/information-form";
 import CourseHistory from "./_components/courses-history";
 import { string } from "zod";
 import { PermissionForm } from "./_components/permission-list";
