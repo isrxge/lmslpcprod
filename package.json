@@ -16,6 +16,7 @@
     "@clerk/nextjs": "^4.29.12",
     "@clerk/types": "^3.63.1",
     "@cyntler/react-doc-viewer": "^1.14.1",
+    "@datadog/browser-rum": "^6.23.0",
     "@hello-pangea/dnd": "^16.5.0",
     "@heroicons/react": "^2.1.1",
     "@nextui-org/react": "^2.2.9",

@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { getFromStorage } from "@/components/ui/current-theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import React from "react";
+import DatadogProvider from './datadog-provider';
 
 // const client = new Ably.Realtime.Promise({ authUrl: "/api/notifications" });
 const inter = Inter({ subsets: ["latin"] });
@@ -55,6 +56,7 @@ export default function RootLayout({
       {/* <AblyProvider client={client}> */}
       <html lang="en">
         <body className={inter.className}>
+	<DatadogProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme={getFromStorage("theme") as string}
@@ -68,6 +70,7 @@ export default function RootLayout({
               {children}
             </QueryClientProvider>
           </ThemeProvider>
+	</DatadogProvider>
         </body>
       </html>
       {/* </AblyProvider> */}
